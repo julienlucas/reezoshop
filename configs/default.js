@@ -1,2 +1,1 @@
-
-export const graphQLEndpoint = '';
+export const graphQLEndpoint = 'DEV';
