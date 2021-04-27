@@ -1,9 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import ReezocarLogo from '../svgs/logo-header.svg';
+
+import requireStatic from '../utils/require-static';
+
 const HomePage = () => (
    <div>
-      <div />
+      <ReezocarLogo />
+      <img src={requireStatic('img/not-found.png')} />
    </div>
 );
 
