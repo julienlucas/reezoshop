@@ -1,14 +1,12 @@
 {
-   "plugins": ["security", "jest", "jsx-a11y", "react"],
+   "plugins": ["security", "jsx-a11y", "react"],
    "parser": "babel-eslint",
    "env": {
       "browser": true,
       "node": true,
-      "jest/globals": true
    },
    "extends": [
       "airbnb",
-      "plugin:jest/recommended",
       "plugin:jsx-a11y/recommended",
       "plugin:security/recommended",
       "plugin:react/recommended",
