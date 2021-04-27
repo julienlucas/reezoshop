@@ -1,0 +1,19 @@
+# dependencies
+/node_modules
+
+# testing
+/coverage
+/reports
+
+# production
+/build
+/dist
+/.next
+
+# misc
+.dccache
+.DS_Store
+.env
+.idea
+*-debug.log
+*-error.log
