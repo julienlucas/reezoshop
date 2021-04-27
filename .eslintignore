@@ -1,0 +1,24 @@
+# dependencies
+node_modules/**
+
+# testing
+/coverage
+/reports
+
+# production
+/build
+/dist
+/.next
+
+# External sources
+utils/next-routes.js
+
+# sources
+pages/mentions-legales.js
+
+# misc
+.DS_Store
+.env
+.idea
+*-debug.log
+*-error.log
