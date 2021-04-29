@@ -1,0 +1,68 @@
+import Image from 'next/image';
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
+import Slider from 'react-slick';
+import { SectionCComp } from './styles';
+
+function Promos() {
+  const [occasionPic, setOccasionPic] = useState('/images/promo-occasion.png');
+  const [neufPic, setNeufPic] = useState('/images/promo-neuf.png');
+
+  useEffect(() => {
+    if (window.innerWidth >= 768) {
+      setNeufPic('/images/promo-neuf.png');
+      setOccasionPic('/images/promo-occasion.png');
+    } else {
+      setNeufPic('/images/promo-mobile.png');
+      setOccasionPic('/images/promo-mobile.png');
+    }
+  }, [])
+
+  return (
+    <SectionCComp>
+      <h2 className="text-center">En ce moment dans votre <span className="blue">agence Lilloise</span></h2>
+
+      <div className="container">
+        <Slider {...sliderSettings}>
+            <div className="card-promo">
+              <Link href="/">
+                <a>
+                  <Image
+                    src={neufPic}
+                    width={560}
+                    height={310}
+                    layout="responsive"
+                  />
+                </a>
+              </Link>
+            </div>
+            <div className="card-promo">
+              <Link href="/">
+                <a>
+                  <Image
+                    src={occasionPic}
+                    width={560}
+                    height={310}
+                    layout="responsive"
+                  />
+                </a>
+              </Link>
+            </div>
+        </Slider>
+      </div>
+    </SectionCComp>
+  );
+};
+
+export default Promos;
+
+const sliderSettings = {
+  className: 'slider',
+  arrows: false,
+  centerMode: false,
+  adaptiveHeight: true,
+  slidesToScroll: 1,
+  focusOnSelect: true,
+  infinite: true,
+  variableWidth: true
+};

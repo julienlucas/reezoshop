@@ -7,26 +7,26 @@ module.exports = {
    },
    trailingSlash: true,
 
-   webpack: (config) => {
-      config.node = {
-         fs: 'empty',
-      };
+   // webpack: (config) => {
+   //    config.node = {
+   //       fs: 'empty',
+   //    };
 
-      config.module.rules.push({
-         test: /\.(css|gif|jpg|jpeg|png|svg)$/,
-         use: [
-            {
-               loader: 'file-loader',
-               options: {
-                  context: '',
-                  outputPath: 'static',
-                  publicPath: '/_next/static',
-                  name: '[path][name].[ext]?[contenthash]',
-               },
-            },
-         ],
-      });
+   //    config.module.rules.push({
+   //       test: /\.(css|gif|jpg|jpeg|png|svg)$/,
+   //       use: [
+   //          {
+   //             loader: 'file-loader',
+   //             options: {
+   //                context: '',
+   //                outputPath: 'static',
+   //                publicPath: '/_next/static',
+   //                name: '[path][name].[ext]?[contenthash]',
+   //             },
+   //          },
+   //       ],
+   //    });
 
-      return config;
-   },
+   //    return config;
+   // },
 };

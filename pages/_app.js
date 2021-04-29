@@ -1,7 +1,13 @@
 import React from 'react';
 import App from 'next/app';
-
+import Head from 'next/head'
+import { ThemeProvider } from 'styled-components'
+import { theme, GlobalStyles } from '../constants/theme'
+import { NextSeo } from 'next-seo'
+import SEO from '../next-seo.config'
 import hocs from '../hooks/hocs';
+
+import '../components/Home/slick.scss'
 
 class RZSApp extends App {
    static async getInitialProps({ Component, ctx }) {
@@ -22,9 +28,14 @@ class RZSApp extends App {
       const { Component, hocProps, pageProps } = this.props;
 
       const cpnt = (
-         // <Layout> // Peut-etre passer par ici pour le Layout
-         <Component hocProps={hocProps} {...pageProps} />
-         // </Layout>
+         <ThemeProvider theme={theme}>
+            <NextSeo {...SEO}/>
+            <Head>
+            <meta content="width=device-width, initial-scale=1" name="viewport" />
+            </Head>
+            <Component hocProps={hocProps} {...pageProps} />
+            <GlobalStyles />
+         </ThemeProvider>
       );
 
       return hocs.reduce((children, hoc) => hoc({ children, ...hocProps }), cpnt);
