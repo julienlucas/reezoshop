@@ -213,11 +213,16 @@ export const SectionDComp = styled.section`
     width: 100%;
     a[href^="http://maps.google.com/maps"]{display:none !important}
     a[href^="https://maps.google.com/maps"]{display:none !important}
-    .gmnoprint a, .gmnoprint span, .gm-style-cc {
+    .gmnoprint a, .gmnoprint span, .gm-style-cc, .gm-fullscreen-control, .gmnoprint {
       display:none;
     }
     .gmnoprint div {
       background:none !important;
+    }
+  }
+  .marker {
+    * {
+      height: 873px;
     }
   }
   .wrapper {
@@ -306,8 +311,10 @@ export const SectionDComp = styled.section`
   }
   ul:not(.tabs) {
     padding: 0;
-    margin: 0;
-    columns: 2;
+    position: relative;
+    margin: 0 auto;
+    display: table;
+    columns: 1;
     li {
       list-style: none;
       padding: 0;
@@ -378,6 +385,11 @@ export const SectionDComp = styled.section`
     }
     ul.tabs {
       display: none;
+    }
+    ul:not(.tabs) {
+      margin: 0;
+      columns: 2;
+      display: block;
     }
     .btn {
       right: -30px;
@@ -546,7 +558,7 @@ export const SectionFComp = styled.section`
     position: relative;
     margin: 0 auto;
     display: table;
-    padding: 10px 0 40px;
+    padding: 10px 0 0;
     float: none;
     width: 100%;
     max-width: 360px;
