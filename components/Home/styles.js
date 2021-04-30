@@ -36,6 +36,7 @@ export const SectionAComp = styled.section`
     position: relative;
     margin: 45px auto 0;
     display: table;
+    width: 100%;
   }
   .card-car {
     height: 336px;
@@ -47,18 +48,15 @@ export const SectionAComp = styled.section`
     box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.15);
     overflow: hidden;
   }
-  .container {
-    padding: 0;
-  }
   .slick-list {
     max-width: 1160px;
     width: 100%;
     height: 340px !important;
   }
   .slider {
-    margin-left: 30px;
+    margin-left: 0;
     .slick-slide {
-      margin: 0 0px 0 20px;
+      margin: 0 -50px 0px 70px;
       * {
         outline: 0;
         user-select: none
@@ -68,18 +66,24 @@ export const SectionAComp = styled.section`
   @media (min-width: 768px) {
     padding: 125px 0 40px;
     h2 {
-      margin: 0 0 15px;
+      margin: 0 -10px 25px 30px;
       max-width: 100%;
     }
     .slider {
+      margin-left: 30px;
       .slick-slide {
       }
+    }
+  }
+  @media (min-width: 620px) {
+    .btn {
+      width: auto;
     }
   }
 `
 
 export const SectionBComp = styled.section`
-  padding: 20px 0;
+  padding: 5px 0 30px;
   h2 {
     padding-left: 5px
   }
@@ -99,9 +103,6 @@ export const SectionBComp = styled.section`
     font-weight: 600;
     font-size: 18px;
   }
-  .container {
-    padding: 0 15px;
-  }
   .card-automaker {
     padding: 0;
     height: 125px;
@@ -119,11 +120,16 @@ export const SectionBComp = styled.section`
       align-items: center;
       * {
         position: absolute;
+        max-width: 100px;
+        max-height: 80px;
+        width: auto;
+        height: auto;
         z-index: 2;
       }
     }
   }
   .slick-list {
+    padding-left: 8px;
     max-width: 1160px;
     width: 100%;
   }
@@ -137,6 +143,7 @@ export const SectionBComp = styled.section`
     }
   }
   @media (min-width: 768px) {
+    padding: 20px 0;
     .container {
       padding: 0 30px;
     }

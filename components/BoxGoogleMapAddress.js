@@ -37,9 +37,7 @@ export const RatingStars = styled.div`
    div {
       top: 1px;
       color: ${theme.grey400};
-      transition: color .4s;
-      cursor: pointer;
-      &.active, &:hover, &:hover ~ div, &:focus, &:focus ~ div	{
+      &.active {
          color: orange;
       }
    }

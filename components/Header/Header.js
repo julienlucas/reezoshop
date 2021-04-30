@@ -6,23 +6,28 @@ import TelIcon from '../../svgs/tel.svg';
 import React, { useEffect, useState } from 'react';
 import { Wrapper, Nav, Hero } from './styles';
 
+let widthSelect = '20px';
+
 const NavComp = (props) => {
   const [scroll, setScroll] = useState(null);
   const [top, setTop] = useState(null);
   const [height, setHeight] = useState(null);
   const [overlayMobile, setOverlayMobile] = useState(false);
+  const [selectedValue, setSelectedValue] = useState(props.nav[0]);
 
   const handleScroll = e => {
-    setScroll(window.scrollY)
+    setScroll(window.scrollY);
   };
 
   const handleChange = (agency) => {
-    props.selectAgency(agency)
+    props.selectAgency(agency.value);
+    widthSelect = agency.value;
+    setSelectedValue(agency);
   };
 
   const addOverlayMobile = () => {
     if (window.innerWidth <= 768) setOverlayMobile(!overlayMobile);
-  }
+  };
 
   useEffect(() => {
     const el = document.querySelector('nav')
@@ -56,11 +61,13 @@ const NavComp = (props) => {
         <div className="select" onClick={(e) => addOverlayMobile(e)}>
           <Select
             instanceId={String}
-            placeholder={props.nav[0].value}
+            placeholder={props.nav[0].label}
             options={props.nav}
             styles={customStyles}
             components={{ DropdownIndicator:() => null, IndicatorSeparator }}
-            onChange={(data) => handleChange(data.value)}
+            onChange={(agency) => handleChange(agency)}
+            defaultValue={{ label: props.nav[0].value, value: props.nav[0].label }}
+            value={{ label: selectedValue.value, value: selectedValue.label }}
           />
         </div>
 
@@ -177,8 +184,8 @@ const customStyles = {
   }),
   control: styles => ({
     ...styles,
+    width: `${widthSelect.length + 120}px`,
     float: 'left',
-    width: '80px',
     fontSize: '20px',
     fontWeight: '600',
     color: '#C1C1C1',
@@ -193,7 +200,7 @@ const customStyles = {
     marginTop: '50px',
     marginLeft: '100px',
     border: 'none',
-    boxShadow: 'none',
+    boxShadow: '1px 2px 13px rgba(0, 0, 0, 0.15)',
     width: '240px',
     borderRadius: '4px',
     zIndex: '10'

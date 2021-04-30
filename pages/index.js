@@ -43,9 +43,9 @@ export default HomePage;
 
 const mockData = {
   nav: [
-    { value: 'Lille', label: 'Lille' },
-    { value: 'Bordeaux', label: 'Bordeaux' },
-    { value: 'Marseille', label: 'Marseille' }
+    { value: 'Lille', label: 'Agence Boulogne-Billacourt' },
+    { value: 'Bordeaux', label: 'Agence Bordeaux' },
+    { value: 'Marseille', label: 'Agence Marseille' }
   ],
   head: {
     headline: 'Reezocar Lille - Seclin',

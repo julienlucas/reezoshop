@@ -2,6 +2,7 @@ import React from 'react';
 import Slider from 'react-slick';
 import AudiIcon from '../../svgs/audi.svg';
 import BmwIcon from '../../svgs/bmw.svg';
+import FordIcon from '../../svgs/ford.svg';
 import PeugeotIcon from '../../svgs/peugeot.svg';
 import RenaultIcon from '../../svgs/renault.svg';
 import VolkswagenIcon from '../../svgs/volkswagen.svg';
@@ -43,7 +44,7 @@ function Logo({ constructeur }) {
   } else if (constructeur == 'BMW') {
     return <BmwIcon/>
   } else if (constructeur == 'Ford') {
-    return <RenaultIcon/>
+    return <FordIcon/>
   } else if (constructeur == 'Peugeot') {
     return <PeugeotIcon/>
   } else if (constructeur == 'Renault') {
@@ -61,7 +62,6 @@ const sliderSettings = {
   focusOnSelect: true,
   infinite: true,
   variableWidth: true,
-  slidesToShow: 6,
   slidesToScroll: 1,
 };
 
