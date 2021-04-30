@@ -9,14 +9,20 @@ function Promos() {
   const [neufPic, setNeufPic] = useState('/images/promo-neuf.png');
 
   useEffect(() => {
-    if (window.innerWidth >= 768) {
-      setNeufPic('/images/promo-neuf.png');
-      setOccasionPic('/images/promo-occasion.png');
-    } else {
-      setNeufPic('/images/promo-mobile.png');
-      setOccasionPic('/images/promo-mobile.png');
+    // Changement images src au resize
+    function onResizeWidth(){
+      const width = document.documentElement.clientWidth;
+      if (width >= 768) {
+        setNeufPic('/images/promo-neuf.png');
+        setOccasionPic('/images/promo-occasion.png');
+      } else {
+        setNeufPic('/images/promo-mobile.png');
+        setOccasionPic('/images/promo-mobile.png');
+      }
     }
-  }, [])
+    window.addEventListener('resize', onResizeWidth);
+    onResizeWidth();
+  }, []);
 
   return (
     <SectionCComp>

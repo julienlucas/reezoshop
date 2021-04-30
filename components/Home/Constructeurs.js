@@ -2,7 +2,6 @@ import React from 'react';
 import Slider from 'react-slick';
 import AudiIcon from '../../svgs/audi.svg';
 import BmwIcon from '../../svgs/bmw.svg';
-import FordIcon from '../../svgs/ford.svg';
 import PeugeotIcon from '../../svgs/peugeot.svg';
 import RenaultIcon from '../../svgs/renault.svg';
 import VolkswagenIcon from '../../svgs/volkswagen.svg';
@@ -27,13 +26,13 @@ export default Constructeurs;
 function CardAutomaker({ constructeur }) {
   return (
     <div className="card-automaker">
-        <div className="logo">
-          <Logo constructeur={constructeur.nom} />
-        </div>
-        <div className="box-text">
-          <strong>{constructeur.nom}</strong>
-          <p className="prix">à partir de 5000€</p>
-        </div>
+      <div className="logo">
+        <Logo constructeur={constructeur.nom} />
+      </div>
+      <div className="box-text">
+        <strong>{constructeur.nom}</strong>
+        <p className="prix">à partir de 5000€</p>
+      </div>
     </div>
   );
 };
@@ -44,7 +43,7 @@ function Logo({ constructeur }) {
   } else if (constructeur == 'BMW') {
     return <BmwIcon/>
   } else if (constructeur == 'Ford') {
-    return <FordIcon/>
+    return <RenaultIcon/>
   } else if (constructeur == 'Peugeot') {
     return <PeugeotIcon/>
   } else if (constructeur == 'Renault') {

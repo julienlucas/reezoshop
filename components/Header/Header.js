@@ -42,14 +42,14 @@ const NavComp = (props) => {
   return (
     <Wrapper>
       <Nav className={`${scroll > top ? ' scroll' : null}`}>
-        <div className={`overlay-mobile ${overlayMobile ? 'show' : 'hide'}`} />
+        <div className={`overlay-mobile ${overlayMobile ? 'show' : 'hide'}`} onClick={(e) => setOverlayMobile(false)} />
         <div className="logo">
           <Image
             src="/images/logo-reezocar.svg"
             alt="reezocar"
             width={244}
             height={66}
-            layout="fixed"
+            layout="responsive"
           />
         </div>
 
@@ -155,26 +155,37 @@ const IndicatorSeparator = () => {
 
 // React Select : Styles
 const customStyles = {
-  option: styles => ({
+  option: (styles, state) => ({
     ...styles,
     fontSize: '16px',
     borderTop: '1px solid #C1C1C1',
-    background: 'white',
+    background: state.isSelected ? 'white' : 'white',
     color: '#313131',
     cursor: 'pointer',
+    "&:focus": {
+      background: 'white'
+    },
+    "&:hover": {
+      background: 'white'
+    },
+    "&:active": {
+      background: 'white'
+    }
+  }),
+  singleValue: (styles) => ({
+    ...styles
   }),
   control: styles => ({
-    height: 0,
-    marginTop: '-35px',
-    padding: '10px 0',
+    ...styles,
+    float: 'left',
+    width: '80px',
     fontSize: '20px',
     fontWeight: '600',
     color: '#C1C1C1',
     border: 'none',
     boxShadow: 'none',
     background: 'transparent',
-    boxShadow: 'none',
-    cursor: 'pointer'
+    cursor: 'pointer',
   }),
   menu: styles => ({
     ...styles,
@@ -183,8 +194,8 @@ const customStyles = {
     marginLeft: '100px',
     border: 'none',
     boxShadow: 'none',
-    width: '250px',
+    width: '240px',
     borderRadius: '4px',
-    zIndex: '-1'
+    zIndex: '10'
   })
-};
+}

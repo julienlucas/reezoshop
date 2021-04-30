@@ -33,15 +33,17 @@ function Vehicules({ cars }) {
         </TabPanel>
       </Tabs>
 
-      <button className="btn btn-primary">Voir toutes les annonces d’occasion</button>
+      <div className="container">
+        <button className="btn btn-primary">Voir toutes les annonces d’occasion</button>
+      </div>
     </SectionAComp>
-  )
-}
+  );
+};
 
 export default Vehicules;
 
 function CardCar({ data }) {
-  // Ajout d'un espace tous les 3 caractères
+  // Ajout d'un espace tous les 3 chiffres
   const numberFormat = (num) => {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
   };

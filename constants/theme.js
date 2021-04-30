@@ -177,7 +177,7 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     ${''/* Media queries */}
-    @media (min-width: 768px) {
+    @media (min-width: 780px) {
       .container {
         padding: 0 40px;
       }

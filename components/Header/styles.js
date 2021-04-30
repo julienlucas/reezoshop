@@ -9,6 +9,7 @@ export const Wrapper = styled.div`
     float: right;
     right: 20px;
     width: calc(50vw - 26px);
+    padding: 0 0 0 16px;
     a {
       display: block;
       color: white;
@@ -21,12 +22,14 @@ export const Wrapper = styled.div`
     display: block;
     left: 20px;
     width: calc(50vw - 26px);
+    padding: 0;
   }
   @media (min-width: 768px) {
     .btn-phone {
       position: fixed;
       top: 23px;
       margin-right: 95px;
+      padding: 0 26px 0 44px;
       width: auto;
       z-index: 10;
     }
@@ -39,7 +42,7 @@ export const Wrapper = styled.div`
 export const Nav = styled.nav`
   position: fixed;
   width: 100vw;
-  height: 92px;
+  height: 58px;
   top: 0;
   z-index: 9;
   transition: all .3s ease-out;
@@ -51,11 +54,12 @@ export const Nav = styled.nav`
     height: 100vh;
     content: '';
     z-index: 10;
-    pointer-events: none;
     &.show {
+      visibility: visible;
       background: rgba(0, 0, 0, 0.3);
     }
     &.hide {
+      visibility: hidden;
       background: rgba(0, 0, 0, 0);
     }
   }
@@ -63,27 +67,36 @@ export const Nav = styled.nav`
     background: white;
   }
   .select {
-    margin-top: 52px;
+    margin-top: 9px;
     *:first-child {
       border-top: none;
+    }
+    .icon {
+      * {
+        width: 15px;
+      }
     }
   }
   .logo {
     position: relative;
-    top: 16px;
+    top: 8px;
     float: left;
     cursor: pointer;
+    * {
+      width: 163px;
+      height: 44px;
+    }
   }
   .mobile-menu {
     position: absolute;
-    top: 38px;
+    top: 22px;
     cursor: pointer;
     display: block;
     width: 100%;
     .cross {
       position: absolute;
       top: 0;
-      right: 35px;
+      right: 15px;
       float: right;
       width: 35px; height: 35px;
       display: block;
@@ -91,11 +104,33 @@ export const Nav = styled.nav`
     span {
       position: absolute;
       width: 29px; height: 3px;
-      background: ${theme.black};
+      background: ${theme.blue100};
       border-radius: 1px;
       &:nth-child(1) {top: 0px}
       &:nth-child(2) {top: 8px}
       &:nth-child(3) {top: 16px}
+    }
+  }
+  @media (min-width: 780px) {
+    height: 92px;
+    .logo {
+      top: 16px;
+      * {
+        width: 244px;
+        height: 66px;
+      }
+    }
+    .mobile-menu {
+      top: 38px;
+      .cross {
+        right: 35px;
+      }
+      span {
+        background: ${theme.black};
+      }
+    }
+    .select {
+      margin-top: 27px;
     }
   }
 `;

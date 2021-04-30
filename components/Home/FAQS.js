@@ -1,4 +1,3 @@
-import ArrowIcon from '../../svgs/arrow-bottom-blue.svg';
 import Image from 'next/image';
 import React from 'react';
 import { SectionGComp } from './styles';
@@ -21,7 +20,6 @@ function FAQS({ faqs }) {
           <div className="col col-right">
             {faqs?.map((faq, i) => <div key={faq + i} className="box-question">
               {faq}
-              <ArrowIcon className="icon" />
             </div>)}
           </div>
         </div>

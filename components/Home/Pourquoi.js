@@ -92,9 +92,18 @@ function ProgressRing({ percents }) {
     // }, 20)
   },[]);
 
-  // Changement height / width du Progress Ring in mobile/tablette
   useEffect(() => {
-    if (window.innerWidth <= 768) setRadius(30)
+    // Changement height / width du Progress Ring au resize
+    function onResizeWidth(){
+      const width = document.documentElement.clientWidth;
+      if (width <= 768) {
+        setRadius(30);
+      } else {
+        setRadius(50);
+      }
+    }
+    window.addEventListener('resize', onResizeWidth);
+    onResizeWidth();
   }, [])
 
   return (

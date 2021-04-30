@@ -4,7 +4,11 @@ import { theme } from '../../constants/theme'
 export const SectionAComp = styled.section`
   padding: 85px 0 40px;
   h2 {
+    position: relative;
+    margin: 0 auto 15px;
+    dusplay: table;
     text-align: center;
+    max-width: 280px;
   }
   .box-text {
     padding: 12px 16px 23px;
@@ -63,6 +67,10 @@ export const SectionAComp = styled.section`
   }
   @media (min-width: 768px) {
     padding: 125px 0 40px;
+    h2 {
+      margin: 0 0 15px;
+      max-width: 100%;
+    }
     .slider {
       .slick-slide {
       }
@@ -147,6 +155,13 @@ export const SectionBComp = styled.section`
 
 export const SectionCComp = styled.section`
   padding: 30px 0 10px;
+  h2 {
+    position: relative;
+    margin: 0 auto 20px;
+    dusplay: table;
+    text-align: center;
+    max-width: 280px;
+  }
   .slick-list {
     max-width: 1140px;
     width: 100%;
@@ -170,6 +185,10 @@ export const SectionCComp = styled.section`
   }
   @media (min-width: 768px) {
     padding: 30px 0;
+    h2 {
+      margin: 0 0 15px;
+      max-width: 100%;
+    }
     .slider {
       .slick-slide {
         margin: 0 10px;
@@ -252,6 +271,10 @@ export const SectionDComp = styled.section`
     width: 100%;
     h3.big {
       font-size: 20px;
+    }
+    @media (max-width: 380px) {
+      margin: 0 20px 25px;
+      width: calc(100% - 40px)
     }
   }
   .box-infos {
@@ -413,7 +436,7 @@ export const SectionEComp = styled.section`
     .row {
       .card-interlocuteur {
         .box-text {
-          min-height: 145px;
+          min-height: auto;
         }
       }
     }
@@ -421,6 +444,15 @@ export const SectionEComp = styled.section`
   @media (min-width: 990px) {
     .row {
       grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  @media (max-width: 550px) {
+    .row {
+      .card-interlocuteur {
+        .box-text {
+          min-height: 150px;
+        }
+      }
     }
   }
 `
@@ -493,7 +525,7 @@ export const SectionFComp = styled.section`
       justify-content: flex-start;
       &:before {
         position: absolute;
-        margin: 7px 0 0 8px;
+        margin: 8px 0 0 9px;
         height: 43px;
         width: 43px;
         border-radius: 50%;
@@ -564,12 +596,15 @@ export const SectionFComp = styled.section`
   @media (min-width: 768px) {
     .col-left {
       float: left;
-      width: 55%;
+      width: 60%;
       .row-2 {
-        margin: auto;
+        margin: -30px 0 0;
         display: grid;
         max-width: 100%;
         grid-template-columns: repeat(3, 1fr);
+      }
+      p, strong {
+        font-size: 20px;
       }
       p {
         margin: 10px 0 0 0;
@@ -648,21 +683,17 @@ export const SectionGComp = styled.section`
     }
   }
   .col-right {
-    padding-left: 20px;
+    padding-left: 0;
     float: none;
     width: 100%;
   }
   .box-question {
     margin-bottom: 10px;
-    padding: 20px 17px;
+    padding: 10px 50px 10px 10px;
     border: 1px solid ${theme.grey400};
     border-radius: 4px;
-    .icon {
-      position: absolute;
-      margin-top: 5px;
-      right: 65px;
-      transform: rotate(-90deg)
-    }
+    background: url('/icons/arrow-bottom-blue.svg') no-repeat calc(100% - 20px) 50%;
+    background-size: 14px;
   }
   .btn {
     position: relative;
@@ -677,9 +708,13 @@ export const SectionGComp = styled.section`
     .col-left {
       display: block;
     }
+    .box-question {
+      padding: 20px 50px 20px 20px;
+    }
     .col-right {
       float: left;
       width: calc(100% - 445px);
+      padding-left: 20px;
     }
   }
 `
