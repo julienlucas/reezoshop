@@ -33,6 +33,7 @@ function Promos() {
             <div className="card-promo">
               <Link href="/">
                 <a>
+                  <button className="btn btn-secondary btn-orange">Profitez-en !</button>
                   <NextImageLazy
                     src={neufPic}
                     width={560}
@@ -46,6 +47,7 @@ function Promos() {
             <div className="card-promo">
               <Link href="/">
                 <a>
+                  <button className="btn btn-secondary btn-orange">Profitez-en !</button>
                   <NextImageLazy
                     src={occasionPic}
                     width={560}

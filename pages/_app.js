@@ -7,8 +7,6 @@ import { NextSeo } from 'next-seo'
 import SEO from '../next-seo.config'
 import hocs from '../hooks/hocs';
 
-import '../components/Home/slick.scss'
-
 class RZSApp extends App {
    static async getInitialProps({ Component, ctx }) {
       // HOCs props

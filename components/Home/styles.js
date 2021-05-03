@@ -142,6 +142,7 @@ export const SectionCComp = styled.section`
   }
   .slider {
     .slick-slide {
+      position: relative;
       margin: 0 5px;
       height: 300px;
       width: 300px;
@@ -150,10 +151,23 @@ export const SectionCComp = styled.section`
       cursor: pointer;
       border-radius: 6px;
       overflow: hidden;
-      * {
+      &:hover .btn-secondary {
+        background: ${theme.orange200}
+      }
+      *:not(.btn-secondary) {
         height: 300px;
         outline: 0;
-        user-select: none
+        user-select: none;
+      }
+      .btn-secondary {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 20px;
+        margin: 0 auto;
+        display: table;
+        z-index: 2;
+        max-width: 150px;
       }
     }
   }
@@ -170,6 +184,11 @@ export const SectionCComp = styled.section`
         width: 560px;
         * {
           height: auto;
+        }
+        .btn-secondary {
+          margin: 0;
+          left: auto;
+          right: 20px;
         }
       }
     }

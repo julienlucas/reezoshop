@@ -143,6 +143,17 @@ export const GlobalStyles = createGlobalStyle`
           margin-left: -27px;
         }
       }
+      &.btn-orange {
+        padding: 0 30px;
+        color: white;
+        border: 0;
+        height: 35px;
+        line-height: 35px;
+        background: ${theme.orange100};
+        &:hover, &:focus {
+          background: ${theme.orange200}
+        }
+      }
     }
     ${''/* Inputs */}
     .box-input-number {
@@ -264,6 +275,87 @@ export const GlobalStyles = createGlobalStyle`
         font-size: 24px;
       }
     }
+
+    ${''/* Slick slider */}
+    .slick-slider {
+      position: relative;
+      display: block;
+      box-sizing: border-box;
+      -webkit-touch-callout: none;
+      user-select: none;
+      touch-action: pan-y;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .slick-list {
+      position: relative;
+      overflow: hidden;
+      display: block;
+      margin: 0;
+      padding: 0;
+      &:focus {
+        outline: none;
+      }
+      &.dragging {
+        cursor: pointer;
+        cursor: hand;
+      }
+    }
+    .slick-slider .slick-track,
+    .slick-slider .slick-list {
+      transform: translate3d(0, 0, 0);
+    }
+    .slick-track {
+      position: relative;
+      left: 0;
+      top: 0;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      &:before,
+      &:after {
+        content: "";
+        display: table;
+      }
+      &:after {
+        clear: both;
+      }
+      .slick-loading & {
+        visibility: hidden;
+      }
+    }
+    .slick-slide {
+      float: left;
+      height: 100%;
+      min-height: 1px;
+      display: none;
+      [dir="rtl"] & {
+        float: right;
+      }
+      img {
+        display: block;
+      }
+      &.slick-loading img {
+        display: none;
+      }
+      &.dragging img {
+        pointer-events: none;
+      }
+      .slick-initialized & {
+        display: block;
+      }
+      .slick-loading & {
+        visibility: hidden;
+      }
+      .slick-vertical & {
+        display: block;
+        height: auto;
+        border: 1px solid transparent;
+      }
+    }
+    .slick-arrow.slick-hidden {
+      display: none;
+    }
+
     ${''/* Media queries */}
     @media (min-width: 780px) {
       .container {
