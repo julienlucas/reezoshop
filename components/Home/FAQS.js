@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import NextImageLazy from '../../utils/imgLazy';
 import React from 'react';
 import { SectionGComp } from './styles';
 
@@ -10,7 +10,7 @@ function FAQS({ faqs }) {
 
         <div className="row">
           <div className="col col-left">
-            <Image
+            <NextImageLazy
               src="/images/faq.png"
               width={445}
               height={350}

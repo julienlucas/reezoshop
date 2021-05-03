@@ -1,5 +1,5 @@
 import GoogleMapReact from 'google-map-react';
-import BoxGoogleMapAddress from '../BoxGoogleMapAddress';
+import BoxGoogleRating from '../BoxGoogleRating';
 import MarkerIcon from '../../svgs/marker-b.svg';
 import React, { useState, useEffect } from 'react';
 import { SectionDComp } from './styles';
@@ -12,7 +12,7 @@ function Map({ data }) {
       <h2 className="text-center">Comment s'y rendre ?</h2>
 
       <div className="box-address-mobile">
-        <BoxGoogleMapAddress data={data} />
+        <BoxGoogleRating data={data} />
       </div>
 
       <ul className="tabs">
@@ -71,7 +71,7 @@ function GoogleMap({ data, tab }) {
       <div className="wrapper">
         <div className="container">
           <div className={`box-infos ${tab === 2 && window.innerWidth <= 990 ? 'active' : ''}`}>
-            <BoxGoogleMapAddress data={data} />
+            <BoxGoogleRating data={data} />
 
             <div className="open-hours">
               <h3 className="big">Horaires d'ouverture</h3>

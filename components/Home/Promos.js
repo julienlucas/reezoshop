@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import Link from 'next/link';
+import NextImageLazy from '../../utils/imgLazy';
 import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import { SectionCComp } from './styles';
@@ -33,11 +33,12 @@ function Promos() {
             <div className="card-promo">
               <Link href="/">
                 <a>
-                  <Image
+                  <NextImageLazy
                     src={neufPic}
                     width={560}
                     height={310}
                     layout="responsive"
+                    alt=""
                   />
                 </a>
               </Link>
@@ -45,11 +46,12 @@ function Promos() {
             <div className="card-promo">
               <Link href="/">
                 <a>
-                  <Image
+                  <NextImageLazy
                     src={occasionPic}
                     width={560}
                     height={310}
                     layout="responsive"
+                    alt=""
                   />
                 </a>
               </Link>

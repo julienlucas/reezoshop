@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { theme } from '../../constants/theme';
 
 function Mobile({ data }) {
-   const [mobileMenu, setMobileMenu] = useState(true);
+   const [mobileMenu, setMobileMenu] = useState(false);
 
    return (
       <MobileWrapper>

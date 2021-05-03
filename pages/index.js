@@ -29,7 +29,7 @@ function HomePage({ data, shop }) {
 };
 
 HomePage.getInitialProps = async ({ shop }) => {
-   const data = await mockData
+   const data = await mockData;
 
    return { data, shop };
 };

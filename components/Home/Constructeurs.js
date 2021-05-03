@@ -64,5 +64,3 @@ const sliderSettings = {
   variableWidth: true,
   slidesToScroll: 1,
 };
-
-

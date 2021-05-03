@@ -10,43 +10,12 @@ export const SectionAComp = styled.section`
     text-align: center;
     max-width: 280px;
   }
-  .box-text {
-    padding: 12px 16px 23px;
-    a {
-      color: black;
-      text-decoration: none;
-    }
-    h3, p {
-      margin: 0;;
-      padding: 0;
-    }
-    .description {
-      padding: 5px 0;
-      font-size: 14px;
-      font-weight: 600;
-      color: ${theme.grey100}
-    }
-    .prix {
-      font-size: 26px;
-      font-weight: 700;
-      letter-spacing: -0.04em;
-    }
-  }
   .btn {
     position: relative;
     margin: 45px auto 0;
     display: table;
     width: 100%;
-  }
-  .card-car {
-    height: 336px;
-    width: 367px;
-    user-select: none;
-    outline: 0;
-    cursor: pointer;
-    border-radius: 4px;
-    box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
+    padding: 0 40px;
   }
   .slick-list {
     max-width: 1160px;
@@ -71,8 +40,6 @@ export const SectionAComp = styled.section`
     }
     .slider {
       margin-left: 30px;
-      .slick-slide {
-      }
     }
   }
   @media (min-width: 620px) {
@@ -120,8 +87,8 @@ export const SectionBComp = styled.section`
       align-items: center;
       * {
         position: absolute;
-        max-width: 100px;
-        max-height: 80px;
+        width: 100px;
+        height: 80px;
         width: auto;
         height: auto;
         z-index: 2;
@@ -193,7 +160,7 @@ export const SectionCComp = styled.section`
   @media (min-width: 768px) {
     padding: 30px 0;
     h2 {
-      margin: 0 0 15px;
+      margin: 0 0 25px;
       max-width: 100%;
     }
     .slider {
@@ -218,6 +185,13 @@ export const SectionDComp = styled.section`
   .google-map {
     height: 320px;
     width: 100%;
+    outline: 0;
+    user-select: none;
+    * {
+      cursor: auto;
+      outline: 0;
+      user-select: none;
+    }
     a[href^="http://maps.google.com/maps"]{display:none !important}
     a[href^="https://maps.google.com/maps"]{display:none !important}
     .gmnoprint a, .gmnoprint span, .gm-style-cc, .gm-fullscreen-control, .gmnoprint {
@@ -299,6 +273,7 @@ export const SectionDComp = styled.section`
     width: 100%;
     display: none;
     z-index:3;
+    cursor: auto;
     &.active {
       display: block;
     }
@@ -650,8 +625,8 @@ export const SectionFComp = styled.section`
         }
       }
       .number {
-        top: auto;
-        margin: 45px auto 0;
+        top: 15px;
+        margin: 45px auto 20px;
         display: table;
         float: none;
         font-size: 36px;

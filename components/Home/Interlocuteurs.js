@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import NextImageLazy from '../../utils/imgLazy';
 import React from 'react';
 import { SectionEComp } from './styles';
 
@@ -22,11 +22,12 @@ function CardInterlocuteur({ interlo }) {
   return (
     <div className="card-interlocuteur">
       <div className="picture">
-        <Image
+        <NextImageLazy
           src={interlo.picture}
           width={185}
           height={185}
           layout="responsive"
+          alt=""
         />
       </div>
       <div className="box-text">
@@ -37,4 +38,3 @@ function CardInterlocuteur({ interlo }) {
     </div>
   );
 };
-

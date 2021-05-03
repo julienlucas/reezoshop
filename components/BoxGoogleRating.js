@@ -2,7 +2,7 @@ import MarkerIcon from '../svgs/marker.svg';
 import styled from 'styled-components';
 import { theme } from '../constants/theme';
 
-function BoxGoogleMapAddress({ data }) {
+function BoxGoogleRating({ data }) {
    return (
       <div className="box-address">
          <MarkerIcon className="indicator" />
@@ -25,7 +25,7 @@ function BoxGoogleMapAddress({ data }) {
    );
 };
 
-export default BoxGoogleMapAddress;
+export default BoxGoogleRating;
 
 export const RatingStars = styled.div`
    color: ${theme.grey100};

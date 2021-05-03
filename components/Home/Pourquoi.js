@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import NextImageLazy from '../../utils/imgLazy';
 // import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { SectionFComp } from './styles';
@@ -37,11 +37,12 @@ function Pourquoi({ data }) {
 
             <div className="box-social-media-reviews">
               <div className="icon">
-                <Image
+                <NextImageLazy
                   src="/icons/facebook.svg"
                   width={65}
                   height={65}
                   layout="responsive"
+                  alt=""
                 />
               </div>
               <div className="box-text">
@@ -52,7 +53,7 @@ function Pourquoi({ data }) {
 
             <div className="box-social-media-reviews">
               <div className="icon">
-                <Image
+                <NextImageLazy
                   src="/icons/google.svg"
                   width={65}
                   height={65}

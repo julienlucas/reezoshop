@@ -1,7 +1,6 @@
-import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react';
 import Slider from 'react-slick';
+import CardCar from '../CardCar';
 import { SectionAComp } from './styles';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
@@ -41,35 +40,6 @@ function Vehicules({ cars }) {
 };
 
 export default Vehicules;
-
-function CardCar({ data }) {
-  // Ajout d'un espace tous les 3 chiffres
-  const numberFormat = (num) => {
-    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
-  };
-
-  return (
-    <div className="card-car">
-      <div className="thumbnail">
-        <Link href="/">
-          <a>
-            <Image
-              src={data.photos && data.photos[0]}
-              width={366}
-              height={205}
-              layout="responsive"
-            />
-          </a>
-        </Link>
-      </div>
-      <div className="box-text">
-        <h3><Link href="/"><a>{data.marque && data.marque} {data.modele && data.modele} {data.complementInfos && data.complementInfos}</a></Link></h3>
-        <p className="description">{data.boite && data.boite + ' ·'} {data.energie && data.energie + ' ·'} {data.annee && data.annee + ' ·'} {data.kilometrage && numberFormat(data.kilometrage) + ' km'}</p>
-        <p className="prix">{data.prix && numberFormat(data.prix)} €</p>
-      </div>
-    </div>
-  );
-};
 
 const sliderSettings = {
   className: 'slider',

@@ -8,10 +8,12 @@ export const theme = {
   grey400: '#DCDCDC',
   grey500: '#555555',
   grey600: '#DDDDDD',
+  grey700: '#EBEBEB',
   orange100: '#F29301',
   orange200: '#C98722',
   jaune100: '#F29400',
-  blue100: '#11589A'
+  blue100: '#11589A',
+  blue200: '#124b80'
 };
 
 export const GlobalStyles = createGlobalStyle`
@@ -34,7 +36,6 @@ export const GlobalStyles = createGlobalStyle`
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
-
     ${''/* Container central */}
     .container {
       position: relative;
@@ -44,7 +45,6 @@ export const GlobalStyles = createGlobalStyle`
       display: table;
       padding: 0 20px;
     }
-
     ${''/* Typos */}
     .text-center {
       text-align: center;
@@ -93,7 +93,6 @@ export const GlobalStyles = createGlobalStyle`
         color: ${theme.blue100}
       }
     }
-
     ${''/* Buttons */}
     .btn {
       cursor: pointer;
@@ -127,6 +126,16 @@ export const GlobalStyles = createGlobalStyle`
           background: ${theme.grey600}
         }
       }
+      &.btn-tertiary {
+        margin-top: 8px;
+        width: 100%;
+        padding: 0;
+        color: white;
+        background: ${theme.blue100};
+        &:hover, &:focus {
+          background: ${theme.blue200};
+        }
+      }
       &.btn-phone {
         padding: 0 26px 0 44px;
         .icon {
@@ -135,7 +144,87 @@ export const GlobalStyles = createGlobalStyle`
         }
       }
     }
-
+    ${''/* Inputs */}
+    .box-input-number {
+      &::before {
+        position: absolute;
+        margin: 7px 0 0 110px;
+        color: ${theme.black};
+        content: '€';
+        z-index: 3
+      }
+    }
+    input {
+      margin-bottom: 16px;
+      color: ${theme.black};
+      border: 1px solid ${theme.grey200};
+      border-radius: 3.24786px;
+      box-shadow: none;
+      outline: 0;
+      box-shadow: none;
+      appearance: none;
+      font-size: 13px;
+      background: white;
+      &[type="number"], &[type="text"] {
+         height: 36px;
+         line-height: 1;
+      }
+      &[type="number"] {
+         padding: 0 7px;
+         display: block;
+         width: 100%;
+         &::placeholder {
+           color: ${theme.black} !important;
+         }
+         &::-webkit-inner-spin-button,
+         &::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+         }
+      }
+      &.search {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 105px;
+        float: right;
+        padding: 0 15px;
+        min-width: 393px;
+        border-radius: 4px;
+        font-size: 16px;
+        background: url('/icons/search.svg') no-repeat;
+        background-position: calc(100% - 20px) 50%;
+        background-size: 18px;
+      }
+    }
+    select {
+      margin-bottom: 16px;
+      font-size: 13px;
+      line-height: 36px;
+      padding: 0 7px;
+      background: white url('/icons/arrow-bottom-light.svg') no-repeat calc(100% - 10px) 50%;
+      background-size: 13px;
+      color: ${theme.black};
+      border: 0.811966px solid ${theme.grey200};
+      border-radius: 3.24786px;
+      display: block;
+      width: 100%;
+      height: 36px;
+      box-shadow: none;
+      outline: 0;
+      box-shadow: none;
+      appearance: none;
+    }
+    ${''/* React Select Fix, sinon bug input */}
+    .select {
+      input[type="text"] {
+        position: absolute;
+        padding: 0;
+        margin: 0;
+        height: 0;
+        line-height: 1;
+      }
+    }
     ${''/* React Tabs */}
     .react-tabs {
       -webkit-tap-highlight-color: transparent;
@@ -175,7 +264,6 @@ export const GlobalStyles = createGlobalStyle`
         font-size: 24px;
       }
     }
-
     ${''/* Media queries */}
     @media (min-width: 780px) {
       .container {
@@ -189,7 +277,6 @@ export const GlobalStyles = createGlobalStyle`
       }
       h1 {
         font-size: 52px;
-
       }
       h2 {
         font-size: 30px;
