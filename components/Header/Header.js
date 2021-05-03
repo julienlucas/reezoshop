@@ -1,28 +1,34 @@
-import Image from 'next/image';
-import Select from 'react-select';
 import ArrowBottomIcon from '../../svgs/arrow-bottom.svg';
+import Image from 'next/image';
+import Link from 'next/link';
+import Select from 'react-select';
+import Mobile from './Mobile';
 import SearchIcon from '../../svgs/search.svg';
+import styled from 'styled-components';
 import TelIcon from '../../svgs/tel.svg';
 import React, { useEffect, useState } from 'react';
-import { Wrapper, Nav, Hero } from './styles';
+import { useRouter } from 'next/router';
+import { theme } from '../../constants/theme';
 
 let widthSelect = '20px';
 
 const NavComp = (props) => {
+  const router = useRouter();
   const [scroll, setScroll] = useState(null);
   const [top, setTop] = useState(null);
   const [height, setHeight] = useState(null);
   const [overlayMobile, setOverlayMobile] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(props.nav[0]);
+  const [selectedOption, setSelectedOption] = useState(props.nav[0]);
+  const [mobileMenu, setMobileMenu] = useState(true);
 
-  const handleScroll = e => {
+  const handleScroll = () => {
     setScroll(window.scrollY);
   };
 
   const handleChange = (agency) => {
     props.selectAgency(agency.value);
     widthSelect = agency.value;
-    setSelectedValue(agency);
+    setSelectedOption(agency);
   };
 
   const addOverlayMobile = () => {
@@ -30,6 +36,7 @@ const NavComp = (props) => {
   };
 
   useEffect(() => {
+    // Au scroll changement du style de la nav
     const el = document.querySelector('nav')
     setTop(el.offsetTop)
     setHeight(el.offsetHeight)
@@ -46,16 +53,18 @@ const NavComp = (props) => {
 
   return (
     <Wrapper>
-      <Nav className={`${scroll > top ? ' scroll' : null}`}>
+      <Nav className={`${scroll > top ? ' scroll' : null} ${router.pathname !== '/' ? 'bottomShadow' : ''}`}>
         <div className={`overlay-mobile ${overlayMobile ? 'show' : 'hide'}`} onClick={(e) => setOverlayMobile(false)} />
         <div className="logo">
-          <Image
-            src="/images/logo-reezocar.svg"
-            alt="reezocar"
-            width={244}
-            height={66}
-            layout="responsive"
-          />
+          <Link href="/">
+            <Image
+              src="/images/logo-reezocar.svg"
+              alt="reezocar"
+              width={244}
+              height={66}
+              layout="responsive"
+            />
+          </Link>
         </div>
 
         <div className="select" onClick={(e) => addOverlayMobile(e)}>
@@ -67,32 +76,31 @@ const NavComp = (props) => {
             components={{ DropdownIndicator:() => null, IndicatorSeparator }}
             onChange={(agency) => handleChange(agency)}
             defaultValue={{ label: props.nav[0].value, value: props.nav[0].label }}
-            value={{ label: selectedValue.value, value: selectedValue.label }}
+            value={{ label: selectedOption.value, value: selectedOption.label }}
           />
         </div>
 
-        <div className="mobile-menu">
-          <div className="cross">
-            <span/>
-            <span/>
-            <span/>
-          </div>
-        </div>
+        {router.pathname === '/recherche' && <input type="text" className="search" placeholder="Marque, Modèle" name="search"/>}
+
+        <Mobile data={props} />
       </Nav>
 
-      <button className="btn btn-primary btn-phone">
-        <a href={`tel:${props.phone}`} rel="noopener noreferrer nofollow" target="_blank">
-          <TelIcon className="icon" />{phoneFormated}
-        </a>
-      </button>
+      {router.pathname === '/' &&
+        <div>
+          <button className="btn btn-primary btn-phone">
+            <a href={`tel:${props.phone}`} rel="noopener noreferrer nofollow" target="_blank">
+              <TelIcon className="icon" />{phoneFormated}
+            </a>
+          </button>
 
-      <button className="btn btn-secondary btn-rdv">Prendre rendez-vous</button>
+          <button className="btn btn-secondary btn-rdv">Prendre rendez-vous</button>
+        </div>}
     </Wrapper>
   );
 };
 
 const HeroComp = ({ headline }) => {
-  const [form, setForm] = useState('')
+  const [form, setForm] = useState('');
 
   const onChange = e => {
     const { name, value } = e.target
@@ -100,11 +108,6 @@ const HeroComp = ({ headline }) => {
       ...form,
       [name]: value
     })
-  };
-
-  const onSubmit = (e) => {
-    e.preventDefault()
-    alert('Recherche envoyée : ' + form.location + form.car)
   };
 
   return (
@@ -141,6 +144,8 @@ const HeroComp = ({ headline }) => {
 };
 
 const Header = (props) => {
+  const router = useRouter();
+
   const selectAgency = (agency) => {
     props.selectAgency(agency)
   };
@@ -148,7 +153,7 @@ const Header = (props) => {
   return (
     <header>
       <NavComp nav={props.nav} phone={props.phone} selectAgency={(agency) => selectAgency(agency)}/>
-      <HeroComp headline={props.headline}/>
+      {router.pathname === '/' && <HeroComp headline={props.headline}/>}
     </header>
   );
 };
@@ -205,4 +210,209 @@ const customStyles = {
     borderRadius: '4px',
     zIndex: '10'
   })
-}
+};
+
+export const Wrapper = styled.div`
+  .btn-phone {
+    position: relative;
+    top: 635px;
+    margin-right: 0;
+    float: right;
+    right: 20px;
+    width: calc(50vw - 26px);
+    padding: 0 0 0 16px;
+    z-index: 3;
+    .icon {
+      position: absolute;
+      height: 25px;
+    }
+    a {
+      display: block;
+      color: white;
+      text-decoration: none;
+    }
+
+  }
+  .btn-rdv {
+    position: relative;
+    top: 635px;
+    display: block;
+    left: 20px;
+    width: calc(50vw - 26px);
+    padding: 0;
+  }
+  @media (min-width: 768px) {
+    .btn-phone {
+      position: fixed;
+      top: 23px;
+      right: 0;
+      margin-right: 95px;
+      padding: 0 26px 0 44px;
+      width: auto;
+    }
+    .btn-rdv {
+      display: none;
+    }
+  }
+`
+
+export const Nav = styled.nav`
+  position: fixed;
+  width: 100vw;
+  height: 58px;
+  top: 0;
+  z-index: 9;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  transition: all .3s ease-out;
+  .overlay-mobile {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    content: '';
+    z-index: 10;
+    &.show {
+      visibility: visible;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    &.hide {
+      visibility: hidden;
+      background: rgba(0, 0, 0, 0);
+    }
+  }
+  &.scroll {
+    background: white;
+    box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.12);
+  }
+  &.bottomShadow {
+    box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.12);
+  }
+  .select {
+    position: relative;
+    top: 8px;
+    *:first-child {
+      border-top: none;
+    }
+    .icon {
+      * {
+        width: 15px;
+      }
+    }
+  }
+  .logo {
+    position: relative;
+    top: 8px;
+    float: left;
+    cursor: pointer;
+    * {
+      width: 163px;
+      height: 44px;
+    }
+  }
+  @media (min-width: 780px) {
+    height: 92px;
+    .logo {
+      top: 16px;
+      * {
+        width: 244px;
+        height: 66px;
+      }
+    }
+    .select {
+      top: 27px;
+    }
+  }
+`;
+
+export const Hero = styled.div`
+  position: relative;
+  top: -60px;
+  width: 100%;
+  height: 630px;
+  display: table;
+  background: url('/images/header-home.png');
+  background-position: 0% 0%;
+  background-size: cover;
+  z-index: 1;
+  .container {
+    position: absolute;
+    top: calc(50% - 30px);
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    max-width: 820px;
+    div {
+      width: 100%;
+    }
+  }
+  .btn {
+    position: relative;
+    margin: 0 auto;
+    display: table;
+    min-width: 270px;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  input[type="text"] {
+    position: relative;
+    padding: 0 14px;
+    font-size: 16px;
+    width: 100%;
+    height: 47px;
+    border-radius: 4px;
+    border: 1px solid white;
+    outline: 0;
+    user-select: none;
+    color: ${theme.grey100};
+    &.active, &:focus, &:hover {
+      border: 1px solid ${theme.black};
+      color: ${theme.black};
+      &::placeholder {
+        color: ${theme.black};
+      }
+    }
+  }
+  .icon {
+    position: absolute;
+    margin: 15px 0 0 -30px;
+  }
+  .row {
+    position: relative;
+    padding-top: 10px;
+    display: block;
+    grid-gap: 20px;
+    max-width: 720px;
+    width: 100%;
+  }
+  .col-2 {
+    height: 50px;
+    margin-top: -3px;
+    font-size: 26px;
+    color: ${theme.black};
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  @media (min-width: 780px) {
+    top: auto;
+    height: 640px;
+    input[type="text"] {
+      width: 395px;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .col-2 {
+      display: block;
+      margin-top: 3px;
+      color: white;
+    }
+  }
+`;

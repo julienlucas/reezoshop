@@ -16,7 +16,7 @@ export const withShop = ({ children, shop }) => (
 );
 
 withShop.getProps = ({ req }) => {
-   console.log('req.hostname', req.hostname);
+   // console.log('req.hostname', req.hostname);
 
    // Récupérer le subDomain
 
