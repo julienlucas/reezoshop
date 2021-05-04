@@ -19,7 +19,6 @@ const NavComp = (props) => {
   const [height, setHeight] = useState(null);
   const [overlayMobile, setOverlayMobile] = useState(false);
   const [selectedOption, setSelectedOption] = useState(props.nav[0]);
-  const [mobileMenu, setMobileMenu] = useState(true);
 
   const handleScroll = () => {
     setScroll(window.scrollY);
@@ -80,7 +79,7 @@ const NavComp = (props) => {
           />
         </div>
 
-        {router.pathname === '/recherche' && <input type="text" className="search" placeholder="Marque, Modèle" name="search"/>}
+        {router.pathname !== '/' && <input type="text" className="search" placeholder="Marque, Modèle" name="search"/>}
 
         <Mobile data={props} />
       </Nav>
@@ -241,6 +240,9 @@ export const Wrapper = styled.div`
     width: calc(50vw - 26px);
     padding: 0;
   }
+  input {
+    height: 42px;
+  }
   @media (min-width: 768px) {
     .btn-phone {
       position: fixed;
@@ -286,6 +288,7 @@ export const Nav = styled.nav`
     box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.12);
   }
   &.bottomShadow {
+    background: white;
     box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.12);
   }
   .select {

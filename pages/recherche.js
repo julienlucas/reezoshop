@@ -2,28 +2,58 @@ import Layout from '../components/Layout';
 import PropTypes from 'prop-types';
 import SearchWrapper from '../components/Search/SearchWrapper';
 import useShop from '../hooks/useShop';
+import useSWR from 'swr';
 
-function Search({ data, shop }) {
-  const shopFromContext = useShop();
-  console.log('shopFromContext', shopFromContext);
-  console.log(shop.subDomain);
-  console.log(shopFromContext.subDomain);
+const index = 12;
+
+const fetcher = async (path) => {
+  const res = await fetch(path, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+  })
+  return await res.json()
+}
+
+function Search(props) {
+  // const shopFromContext = useShop();
+  // console.log('shopFromContext', shopFromContext);
+  // console.log(shop.subDomain);
+  // console.log(shopFromContext.subDomain);
+
+  const initialData = props.data
+  // Intial Data servit SSR via API Next, ensuite data peut être changée dynamiquement (feature de useSWR ver. 0.1.10)
+  const { data } = useSWR([`http://localhost:3000/api/search?pages=${index}`], fetcher, { initialData })
+  const { head, nav } = props;
+
+  // console.log(data.ads.ads)
+
+  const loadMore = async (nbr) => {
+    console.log(nbr);
+    const res = await fetch([`http://localhost:3000/api/search?pages=${nbr}`], fetcher)
+    const data = await res.json()
+    console.log(data)
+  }
 
   return (
-    <Layout nav={data.nav} phone={data.head.phone} headline={data.head.headline}>
-      <SearchWrapper cars={data.cars} />
+    <Layout nav={nav} phone={head.phone}>
+      <SearchWrapper cars={data.ads.ads} loadMore={(nbr) => loadMore(nbr)} />
     </Layout>
   );
 };
 
 Search.getInitialProps = async ({ shop }) => {
-   const data = await mockData;
+  const head = await mockData.head;
+  const nav = await mockData.nav;
+  const data = await fetcher([`http://localhost:3000/api/search?pages=${index}`]);
 
-   return { data, shop };
-};
+  return { head, data, nav, shop }
+}
 
 Search.propTypes = {
-   data: PropTypes.object.isRequired,
+  //  data: PropTypes.object.isRequired,
    shop: PropTypes.object.isRequired
 };
 
@@ -51,347 +81,5 @@ const mockData = {
     phone: '0142536529',
     googleAvis: '891',
     googleNote: '4,2'
-  },
-  cars: {
-    'occasions': [
-      {
-        marque: 'Peugeot',
-        modele: '208 II GT Line',
-        complementInfos: 'couleur jaune avec GPS intégré',
-        photos: [
-          '/images/peugeot-1.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2020',
-        kilometrage: '27076',
-        prix: '24890',
-        neuf: false
-      },
-      {
-        marque: 'Porsche',
-        modele: 'Cayenne',
-        complementInfos: 'Turbo-Techart-640P Panorama-LED-NP204T',
-        photos: [
-          '/images/porsche.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2020',
-        kilometrage: '31076',
-        prix: '21890',
-        neuf: false
-      },
-      {
-        titre: 'Peugeot',
-        modele: '208 GT Line',
-        complementInfos: 'PureTech 130 S et EAT8 + To...',
-        photos: [
-          '/images/peugeot-2.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2020',
-        kilometrage: '31076',
-        prix: '21890',
-        neuf: false
-      },
-      {
-        marque: 'Peugeot',
-        modele: '208 II GT Line',
-        complementInfos: 'couleur jaune avec GPS intégré',
-        photos: [
-          '/images/peugeot-1.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2020',
-        kilometrage: '27076',
-        prix: '24890',
-        neuf: false
-      },
-      {
-        marque: 'Porsche',
-        modele: 'Cayenne',
-        complementInfos: 'Turbo-Techart-640P Panorama-LED-NP204T',
-        photos: [
-          '/images/porsche.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2020',
-        kilometrage: '31076',
-        prix: '21890',
-        neuf: false
-      },
-      {
-        titre: 'Peugeot',
-        modele: '208 GT Line',
-        complementInfos: 'PureTech 130 S et EAT8 + To...',
-        photos: [
-          '/images/peugeot-2.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2020',
-        kilometrage: '31076',
-        prix: '21890',
-        neuf: false
-      },
-      {
-        marque: 'Peugeot',
-        modele: '208 II GT Line',
-        complementInfos: 'couleur jaune avec GPS intégré',
-        photos: [
-          '/images/peugeot-1.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2020',
-        kilometrage: '27076',
-        prix: '24890',
-        neuf: false
-      },
-      {
-        marque: 'Porsche',
-        modele: 'Cayenne',
-        complementInfos: 'Turbo-Techart-640P Panorama-LED-NP204T',
-        photos: [
-          '/images/porsche.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2020',
-        kilometrage: '31076',
-        prix: '21890',
-        neuf: false
-      },
-      {
-        titre: 'Peugeot',
-        modele: '208 GT Line',
-        complementInfos: 'PureTech 130 S et EAT8 + To...',
-        photos: [
-          '/images/peugeot-2.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2020',
-        kilometrage: '31076',
-        prix: '21890',
-        neuf: false
-      },
-      {
-        marque: 'Peugeot',
-        modele: '208 II GT Line',
-        complementInfos: 'couleur jaune avec GPS intégré',
-        photos: [
-          '/images/peugeot-1.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2020',
-        kilometrage: '27076',
-        prix: '24890',
-        neuf: false
-      },
-      {
-        marque: 'Porsche',
-        modele: 'Cayenne',
-        complementInfos: 'Turbo-Techart-640P Panorama-LED-NP204T',
-        photos: [
-          '/images/porsche.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2020',
-        kilometrage: '31076',
-        prix: '21890',
-        neuf: false
-      },
-      {
-        titre: 'Peugeot',
-        modele: '208 GT Line',
-        complementInfos: 'PureTech 130 S et EAT8 + To...',
-        photos: [
-          '/images/peugeot-2.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2020',
-        kilometrage: '31076',
-        prix: '21890',
-        neuf: false
-      },
-      {
-        marque: 'Peugeot',
-        modele: '208 II GT Line',
-        complementInfos: 'couleur jaune avec GPS intégré',
-        photos: [
-          '/images/peugeot-1.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2020',
-        kilometrage: '27076',
-        prix: '24890',
-        neuf: false
-      },
-      {
-        marque: 'Porsche',
-        modele: 'Cayenne',
-        complementInfos: 'Turbo-Techart-640P Panorama-LED-NP204T',
-        photos: [
-          '/images/porsche.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2020',
-        kilometrage: '31076',
-        prix: '21890',
-        neuf: false
-      },
-      {
-        titre: 'Peugeot',
-        modele: '208 GT Line',
-        complementInfos: 'PureTech 130 S et EAT8 + To...',
-        photos: [
-          '/images/peugeot-2.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2020',
-        kilometrage: '31076',
-        prix: '21890',
-        neuf: false
-      },
-      {
-        marque: 'Peugeot',
-        modele: '208 II GT Line',
-        complementInfos: 'couleur jaune avec GPS intégré',
-        photos: [
-          '/images/peugeot-1.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2020',
-        kilometrage: '27076',
-        prix: '24890',
-        neuf: false
-      },
-      {
-        marque: 'Porsche',
-        modele: 'Cayenne',
-        complementInfos: 'Turbo-Techart-640P Panorama-LED-NP204T',
-        photos: [
-          '/images/porsche.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2020',
-        kilometrage: '31076',
-        prix: '21890',
-        neuf: false
-      },
-      {
-        titre: 'Peugeot',
-        modele: '208 GT Line',
-        complementInfos: 'PureTech 130 S et EAT8 + To...',
-        photos: [
-          '/images/peugeot-2.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2020',
-        kilometrage: '31076',
-        prix: '21890',
-        neuf: false
-      },
-      {
-        marque: 'Peugeot',
-        modele: '208 II GT Line',
-        complementInfos: 'couleur jaune avec GPS intégré',
-        photos: [
-          '/images/peugeot-1.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2020',
-        kilometrage: '27076',
-        prix: '24890',
-        neuf: false
-      },
-      {
-        marque: 'Porsche',
-        modele: 'Cayenne',
-        complementInfos: 'Turbo-Techart-640P Panorama-LED-NP204T',
-        photos: [
-          '/images/porsche.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2020',
-        kilometrage: '31076',
-        prix: '21890',
-        neuf: false
-      },
-      {
-        titre: 'Peugeot',
-        modele: '208 GT Line',
-        complementInfos: 'PureTech 130 S et EAT8 + To...',
-        photos: [
-          '/images/peugeot-2.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2020',
-        kilometrage: '31076',
-        prix: '21890',
-        neuf: false
-      }
-    ],
-    'neufs': [
-      {
-        titre: 'Land Rover',
-        modele: 'Range Rover',
-        complementInfos: 'Evoque 2010 blanche TDI',
-        photos: [
-          '/images/land-rover-evoque-1.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2010',
-        kilometrage: '31076',
-        prix: '22340',
-        neuf: true
-      },
-      {
-        titre: 'Land Rover',
-        modele: 'Range Rover',
-        complementInfos: 'Evoque 2020 Noir + GPS + Bluetootk',
-        photos: [
-          '/images/land-rover-evoque-2.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2010',
-        kilometrage: '43076',
-        prix: '34340',
-        neuf: true
-      },
-      {
-        titre: 'Land Rover',
-        modele: 'Range Rover',
-        complementInfos: 'Evoque 2010 blanche TDI',
-        photos: [
-          '/images/land-rover-evoque-3.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2010',
-        kilometrage: '54076',
-        prix: '32120',
-        neuf: true
-      }
-    ]
   }
 };

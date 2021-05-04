@@ -24,10 +24,10 @@ export const Aside = styled.aside`
       font-size: 18px;
       font-weight: 700;
       margin-bottom: 30px;
-      float: left;
    }
    .btn-reset {
-      padding-top: 2px;
+      position: relative;
+      top: -50px;
       font-size: 14px;
       text-align: right;
       float: right;

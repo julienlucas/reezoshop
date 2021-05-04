@@ -1,60 +1,41 @@
 import Image from 'next/image';
-import Select from 'react-select';
+import PropTypes from 'prop-types';
 import { Aside } from './styles';
+import Select from '../Select';
 import React, { useState } from 'react';
 
 function SearchAside() {
-  const [filters, setFilters] = useState('');
+  const [filters, setFilters] = useState({});
 
   const resetFilters = () => {
-
+    setFilters('')
   };
 
-  const onChange = e => {
-
-    // setFilters({
-    //   ...filters,
-    //   [name]: value
-    // })
+  const onChange = (name, option) => {
+    setFilters({
+      ...filters,
+      [name]: option
+    })
   };
+
+  const onReset = filters === '' ? true : false;
 
   return (
     <Aside>
       <div className="wrapper-filters">
         <form>
-          <h3>Filtres</h3>
-          <p className="btn-reset" onClick={(e) => resetFilters()}>Réinitialiser les filtres</p>
+          <div classNale="row">
+            <h3>Filtres</h3>
+            <p className="btn-reset" onClick={resetFilters}>Réinitialiser les filtres</p>
+          </div>
 
           <Select
-            className="select"
-            instanceId={String}
-            placeholder="Meilleures réductions"
-            options={nav}
-            styles={customStyles}
-            components={{ DropdownIndicator:() => null, IndicatorSeparator:() => null }}
-            onChange={onChange}
+            name="types-vehicules"
+            options={typesVehicules}
+            placeholder="Type de véhicules"
+            onChange={(name, option) => onChange(name, option)}
+            onReset={onReset}
           />
-
-          <select name="marques" onChange={onChange}>
-            <option selected disabled>Marques</option>
-            <option value="1">Peugeot</option>
-            <option value="2">Renault</option>
-            <option value="3">Porsche</option>
-          </select>
-
-          <select name="modèles" onChange={onChange}>
-            <option selected disabled>Modèles</option>
-            <option value="1">Peugeot</option>
-            <option value="2">Renault</option>
-            <option value="3">Porsche</option>
-          </select>
-
-          <select name="marques" onChange={onChange}>
-            <option selected disabled>Type de véhicule</option>
-            <option value="1">Peugeot</option>
-            <option value="2">Renault</option>
-            <option value="3">Porsche</option>
-          </select>
 
           <div className="row">
             <div>
@@ -72,33 +53,33 @@ function SearchAside() {
             <div className="box-input-number"><input type="number" name="prix-max" placeholder="Prix max" /></div>
           </div>
 
-          <select name="marques">
-            <option selected disabled>Énergie</option>
-            <option value="1">Peugeot</option>
-            <option value="2">Renault</option>
-            <option value="3">Porsche</option>
-          </select>
+          <Select
+            options={energies}
+            placeholder="Énergie"
+            onChange={onChange}
+            onReset={onReset}
+          />
 
-          <select name="marques">
-            <option selected disabled>Transmission</option>
-            <option value="1">Peugeot</option>
-            <option value="2">Renault</option>
-            <option value="3">Porsche</option>
-          </select>
+          <Select
+            options={transmissions}
+            placeholder="Tranmission"
+            onChange={onChange}
+            onReset={onReset}
+          />
 
-          <select name="marques">
-            <option selected disabled>Nombre de portes</option>
-            <option value="1">Peugeot</option>
-            <option value="2">Renault</option>
-            <option value="3">Porsche</option>
-          </select>
+          <Select
+            options={nbrPortes}
+            placeholder="Nombre de portes"
+            onChange={onChange}
+            onReset={onReset}
+          />
 
-          <select name="marques">
-            <option selected disabled>Couleur extérieur</option>
-            <option value="1">Peugeot</option>
-            <option value="2">Renault</option>
-            <option value="3">Porsche</option>
-          </select>
+          <Select
+            options={couleurs}
+            placeholder="Couleur extérieure"
+            onChange={onChange}
+            onReset={onReset}
+          />
         </form>
       </div>
 
@@ -122,56 +103,32 @@ function SearchAside() {
 
 export default SearchAside;
 
-const nav = [
-  { value: 'Lille', label: 'Agence Boulogne-Billacourt' },
-  { value: 'Bordeaux', label: 'Agence Bordeaux' },
-  { value: 'Marseille', label: 'Agence Marseille' }
+const typesVehicules = [
+  { value: 'Berline', label: 'Berline' },
+  { value: 'Citadine', label: 'Citadine' },
+  { value: '4 x 4', label: '4 x 4' },
+  { value: 'Sport', label: 'Sport' }
 ];
 
-// React Select : Styles
-const customStyles = {
-  option: (styles, state) => ({
-    ...styles,
-    fontSize: '16px',
-    borderTop: '1px solid #C1C1C1',
-    background: state.isSelected ? 'white' : 'white',
-    color: '#313131',
-    cursor: 'pointer',
-    "&:focus": {
-      background: 'white'
-    },
-    "&:hover": {
-      background: 'white'
-    },
-    "&:active": {
-      background: 'white'
-    }
-  }),
-  singleValue: styles => ({
-    ...styles
-  }),
-  control: styles => ({
-    ...styles,
-    marginBottom: '20px',
-    width: '100%',
-    fontSize: '14px',
-    padding: '0',
-    height: '31px',
-    color: '#313131',
-    border: '1px solid #C4C4C4',
-    boxShadow: 'none',
-    background: 'white url("/icons/arrow-bottom-light.svg") no-repeat',
-    backgroundPosition: 'calc(100% - 10px) 50%',
-    backgroundSize: '13px',
-    cursor: 'pointer',
-  }),
-  menu: styles => ({
-    ...styles,
-    position: 'absolute',
-    border: 'none',
-    boxShadow: '1px 2px 13px rgba(0, 0, 0, 0.15)',
-    width: '100%',
-    borderRadius: '4px',
-    zIndex: '10'
-  })
-};
+const energies = [
+  { value: 'Essence', label: 'Essence' },
+  { value: 'Diesel', label: 'Diesel' },
+  { value: 'Electrique', label: 'Electrique' },
+  { value: 'Hydrogène', label: 'Hydrogène' },
+  { value: 'Ethanol', label: 'Ethanol' }
+];
+
+const transmissions = [
+  { value: '5 vitèsses', label: '5 vitèsses' },
+  { value: 'Automatique', label: 'Automatique' }
+];
+
+const nbrPortes = [
+  { value: '3 portes', label: '3 portes' },
+  { value: '5 portes', label: '5 portes' }
+];
+
+const couleurs = [
+  { value: 'Bleu', label: 'Bleu' },
+  { value: 'Rouge', label: 'Rouge' }
+];

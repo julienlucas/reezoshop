@@ -43,6 +43,12 @@ export const FooterComp = styled.footer`
   .col-3 {
     margin-top: 45px;
   }
+  br {
+    display: block;
+    margin: 7px 0;
+    line-height:22px;
+    content: '';
+  }
   .logo {
     position: relative;
     margin: 0 auto;

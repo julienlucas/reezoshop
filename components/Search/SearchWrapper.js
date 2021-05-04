@@ -1,13 +1,13 @@
-import Aside from './SearchAside';
-import Results from './SearchResults';
+import SearchAside from './SearchAside';
+import SearchResults from './SearchResults';
 import { Wrapper } from './styles';
 
-function SearchWrapper({ cars }) {
+function SearchWrapper({ cars, loadMore }) {
   return (
     <Wrapper>
       <div className="container">
-        <Aside />
-        <Results cars={cars} />
+        <SearchAside />
+        <SearchResults cars={cars} loadMore={(nbr) => loadMore(nbr)} />
       </div>
     </Wrapper>
   );

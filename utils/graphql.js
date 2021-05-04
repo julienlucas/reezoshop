@@ -1,11 +1,10 @@
 import configs from '../configs';
 
 import { __TEST__ } from '../constants/env';
-
-const { graphqlEndpoint, graphqlStaticEndpoint } = configs;
+// const { graphqlEndpoint, graphqlStaticEndpoint } = configs;
 
 const graphQLQuery = (query, variables = {}, { headers: additionalHeaders, ...options } = {}) => {
-   const endpoint = staticEndpoint ? graphqlStaticEndpoint : graphqlEndpoint;
+   // const endpoint = staticEndpoint ? graphqlStaticEndpoint : graphqlEndpoint;
    const body = JSON.stringify({ query, variables });
    const headers = {
       'Content-Type': 'application/json',
@@ -13,7 +12,7 @@ const graphQLQuery = (query, variables = {}, { headers: additionalHeaders, ...op
       ...additionalHeaders,
    };
 
-   return fetch(endpoint, {
+   return fetch('https://gql-rc.front-uat.reezocar.com/graphql', {
       method: 'POST',
       headers,
       ...options,

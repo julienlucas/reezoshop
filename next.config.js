@@ -5,6 +5,9 @@ module.exports = {
       CONF_ENV: process.env.CONF_ENV,
       N_ENV: process.env.NODE_ENV,
    },
+   images: {
+      domains: ['pict1.reezocar.com']
+   },
    trailingSlash: true,
 
    // webpack: (config) => {

@@ -36,7 +36,8 @@ export const GlobalStyles = createGlobalStyle`
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
-    ${''/* Container central */}
+
+    ${''/* Container central & lists */}
     .container {
       position: relative;
       margin: 0 auto;
@@ -45,6 +46,11 @@ export const GlobalStyles = createGlobalStyle`
       display: table;
       padding: 0 20px;
     }
+    ul, ol {
+      padding: 0;
+      margin: 0;
+    }
+
     ${''/* Typos */}
     .text-center {
       text-align: center;
@@ -127,6 +133,7 @@ export const GlobalStyles = createGlobalStyle`
         }
       }
       &.btn-tertiary {
+        font-size: 14px;
         margin-top: 8px;
         width: 100%;
         padding: 0;
@@ -159,10 +166,16 @@ export const GlobalStyles = createGlobalStyle`
     .box-input-number {
       &::before {
         position: absolute;
-        margin: 7px 0 0 110px;
+        margin: 9px 0 0 110px;
         color: ${theme.black};
         content: '€';
-        z-index: 3
+        z-index: 1;
+      }
+      &.mois::before {
+        content: 'Mois';
+      }
+      &.kilometres::before {
+        content: 'Kms';
       }
     }
     input {
@@ -226,6 +239,7 @@ export const GlobalStyles = createGlobalStyle`
       box-shadow: none;
       appearance: none;
     }
+
     ${''/* React Select Fix, sinon bug input */}
     .select {
       input[type="text"] {
@@ -236,6 +250,7 @@ export const GlobalStyles = createGlobalStyle`
         line-height: 1;
       }
     }
+
     ${''/* React Tabs */}
     .react-tabs {
       -webkit-tap-highlight-color: transparent;

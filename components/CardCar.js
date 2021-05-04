@@ -23,26 +23,26 @@ function CardCar({ data }) {
 
             <Link href="/">
                <a>
-                  <NextImageLazy
-                     src={data.photos && data.photos[0]}
+                  {/* <NextImageLazy
+                     src={data.oneImage && data.oneImage[0]}
                      width={367}
                      height={205}
                      layout="responsive"
                      alt=""
-                  />
+                  /> */}
                </a>
             </Link>
          </div>
          <div className="box-text">
             <h3>
                <Link href="/">
-                  <a>{data.marque && data.marque} {data.modele && data.modele} {data.complementInfos && data.complementInfos}</a>
+                  <a>{data.brand && data.brand} {data.model && data.model}</a>
                </Link>
             </h3>
-            <p className="description">{data.boite && data.boite + ' ·'} {data.energie && data.energie + ' ·'} {data.annee && data.annee + ' ·'} {data.kilometrage && numberFormat(data.kilometrage) + ' km'}</p>
-            {router.pathname !== '/' && <button className="btn btn-neuf-occas">Neuf /0km</button>}
-            <p className="prix">{data.prix && numberFormat(data.prix)} €</p>
-            {router.pathname !== '/' && <p className="prix-barre">{data.prix && numberFormat(data.prix)} €</p>}
+            <p className="description">{data.gearbox && data.gearbox + ' ·'} {data.energy && data.energy + ' ·'} {data.year && data.year + ' ·'} {data.mileage && numberFormat(data.mileage) + ' km'}</p>
+            {router.pathname !== '/' && data.isNew && <button className="btn btn-neuf-occas">Neuf /0km</button>}
+            <p className="prix">{data.price && numberFormat(data.price)} €</p>
+            {router.pathname !== '/' && <p className="prix-barre">{data.price && numberFormat(data.price)} €</p>}
          </div>
       </Card>
    );
@@ -126,7 +126,8 @@ export const Card = styled.div`
          padding: 5px 0;
          font-size: 14px;
          font-weight: 600;
-         color: ${theme.grey100}
+         color: ${theme.grey100};
+         text-transform: capitalize;
       }
       .prix {
          font-size: 26px;
