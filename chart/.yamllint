@@ -1,0 +1,17 @@
+extends: default
+rules:
+  braces:
+    min-spaces-inside: 0
+    max-spaces-inside: 1
+    level: error
+  line-length:
+    max: 120
+    level: warning
+  truthy: enable
+  comments-indentation: {}
+  indentation:
+    spaces: 2
+    indent-sequences: whatever
+    check-multi-line-strings: false
+  hyphens:
+    max-spaces-after: 1

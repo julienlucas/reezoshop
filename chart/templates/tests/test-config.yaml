@@ -1,0 +1,35 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "rzc-chart-reezoshop.fullname" . }}-test
+data:
+  run.sh: |-
+    function fail {
+      echo $1 >&2
+      exit 1
+    }
+    function retry {
+      local n=1
+      local max=150
+      local delay=3
+      while true; do
+        "$@" && break || {
+          if [[ $n -lt $max ]]; then
+            ((n++))
+            echo "Command failed. Attempt $n/$max:"
+            sleep $delay;
+          else
+            fail "The command has failed after $n attempts."
+          fi
+        }
+      done
+    }
+
+    @test "Testing rzc-chart-reezoshop Server URL" {
+      run retry curl -s --fail --max-time 5 --request GET http://{{ include "rzc-chart-reezoshop.fullname" . }}.{{ .Release.Namespace }}:{{ .Values.service.port }}/
+      echo "command = retry curl -s --fail --max-time 5 --request GET http://{{ include "rzc-chart-reezoshop.fullname" . }}.{{ .Release.Namespace }}:{{ .Values.service.port }}/"
+      echo "status = ${status}"
+      echo "output = ${output}"
+      [ "$status" -eq 0 ]
+    }
