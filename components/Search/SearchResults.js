@@ -3,12 +3,12 @@ import Select from 'react-select';
 import React, { useState } from 'react';
 import { Results } from './styles';
 
-function SearchResults({ cars, loadMore }) {
+function SearchResults({ cars, onLoadMore }) {
   const [nbrCars, setNbrCars] = useState(12);
 
-  const onLoadMore = async () => {
-    setNbrCars((nbrCars) => nbrCars + 12);
-    loadMore(24);
+  const loadMore = () => {
+    setNbrCars((prevState) => prevState + 12);
+    onLoadMore(nbrCars);
   };
 
   return (
@@ -25,12 +25,12 @@ function SearchResults({ cars, loadMore }) {
       />
 
       <div className="row">
-        {cars?.slice(0, nbrCars).map((car, i) => <CardCar key={car + i + 'occasion'} data={car} />)}
+        {cars?.map((car, i) => <CardCar key={car + i + 'occasion'} data={car} />)}
       </div>
 
       <div className="row">
         <div/>
-        <button className="btn btn-tertiary" onClick={onLoadMore}>Voir plus de véhiculesssss</button>
+        <button className="btn btn-tertiary" onClick={loadMore}>Voir plus de véhicules</button>
         <div/>
       </div>
     </Results>

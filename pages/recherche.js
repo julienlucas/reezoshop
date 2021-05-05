@@ -1,55 +1,62 @@
+import fetcher from '../utils/fetcher';
 import Layout from '../components/Layout';
 import PropTypes from 'prop-types';
 import SearchWrapper from '../components/Search/SearchWrapper';
 import useShop from '../hooks/useShop';
 import useSWR from 'swr';
-
-const index = 12;
-
-const fetcher = async (path) => {
-  const res = await fetch(path, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
-  })
-  return await res.json()
-}
+import React, { useEffect, useState } from 'react';
 
 function Search(props) {
+    const [cars, setCars] = useState([]);
   // const shopFromContext = useShop();
   // console.log('shopFromContext', shopFromContext);
   // console.log(shop.subDomain);
   // console.log(shopFromContext.subDomain);
 
   const initialData = props.data
-  // Intial Data servit SSR via API Next, ensuite data peut être changée dynamiquement (feature de useSWR ver. 0.1.10)
-  const { data } = useSWR([`http://localhost:3000/api/search?pages=${index}`], fetcher, { initialData })
+  // Intial Data servit SSR par l'API Next, ensuite la data peut être changée dynamiquement (feature de useSWR ver. 0.1.10, hook crée par Vercel/Next)
+  const { data } = useSWR([`http://localhost:3000/api/search?size=${nbrCars}`], fetcher, { initialData })
   const { head, nav } = props;
 
-  // console.log(data.ads.ads)
+  const onLoadMore = async nbrCars => {
+    const res = await fetch([`http://localhost:3000/api/search?size=${nbrCars}`], fetcher);
+    const updatedData = await res.json();
+    setCars(updatedData.ads.ads);
+  };
 
-  const loadMore = async (nbr) => {
-    console.log(nbr);
-    const res = await fetch([`http://localhost:3000/api/search?pages=${nbr}`], fetcher)
-    const data = await res.json()
-    console.log(data)
+  const onSearch = async filters => {
+    // filters.size = 12;
+    // var query = Object.keys(filters).map(key => key + '=' + filters[key]).join('&');
+    // const res = await fetch([`http://localhost:3000/api/search?${query}`], fetcher);
+    // const updatedData = await res.json();
+    // setCars(updatedData.ads.ads);
+    // console.log(filters)
   }
+
+  useEffect(() => {
+    setCars(data.ads.ads)
+  }, [props])
 
   return (
     <Layout nav={nav} phone={head.phone}>
-      <SearchWrapper cars={data.ads.ads} loadMore={(nbr) => loadMore(nbr)} />
+      <SearchWrapper cars={cars} onLoadMore={nbrCars => onLoadMore(nbrCars)} onSearch={filters => onSearch(filters)} />
     </Layout>
   );
 };
 
-Search.getInitialProps = async ({ shop }) => {
+export async function getServerSideProps({ shop }) {
   const head = await mockData.head;
   const nav = await mockData.nav;
-  const data = await fetcher([`http://localhost:3000/api/search?pages=${index}`]);
+  const data = await fetcher([`http://localhost:3000/api/search?size=${nbrCars}`]);
 
-  return { head, data, nav, shop }
+  return {
+    props: {
+      head,
+      data,
+      nav,
+      shop: null
+    }
+  }
 }
 
 Search.propTypes = {
@@ -58,6 +65,8 @@ Search.propTypes = {
 };
 
 export default Search;
+
+const nbrCars = 12;
 
 const mockData = {
   nav: [

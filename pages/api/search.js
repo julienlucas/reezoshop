@@ -4,7 +4,7 @@ export default async (req, res) => {
    try {
       const query = `query getAds{
         ads(queryParams: {
-          size: ${req.query.pages}
+          size: ${req.query.size}
         }){
           count
           ads {

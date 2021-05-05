@@ -28,9 +28,7 @@ export const GlobalStyles = createGlobalStyle`
       overflow-x: hidden;
     }
     * {
-      font-family: Source Sans Pro, BlinkMacSystemFont, Segoe UI, Roboto,
-        Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-        sans-serif;
+      font-family: Source Sans Pro, Helvetica Neue, sans-serif;
       box-sizing: border-box;
       transition: all .15s ease-out;
       -webkit-font-smoothing: antialiased;

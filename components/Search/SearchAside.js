@@ -1,37 +1,42 @@
 import Image from 'next/image';
 import PropTypes from 'prop-types';
 import { Aside } from './styles';
+import { categories, colorsExt, doors, energies, gearboxes } from '../../constants/search';
 import Select from '../Select';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-function SearchAside() {
+function SearchAside({ onSearch }) {
   const [filters, setFilters] = useState({});
 
   const resetFilters = () => {
     setFilters('')
   };
 
+  const onReset = filters === '' ? true : false;
+
   const onChange = (name, option) => {
     setFilters({
       ...filters,
       [name]: option
-    })
+    });
   };
 
-  const onReset = filters === '' ? true : false;
+  useEffect(() => {
+    onSearch(filters);
+  }, [filters])
 
   return (
     <Aside>
       <div className="wrapper-filters">
         <form>
-          <div classNale="row">
+          <div className="row">
             <h3>Filtres</h3>
             <p className="btn-reset" onClick={resetFilters}>Réinitialiser les filtres</p>
           </div>
 
           <Select
-            name="types-vehicules"
-            options={typesVehicules}
+            name="categories"
+            options={categories}
             placeholder="Type de véhicules"
             onChange={(name, option) => onChange(name, option)}
             onReset={onReset}
@@ -40,11 +45,11 @@ function SearchAside() {
           <div className="row">
             <div>
               <input type="checkbox" className="checkbox" name="neuf" id="neuf" />
-              <label for="neuf">Neuf / 0km</label>
+              <label htmlFor="neuf">Neuf / 0km</label>
             </div>
             <div>
               <input type="checkbox" className="checkbox" name="occasion" id="occasion" />
-              <label for="occasion">Occasion</label>
+              <label htmlFor="occasion">Occasion</label>
             </div>
           </div>
 
@@ -54,6 +59,7 @@ function SearchAside() {
           </div>
 
           <Select
+            name="energies"
             options={energies}
             placeholder="Énergie"
             onChange={onChange}
@@ -61,21 +67,24 @@ function SearchAside() {
           />
 
           <Select
-            options={transmissions}
+            name="gearboxes"
+            options={gearboxes}
             placeholder="Tranmission"
             onChange={onChange}
             onReset={onReset}
           />
 
           <Select
-            options={nbrPortes}
+            name="doors"
+            options={doors}
             placeholder="Nombre de portes"
             onChange={onChange}
             onReset={onReset}
           />
 
           <Select
-            options={couleurs}
+            name="colorsExt"
+            options={colorsExt}
             placeholder="Couleur extérieure"
             onChange={onChange}
             onReset={onReset}
@@ -102,33 +111,3 @@ function SearchAside() {
 };
 
 export default SearchAside;
-
-const typesVehicules = [
-  { value: 'Berline', label: 'Berline' },
-  { value: 'Citadine', label: 'Citadine' },
-  { value: '4 x 4', label: '4 x 4' },
-  { value: 'Sport', label: 'Sport' }
-];
-
-const energies = [
-  { value: 'Essence', label: 'Essence' },
-  { value: 'Diesel', label: 'Diesel' },
-  { value: 'Electrique', label: 'Electrique' },
-  { value: 'Hydrogène', label: 'Hydrogène' },
-  { value: 'Ethanol', label: 'Ethanol' }
-];
-
-const transmissions = [
-  { value: '5 vitèsses', label: '5 vitèsses' },
-  { value: 'Automatique', label: 'Automatique' }
-];
-
-const nbrPortes = [
-  { value: '3 portes', label: '3 portes' },
-  { value: '5 portes', label: '5 portes' }
-];
-
-const couleurs = [
-  { value: 'Bleu', label: 'Bleu' },
-  { value: 'Rouge', label: 'Rouge' }
-];

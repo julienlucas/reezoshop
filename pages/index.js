@@ -10,10 +10,10 @@ import FAQS from '../components/Home/FAQS';
 import useShop from '../hooks/useShop';
 
 function HomePage({ data, shop }) {
-  const shopFromContext = useShop();
-  console.log('shopFromContext', shopFromContext);
-  console.log(shop.subDomain);
-  console.log(shopFromContext.subDomain);
+  // const shopFromContext = useShop();
+  // console.log('shopFromContext', shopFromContext);
+  // console.log(shop.subDomain);
+  // console.log(shopFromContext.subDomain);
 
   return (
     <Layout nav={data.nav} phone={data.head.phone} headline={data.head.headline} home>
@@ -28,11 +28,16 @@ function HomePage({ data, shop }) {
   );
 };
 
-HomePage.getInitialProps = async ({ shop }) => {
-   const data = await mockData;
+export async function getServerSideProps({ shop }) {
+  const data = await mockData;
 
-   return { data, shop };
-};
+  return {
+    props: {
+      data,
+      shop: null
+    }
+  }
+}
 
 HomePage.propTypes = {
    data: PropTypes.object.isRequired,

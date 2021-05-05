@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import { theme } from '../constants/theme';
 
-function Select({ name, onChange, options, placeholder, onReset }) {
+function Select({ name, onChange, onReset, options, placeholder }) {
    const [state, setState] = useState({
       selected: null,
       opened: false
@@ -33,12 +33,12 @@ function Select({ name, onChange, options, placeholder, onReset }) {
    }, [onReset])
 
    const getOptions = () => {
-      return options.map(o => <Option key={o.label} option={o} onSelect={onSelect} />);
+      return options.map(o => <Option key={o} option={o} onSelect={onSelect} />);
    };
 
    return (
       <SelectMenu onClick={onOpen} className="select">
-         <span>{state.selected ? state.selected.value : placeholder}</span>
+         <span>{state.selected ? state.selected : placeholder}</span>
          <ul className={state.opened ? 'show': 'hide'}>{getOptions()}</ul>
       </SelectMenu>
    );
@@ -53,7 +53,7 @@ function Option (props) {
    }
 
    return (
-      <li onClick={onSelect}>{props.option.value}</li>
+      <li onClick={onSelect}>{props.option}</li>
    );
 };
 
@@ -83,6 +83,7 @@ export const SelectMenu = styled.div`
    cursor: pointer;
    * {
       cursor: pointer;
+      text-transform: capitalize;
    }
    ul {
       position: absolute;

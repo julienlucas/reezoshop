@@ -23,13 +23,13 @@ function CardCar({ data }) {
 
             <Link href="/">
                <a>
-                  {/* <NextImageLazy
-                     src={data.oneImage && data.oneImage[0]}
+                  <NextImageLazy
+                     src={'https://picsum.photos/480/270'}
                      width={367}
                      height={205}
                      layout="responsive"
                      alt=""
-                  /> */}
+                  />
                </a>
             </Link>
          </div>

@@ -27,7 +27,8 @@ export const Aside = styled.aside`
    }
    .btn-reset {
       position: relative;
-      top: -50px;
+      height: 20px;
+      margin-top: 2px;
       font-size: 14px;
       text-align: right;
       float: right;

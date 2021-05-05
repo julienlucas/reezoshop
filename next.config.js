@@ -6,7 +6,7 @@ module.exports = {
       N_ENV: process.env.NODE_ENV,
    },
    images: {
-      domains: ['pict1.reezocar.com']
+      domains: ['pict1.reezocar.com', 'picsum.photos']
    },
    trailingSlash: true,
 
