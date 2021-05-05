@@ -1,5 +1,6 @@
 import GoogleMapReact from 'google-map-react';
 import BoxGoogleRating from '../BoxGoogleRating';
+import MarkerIcon from '../../svgs/marker-b.svg';
 import React, { useState, useEffect } from 'react';
 import { SectionDComp } from './styles';
 
@@ -55,6 +56,12 @@ function GoogleMap({ data, tab }) {
         draggable={false}
         onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
       >
+
+      <MarkerIcon
+        className="marker"
+        lat={center.lat}
+        lng={center.lng}
+      />
 
       <div className="wrapper">
         <div className="container">
