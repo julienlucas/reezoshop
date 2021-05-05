@@ -19,7 +19,6 @@ const NavComp = (props) => {
   const [height, setHeight] = useState(null);
   const [overlayMobile, setOverlayMobile] = useState(false);
   const [selectedOption, setSelectedOption] = useState(props.nav[0]);
-  const [mobileMenu, setMobileMenu] = useState(true);
 
   const handleScroll = () => {
     setScroll(window.scrollY);
@@ -173,6 +172,7 @@ const customStyles = {
     borderTop: '1px solid #C1C1C1',
     background: state.isSelected ? 'white' : 'white',
     color: '#313131',
+    textTransform: 'Capitalize',
     cursor: 'pointer',
     "&:focus": {
       background: 'white'
@@ -197,6 +197,7 @@ const customStyles = {
     border: 'none',
     boxShadow: 'none',
     background: 'transparent',
+    textTransform: 'Capitalize',
     cursor: 'pointer',
   }),
   menu: styles => ({
@@ -208,6 +209,7 @@ const customStyles = {
     boxShadow: '1px 2px 13px rgba(0, 0, 0, 0.15)',
     width: '240px',
     borderRadius: '4px',
+    textTransform: 'Capitalize',
     zIndex: '10'
   })
 };

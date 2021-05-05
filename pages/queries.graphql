@@ -1,0 +1,23 @@
+query getAds {
+   ads(queryParams: {
+      size: 12
+   }){
+   count
+   ads {
+      _id
+      brand
+      colors { ext }
+      energy
+      gearbox
+      images
+      isNew
+      mileage
+      model
+      oneImage:images(count: 1, width: W320)
+      price
+      prices { originalPrice: originalCommercializationPrice, percentage }
+      thumbs:images(width: W320)
+      year
+   }
+   }
+}

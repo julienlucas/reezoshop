@@ -5,11 +5,11 @@ import styled from 'styled-components';
 import { theme } from '../constants/theme';
 import { useRouter } from 'next/router';
 
-const CardCar = ({ data }) => {
+function CardCar({ brand, energy, gearbox, model, mileage, price, thumbnail, year }) {
    const router = useRouter();
 
    // Ajout d'un espace tous les 3 chiffres
-   const numberFormat = (num) => {
+   const numberFormat = num => {
       return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
    };
 
@@ -24,7 +24,7 @@ const CardCar = ({ data }) => {
             <Link href="/">
                <a>
                   <NextImageLazy
-                     src={data.photos && data.photos[0]}
+                     src={'https://picsum.photos/480/270'}
                      width={367}
                      height={205}
                      layout="responsive"
@@ -36,20 +36,27 @@ const CardCar = ({ data }) => {
          <div className="box-text">
             <h3>
                <Link href="/">
-                  <a>{data.marque && data.marque} {data.modele && data.modele}</a>
+                  <a>{brand && brand} {model && model}</a>
                </Link>
             </h3>
-            <p className="description">{data.boite && data.boite + ' ·'} {data.energie && data.energie + ' ·'} {data.annee && data.annee + ' ·'} {data.kilometrage && numberFormat(data.kilometrage) + ' km'}</p>
+            <p className="description">{gearbox && gearbox + ' ·'} {energy && energy + ' ·'} {year && year + ' ·'} {mileage && numberFormat(mileage) + ' km'}</p>
             {router.pathname !== '/' && <button className="btn btn-neuf-occas">Neuf /0km</button>}
-            <p className="prix">{data.prix && numberFormat(data.prix)} €</p>
-            {router.pathname !== '/' && <p className="prix-barre">{data.prix && numberFormat(data.prix)} €</p>}
+            <p className="prix">{price && numberFormat(price)} €</p>
+            {router.pathname !== '/' && <p className="prix-barre">{price && numberFormat(price)} €</p>}
          </div>
       </Card>
    );
 };
 
 CardCar.propTypes = {
-   data: PropTypes.Object
+   brand: PropTypes.string,
+   energy: PropTypes.string,
+   gearbox: PropTypes.string,
+   model: PropTypes.string,
+   mileage: PropTypes.string,
+   price: PropTypes.number,
+   thumbnail: PropTypes.string,
+   year: PropTypes.string
 };
 
 export default CardCar;

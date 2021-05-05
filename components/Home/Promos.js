@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import NextImageLazy from '../../utils/imgLazy';
-import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import Slider from 'react-slick';
 import { SectionCComp } from './styles';
+import React, { useEffect, useState } from 'react';
 
-function Promos() {
+function Promos({ subHeadline }) {
   const [occasionPic, setOccasionPic] = useState('/images/promo-occasion.png');
   const [neufPic, setNeufPic] = useState('/images/promo-neuf.png');
 
@@ -26,7 +27,7 @@ function Promos() {
 
   return (
     <SectionCComp>
-      <h2 className="text-center">En ce moment dans votre <span className="blue">agence Lilloise</span></h2>
+      <h2 className="text-center">En ce moment dans votre <span className="blue">{subHeadline}</span></h2>
 
       <div className="container">
         <Slider {...sliderSettings}>
@@ -62,6 +63,10 @@ function Promos() {
       </div>
     </SectionCComp>
   );
+};
+
+Promos.propTypes = {
+   subHeadline: PropTypes.string
 };
 
 export default Promos;

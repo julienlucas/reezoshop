@@ -1,5 +1,7 @@
 import Layout from '../components/Layout';
 import PropTypes from 'prop-types';
+import graphQLQuery from '../utils/graphql';
+import useShop from '../hooks/useShop';
 import Vehicules from '../components/Home/Vehicules';
 import Constructeurs from '../components/Home/Constructeurs';
 import Promos from '../components/Home/Promos';
@@ -7,20 +9,20 @@ import Map from '../components/Home/Map';
 import Interlocuteurs from '../components/Home/Interlocuteurs';
 import Pourquoi from '../components/Home/Pourquoi';
 import FAQS from '../components/Home/FAQS';
-import useShop from '../hooks/useShop';
 
-function HomePage({ data, shop }) {
+function HomePage({ cars, data, shop }) {
   const shopFromContext = useShop();
-  console.log('shopFromContext', shopFromContext);
-  console.log(shop.subDomain);
-  console.log(shopFromContext.subDomain);
+  // console.log('shopFromContext', shopFromContext);
+  // console.log(shop.subDomain);
+  // console.log(shopFromContext.subDomain);
+  const agence = data.agencies[shopFromContext.subdomain];
 
   return (
-    <Layout nav={data.nav} phone={data.head.phone} headline={data.head.headline} home>
-      <Vehicules cars={data.cars} />
+    <Layout nav={data.nav} phone={agence.phone} headline={agence.headline} home>
+      <Vehicules cars={cars} subHeadline={agence.subHeadline} />
       <Constructeurs constructeurs={data.constructeurs} />
-      <Promos />
-      <Map data={data.head} />
+      <Promos subHeadline={agence.subHeadline} />
+      <Map data={agence} />
       <Interlocuteurs interlocuteurs={data.interlocuteurs} />
       <Pourquoi data={data.pourquoi} />
       <FAQS faqs={data.faqs} />
@@ -29,130 +31,116 @@ function HomePage({ data, shop }) {
 };
 
 HomePage.getInitialProps = async ({ shop }) => {
-   const data = await mockData;
 
-   return { data, shop };
+  let data;
+  let cars;
+  try {
+    data = await mockData;
+    cars = await graphQLQuery(initialQuery);
+  } catch (err) {
+
+  }
+
+  cars = cars.ads.ads;
+
+  return { data, cars, shop };
 };
 
 HomePage.propTypes = {
-   data: PropTypes.object.isRequired,
-   shop: PropTypes.object.isRequired
+  cars: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
+  shop: PropTypes.object.isRequired
 };
 
 export default HomePage;
 
+const initialQuery = `
+    query getAds {
+    ads(queryParams: {
+      size: 3
+    }){
+      count
+      ads {
+        _id
+        brand
+        colors { ext }
+        energy
+        gearbox
+        images
+        isNew
+        mileage
+        model
+        oneImage:images(count: 1, width: W320)
+        price
+        prices { originalPrice: originalCommercializationPrice, percentage }
+        thumbs:images(width: W320)
+        year
+      }
+    }
+  }
+`
+
 const mockData = {
   nav: [
-    { value: 'Lille', label: 'Agence Boulogne-Billacourt' },
-    { value: 'Bordeaux', label: 'Agence Bordeaux' },
-    { value: 'Marseille', label: 'Agence Marseille' }
+    { value: 'lille', label: 'Agence Boulogne-Billacourt' },
+    { value: 'bordeaux', label: 'Agence Bordeaux' },
+    { value: 'marseille', label: 'Agence Marseille' }
   ],
-  head: {
-    headline: 'Reezocar Lille - Seclin',
-    description: '',
-    adresse: '11 Rue du Clauwiers, 59113 Seclin',
-    horaires: {
-      Lundi: ['09:00 : 18:00'],
-      Mardi: ['09:00 : 18:00'],
-      Mercredi: ['09:00 : 18:00'],
-      Jeudi: ['09:00 : 18:00'],
-      Vendredi: ['09:00 : 18:00'],
-      Samedi: ['09:00 : 18:00'],
-      Dimanche: 'Fermé',
+  agencies: {
+    'lille': {
+      headline: 'Reezocar Lille - Seclin',
+      subHeadline: 'agence Lilloise',
+      description: '',
+      adresse: '11 Rue du Clauwiers, 59113 Seclin',
+      horaires: {
+        Lundi: ['09:00 : 18:00'],
+        Mardi: ['09:00 : 18:00'],
+        Mercredi: ['09:00 : 18:00'],
+        Jeudi: ['09:00 : 18:00'],
+        Vendredi: ['09:00 : 18:00'],
+        Samedi: ['09:00 : 18:00'],
+        Dimanche: 'Fermé',
+      },
+      phone: '0142536529',
+      googleAvis: '891',
+      googleNote: '4,2'
     },
-    phone: '0142536529',
-    googleAvis: '891',
-    googleNote: '4,2'
-  },
-  cars: {
-    'occasions': [
-      {
-        marque: 'Peugeot',
-        modele: '208 II GT Line',
-        complementInfos: 'couleur jaune avec GPS intégré',
-        photos: [
-          '/images/peugeot-1.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2020',
-        kilometrage: '27076',
-        prix: '24890',
-        neuf: false
+    'bordeaux': {
+      headline: 'Reezocar Bordeaux',
+      subHeadline: 'agence Bordelaise',
+      description: '',
+      adresse: '11 Rue du des lumières, 33200 Bordeaux',
+      horaires: {
+        Lundi: ['09:00 : 18:00'],
+        Mardi: ['09:00 : 18:00'],
+        Mercredi: ['09:00 : 18:00'],
+        Jeudi: ['09:00 : 18:00'],
+        Vendredi: ['09:00 : 18:00'],
+        Samedi: ['09:00 : 18:00'],
+        Dimanche: 'Fermé',
       },
-      {
-        marque: 'Porsche',
-        modele: 'Cayenne',
-        complementInfos: 'Turbo-Techart-640P Panorama-LED-NP204T',
-        photos: [
-          '/images/porsche.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2020',
-        kilometrage: '31076',
-        prix: '21890',
-        neuf: false
+      phone: '0142536529',
+      googleAvis: '112',
+      googleNote: '4,3'
+    },
+    'marseille': {
+      headline: 'Reezocar Marseille',
+      subHeadline: 'agence Marseillaise',
+      description: '',
+      adresse: '32 Rue saint Antoine, 13000 Marseille',
+      horaires: {
+        Lundi: ['09:00 : 18:00'],
+        Mardi: ['09:00 : 18:00'],
+        Mercredi: ['09:00 : 18:00'],
+        Jeudi: ['09:00 : 18:00'],
+        Vendredi: ['09:00 : 18:00'],
+        Samedi: ['09:00 : 18:00'],
+        Dimanche: 'Fermé',
       },
-      {
-        titre: 'Peugeot',
-        modele: '208 GT Line',
-        complementInfos: 'PureTech 130 S et EAT8 + To...',
-        photos: [
-          '/images/peugeot-2.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2020',
-        kilometrage: '31076',
-        prix: '21890',
-        neuf: false
-      }
-    ],
-    'neufs': [
-      {
-        titre: 'Land Rover',
-        modele: 'Range Rover',
-        complementInfos: 'Evoque 2010 blanche TDI',
-        photos: [
-          '/images/land-rover-evoque-1.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2010',
-        kilometrage: '31076',
-        prix: '22340',
-        neuf: true
-      },
-      {
-        titre: 'Land Rover',
-        modele: 'Range Rover',
-        complementInfos: 'Evoque 2020 Noir + GPS + Bluetootk',
-        photos: [
-          '/images/land-rover-evoque-2.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2010',
-        kilometrage: '43076',
-        prix: '34340',
-        neuf: true
-      },
-      {
-        titre: 'Land Rover',
-        modele: 'Range Rover',
-        complementInfos: 'Evoque 2010 blanche TDI',
-        photos: [
-          '/images/land-rover-evoque-3.png'
-        ],
-        boite: 'Automatique',
-        energie: 'Essence',
-        annee: '2010',
-        kilometrage: '54076',
-        prix: '32120',
-        neuf: true
-      }
-    ]
+      phone: '0142536529',
+      googleAvis: '51',
+      googleNote: '4,2'
+    }
   },
   'constructeurs': [
     {

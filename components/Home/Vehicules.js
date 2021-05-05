@@ -1,13 +1,14 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Slider from 'react-slick';
 import CardCar from '../CardCar';
 import { SectionAComp } from './styles';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-function Vehicules({ cars }) {
+function Vehicules({ cars, subHeadline }) {
   return (
     <SectionAComp>
-      <h2 className="text-center">Les affaires du mois dans votre <span className="blue">agence Lilloise</span></h2>
+      <h2 className="text-center">Les affaires du mois dans votre <span className="blue">{subHeadline}</span></h2>
 
       <Tabs>
         <TabList>
@@ -18,7 +19,19 @@ function Vehicules({ cars }) {
         <TabPanel>
           <div className="container">
             <Slider {...sliderSettings}>
-              {cars?.occasions?.slice(0, 3).map((car, i) => <CardCar key={car + i + 'occasion'} data={car} />)}
+              {cars?.map(car =>
+                <CardCar
+                  key={car._id}
+                  year={car.year}
+                  gearbox={car.gearbox}
+                  energy={car.energy}
+                  mileage={car.mileage}
+                  brand={car.brand}
+                  model={car.model}
+                  thumbnail={car.oneImage[0]}
+                  price={car.price}
+                />
+              )}
             </Slider>
           </div>
         </TabPanel>
@@ -26,7 +39,19 @@ function Vehicules({ cars }) {
         <TabPanel>
           <div className="container">
             <Slider {...sliderSettings}>
-              {cars?.neufs?.slice(0, 3).map((car, i) => <CardCar key={car + i + 'neuf'}  data={car} />)}
+              {cars?.map(car =>
+                <CardCar
+                  key={car._id}
+                  year={car.year}
+                  gearbox={car.gearbox}
+                  energy={car.energy}
+                  mileage={car.mileage}
+                  brand={car.brand}
+                  modele={car.model}
+                  thumbnail={car.oneImage[0]}
+                  price={car.price}
+                />
+              )}
             </Slider>
           </div>
         </TabPanel>
@@ -37,6 +62,11 @@ function Vehicules({ cars }) {
       </div>
     </SectionAComp>
   );
+};
+
+Vehicules.propTypes = {
+   cars: PropTypes.Object,
+   subHeadline: PropTypes.string
 };
 
 export default Vehicules;

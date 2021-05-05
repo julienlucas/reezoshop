@@ -29,7 +29,7 @@ BoxGoogleRating.propTypes = {
    adresse: PropTypes.string,
    headline: PropTypes.string,
    googleNote: PropTypes.number,
-   googleAvis: PropTypes.string,
+   googleAvis: PropTypes.number,
 };
 
 export default BoxGoogleRating;
