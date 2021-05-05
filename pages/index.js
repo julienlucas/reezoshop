@@ -31,7 +31,6 @@ function HomePage({ cars, data, shop }) {
 };
 
 HomePage.getInitialProps = async ({ shop }) => {
-
   let data;
   let cars;
   try {
@@ -47,7 +46,7 @@ HomePage.getInitialProps = async ({ shop }) => {
 };
 
 HomePage.propTypes = {
-  cars: PropTypes.object.isRequired,
+  // cars: PropTypes.array.isRequired,
   data: PropTypes.object.isRequired,
   shop: PropTypes.object.isRequired
 };

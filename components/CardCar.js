@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { theme } from '../constants/theme';
 import { useRouter } from 'next/router';
 
-function CardCar({ brand, energy, gearbox, model, mileage, price, thumbnail, year }) {
+const CardCar = ({ brand, energy, gearbox, model, mileage, price, thumbnail, year }) => {
    const router = useRouter();
 
    // Ajout d'un espace tous les 3 chiffres
