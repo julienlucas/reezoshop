@@ -1,7 +1,7 @@
 import ArrowBottomIcon from '../../svgs/arrow-bottom.svg';
 import Image from 'next/image';
 import Link from 'next/link';
-import Select from 'react-select';
+import ReactSelect from 'react-select';
 import Mobile from './Mobile';
 import SearchIcon from '../../svgs/search.svg';
 import styled from 'styled-components';
@@ -68,7 +68,7 @@ const NavComp = (props) => {
         </div>
 
         <div className="select" onClick={(e) => addOverlayMobile(e)}>
-          <Select
+          <ReactSelect
             instanceId={String}
             placeholder={props.nav[0].label}
             options={props.nav}

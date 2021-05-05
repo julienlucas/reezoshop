@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { theme } from '../constants/theme';
 import { useRouter } from 'next/router';
 
-function CardCar({ data }) {
+const CardCar = ({ data }) => {
    const router = useRouter();
 
    // Ajout d'un espace tous les 3 chiffres
@@ -36,7 +36,7 @@ function CardCar({ data }) {
          <div className="box-text">
             <h3>
                <Link href="/">
-                  <a>{data.marque && data.marque} {data.modele && data.modele} {data.complementInfos && data.complementInfos}</a>
+                  <a>{data.marque && data.marque} {data.modele && data.modele}</a>
                </Link>
             </h3>
             <p className="description">{data.boite && data.boite + ' ·'} {data.energie && data.energie + ' ·'} {data.annee && data.annee + ' ·'} {data.kilometrage && numberFormat(data.kilometrage) + ' km'}</p>
@@ -48,11 +48,11 @@ function CardCar({ data }) {
    );
 };
 
-export default CardCar;
-
 CardCar.propTypes = {
    data: PropTypes.Object
 };
+
+export default CardCar;
 
 export const Card = styled.div`
    position: relative;

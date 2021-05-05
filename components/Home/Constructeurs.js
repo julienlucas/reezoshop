@@ -8,7 +8,7 @@ import RenaultIcon from '../../svgs/renault.svg';
 import VolkswagenIcon from '../../svgs/volkswagen.svg';
 import { SectionBComp } from './styles';
 
-function Constructeurs({ constructeurs }) {
+const Constructeurs = ({ constructeurs }) => {
   return (
     <SectionBComp>
       <div className="container">
@@ -24,7 +24,7 @@ function Constructeurs({ constructeurs }) {
 
 export default Constructeurs;
 
-function CardAutomaker({ constructeur }) {
+const CardAutomaker = ({ constructeur }) => {
   return (
     <div className="card-automaker">
       <div className="logo">

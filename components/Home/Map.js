@@ -12,12 +12,17 @@ function Map({ data }) {
       <h2 className="text-center">Comment s'y rendre ?</h2>
 
       <div className="box-address-mobile">
-        <BoxGoogleRating data={data} />
+        <BoxGoogleRating
+          adresse={data.adresse}
+          headline={data.headline}
+          googleAvis={data.googleAvis}
+          googleNote={data.googleNote}
+        />
       </div>
 
       <ul className="tabs">
-        <li onClick={(e) => setTab(1)} className={tab === 1 ? 'active' : ''}>Google Map</li>
-        <li onClick={(e) => setTab(2)} className={tab === 2 ? 'active' : ''}>Horaires d'ouverture</li>
+        <li onClick={() => setTab(1)} className={tab === 1 ? 'active' : ''}>Google Map</li>
+        <li onClick={() => setTab(2)} className={tab === 2 ? 'active' : ''}>Horaires d'ouverture</li>
       </ul>
 
       <GoogleMap data={data} tab={tab} />
@@ -35,16 +40,6 @@ function GoogleMap({ data, tab }) {
   const handleApiLoaded = (map, maps) => {
     setMapURL(map)
   };
-
-  useEffect(() => {
-    // fetch('/api')
-    //   .then((res) => {
-    //     console.log(res)
-    //   })
-    //   .catch((err) => {
-    //     console.log('Looks like there was a problem: \n', err);
-    //   })
-  });
 
   useEffect(() => {
   }, [mapURL])
@@ -71,7 +66,12 @@ function GoogleMap({ data, tab }) {
       <div className="wrapper">
         <div className="container">
           <div className={`box-infos ${tab === 2 && window.innerWidth <= 990 ? 'active' : ''}`}>
-            <BoxGoogleRating data={data} />
+            <BoxGoogleRating
+              adresse={data.adresse}
+              headline={data.headline}
+              googleAvis={data.googleAvis}
+              googleNote={data.googleNote}
+            />
 
             <div className="open-hours">
               <h3 className="big">Horaires d'ouverture</h3>

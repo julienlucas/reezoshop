@@ -243,28 +243,6 @@ export const SectionDComp = styled.section`
     align-items: center;
     padding: 0;
   }
-  .box-address {
-    .indicator {
-      position: relative;
-      top: 4px;
-      width: 55px;
-      height: 60px;
-      float: left;
-    }
-    .address {
-      width: calc(100% - 55px);
-      float: right;
-      * {
-        margin: 0;
-        padding: 0;
-      }
-      p {
-        margin-bottom: 7px;
-        font-size: 16px;
-        font-weight: 600;
-      }
-    }
-  }
   .box-address-mobile {
     position: relative;
     padding: 22px;
