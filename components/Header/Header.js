@@ -1,7 +1,7 @@
 import ArrowBottomIcon from '../../svgs/arrow-bottom.svg';
 import Image from 'next/image';
 import Link from 'next/link';
-import Select from 'react-select';
+import ReactSelect from 'react-select';
 import Mobile from './Mobile';
 import SearchIcon from '../../svgs/search.svg';
 import styled from 'styled-components';
@@ -67,7 +67,7 @@ const NavComp = (props) => {
         </div>
 
         <div className="select" onClick={(e) => addOverlayMobile(e)}>
-          <Select
+          <ReactSelect
             instanceId={String}
             placeholder={props.nav[0].label}
             options={props.nav}
@@ -79,7 +79,7 @@ const NavComp = (props) => {
           />
         </div>
 
-        {router.pathname !== '/' && <input type="text" className="search" placeholder="Marque, Modèle" name="search"/>}
+        {router.pathname === '/recherche' && <input type="text" className="search" placeholder="Marque, Modèle" name="search"/>}
 
         <Mobile data={props} />
       </Nav>
@@ -172,6 +172,7 @@ const customStyles = {
     borderTop: '1px solid #C1C1C1',
     background: state.isSelected ? 'white' : 'white',
     color: '#313131',
+    textTransform: 'Capitalize',
     cursor: 'pointer',
     "&:focus": {
       background: 'white'
@@ -196,6 +197,7 @@ const customStyles = {
     border: 'none',
     boxShadow: 'none',
     background: 'transparent',
+    textTransform: 'Capitalize',
     cursor: 'pointer',
   }),
   menu: styles => ({
@@ -207,6 +209,7 @@ const customStyles = {
     boxShadow: '1px 2px 13px rgba(0, 0, 0, 0.15)',
     width: '240px',
     borderRadius: '4px',
+    textTransform: 'Capitalize',
     zIndex: '10'
   })
 };
@@ -230,7 +233,6 @@ export const Wrapper = styled.div`
       color: white;
       text-decoration: none;
     }
-
   }
   .btn-rdv {
     position: relative;
@@ -239,9 +241,6 @@ export const Wrapper = styled.div`
     left: 20px;
     width: calc(50vw - 26px);
     padding: 0;
-  }
-  input {
-    height: 42px;
   }
   @media (min-width: 768px) {
     .btn-phone {
@@ -288,7 +287,6 @@ export const Nav = styled.nav`
     box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.12);
   }
   &.bottomShadow {
-    background: white;
     box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.12);
   }
   .select {

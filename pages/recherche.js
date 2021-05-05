@@ -1,94 +1,142 @@
-import fetcher from '../utils/fetcher';
+import graphQLQuery from '../utils/graphql';
 import Layout from '../components/Layout';
 import PropTypes from 'prop-types';
 import SearchWrapper from '../components/Search/SearchWrapper';
 import useShop from '../hooks/useShop';
-import useSWR from 'swr';
 import React, { useEffect, useState } from 'react';
 
-function Search(props) {
-    const [cars, setCars] = useState([]);
-  // const shopFromContext = useShop();
-  // console.log('shopFromContext', shopFromContext);
-  // console.log(shop.subDomain);
-  // console.log(shopFromContext.subDomain);
-
-  const initialData = props.data
-  // Intial Data servit SSR par l'API Next, ensuite la data peut être changée dynamiquement (feature de useSWR ver. 0.1.10, hook crée par Vercel/Next)
-  const { data } = useSWR([`http://localhost:3000/api/search?size=${nbrCars}`], fetcher, { initialData })
-  const { head, nav } = props;
+function Search({ data, search, shop }) {
+  const [cars, setCars] = useState([]);
+  const [count, setCount] = useState([]);
+  const shopFromContext = useShop();
+  const agence = data.agencies[shopFromContext.subdomain];
+  const city = shopFromContext.subdomain;
 
   const onLoadMore = async nbrCars => {
-    const res = await fetch([`http://localhost:3000/api/search?size=${nbrCars}`], fetcher);
-    const updatedData = await res.json();
-    setCars(updatedData.ads.ads);
+    console.log(nbrCars)
   };
 
-  const onSearch = async filters => {
-    // filters.size = 12;
-    // var query = Object.keys(filters).map(key => key + '=' + filters[key]).join('&');
-    // const res = await fetch([`http://localhost:3000/api/search?${query}`], fetcher);
-    // const updatedData = await res.json();
-    // setCars(updatedData.ads.ads);
-    // console.log(filters)
-  }
+  useEffect(() => {
+    setCount(search.ads.count)
+  }, [count])
 
   useEffect(() => {
-    setCars(data.ads.ads)
-  }, [props])
+    setCars(search.ads.ads)
+  }, [search])
 
   return (
-    <Layout nav={nav} phone={head.phone}>
-      <SearchWrapper cars={cars} onLoadMore={nbrCars => onLoadMore(nbrCars)} onSearch={filters => onSearch(filters)} />
+    <Layout nav={data.nav} phone={agence.phone}>
+      <SearchWrapper agence={city} cars={cars} count={count} onLoadMore={nbrCars => onLoadMore(nbrCars)} />
     </Layout>
   );
 };
 
-export async function getServerSideProps({ shop }) {
-  const head = await mockData.head;
-  const nav = await mockData.nav;
-  const data = await fetcher([`http://localhost:3000/api/search?size=${nbrCars}`]);
+Search.getInitialProps = async ({ shop }) => {
+  let data;
+  let search;
+  try {
+    data = await mockData;
+    search = await graphQLQuery(initialQuery);
+  } catch (err) {
 
-  return {
-    props: {
-      head,
-      data,
-      nav,
-      shop: null
-    }
   }
-}
+  return { data, search, shop };
+};
 
 Search.propTypes = {
-  //  data: PropTypes.object.isRequired,
+   data: PropTypes.object.isRequired,
+   search: PropTypes.array.isRequired,
    shop: PropTypes.object.isRequired
 };
 
 export default Search;
 
-const nbrCars = 12;
+const initialQuery = `
+  query getAds {
+    ads(queryParams: {
+      size: 12
+    }){
+      count
+      ads {
+        _id
+        brand
+        colors { ext }
+        energy
+        gearbox
+        images
+        isNew
+        mileage
+        model
+        oneImage:images(count: 1, width: W320)
+        price
+        prices { originalPrice: originalCommercializationPrice, percentage }
+        thumbs:images(width: W320)
+        year
+      }
+    }
+  }
+`
 
 const mockData = {
   nav: [
-    { value: 'Lille', label: 'Agence Boulogne-Billacourt' },
-    { value: 'Bordeaux', label: 'Agence Bordeaux' },
-    { value: 'Marseille', label: 'Agence Marseille' }
+    { value: 'lille', label: 'Agence Boulogne-Billacourt' },
+    { value: 'bordeaux', label: 'Agence Bordeaux' },
+    { value: 'marseille', label: 'Agence Marseille' }
   ],
-  head: {
-    headline: 'Reezocar Lille - Seclin',
-    description: '',
-    adresse: '11 Rue du Clauwiers, 59113 Seclin',
-    horaires: {
-      Lundi: ['09:00 : 18:00'],
-      Mardi: ['09:00 : 18:00'],
-      Mercredi: ['09:00 : 18:00'],
-      Jeudi: ['09:00 : 18:00'],
-      Vendredi: ['09:00 : 18:00'],
-      Samedi: ['09:00 : 18:00'],
-      Dimanche: 'Fermé',
+  agencies: {
+    'lille': {
+      headline: 'Reezocar Lille - Seclin',
+      subHeadline: 'agence Lilloise',
+      description: '',
+      adresse: '11 Rue du Clauwiers, 59113 Seclin',
+      horaires: {
+        Lundi: ['09:00 : 18:00'],
+        Mardi: ['09:00 : 18:00'],
+        Mercredi: ['09:00 : 18:00'],
+        Jeudi: ['09:00 : 18:00'],
+        Vendredi: ['09:00 : 18:00'],
+        Samedi: ['09:00 : 18:00'],
+        Dimanche: 'Fermé',
+      },
+      phone: '0142536529',
+      googleAvis: '891',
+      googleNote: '4,2'
     },
-    phone: '0142536529',
-    googleAvis: '891',
-    googleNote: '4,2'
+    'bordeaux': {
+      headline: 'Reezocar Bordeaux',
+      subHeadline: 'agence Bordelaise',
+      description: '',
+      adresse: '11 Rue du des lumières, 33200 Bordeaux',
+      horaires: {
+        Lundi: ['09:00 : 18:00'],
+        Mardi: ['09:00 : 18:00'],
+        Mercredi: ['09:00 : 18:00'],
+        Jeudi: ['09:00 : 18:00'],
+        Vendredi: ['09:00 : 18:00'],
+        Samedi: ['09:00 : 18:00'],
+        Dimanche: 'Fermé',
+      },
+      phone: '0142536529',
+      googleAvis: '112',
+      googleNote: '4,3'
+    },
+    'marseille': {
+      headline: 'Reezocar Marseille',
+      subHeadline: 'agence Marseillaise',
+      description: '',
+      adresse: '32 Rue saint Antoine, 13000 Marseille',
+      horaires: {
+        Lundi: ['09:00 : 18:00'],
+        Mardi: ['09:00 : 18:00'],
+        Mercredi: ['09:00 : 18:00'],
+        Jeudi: ['09:00 : 18:00'],
+        Vendredi: ['09:00 : 18:00'],
+        Samedi: ['09:00 : 18:00'],
+        Dimanche: 'Fermé',
+      },
+      phone: '0142536529',
+      googleAvis: '51',
+      googleNote: '4,2'
+    }
   }
 };

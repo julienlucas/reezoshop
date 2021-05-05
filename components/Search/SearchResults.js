@@ -1,9 +1,10 @@
 import CardCar from '../CardCar';
-import Select from 'react-select';
+import PropTypes from 'prop-types';
+import ReactSelect from 'react-select';
 import React, { useState } from 'react';
 import { Results } from './styles';
 
-function SearchResults({ cars, onLoadMore }) {
+const SearchResults = ({ agence, cars, count, onLoadMore }) => {
   const [nbrCars, setNbrCars] = useState(12);
 
   const loadMore = () => {
@@ -11,12 +12,16 @@ function SearchResults({ cars, onLoadMore }) {
     onLoadMore(nbrCars);
   };
 
+  const capitalizeFirstLetter = str => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
   return (
     <Results>
-      <h2>Land Rover Range Rover Evoque neuves en vente <span className="blue">près de Lille</span></h2>
-      <p className="count"><span className="blue">XXX</span> voitures dispos</p>
+      <h2>Land Rover Range Rover Evoque neuves en vente <span className="blue">près de {capitalizeFirstLetter(agence)}</span></h2>
+      <p className="count"><span className="blue">{count}</span> voitures dispos</p>
 
-      <Select
+      <ReactSelect
         className="select"
         instanceId={String}
         placeholder="Meilleures réductions"
@@ -25,7 +30,18 @@ function SearchResults({ cars, onLoadMore }) {
       />
 
       <div className="row">
-        {cars?.map((car, i) => <CardCar key={car + i + 'occasion'} data={car} />)}
+        {cars?.map(car =>
+          <CardCar
+            key={car._id}
+            year={car.year}
+            gearbox={car.gearbox}
+            energy={car.energy}
+            mileage={car.mileage}
+            brand={car.brand}
+            modele={car.model}
+            thumbnail={car.oneImage[0]}
+            price={car.price}
+          />)}
       </div>
 
       <div className="row">
@@ -35,6 +51,13 @@ function SearchResults({ cars, onLoadMore }) {
       </div>
     </Results>
   );
+};
+
+SearchResults.propTypes = {
+   agence: PropTypes.string,
+   cars: PropTypes.array.isRequired,
+   count: PropTypes.string.isRequired,
+   onLoadMore: PropTypes.func
 };
 
 export default SearchResults;

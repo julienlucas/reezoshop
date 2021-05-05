@@ -1,11 +1,10 @@
 import Image from 'next/image';
-import PropTypes from 'prop-types';
 import { Aside } from './styles';
 import { categories, colorsExt, doors, energies, gearboxes } from '../../constants/search';
 import Select from '../Select';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-function SearchAside({ onSearch }) {
+function SearchAside() {
   const [filters, setFilters] = useState({});
 
   const resetFilters = () => {
@@ -20,10 +19,6 @@ function SearchAside({ onSearch }) {
       [name]: option
     });
   };
-
-  useEffect(() => {
-    onSearch(filters);
-  }, [filters])
 
   return (
     <Aside>

@@ -5,11 +5,11 @@ import styled from 'styled-components';
 import { theme } from '../constants/theme';
 import { useRouter } from 'next/router';
 
-function CardCar({ data }) {
+const CardCar = ({ brand, energy, gearbox, model, mileage, price, thumbnail, year }) => {
    const router = useRouter();
 
    // Ajout d'un espace tous les 3 chiffres
-   const numberFormat = (num) => {
+   const numberFormat = num => {
       return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
    };
 
@@ -36,23 +36,30 @@ function CardCar({ data }) {
          <div className="box-text">
             <h3>
                <Link href="/">
-                  <a>{data.brand && data.brand} {data.model && data.model}</a>
+                  <a>{brand && brand} {model && model}</a>
                </Link>
             </h3>
-            <p className="description">{data.gearbox && data.gearbox + ' ·'} {data.energy && data.energy + ' ·'} {data.year && data.year + ' ·'} {data.mileage && numberFormat(data.mileage) + ' km'}</p>
-            {router.pathname !== '/' && data.isNew && <button className="btn btn-neuf-occas">Neuf /0km</button>}
-            <p className="prix">{data.price && numberFormat(data.price)} €</p>
-            {router.pathname !== '/' && <p className="prix-barre">{data.price && numberFormat(data.price)} €</p>}
+            <p className="description">{gearbox && gearbox + ' ·'} {energy && energy + ' ·'} {year && year + ' ·'} {mileage && numberFormat(mileage) + ' km'}</p>
+            {router.pathname !== '/' && <button className="btn btn-neuf-occas">Neuf /0km</button>}
+            <p className="prix">{price && numberFormat(price)} €</p>
+            {router.pathname !== '/' && <p className="prix-barre">{price && numberFormat(price)} €</p>}
          </div>
       </Card>
    );
 };
 
-export default CardCar;
-
 CardCar.propTypes = {
-   data: PropTypes.Object
+   brand: PropTypes.string,
+   energy: PropTypes.string,
+   gearbox: PropTypes.string,
+   model: PropTypes.string,
+   mileage: PropTypes.string,
+   price: PropTypes.number,
+   thumbnail: PropTypes.string,
+   year: PropTypes.string
 };
+
+export default CardCar;
 
 export const Card = styled.div`
    position: relative;
@@ -126,8 +133,7 @@ export const Card = styled.div`
          padding: 5px 0;
          font-size: 14px;
          font-weight: 600;
-         color: ${theme.grey100};
-         text-transform: capitalize;
+         color: ${theme.grey100}
       }
       .prix {
          font-size: 26px;

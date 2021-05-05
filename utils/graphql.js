@@ -1,7 +1,8 @@
 import configs from '../configs';
 
 import { __TEST__ } from '../constants/env';
-// const { graphqlEndpoint, graphqlStaticEndpoint } = configs;
+
+const { graphqlEndpoint, graphqlStaticEndpoint } = configs;
 
 const graphQLQuery = (query, variables = {}, { headers: additionalHeaders, ...options } = {}) => {
    // const endpoint = staticEndpoint ? graphqlStaticEndpoint : graphqlEndpoint;

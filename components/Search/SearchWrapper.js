@@ -2,12 +2,12 @@ import SearchAside from './SearchAside';
 import SearchResults from './SearchResults';
 import { Wrapper } from './styles';
 
-function SearchWrapper({ cars, onLoadMore, onSearch }) {
+function SearchWrapper({ agence, cars, count, onLoadMore }) {
   return (
     <Wrapper>
       <div className="container">
-        <SearchAside onSearch={(filters) => onSearch(filters)} />
-        <SearchResults cars={cars} onLoadMore={(nbrCars) => onLoadMore(nbrCars)} />
+        <SearchAside />
+        <SearchResults agence={agence} cars={cars} count={count} onLoadMore={nbrCars => onLoadMore(nbrCars)} />
       </div>
     </Wrapper>
   );

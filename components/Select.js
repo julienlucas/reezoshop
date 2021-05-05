@@ -44,6 +44,13 @@ function Select({ name, onChange, onReset, options, placeholder }) {
    );
 };
 
+Select.propTypes = {
+   options: PropTypes.object.isRequired,
+   placeholder: PropTypes.string.isRequired,
+   name: PropTypes.string.isRequired,
+   reset: PropTypes.bool
+};
+
 export default Select;
 
 function Option (props) {
@@ -55,13 +62,6 @@ function Option (props) {
    return (
       <li onClick={onSelect}>{props.option}</li>
    );
-};
-
-Select.propTypes = {
-   options: PropTypes.object.isRequired,
-   placeholder: PropTypes.string.isRequired,
-   name: PropTypes.string.isRequired,
-   reset: PropTypes.bool
 };
 
 export const SelectMenu = styled.div`
