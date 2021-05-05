@@ -5,11 +5,9 @@ service:
 ingress:
   enabled: true
   hosts:
-    - host: "www.reezocar.com"
+    - host: "www.paris.reezocar.com"
       paths: ["/"]
-    - host: "www.reezocar.be"
-      paths: ["/"]
-    - host: "assets.reezocar.com"
+    - host: "www.lille.reezocar.com"
       paths: ["/"]
 
 imagePullSecrets:
