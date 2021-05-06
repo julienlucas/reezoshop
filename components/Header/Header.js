@@ -86,13 +86,15 @@ const NavComp = (props) => {
 
       {(router.pathname === '/' || router.pathname === '/recherche') &&
         <BottomNavMobile>
-          <button className={`btn btn-primary btn-phone ${router.pathname === '/recherche' ? 'search-page' : ''}`}>
-            <a href={`tel:${props.phone}`} rel="noopener noreferrer nofollow" target="_blank">
-              <TelIcon className="icon" />{phoneFormated}
-            </a>
-          </button>
+          <div className={`wrapper-header-buttons ${router.pathname === '/recherche' ? 'search-page' : ''}`}>
+            <button className="btn btn-primary btn-phone">
+              <a href={`tel:${props.phone}`} rel="noopener noreferrer nofollow" target="_blank">
+                <TelIcon className="icon" />{phoneFormated}
+              </a>
+            </button>
 
-          <button className="btn btn-secondary btn-rdv">Prendre rendez-vous</button>
+            <button className="btn btn-secondary btn-rdv">Prendre rendez-vous</button>
+          </div>
         </BottomNavMobile>}
     </Wrapper>
   );
@@ -215,6 +217,16 @@ const customStyles = {
 };
 
 export const Wrapper = styled.div`
+  .wrapper-header-buttons {
+    &.search-page {
+      .btn-phone {
+        display: block;
+      }
+      .btn-rdv {
+        display: none
+      }
+    }
+  }
   .btn-phone {
     position: relative;
     top: auto;
@@ -224,9 +236,6 @@ export const Wrapper = styled.div`
     width: calc(50vw - 26px);
     padding: 0 0 0 16px;
     z-index: 3;
-    &.search-page {
-      display: block;
-    }
     .icon {
       position: absolute;
       height: 25px;
@@ -245,8 +254,12 @@ export const Wrapper = styled.div`
     padding: 0;
   }
   @media (min-width: 990px) {
-    &.search-page {
-      display: none;
+    .wrapper-header-buttons {
+      &.search-page {
+        .btn-phone {
+          display: none;
+        }
+      }
     }
     .btn-phone {
       position: fixed;
@@ -292,7 +305,8 @@ export const Nav = styled.nav`
     box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.12);
   }
   &.bottomShadow {
-    box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.12);
+    border: 1px solid ${theme.grey700};
+    box-shadow: 1px 2px 13px rgba(0, 0, 0, 0);
   }
   .select {
     position: relative;
@@ -319,7 +333,15 @@ export const Nav = styled.nav`
       height: 44px;
     }
   }
-  @media (min-width: 780px) {
+  @media (min-width: 990px) {
+    &.bottomShadow {
+      box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.12);
+    }
+    .search {
+      display: block;
+    }
+  }
+  @media (min-width: 768px) {
     height: 92px;
     .logo {
       top: 16px;
@@ -332,11 +354,6 @@ export const Nav = styled.nav`
       top: 27px;
     }
   }
-  @media (min-width: 750px) {
-    .search {
-      display: block;
-    }
-  }
 `;
 
 export const BottomNavMobile = styled.div`
@@ -346,8 +363,10 @@ export const BottomNavMobile = styled.div`
   background: white;
   bottom: 0;
   padding: 20px 0;
+  box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
   @media (min-width: 990px) {
     background: transparent;
+    box-shadow: 0px -4px 10px rgba(0, 0, 0, 0);
   }
 `
 

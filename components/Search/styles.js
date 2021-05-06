@@ -7,8 +7,11 @@ export const Wrapper = styled.section`
       padding: 0 25px;
       max-width: 1400px;
    }
-   @media (min-width: 768px) {
+   @media (min-width: 990px) {
       margin: 135px 0;
+   }
+   @media (max-width: 768px) {
+      margin: 40px 0 80px;
    }
 `
 
@@ -55,63 +58,6 @@ export const Aside = styled.aside`
       margin: 6px 0 0 6px;
       font-size: 13px;
    }
-
-   ${''/* Checkbox */}
-   input.checkbox {
-      position: relative;
-      height: 24px;
-      opacity: 0;
-      & + label {
-         position: relative;
-         top: -20px;
-         cursor: pointer;
-         color: ${theme.black};
-         padding: 0;
-         &:before {
-            content: '';
-            margin-top: -5px;
-            margin-right: 10px;
-            margin-left: -12px;
-            display: inline-block;
-            vertical-align: text-top;
-            width: 24px;
-            height: 24px;
-            background: white;
-            border: 1px solid ${theme.grey200};
-            border-radius: 3.24786px;
-         }
-      }
-      &:hover + label:before {
-         background: white;
-      }
-      &:focus + label:before {
-         box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
-      }
-      &:checked + label:before {
-         background: white;
-      }
-      &:disabled + label:before {
-         box-shadow: none;
-         background: #ddd;
-      }
-      &:checked + label:after {
-         position: absolute;
-         left: -5px;
-         top: 6px;
-         background: ${theme.blue100};
-         width: 3px;
-         height: 3px;
-         box-shadow:
-            2px 0 0 ${theme.blue100},
-            5px 0 0 ${theme.blue100},
-            5px -2px 0 ${theme.blue100},
-            5px -4px 0 ${theme.blue100},
-            5px -6px 0 ${theme.blue100},
-            5px -8px 0 ${theme.blue100};
-         transform: rotate(45deg);
-         content: '';
-      }
-   }
    @media (min-width: 990px) {
       float: left;
       max-width: 300px;
@@ -134,7 +80,7 @@ export const Results = styled.div`
       }
    }
    h2 {
-      margin: -8px 0 10px 0;
+      margin: -8px 0 20px 0;
    }
    .count {
       font-size: 20px;
@@ -145,8 +91,20 @@ export const Results = styled.div`
    .select {
       display: none;
    }
+   .wrapper-select-sorting {
+      position: absolute;
+      margin-top: -27px;
+      right: 25px;
+      float: right;
+      max-width: 200px;
+      width: 100%;
+      ul {
+         left: auto;
+         right: 0;
+      }
+   }
    .row {
-      margin-top: 20px;
+      margin-top: 30px;
       display: grid;
       grid-template-columns: repeat(1, 1fr);
       grid-gap: 22px;

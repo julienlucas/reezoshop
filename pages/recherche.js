@@ -5,15 +5,29 @@ import PropTypes from 'prop-types';
 import SearchWrapper from '../components/Search/SearchWrapper';
 import useShop from '../hooks/useShop';
 import React, { useEffect, useState } from 'react';
+import { sortAsc, sortDsc } from '../utils/sorting';
 
 const getAdsQuery = getAds.loc.source.body;
 
 function Search({ data, search, shop }) {
   const [cars, setCars] = useState([]);
   const [count, setCount] = useState([]);
+  const [filtersSaved, setfiltersSaved] = useState({});
   const shopFromContext = useShop();
   const agence = data.agencies[shopFromContext.subdomain];
   const cityShop = shopFromContext.subdomain;
+
+  const onSort = sorting => {
+    if (sorting === 'prices-dsc') {
+      setCars(prevState => sortDsc(prevState, 'price'));
+    } else if (sorting === 'prices-asc') {
+      setCars(prevState => sortAsc(prevState, 'price'));
+    }
+  };
+
+  const onFilters = async filters => {
+    console.log(filters);
+  };
 
   const onLoadMore = async nbrCars => {
     const queryParams = {
@@ -30,12 +44,19 @@ function Search({ data, search, shop }) {
   }, [count])
 
   useEffect(() => {
-    setCars(search.ads.ads);
+    setCars(sortAsc(search.ads.ads, 'price'));
   }, [search])
 
   return (
     <Layout nav={data.nav} phone={agence.phone}>
-      <SearchWrapper cars={cars} cityShop={cityShop} count={count} onLoadMore={nbrCars => onLoadMore(nbrCars)} />
+      <SearchWrapper
+        cars={cars}
+        cityShop={cityShop}
+        count={count}
+        onFilters={filters => onFilters(filters)}
+        onLoadMore={nbrCars => onLoadMore(nbrCars)}
+        onSort={sorting => onSort(sorting)}
+      />
     </Layout>
   );
 };
@@ -61,7 +82,7 @@ Search.getInitialProps = async ({ shop }) => {
 
 Search.propTypes = {
    data: PropTypes.object.isRequired,
-   search: PropTypes.array.isRequired,
+   search: PropTypes.object.isRequired,
    shop: PropTypes.object.isRequired
 };
 

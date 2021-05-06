@@ -1,23 +1,38 @@
 import Ad from './Ad';
+import PropTypes from 'prop-types';
 import SearchResults from './SearchResults';
 import styled from 'styled-components'
 import { Aside, Wrapper } from './styles';
-import { theme } from '../../constants/theme'
+import { theme } from '../../constants/theme';
 
-function SearchWrapper({ cars, cityShop, count, onLoadMore }) {
+function SearchWrapper({ cars, cityShop, count, onFilters, onLoadMore, onSort }) {
   return (
     <Wrapper>
       <div className="container">
         <Aside>
-          <Filters/>
+          <Filters />
           <div className="wrapper-ad-desktop">
             <Ad/>
           </div>
         </Aside>
-        <SearchResults cars={cars} cityShop={cityShop} count={count} onLoadMore={nbrCars => onLoadMore(nbrCars)} />
+        <SearchResults
+          cars={cars}
+          cityShop={cityShop}
+          count={count}
+          onLoadMore={nbrCars => onLoadMore(nbrCars)}
+          onSort={sorting => onSort(sorting)}
+        />
       </div>
     </Wrapper>
   );
+};
+
+SearchWrapper.propTypes = {
+  cars: PropTypes.array.isRequired,
+  cityShop: PropTypes.string.isRequired,
+  count: PropTypes.array.isRequired,
+  onLoadMore: PropTypes.func.isRequired,
+  onSort: PropTypes.func.isRequired
 };
 
 export default SearchWrapper;

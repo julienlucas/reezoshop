@@ -1,11 +1,13 @@
 import CardCar from '../CardCar';
 import PropTypes from 'prop-types';
 import ReactSelect from 'react-select';
-import React, { useEffect, useState } from 'react';
 import SearchAd from './Ad';
+import Select from '../Select';
+import React, { useEffect, useState } from 'react';
 import { Results } from './styles';
+import { sorting } from '../../constants/search';
 
-const SearchResults = ({ cars, cityShop, count, onLoadMore }) => {
+const SearchResults = ({ cars, cityShop, count, onLoadMore, onSort }) => {
   const [nbrCars, setNbrCars] = useState(12);
 
   const capitalizeFirstLetter = str => {
@@ -27,13 +29,14 @@ const SearchResults = ({ cars, cityShop, count, onLoadMore }) => {
       <h2>Land Rover Range Rover Evoque neuves en vente <span className="blue">près de {capitalizeFirstLetter(cityShop)}</span></h2>
       <p className="count"><span className="blue">{count}</span> voitures dispos</p>
 
-      <ReactSelect
-        className="select"
-        instanceId={String}
-        placeholder="Meilleures réductions"
-        styles={customStyles}
-        components={{ DropdownIndicator:() => null, IndicatorSeparator:() => null }}
-      />
+      <div className="wrapper-select-sorting">
+        <Select
+          name="sorting"
+          options={sorting}
+          placeholder="Meilleures prix"
+          onChange={sorting => onSort(sorting)}
+        />
+      </div>
 
       <div className="row">
         {cars?.map(car =>
@@ -67,7 +70,7 @@ const SearchResults = ({ cars, cityShop, count, onLoadMore }) => {
 SearchResults.propTypes = {
    cars: PropTypes.array.isRequired,
    cityShop: PropTypes.string,
-   count: PropTypes.string.isRequired,
+   count: PropTypes.array.isRequired,
    onLoadMore: PropTypes.func
 };
 
