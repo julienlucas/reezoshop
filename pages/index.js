@@ -1,6 +1,7 @@
+import graphQLQuery from '../utils/graphql';
+import getAds from './.graphql';
 import Layout from '../components/Layout';
 import PropTypes from 'prop-types';
-import graphQLQuery from '../utils/graphql';
 import useShop from '../hooks/useShop';
 import Vehicules from '../components/Home/Vehicules';
 import Constructeurs from '../components/Home/Constructeurs';
@@ -9,6 +10,8 @@ import Map from '../components/Home/Map';
 import Interlocuteurs from '../components/Home/Interlocuteurs';
 import Pourquoi from '../components/Home/Pourquoi';
 import FAQS from '../components/Home/FAQS';
+
+const getAdsQuery = getAds.loc.source.body;
 
 function HomePage({ cars, data, shop }) {
   const shopFromContext = useShop();
@@ -31,17 +34,22 @@ function HomePage({ cars, data, shop }) {
 };
 
 HomePage.getInitialProps = async ({ shop }) => {
+  const initialQueryParams = {
+    queryParams: {
+      size: 12
+    }
+  };
+
   let data;
   let cars;
   try {
     data = await mockData;
-    cars = await graphQLQuery(initialQuery);
+    cars = await graphQLQuery(getAdsQuery, initialQueryParams);
   } catch (err) {
 
   }
 
   cars = cars.ads.ads;
-
   return { data, cars, shop };
 };
 
@@ -52,32 +60,6 @@ HomePage.propTypes = {
 };
 
 export default HomePage;
-
-const initialQuery = `
-  query getAds {
-    ads(queryParams: {
-      size: 3
-    }){
-      count
-      ads {
-        _id
-        brand
-        colors { ext }
-        energy
-        gearbox
-        images
-        isNew
-        mileage
-        model
-        oneImage:images(count: 1, width: W320)
-        price
-        prices { originalPrice: originalCommercializationPrice, percentage }
-        thumbs:images(width: W320)
-        year
-      }
-    }
-  }
-`
 
 const mockData = {
   nav: [

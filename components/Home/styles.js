@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { theme } from '../../constants/theme'
 
 export const SectionAComp = styled.section`
-  padding: 85px 0 40px;
+  padding: 35px 0 40px;
   h2 {
     position: relative;
     margin: 0 auto 15px;

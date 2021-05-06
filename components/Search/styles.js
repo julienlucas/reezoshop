@@ -2,21 +2,27 @@ import styled from 'styled-components'
 import { theme } from '../../constants/theme'
 
 export const Wrapper = styled.section`
-   margin: 135px 0;
+   margin: 80px 0;
    .container {
       padding: 0 25px;
       max-width: 1400px;
    }
+   @media (min-width: 768px) {
+      margin: 135px 0;
+   }
 `
 
 export const Aside = styled.aside`
-   float: left;
-   max-width: 300px;
+   float: none;
+   max-width: 100%;
    width: 100%;
    .wrapper-filters {
       padding: 21px 16px 27px;
       background: ${theme.grey300};
       border-radius: 4px;
+   }
+   .wrapper-ad-desktop {
+      display: none;
    }
    h3 {
       margin: 0;
@@ -48,33 +54,6 @@ export const Aside = styled.aside`
       position: absolute;
       margin: 6px 0 0 6px;
       font-size: 13px;
-   }
-   .wrapper-ad {
-      margin-top: 25px;
-      border-radius: 4px;
-      overflow: hidden;
-      .box-text {
-         position: absolute;
-         width: 300px;
-         height: 235px;
-         display: flex;
-         align-items: center;
-         z-index: 2;
-         .btn-secondary {
-            margin: 0 36px;
-            width: calc(100% - 72px);
-            padding: 0;
-            font-size: 14px;
-         }
-         p {
-            width: 100%;
-            padding: 0 10px 15px 10px;
-            font-size: 24px;
-            font-weight: 700;
-            color: white;
-            text-align: center;
-         }
-      }
    }
 
    ${''/* Checkbox */}
@@ -133,12 +112,27 @@ export const Aside = styled.aside`
          content: '';
       }
    }
+   @media (min-width: 990px) {
+      float: left;
+      max-width: 300px;
+      .wrapper-ad-desktop {
+         display: block;
+      }
+   }
 `
 
 export const Results = styled.div`
-   padding-left: 51px;
-   float: right;
-   width: calc(100% - 300px);
+   padding: 0 0 0 0;
+   float: none;
+   width: 100%;
+   .wrapper-ad-mobile {
+      display: block;
+      margin-top: 64px;
+      .box-text {
+         width: calc(100% - 51px);
+         justify-content: center;
+      }
+   }
    h2 {
       margin: -8px 0 10px 0;
    }
@@ -148,11 +142,49 @@ export const Results = styled.div`
         font-weight: 700;
      }
    }
+   .select {
+      display: none;
+   }
    .row {
       margin-top: 20px;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(1, 1fr);
       grid-gap: 22px;
-      width: calc(100% + 51px);
+      width: 100%;
+      &.row-btn {
+         display: block;
+         .btn {
+            width: 100%;
+         }
+      }
+   }
+   @media (min-width: 990px) {
+      float: left;
+      width: calc(100% - 300px);
+      padding: 0 51px;
+      .select {
+         display: block;
+      }
+      .row {
+         width: calc(100% + 51px);
+         &.row-btn {
+            display: grid;
+            .btn {
+               width: auto;
+            }
+         }
+      }
+      .wrapper-ad-mobile {
+         display: none;
+         .box-text {
+            width: calc(100% - 51px);
+            justify-content: center;
+         }
+      }
+   }
+   @media (min-width: 750px) {
+      .row {
+         grid-template-columns: repeat(3, 1fr);
+      }
    }
 `

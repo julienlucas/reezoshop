@@ -84,16 +84,16 @@ const NavComp = (props) => {
         <Mobile data={props} />
       </Nav>
 
-      {router.pathname === '/' &&
-        <div>
-          <button className="btn btn-primary btn-phone">
+      {(router.pathname === '/' || router.pathname === '/recherche') &&
+        <BottomNavMobile>
+          <button className={`btn btn-primary btn-phone ${router.pathname === '/recherche' ? 'search-page' : ''}`}>
             <a href={`tel:${props.phone}`} rel="noopener noreferrer nofollow" target="_blank">
               <TelIcon className="icon" />{phoneFormated}
             </a>
           </button>
 
           <button className="btn btn-secondary btn-rdv">Prendre rendez-vous</button>
-        </div>}
+        </BottomNavMobile>}
     </Wrapper>
   );
 };
@@ -217,13 +217,16 @@ const customStyles = {
 export const Wrapper = styled.div`
   .btn-phone {
     position: relative;
-    top: 635px;
+    top: auto;
     margin-right: 0;
     float: right;
     right: 20px;
     width: calc(50vw - 26px);
     padding: 0 0 0 16px;
     z-index: 3;
+    &.search-page {
+      display: block;
+    }
     .icon {
       position: absolute;
       height: 25px;
@@ -236,13 +239,15 @@ export const Wrapper = styled.div`
   }
   .btn-rdv {
     position: relative;
-    top: 635px;
     display: block;
     left: 20px;
     width: calc(50vw - 26px);
     padding: 0;
   }
-  @media (min-width: 768px) {
+  @media (min-width: 990px) {
+    &.search-page {
+      display: none;
+    }
     .btn-phone {
       position: fixed;
       top: 23px;
@@ -301,6 +306,9 @@ export const Nav = styled.nav`
       }
     }
   }
+  .search {
+    display: none;
+  }
   .logo {
     position: relative;
     top: 8px;
@@ -324,7 +332,24 @@ export const Nav = styled.nav`
       top: 27px;
     }
   }
+  @media (min-width: 750px) {
+    .search {
+      display: block;
+    }
+  }
 `;
+
+export const BottomNavMobile = styled.div`
+  position: fixed;
+  z-index: 8;
+  width: 100%;
+  background: white;
+  bottom: 0;
+  padding: 20px 0;
+  @media (min-width: 990px) {
+    background: transparent;
+  }
+`
 
 export const Hero = styled.div`
   position: relative;

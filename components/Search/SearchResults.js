@@ -1,24 +1,30 @@
 import CardCar from '../CardCar';
 import PropTypes from 'prop-types';
 import ReactSelect from 'react-select';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import SearchAd from './Ad';
 import { Results } from './styles';
 
-const SearchResults = ({ agence, cars, count, onLoadMore }) => {
+const SearchResults = ({ cars, cityShop, count, onLoadMore }) => {
   const [nbrCars, setNbrCars] = useState(12);
-
-  const loadMore = () => {
-    setNbrCars((prevState) => prevState + 12);
-    onLoadMore(nbrCars);
-  };
 
   const capitalizeFirstLetter = str => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
+  const loadMore = () => {
+    setNbrCars((prevState) => prevState + 12);
+  };
+
+  useEffect(() => {
+    if (nbrCars > 12) {
+      onLoadMore(nbrCars);
+    }
+  }, [nbrCars])
+
   return (
     <Results>
-      <h2>Land Rover Range Rover Evoque neuves en vente <span className="blue">près de {capitalizeFirstLetter(agence)}</span></h2>
+      <h2>Land Rover Range Rover Evoque neuves en vente <span className="blue">près de {capitalizeFirstLetter(cityShop)}</span></h2>
       <p className="count"><span className="blue">{count}</span> voitures dispos</p>
 
       <ReactSelect
@@ -41,21 +47,26 @@ const SearchResults = ({ agence, cars, count, onLoadMore }) => {
             modele={car.model}
             thumbnail={car.oneImage[0]}
             price={car.price}
+            isNew={car.isNew}
           />)}
       </div>
 
-      <div className="row">
+      <div className="row row-btn">
         <div/>
         <button className="btn btn-tertiary" onClick={loadMore}>Voir plus de véhicules</button>
         <div/>
+      </div>
+
+      <div className="wrapper-ad-mobile">
+        <SearchAd />
       </div>
     </Results>
   );
 };
 
 SearchResults.propTypes = {
-   agence: PropTypes.string,
    cars: PropTypes.array.isRequired,
+   cityShop: PropTypes.string,
    count: PropTypes.string.isRequired,
    onLoadMore: PropTypes.func
 };

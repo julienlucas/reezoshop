@@ -1,45 +1,61 @@
 import graphQLQuery from '../utils/graphql';
+import getAds from './.graphql';
 import Layout from '../components/Layout';
 import PropTypes from 'prop-types';
 import SearchWrapper from '../components/Search/SearchWrapper';
 import useShop from '../hooks/useShop';
 import React, { useEffect, useState } from 'react';
 
+const getAdsQuery = getAds.loc.source.body;
+
 function Search({ data, search, shop }) {
   const [cars, setCars] = useState([]);
   const [count, setCount] = useState([]);
   const shopFromContext = useShop();
   const agence = data.agencies[shopFromContext.subdomain];
-  const city = shopFromContext.subdomain;
+  const cityShop = shopFromContext.subdomain;
 
   const onLoadMore = async nbrCars => {
-    console.log(nbrCars)
+    const queryParams = {
+      queryParams: {
+        size: nbrCars
+      }
+    };
+    const newSearch = await graphQLQuery(getAdsQuery, queryParams);
+    setCars(newSearch.ads.ads);
   };
 
   useEffect(() => {
-    setCount(search.ads.count)
+    setCount(search.ads.count);
   }, [count])
 
   useEffect(() => {
-    setCars(search.ads.ads)
+    setCars(search.ads.ads);
   }, [search])
 
   return (
     <Layout nav={data.nav} phone={agence.phone}>
-      <SearchWrapper agence={city} cars={cars} count={count} onLoadMore={nbrCars => onLoadMore(nbrCars)} />
+      <SearchWrapper cars={cars} cityShop={cityShop} count={count} onLoadMore={nbrCars => onLoadMore(nbrCars)} />
     </Layout>
   );
 };
 
 Search.getInitialProps = async ({ shop }) => {
+  const initialQueryParams = {
+    queryParams: {
+      size: 12
+    }
+  };
   let data;
   let search;
+
   try {
     data = await mockData;
-    search = await graphQLQuery(initialQuery);
+    search = await graphQLQuery(getAdsQuery, initialQueryParams);
   } catch (err) {
 
   }
+
   return { data, search, shop };
 };
 
@@ -50,32 +66,6 @@ Search.propTypes = {
 };
 
 export default Search;
-
-const initialQuery = `
-  query getAds {
-    ads(queryParams: {
-      size: 12
-    }){
-      count
-      ads {
-        _id
-        brand
-        colors { ext }
-        energy
-        gearbox
-        images
-        isNew
-        mileage
-        model
-        oneImage:images(count: 1, width: W320)
-        price
-        prices { originalPrice: originalCommercializationPrice, percentage }
-        thumbs:images(width: W320)
-        year
-      }
-    }
-  }
-`
 
 const mockData = {
   nav: [
