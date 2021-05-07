@@ -2,6 +2,7 @@ import Link from 'next/link';
 import styled from 'styled-components'
 import TelIcon from '../../svgs/tel.svg';
 import React, { useState } from 'react';
+import { GlobalStyles } from '../../constants/global-styles';
 import { theme } from '../../constants/theme';
 
 function Mobile({ data }) {

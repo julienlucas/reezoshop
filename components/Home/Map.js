@@ -4,7 +4,7 @@ import MarkerIcon from '../../svgs/marker-b.svg';
 import React, { useState, useEffect } from 'react';
 import { SectionDComp } from './styles';
 
-function Map({ data }) {
+const Map = ({ data }) => {
   const [tab, setTab] = useState(1);
 
   return (
@@ -32,7 +32,7 @@ function Map({ data }) {
 
 export default Map;
 
-function GoogleMap({ data, tab }) {
+const GoogleMap = ({ data, tab }) => {
   const [mapURL, setMapURL] = useState('');
   const center = {lat: 43.9178047, lng: 4.8899898};
   const zoom = 15;
@@ -43,6 +43,7 @@ function GoogleMap({ data, tab }) {
 
   useEffect(() => {
   }, [mapURL])
+
   return (
     <div className="google-map">
       <GoogleMapReact

@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import TelIcon from '../../svgs/tel.svg';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { GlobalStyles } from '../../constants/global-styles';
 import { theme } from '../../constants/theme';
 
 let widthSelect = '20px';

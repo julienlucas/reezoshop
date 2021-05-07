@@ -5,9 +5,20 @@ import Slider from 'react-slick';
 import { SectionCComp } from './styles';
 import React, { useEffect, useState } from 'react';
 
-function Promos({ subHeadline }) {
+function Promotions({ subHeadline }) {
   const [occasionPic, setOccasionPic] = useState('/images/promo-occasion.png');
   const [neufPic, setNeufPic] = useState('/images/promo-neuf.png');
+
+  const sliderSettings = {
+    className: 'slider',
+    arrows: false,
+    centerMode: false,
+    adaptiveHeight: true,
+    slidesToScroll: 1,
+    focusOnSelect: true,
+    infinite: true,
+    variableWidth: true
+  };
 
   useEffect(() => {
     // Changement images src au resize
@@ -65,19 +76,8 @@ function Promos({ subHeadline }) {
   );
 };
 
-Promos.propTypes = {
+Promotions.propTypes = {
    subHeadline: PropTypes.string
 };
 
-export default Promos;
-
-const sliderSettings = {
-  className: 'slider',
-  arrows: false,
-  centerMode: false,
-  adaptiveHeight: true,
-  slidesToScroll: 1,
-  focusOnSelect: true,
-  infinite: true,
-  variableWidth: true
-};
+export default Promotions;

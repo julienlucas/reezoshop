@@ -38,7 +38,7 @@ const CardAutomaker = ({ constructeur }) => {
   );
 };
 
-function Logo({ constructeur }) {
+const Logo = ({ constructeur }) => {
   if (constructeur == 'Audi') {
     return <AudiIcon/>
   } else if (constructeur == 'BMW') {

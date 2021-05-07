@@ -13,7 +13,7 @@ import FAQS from '../components/Home/FAQS';
 
 const getAdsQuery = getAds.loc.source.body;
 
-function HomePage({ data, newCars, oldCars, shop }) {
+const HomePage = ({ data, newCars, oldCars, shop }) => {
   const shopFromContext = useShop();
   // console.log('shopFromContext', shopFromContext);
   // console.log(shop.subDomain);

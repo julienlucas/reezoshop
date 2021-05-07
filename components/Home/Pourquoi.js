@@ -1,9 +1,8 @@
 import NextImageLazy from '../../utils/imgLazy';
-// import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { SectionFComp } from './styles';
 
-function Pourquoi({ data }) {
+function Why({ data }) {
   return (
     <SectionFComp>
       <div className="container">
@@ -73,7 +72,7 @@ function Pourquoi({ data }) {
   );
 };
 
-export default Pourquoi;
+export default Why;
 
 function ProgressRing({ percents }) {
   const [radius, setRadius] = useState(50);

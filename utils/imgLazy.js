@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import React, { useState } from 'react';
 
-function NextImageLazy({ alt, layout, width, height, src }) {
+const NextImageLazy = ({ alt, layout, width, height, src }) => {
    const [smoothLoad, setSmoothLoad] = useState(false);
 
    const isReady = () => {
@@ -24,8 +24,6 @@ function NextImageLazy({ alt, layout, width, height, src }) {
    )
 };
 
-export default NextImageLazy;
-
 NextImageLazy.propTypes = {
    alt: PropTypes.string,
    height: PropTypes.number,
@@ -33,6 +31,8 @@ NextImageLazy.propTypes = {
    src: PropTypes.string.isRequired,
    width: PropTypes.number
 };
+
+export default NextImageLazy;
 
 export const NextImage = styled.div`
    opacity: 0;

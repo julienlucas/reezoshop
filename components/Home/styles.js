@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { GlobalStyles } from '../../constants/global-styles';
 import { theme } from '../../constants/theme'
 
 export const SectionAComp = styled.section`

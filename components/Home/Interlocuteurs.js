@@ -2,7 +2,7 @@ import NextImageLazy from '../../utils/imgLazy';
 import React from 'react';
 import { SectionEComp } from './styles';
 
-function Interlocuteurs({ interlocuteurs }) {
+const Interlocuteurs = ({ interlocuteurs }) => {
   return (
     <SectionEComp>
       <div className="container">
@@ -18,7 +18,7 @@ function Interlocuteurs({ interlocuteurs }) {
 
 export default Interlocuteurs;
 
-function CardInterlocuteur({ interlo }) {
+const CardInterlocuteur = ({ interlo }) => {
   return (
     <div className="card-interlocuteur">
       <div className="picture">

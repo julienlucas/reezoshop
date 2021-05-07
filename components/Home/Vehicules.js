@@ -1,11 +1,22 @@
+import CardCar from '../CardCar';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Slider from 'react-slick';
-import CardCar from '../CardCar';
 import { SectionAComp } from './styles';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-function Vehicules({ newCars, oldCars, subHeadline }) {
+const Vehicules = ({ newCars, oldCars, subHeadline }) => {
+  const sliderSettings = {
+    className: 'slider',
+    arrows: false,
+    centerMode: false,
+    adaptiveHeight: true,
+    slidesToScroll: 1,
+    focusOnSelect: true,
+    infinite: true,
+    variableWidth: true
+  };
+
   return (
     <SectionAComp>
       <h2 className="text-center">Les affaires du mois dans votre <span className="blue">{subHeadline}</span></h2>
@@ -71,14 +82,3 @@ Vehicules.propTypes = {
 };
 
 export default Vehicules;
-
-const sliderSettings = {
-  className: 'slider',
-  arrows: false,
-  centerMode: false,
-  adaptiveHeight: true,
-  slidesToScroll: 1,
-  focusOnSelect: true,
-  infinite: true,
-  variableWidth: true
-};

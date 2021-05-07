@@ -2,7 +2,7 @@ import NextImageLazy from '../../utils/imgLazy';
 import React from 'react';
 import { SectionGComp } from './styles';
 
-function FAQS({ faqs }) {
+const FAQS = ({ faqs }) => {
   return (
     <SectionGComp>
       <div className="container">

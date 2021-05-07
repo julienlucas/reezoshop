@@ -1,11 +1,12 @@
 import React from 'react';
 import App from 'next/app';
 import Head from 'next/head'
-import { ThemeProvider } from 'styled-components'
-import { theme, GlobalStyles } from '../constants/theme'
-import { NextSeo } from 'next-seo'
-import SEO from '../next-seo.config'
 import hocs from '../hooks/hocs';
+import SEO from '../next-seo.config'
+import { ThemeProvider } from 'styled-components'
+import { GlobalStyles } from '../constants/global-styles'
+import { theme } from '../constants/theme'
+import { NextSeo } from 'next-seo'
 
 class RZSApp extends App {
    static async getInitialProps({ Component, ctx }) {

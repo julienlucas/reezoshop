@@ -1,6 +1,7 @@
 import MarkerIcon from '../svgs/marker.svg';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { GlobalStyles } from '../constants/global-styles';
 import { theme } from '../constants/theme';
 
 const BoxGoogleRating = ({ adresse, headline, googleAvis, googleNote }) => {
