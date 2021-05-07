@@ -28,8 +28,8 @@ const BoxGoogleRating = ({ adresse, headline, googleAvis, googleNote }) => {
 BoxGoogleRating.propTypes = {
    adresse: PropTypes.string,
    headline: PropTypes.string,
-   googleNote: PropTypes.number,
-   googleAvis: PropTypes.number,
+   googleNote: PropTypes.string,
+   googleAvis: PropTypes.string
 };
 
 export default BoxGoogleRating;

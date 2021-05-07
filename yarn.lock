@@ -496,6 +496,12 @@ babel-eslint@^10.1.0:
     eslint-visitor-keys "^1.0.0"
     resolve "^1.12.0"
 
+babel-plugin-import-graphql@^2.8.1:
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/babel-plugin-import-graphql/-/babel-plugin-import-graphql-2.8.1.tgz#dec677dc47327181d69e8c451aff290460ca2ed6"
+  dependencies:
+    graphql-tag "^2.9.2"
+
 babel-plugin-inline-react-svg@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-inline-react-svg/-/babel-plugin-inline-react-svg-2.0.1.tgz#68c9c119d643a8f2d7bf939b942534d89ae3ade9"
@@ -1756,11 +1762,15 @@ graceful-fs@^4.1.2:
   version "4.2.6"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.6.tgz#ff040b2b0853b23c3d31027523706f1885d76bee"
 
-graphql-tag@^2.10.0:
+graphql-tag@^2.9.2:
   version "2.12.4"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.12.4.tgz#d34066688a4f09e72d6f4663c74211e9b4b7c4bf"
   dependencies:
     tslib "^2.1.0"
+
+graphql@^15.5.0:
+  version "15.5.0"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-15.5.0.tgz#39d19494dbe69d1ea719915b578bf920344a69d5"
 
 has-bigints@^1.0.1:
   version "1.0.1"
@@ -2387,12 +2397,6 @@ natural-compare@^1.4.0:
 negotiator@0.6.2:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.2.tgz#feacf7ccf525a77ae9634436a64883ffeca346fb"
-
-next-plugin-graphql@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/next-plugin-graphql/-/next-plugin-graphql-0.0.2.tgz#31625abe1cef282194063533522026010a9d6255"
-  dependencies:
-    graphql-tag "^2.10.0"
 
 next-seo@^4.23.0:
   version "4.24.0"

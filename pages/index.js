@@ -1,6 +1,7 @@
+import graphQLQuery from '../utils/graphql';
+import getAds from './.graphql';
 import Layout from '../components/Layout';
 import PropTypes from 'prop-types';
-import graphQLQuery from '../utils/graphql';
 import useShop from '../hooks/useShop';
 import Vehicules from '../components/Home/Vehicules';
 import Constructeurs from '../components/Home/Constructeurs';
@@ -10,7 +11,9 @@ import Interlocuteurs from '../components/Home/Interlocuteurs';
 import Pourquoi from '../components/Home/Pourquoi';
 import FAQS from '../components/Home/FAQS';
 
-function HomePage({ cars, data, shop }) {
+const getAdsQuery = getAds.loc.source.body;
+
+function HomePage({ data, newCars, oldCars, shop }) {
   const shopFromContext = useShop();
   // console.log('shopFromContext', shopFromContext);
   // console.log(shop.subDomain);
@@ -19,7 +22,7 @@ function HomePage({ cars, data, shop }) {
 
   return (
     <Layout nav={data.nav} phone={agence.phone} headline={agence.headline} home>
-      <Vehicules cars={cars} subHeadline={agence.subHeadline} />
+      <Vehicules newCars={newCars} oldCars={oldCars} subHeadline={agence.subHeadline} />
       <Constructeurs constructeurs={data.constructeurs} />
       <Promos subHeadline={agence.subHeadline} />
       <Map data={agence} />
@@ -32,52 +35,32 @@ function HomePage({ cars, data, shop }) {
 
 HomePage.getInitialProps = async ({ shop }) => {
   let data;
-  let cars;
+  let newCars;
+  let oldCars;
+  const paramsNewCars = {queryParams: { size: 3, onlyNew: true }};
+  const paramsOldCars = {queryParams: { size: 3, onlyNew: false }};
+
   try {
     data = await mockData;
-    cars = await graphQLQuery(initialQuery);
+    newCars = await graphQLQuery(getAdsQuery, paramsNewCars);
+    oldCars = await graphQLQuery(getAdsQuery, paramsOldCars);
   } catch (err) {
 
   }
 
-  cars = cars.ads.ads;
-
-  return { data, cars, shop };
+  newCars = newCars.ads.ads;
+  oldCars = oldCars.ads.ads;
+  return { data, newCars, oldCars, shop };
 };
 
 HomePage.propTypes = {
-  // cars: PropTypes.array.isRequired,
+  oldCars: PropTypes.array.isRequired,
+  newCars: PropTypes.array.isRequired,
   data: PropTypes.object.isRequired,
   shop: PropTypes.object.isRequired
 };
 
 export default HomePage;
-
-const initialQuery = `
-    query getAds {
-    ads(queryParams: {
-      size: 3
-    }){
-      count
-      ads {
-        _id
-        brand
-        colors { ext }
-        energy
-        gearbox
-        images
-        isNew
-        mileage
-        model
-        oneImage:images(count: 1, width: W320)
-        price
-        prices { originalPrice: originalCommercializationPrice, percentage }
-        thumbs:images(width: W320)
-        year
-      }
-    }
-  }
-`
 
 const mockData = {
   nav: [

@@ -53,7 +53,7 @@ CardCar.propTypes = {
    energy: PropTypes.string,
    gearbox: PropTypes.string,
    model: PropTypes.string,
-   mileage: PropTypes.string,
+   mileage: PropTypes.number,
    price: PropTypes.number,
    thumbnail: PropTypes.string,
    year: PropTypes.string

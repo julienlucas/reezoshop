@@ -5,7 +5,7 @@ import CardCar from '../CardCar';
 import { SectionAComp } from './styles';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-function Vehicules({ cars, subHeadline }) {
+function Vehicules({ newCars, oldCars, subHeadline }) {
   return (
     <SectionAComp>
       <h2 className="text-center">Les affaires du mois dans votre <span className="blue">{subHeadline}</span></h2>
@@ -19,7 +19,7 @@ function Vehicules({ cars, subHeadline }) {
         <TabPanel>
           <div className="container">
             <Slider {...sliderSettings}>
-              {cars?.map(car =>
+              {oldCars?.map(car =>
                 <CardCar
                   key={car._id}
                   year={car.year}
@@ -39,7 +39,7 @@ function Vehicules({ cars, subHeadline }) {
         <TabPanel>
           <div className="container">
             <Slider {...sliderSettings}>
-              {cars?.map(car =>
+              {newCars?.map(car =>
                 <CardCar
                   key={car._id}
                   year={car.year}
@@ -65,7 +65,8 @@ function Vehicules({ cars, subHeadline }) {
 };
 
 Vehicules.propTypes = {
-   cars: PropTypes.Object,
+   newCars: PropTypes.array.isRequired,
+   oldCars: PropTypes.array.isRequired,
    subHeadline: PropTypes.string
 };
 
