@@ -1,7 +1,5 @@
 import ArrowBottomIcon from '../../svgs/arrow-bottom.svg';
 import Image from 'next/image';
-import graphQLQuery from '../../utils/graphql';
-import getAds from '../../pages/.graphql';
 import Link from 'next/link';
 import ReactSelect from 'react-select';
 import Mobile from './Mobile';
@@ -10,10 +8,7 @@ import styled from 'styled-components';
 import TelIcon from '../../svgs/tel.svg';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { GlobalStyles } from '../../constants/global-styles';
 import { theme } from '../../constants/theme';
-
-const getAdsQuery = getAds.loc.source.body;
 
 let widthSelect = '20px';
 
@@ -58,22 +53,23 @@ const NavComp = (props) => {
   return (
     <Wrapper>
       <Nav className={`${scroll > top ? ' scroll' : null} ${router.pathname !== '/' ? 'bottomShadow' : ''}`}>
-        <div className={`overlay-mobile ${overlayMobile ? 'show' : 'hide'}`} onClick={(e) => setOverlayMobile(false)} />
+        <div className={`overlay-mobile ${overlayMobile ? 'show' : 'hide'}`} onClick={() => setOverlayMobile(false)} />
         <div className="logo">
           <Link href="/">
-            <Image
-              src="/images/logo-reezocar.svg"
-              alt="reezocar"
-              width={244}
-              height={66}
-              layout="responsive"
-            />
+            <a>
+              <Image
+                src="/images/logo-reezocar.svg"
+                alt="reezocar"
+                width={244}
+                height={66}
+                layout="responsive"
+              />
+            </a>
           </Link>
         </div>
 
         <div className="select" onClick={(e) => addOverlayMobile(e)}>
           <ReactSelect
-            instanceId={String}
             placeholder={props.nav[0].label}
             options={props.nav}
             styles={customStyles}
@@ -88,7 +84,7 @@ const NavComp = (props) => {
       <Mobile data={props} />
 
       {router.pathname === '/' &&
-        <div>
+        <BottomNavMobile>
           <button className="btn btn-primary btn-phone">
             <a href={`tel:${props.phone}`} rel="noopener noreferrer nofollow" target="_blank">
               <TelIcon className="icon" />{phoneFormated}
@@ -96,7 +92,7 @@ const NavComp = (props) => {
           </button>
 
           <button className="btn btn-secondary btn-rdv">Prendre rendez-vous</button>
-        </div>}
+        </BottomNavMobile>}
     </Wrapper>
   );
 };
@@ -241,8 +237,8 @@ export const Wrapper = styled.div`
     }
   }
   .btn-phone {
-    position: relative;
-    top: auto;
+    position: fixed;
+    bottom: 20px;
     margin-right: 0;
     float: right;
     right: 20px;
@@ -251,7 +247,7 @@ export const Wrapper = styled.div`
     z-index: 8;
     .icon {
       position: absolute;
-      height: 25px;
+      height: 30px;
     }
     a {
       display: block;
@@ -260,8 +256,9 @@ export const Wrapper = styled.div`
     }
   }
   .btn-rdv {
-    position: relative;
+    position: fixed;
     display: block;
+    bottom: 20px;
     left: 20px;
     width: calc(50vw - 26px);
     padding: 0;
@@ -365,8 +362,9 @@ export const Nav = styled.nav`
 
 export const BottomNavMobile = styled.div`
   position: fixed;
-  z-index: 7;
+  z-index: 8;
   width: 100%;
+  height: 87px;
   background: white;
   bottom: 0;
   padding: 20px 0;

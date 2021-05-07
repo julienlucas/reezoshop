@@ -197,6 +197,7 @@ export const SectionCComp = styled.section`
 `
 
 export const SectionDComp = styled.section`
+  position: relative;
   padding: 30px 0 10px;
   h2 {
     position: relative;
@@ -228,18 +229,20 @@ export const SectionDComp = styled.section`
   }
   .wrapper {
     position: absolute;
-    top: -210px;
-    left: -50vw;
+    top: 305px;
     height: 360px;
     width: 100vw;
-    z-index: 3;
+    z-index: 1;
+    ul {
+      top: -40px;
+    }
   }
   .container {
     position: relative;
     left: 0;
     right: 0;
     margin: 0 auto;
-    height: 400px;
+    height: 100%;
     display: flex;
     align-items: center;
     padding: 0;
@@ -264,13 +267,13 @@ export const SectionDComp = styled.section`
   .box-infos {
     position: relative;
     background: white;
-    box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.15);
+    box-shadow: none;
     border-radius: 4px;
-    padding: 57px 37px;
+    padding: 0 37px;
     max-width: auto;
     width: 100%;
     display: none;
-    z-index:3;
+    z-index: 3;
     cursor: auto;
     &.active {
       display: block;
@@ -329,10 +332,11 @@ export const SectionDComp = styled.section`
   .btn {
     position: absolute;
     right: 20px;
-    bottom: 50px;
+    bottom: 70px;
     height: 40px;
     font-size: 14px;
     z-index: 2;
+    padding: 0 15px;
   }
   @media (min-width: 990px) {
     h2 {
@@ -343,19 +347,25 @@ export const SectionDComp = styled.section`
         display: block;
       }
     }
-    .google-map, .container, .wrapper {
+    .google-map {
       height: 660px;
     }
     .container {
       padding: 0 40px;
     }
     .wrapper {
-      top: -330px;
-      left: -50vw;
+      top: 295px;
+      left: 0;
+      height: 360px;
+      ul {
+        top: auto;
+      }
     }
     .box-infos {
       max-width: 507px;
+      padding: 57px 37px;
       display: block;
+      box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.15);
       .box-address {
         display: block;
       }
@@ -372,8 +382,9 @@ export const SectionDComp = styled.section`
       display: block;
     }
     .btn {
-      right: -30px;
-      bottom: 30px;
+      right: 0px;
+      bottom: -90px;
+      padding: 0 50px;
     }
   }
 `
