@@ -1,5 +1,7 @@
 import ArrowBottomIcon from '../../svgs/arrow-bottom.svg';
 import Image from 'next/image';
+import graphQLQuery from '../../utils/graphql';
+import getAds from '../../pages/.graphql';
 import Link from 'next/link';
 import ReactSelect from 'react-select';
 import Mobile from './Mobile';
@@ -10,6 +12,8 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { GlobalStyles } from '../../constants/global-styles';
 import { theme } from '../../constants/theme';
+
+const getAdsQuery = getAds.loc.source.body;
 
 let widthSelect = '20px';
 
@@ -79,11 +83,9 @@ const NavComp = (props) => {
             value={{ label: selectedOption.value, value: selectedOption.label }}
           />
         </div>
-
-        {router.pathname === '/recherche' && <input type="text" className="search" placeholder="Marque, Modèle" name="search"/>}
-
-        <Mobile data={props} />
       </Nav>
+
+      <Mobile data={props} />
 
       {router.pathname === '/' &&
         <div>
@@ -100,15 +102,28 @@ const NavComp = (props) => {
 };
 
 const HeroComp = ({ headline }) => {
-  const [form, setForm] = useState('');
+  const router = useRouter();
+  const [search, setSearch] = useState('');
 
   const onChange = e => {
-    const { name, value } = e.target
-    setForm({
-      ...form,
-      [name]: value
-    })
+    e.preventDefault();
+    setSearch(e.target.value);
   };
+
+  const seeAllCars = () => {
+    router.push(`/recherche`);
+  };
+
+  useEffect(() => {
+    const input = document.getElementById('search');
+    input.addEventListener('keyup', e => {
+      if (e.keyCode === 13) {
+        e.preventDefault();
+        const match = input.value;
+        router.push(`/recherche?match=${match}`);
+      }
+    });
+  }, [])
 
   return (
     <Hero>
@@ -116,27 +131,26 @@ const HeroComp = ({ headline }) => {
         <div>
           <h1>{headline}</h1>
           <h2 className="sub-headline">Voiture d'occasion et neuves à vendre dans notre agence</h2>
-          <form onSubmit={(e) => onSubmit(e)}>
-            <div className="row">
-              <div className="col col-1">
-                <input
-                  name="car"
-                  type="text"
-                  className={form ? 'active' : null}
-                  placeholder="Marque, Modèle"
-                  value={form}
-                  onChange={onChange}
-                />
-                <SearchIcon className="icon" />
-              </div>
 
-              <div className="col col-2">ou</div>
-
-              <div className="col col-3">
-                <button className="btn btn-primary btn-green" >Voir tous les véhicules</button>
-              </div>
+          <div className="row">
+            <div className="col col-1">
+              <input
+                id="search"
+                type="text"
+                className={search ? 'active' : null}
+                placeholder="Marque, Modèle"
+                value={search}
+                onChange={e => onChange(e)}
+              />
+              <SearchIcon className="icon" />
             </div>
-          </form>
+
+            <div className="col col-2">ou</div>
+
+            <div className="col col-3">
+              <button className="btn btn-primary btn-green" onClick={seeAllCars}>Voir tous les véhicules</button>
+            </div>
+          </div>
         </div>
       </div>
     </Hero>
@@ -216,15 +230,25 @@ const customStyles = {
 };
 
 export const Wrapper = styled.div`
+  .wrapper-header-buttons {
+    &.search-page {
+      .btn-phone {
+        display: block;
+      }
+      .btn-rdv {
+        display: none
+      }
+    }
+  }
   .btn-phone {
     position: relative;
-    top: 635px;
+    top: auto;
     margin-right: 0;
     float: right;
     right: 20px;
     width: calc(50vw - 26px);
     padding: 0 0 0 16px;
-    z-index: 3;
+    z-index: 8;
     .icon {
       position: absolute;
       height: 25px;
@@ -234,17 +258,22 @@ export const Wrapper = styled.div`
       color: white;
       text-decoration: none;
     }
-
   }
   .btn-rdv {
     position: relative;
-    top: 635px;
     display: block;
     left: 20px;
     width: calc(50vw - 26px);
     padding: 0;
   }
-  @media (min-width: 768px) {
+  @media (min-width: 990px) {
+    .wrapper-header-buttons {
+      &.search-page {
+        .btn-phone {
+          display: none;
+        }
+      }
+    }
     .btn-phone {
       position: fixed;
       top: 23px;
@@ -264,7 +293,7 @@ export const Nav = styled.nav`
   width: 100vw;
   height: 58px;
   top: 0;
-  z-index: 9;
+  z-index: 8;
   box-shadow: 0 0 0 rgba(0, 0, 0, 0);
   transition: all .3s ease-out;
   .overlay-mobile {
@@ -274,7 +303,7 @@ export const Nav = styled.nav`
     width: 100vw;
     height: 100vh;
     content: '';
-    z-index: 10;
+    z-index: 8;
     &.show {
       visibility: visible;
       background: rgba(0, 0, 0, 0.3);
@@ -289,7 +318,8 @@ export const Nav = styled.nav`
     box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.12);
   }
   &.bottomShadow {
-    box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.12);
+    border: 1px solid ${theme.grey700};
+    box-shadow: 1px 2px 13px rgba(0, 0, 0, 0);
   }
   .select {
     position: relative;
@@ -313,7 +343,12 @@ export const Nav = styled.nav`
       height: 44px;
     }
   }
-  @media (min-width: 780px) {
+  @media (min-width: 990px) {
+    &.bottomShadow {
+      box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.12);
+    }
+  }
+  @media (min-width: 768px) {
     height: 92px;
     .logo {
       top: 16px;
@@ -327,6 +362,20 @@ export const Nav = styled.nav`
     }
   }
 `;
+
+export const BottomNavMobile = styled.div`
+  position: fixed;
+  z-index: 7;
+  width: 100%;
+  background: white;
+  bottom: 0;
+  padding: 20px 0;
+  box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
+  @media (min-width: 990px) {
+    background: transparent;
+    box-shadow: 0px -4px 10px rgba(0, 0, 0, 0);
+  }
+`
 
 export const Hero = styled.div`
   position: relative;
@@ -370,7 +419,6 @@ export const Hero = styled.div`
     border-radius: 4px;
     border: 1px solid white;
     outline: 0;
-    user-select: none;
     color: ${theme.grey100};
     &.active, &:focus, &:hover {
       border: 1px solid ${theme.black};

@@ -47,7 +47,7 @@ export const MobileWrapper = styled.div`
       transition: all .3s ease-out;
    }
    .btn-mobile {
-      position: absolute;
+      position: fixed;
       top: 20px;
       right: 25px;
       float: right;
@@ -93,8 +93,13 @@ export const MobileWrapper = styled.div`
       padding: 95px 35px;
       background: ${theme.blue100};
       right: -400px;
+      display: none;
+      visibility: hidden;
+      z-index: 9;
       &.open {
          right: 0;
+         display: block;
+         visibility: visible;
       }
       .box-bottom {
          position: fixed;
