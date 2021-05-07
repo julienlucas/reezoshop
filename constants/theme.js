@@ -17,7 +17,9 @@ export const theme = {
 };
 
 export const GlobalStyles = createGlobalStyle`
-  ::selection {background-color: ${theme.orange100}; color: white}
+  ::selection {
+    color: ${theme.black}
+  }
   html,
     body {
       scroll-behavior: smooth;
@@ -187,22 +189,9 @@ export const GlobalStyles = createGlobalStyle`
       appearance: none;
       font-size: 13px;
       background: white;
-      &[type="number"], &[type="text"] {
+      &[type="text"] {
          height: 36px;
          line-height: 1;
-      }
-      &[type="number"] {
-         padding: 0 7px;
-         display: block;
-         width: 100%;
-         &::placeholder {
-           color: ${theme.black} !important;
-         }
-         &::-webkit-inner-spin-button,
-         &::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-         }
       }
       &.search {
         position: relative;

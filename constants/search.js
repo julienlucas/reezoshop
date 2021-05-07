@@ -1,15 +1,15 @@
-export const categories = [
+export const bodies = [
    { value: 'compacte', label: 'Compacte' },
-   { value: 'berline', label: 'Berline' },
+   { value: 'hatchback', label: 'Berline' },
    { value: 'citadine', label: 'Citadine' },
    { value: 'break', label: 'Break' },
    { value: 'monospace', label: 'Monospace' },
    { value: 'suv', label: 'SUV/4x4' },
    { value: 'cabriolet', label: 'Cabriolet' },
-   { value: 'coupé', label: 'Coupé' },
+   { value: 'coupe', label: 'Coupé' },
    { value: 'collection', label: 'Collection' },
    { value: 'utilitaire', label: 'Utilitaire' },
-   { value: 'autres', label: 'Autres' },
+   { value: 'other', label: 'Autres' },
 ];
 
 export const gearbox = [

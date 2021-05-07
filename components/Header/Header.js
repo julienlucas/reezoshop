@@ -78,11 +78,9 @@ const NavComp = (props) => {
             value={{ label: selectedOption.value, value: selectedOption.label }}
           />
         </div>
-
-        {router.pathname === '/recherche' && <input type="text" className="search" placeholder="Marque, Modèle" name="search"/>}
-
-        <Mobile data={props} />
       </Nav>
+
+      <Mobile data={props} />
 
       {(router.pathname === '/' || router.pathname === '/recherche') &&
         <BottomNavMobile>
@@ -280,7 +278,7 @@ export const Nav = styled.nav`
   width: 100vw;
   height: 58px;
   top: 0;
-  z-index: 9;
+  z-index: 8;
   box-shadow: 0 0 0 rgba(0, 0, 0, 0);
   transition: all .3s ease-out;
   .overlay-mobile {
@@ -290,7 +288,7 @@ export const Nav = styled.nav`
     width: 100vw;
     height: 100vh;
     content: '';
-    z-index: 10;
+    z-index: 8;
     &.show {
       visibility: visible;
       background: rgba(0, 0, 0, 0.3);
@@ -320,9 +318,6 @@ export const Nav = styled.nav`
       }
     }
   }
-  .search {
-    display: none;
-  }
   .logo {
     position: relative;
     top: 8px;
@@ -336,9 +331,6 @@ export const Nav = styled.nav`
   @media (min-width: 990px) {
     &.bottomShadow {
       box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.12);
-    }
-    .search {
-      display: block;
     }
   }
   @media (min-width: 768px) {
@@ -358,7 +350,7 @@ export const Nav = styled.nav`
 
 export const BottomNavMobile = styled.div`
   position: fixed;
-  z-index: 8;
+  z-index: 7;
   width: 100%;
   background: white;
   bottom: 0;

@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { Results } from './styles';
 import { sorting } from '../../constants/search';
 
-const SearchResults = ({ cars, cityShop, count, onLoadMore, onSort }) => {
+const SearchResults = ({ cars, cityShop, count, filters, onLoadMore, onSort }) => {
   const [nbrCars, setNbrCars] = useState(12);
 
   const capitalizeFirstLetter = str => {
@@ -24,9 +24,18 @@ const SearchResults = ({ cars, cityShop, count, onLoadMore, onSort }) => {
     }
   }, [nbrCars])
 
+  useEffect(() => {
+    console.log('FILTERS');
+    console.log(filters);
+  }, [filters])
+
   return (
     <Results>
-      <h2>Land Rover Range Rover Evoque neuves en vente <span className="blue">près de {capitalizeFirstLetter(cityShop)}</span></h2>
+      <h2>
+        {filters?.match ? filters.match : 'Véhicules '}
+        {filters?.onlyNew === true && filters.match ? 'neufs ' : filters?.onlyNew === true ? 'neuves ' : filters?.onlyNew === false ? "d'occasion " : ''}
+        <span className="blue">près de {capitalizeFirstLetter(cityShop)}</span>
+      </h2>
       <p className="count"><span className="blue">{count}</span> voitures dispos</p>
 
       <div className="wrapper-select-sorting">
@@ -70,7 +79,8 @@ const SearchResults = ({ cars, cityShop, count, onLoadMore, onSort }) => {
 SearchResults.propTypes = {
    cars: PropTypes.array.isRequired,
    cityShop: PropTypes.string,
-   count: PropTypes.array.isRequired,
+   count: PropTypes.number.isRequired,
+   filters: PropTypes.object.isRequired,
    onLoadMore: PropTypes.func
 };
 

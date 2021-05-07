@@ -48,7 +48,7 @@ export const MobileWrapper = styled.div`
    .btn-mobile {
       position: absolute;
       top: 20px;
-      right: 25px;
+      right: 10px;
       float: right;
       width: 35px; height: 35px;
       display: block;
@@ -92,8 +92,13 @@ export const MobileWrapper = styled.div`
       padding: 95px 35px;
       background: ${theme.blue100};
       right: -400px;
+      display: none;
+      visibility: hidden;
+      z-index: 9;
       &.open {
          right: 0;
+         display: block;
+         visibility: visible;
       }
       .box-bottom {
          position: fixed;
@@ -129,12 +134,17 @@ export const MobileWrapper = styled.div`
          left: -10px;
       }
    }
+   @media (min-width:990px) {
+      .btn-mobile {
+         top: 38px;
+         right: 25px;
+      }
+   }
    @media (min-width: 780px) {
       .mobile-menu {
          width: 400px;
       }
       .btn-mobile {
-         top: 38px;
          .cross {
             right: 35px;
          }

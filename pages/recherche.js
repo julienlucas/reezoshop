@@ -12,7 +12,7 @@ const getAdsQuery = getAds.loc.source.body;
 function Search({ data, search, shop }) {
   const [cars, setCars] = useState([]);
   const [count, setCount] = useState([]);
-  const [filtersSaved, setfiltersSaved] = useState({});
+  const [filters, setfilters] = useState({});
   const shopFromContext = useShop();
   const agence = data.agencies[shopFromContext.subdomain];
   const cityShop = shopFromContext.subdomain;
@@ -26,24 +26,30 @@ function Search({ data, search, shop }) {
   };
 
   const onFilters = async filters => {
-    console.log(filters);
+    setfilters(filters);
+    const queryParams = {
+      queryParams: filters
+    };
+    const newSearch = await graphQLQuery(getAdsQuery, queryParams);
+    setCount(newSearch.ads.count);
+    setCars(newSearch.ads.ads);
   };
 
   const onLoadMore = async nbrCars => {
     const queryParams = {
       queryParams: {
-        size: nbrCars
+        size: nbrCars,
+        ...filters
       }
     };
     const newSearch = await graphQLQuery(getAdsQuery, queryParams);
+    setCount(newSearch.ads.count);
     setCars(newSearch.ads.ads);
   };
 
+  // Chargement initial (avec tri par prix croissant)
   useEffect(() => {
     setCount(search.ads.count);
-  }, [count])
-
-  useEffect(() => {
     setCars(sortAsc(search.ads.ads, 'price'));
   }, [search])
 
@@ -53,6 +59,7 @@ function Search({ data, search, shop }) {
         cars={cars}
         cityShop={cityShop}
         count={count}
+        filters={filters}
         onFilters={filters => onFilters(filters)}
         onLoadMore={nbrCars => onLoadMore(nbrCars)}
         onSort={sorting => onSort(sorting)}

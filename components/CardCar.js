@@ -148,7 +148,8 @@ export const Card = styled.div`
       padding: 5px 0;
       font-size: 14px;
       font-weight: 600;
-      color: ${theme.grey100}
+      color: ${theme.grey100};
+      text-transform: capitalize;
    }
    .prix {
       padding-bottom: 7px;

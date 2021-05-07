@@ -1,18 +1,22 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { theme } from '../constants/theme';
 
-const Checkbox = ({ id, label }) => {
-   const [state, setState] = useState(false);
+const Checkbox = ({ id, label, name, onChange }) => {
+   const [value, setValue] = useState(null);
 
-   const onChange = () => {
-      setState(prevState => !prevState)
+   const onClick = () => {
+      value === null ? setValue(true) : setValue(!value);
    };
+
+   useEffect(() => {
+      onChange(value, name);
+   }, [value])
 
    return (
       <CustomCheckbox>
-         <input type="checkbox" className="checkbox" id={id} onClick={() => console.log('top')} />
+         <input type="checkbox" className="checkbox" id={id} onClick={onClick} />
          <label htmlFor={id}>{label}</label>
       </CustomCheckbox>
    );
@@ -20,7 +24,9 @@ const Checkbox = ({ id, label }) => {
 
 Checkbox.propTypes = {
    id: PropTypes.string.isRequired,
-   label: PropTypes.string.isRequired
+   label: PropTypes.string.isRequired,
+   name: PropTypes.string.isRequired,
+   onChange: PropTypes.func.isRequired
 };
 
 export default Checkbox;
