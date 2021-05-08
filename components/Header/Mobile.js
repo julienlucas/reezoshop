@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import styled from 'styled-components'
 import TelIcon from '../../svgs/tel.svg';
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { GlobalStyles } from '../../constants/global-styles';
 import { theme } from '../../constants/theme';
 
-function Mobile({ data }) {
+function Mobile({ phone }) {
    const [mobileMenu, setMobileMenu] = useState(false);
 
    return (
@@ -30,7 +30,7 @@ function Mobile({ data }) {
                <p><strong>Reezocar Lille-Seclin</strong></p>
                <p>Lundi au Samedi - 09:00 à 18h00</p>
                <p>
-                  <a href={`tel:${data.phone}`} rel="noopener noreferrer nofollow" target="_blank">
+                  <a href={`tel:${phone}`} rel="noopener noreferrer nofollow" target="_blank">
                      <TelIcon className="icon" />01 42 53 65 29
                   </a>
                </p>
@@ -38,6 +38,10 @@ function Mobile({ data }) {
         </div>}
       </MobileWrapper>
    );
+};
+
+Mobile.propTypes = {
+  phone: PropTypes.string.isRequired
 };
 
 export default Mobile;

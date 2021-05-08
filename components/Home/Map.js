@@ -16,14 +16,13 @@ const Map = ({ data }) => {
     <SectionDComp>
       <h2 className="text-center">Comment s'y rendre ?</h2>
 
-      <div className="box-address-mobile">
-        <BoxGoogleRating
-          adresse={data.adresse}
-          headline={data.headline}
-          googleAvis={data.googleAvis}
-          googleNote={data.googleNote}
-        />
-      </div>
+      <BoxGoogleRating
+        className="box-address-mobile"
+        adresse={data.adresse}
+        headline={data.headline}
+        googleAvis={data.googleAvis}
+        googleNote={data.googleNote}
+      />
 
       <ul className="tabs">
         <li onClick={() => setTab(1)} className={tab === 1 ? 'active' : ''}>Google Map</li>

@@ -1,14 +1,21 @@
+import NextImageLazy from '../../utils/imgLazy';
 import React from 'react';
 import Slider from 'react-slick';
-import AudiIcon from '../../svgs/audi.svg';
-import BmwIcon from '../../svgs/bmw.svg';
-import FordIcon from '../../svgs/ford.svg';
-import PeugeotIcon from '../../svgs/peugeot.svg';
-import RenaultIcon from '../../svgs/renault.svg';
-import VolkswagenIcon from '../../svgs/volkswagen.svg';
+import requireStatic from '../../utils/require-static';
 import { SectionBComp } from './styles';
 
 const Constructeurs = ({ constructeurs }) => {
+  const sliderSettings = {
+    className: 'slider',
+    arrows: false,
+    centerMode: false,
+    adaptiveHeight: true,
+    focusOnSelect: true,
+    infinite: true,
+    variableWidth: true,
+    slidesToScroll: 1,
+  };
+
   return (
     <SectionBComp>
       <div className="container">
@@ -28,7 +35,13 @@ const CardAutomaker = ({ constructeur }) => {
   return (
     <div className="card-automaker">
       <div className="logo">
-        <Logo constructeur={constructeur.nom} />
+        <NextImageLazy
+          src={requireStatic(constructeur.picture)}
+          alt="Picture of the author"
+          width={50}
+          height={50}
+          layout="fixed"
+        />
       </div>
       <div className="box-text">
         <strong>{constructeur.nom}</strong>
@@ -36,31 +49,4 @@ const CardAutomaker = ({ constructeur }) => {
       </div>
     </div>
   );
-};
-
-const Logo = ({ constructeur }) => {
-  if (constructeur == 'Audi') {
-    return <AudiIcon/>
-  } else if (constructeur == 'BMW') {
-    return <BmwIcon/>
-  } else if (constructeur == 'Ford') {
-    return <FordIcon/>
-  } else if (constructeur == 'Peugeot') {
-    return <PeugeotIcon/>
-  } else if (constructeur == 'Renault') {
-    return <RenaultIcon/>
-  } else if (constructeur == 'Volkswagen') {
-    return <VolkswagenIcon/>
-  };
-};
-
-const sliderSettings = {
-  className: 'slider',
-  arrows: false,
-  centerMode: false,
-  adaptiveHeight: true,
-  focusOnSelect: true,
-  infinite: true,
-  variableWidth: true,
-  slidesToScroll: 1,
 };

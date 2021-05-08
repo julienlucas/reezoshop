@@ -2,7 +2,6 @@ import Link from 'next/link';
 import NextImageLazy from '../utils/imgLazy';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { GlobalStyles } from '../constants/global-styles';
 import { theme } from '../constants/theme';
 import { useRouter } from 'next/router';
 

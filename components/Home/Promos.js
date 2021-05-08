@@ -1,13 +1,14 @@
 import Link from 'next/link';
 import NextImageLazy from '../../utils/imgLazy';
 import PropTypes from 'prop-types';
+import requireStatic from '../../utils/require-static';
 import Slider from 'react-slick';
 import { SectionCComp } from './styles';
 import React, { useEffect, useState } from 'react';
 
 function Promotions({ subHeadline }) {
-  const [occasionPic, setOccasionPic] = useState('/images/promo-occasion.png');
-  const [neufPic, setNeufPic] = useState('/images/promo-neuf.png');
+  const [occasionPic, setOccasionPic] = useState('images/promo-occasion.png');
+  const [neufPic, setNeufPic] = useState('images/promo-neuf.png');
 
   const sliderSettings = {
     className: 'slider',
@@ -25,11 +26,11 @@ function Promotions({ subHeadline }) {
     function onResizeWidth(){
       const width = document.documentElement.clientWidth;
       if (width >= 768) {
-        setNeufPic('/images/promo-neuf.png');
-        setOccasionPic('/images/promo-occasion.png');
+        setNeufPic('images/promo-neuf.png');
+        setOccasionPic('images/promo-occasion.png');
       } else {
-        setNeufPic('/images/promo-mobile.png');
-        setOccasionPic('/images/promo-mobile.png');
+        setNeufPic('images/promo-mobile.png');
+        setOccasionPic('images/promo-mobile.png');
       }
     }
     window.addEventListener('resize', onResizeWidth);
@@ -47,7 +48,7 @@ function Promotions({ subHeadline }) {
                 <a>
                   <button className="btn btn-secondary btn-orange">Profitez-en !</button>
                   <NextImageLazy
-                    src={neufPic}
+                    src={requireStatic(neufPic)}
                     width={560}
                     height={310}
                     layout="responsive"
@@ -61,7 +62,7 @@ function Promotions({ subHeadline }) {
                 <a>
                   <button className="btn btn-secondary btn-orange">Profitez-en !</button>
                   <NextImageLazy
-                    src={occasionPic}
+                    src={requireStatic(occasionPic)}
                     width={560}
                     height={310}
                     layout="responsive"

@@ -1,5 +1,6 @@
 import NextImageLazy from '../../utils/imgLazy';
 import React, { useState, useEffect } from 'react';
+import requireStatic from '../../utils/require-static';
 import { SectionFComp } from './styles';
 
 function Why({ data }) {
@@ -34,10 +35,11 @@ function Why({ data }) {
           </div>
           <div className="col col-right">
 
+
             <div className="box-social-media-reviews">
               <div className="icon">
                 <NextImageLazy
-                  src="/icons/facebook.svg"
+                  src={requireStatic('icons/facebook.svg')}
                   width={65}
                   height={65}
                   layout="responsive"
@@ -53,7 +55,7 @@ function Why({ data }) {
             <div className="box-social-media-reviews">
               <div className="icon">
                 <NextImageLazy
-                  src="/icons/google.svg"
+                  src={requireStatic('icons/google.svg')}
                   width={65}
                   height={65}
                   layout="responsive"

@@ -1,5 +1,6 @@
 import NextImageLazy from '../../utils/imgLazy';
 import React from 'react';
+import requireStatic from '../../utils/require-static';
 import { SectionGComp } from './styles';
 
 const FAQS = ({ faqs }) => {
@@ -11,7 +12,7 @@ const FAQS = ({ faqs }) => {
         <div className="row">
           <div className="col col-left">
             <NextImageLazy
-              src="/images/faq.png"
+              src={requireStatic('images/faq.png')}
               width={445}
               height={350}
               layout="fixed"

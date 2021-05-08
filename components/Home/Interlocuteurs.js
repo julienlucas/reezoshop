@@ -1,5 +1,6 @@
 import NextImageLazy from '../../utils/imgLazy';
 import React from 'react';
+import requireStatic from '../../utils/require-static';
 import { SectionEComp } from './styles';
 
 const Interlocuteurs = ({ interlocuteurs }) => {
@@ -23,7 +24,7 @@ const CardInterlocuteur = ({ interlo }) => {
     <div className="card-interlocuteur">
       <div className="picture">
         <NextImageLazy
-          src={interlo.picture}
+          src={requireStatic(interlo.picture)}
           width={185}
           height={185}
           layout="responsive"

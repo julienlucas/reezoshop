@@ -1,5 +1,5 @@
+import requireStatic from '../../utils/require-static';
 import styled from 'styled-components'
-import { GlobalStyles } from '../../constants/global-styles';
 import { theme } from '../../constants/theme'
 
 export const SectionAComp = styled.section`
@@ -247,23 +247,6 @@ export const SectionDComp = styled.section`
     align-items: center;
     padding: 0;
   }
-  .box-address-mobile {
-    position: relative;
-    padding: 22px;
-    margin: 0 auto 25px;
-    border: 1px solid ${theme.grey200};
-    border-radius: 4px;
-    display: table;
-    max-width: 340px;
-    width: 100%;
-    h3.big {
-      font-size: 20px;
-    }
-    @media (max-width: 380px) {
-      margin: 0 20px 25px;
-      width: calc(100% - 40px)
-    }
-  }
   .box-infos {
     position: relative;
     background: white;
@@ -369,9 +352,6 @@ export const SectionDComp = styled.section`
       .box-address {
         display: block;
       }
-    }
-    .box-address-mobile {
-      display: none;
     }
     ul.tabs {
       display: none;
@@ -494,21 +474,21 @@ export const SectionFComp = styled.section`
     }
     .col-1 {
       .progress-ring:before {
-        background: url('/icons/pouce.svg') no-repeat;
+        background: url(${requireStatic('icons/pouce.svg')}) no-repeat;
         background-position: 50% 50%;
         background-size: 24px;
       }
     }
     .col-2 {
       .progress-ring:before {
-        background: url('/icons/euros.svg') no-repeat;
+        background: url(${requireStatic('icons/euros.svg')}) no-repeat;
         background-position: 50% 50%;
         background-size: 24px;
       }
     }
     .col-3 {
       .progress-ring:before {
-        background: url('/icons/coeur.svg') no-repeat;
+        background: url(${requireStatic('icons/coeur.svg')}) no-repeat;
         background-position: 50% 50%;
         background-size: 24px;
       }
@@ -533,7 +513,6 @@ export const SectionFComp = styled.section`
         width: 43px;
         border-radius: 50%;
         border: 1px solid ${theme.blue100};
-        content: '';
         z-index: -1;
         background-size: 24px;
         transform: rotate(0deg);

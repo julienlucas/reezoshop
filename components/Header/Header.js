@@ -1,33 +1,29 @@
-import ArrowBottomIcon from '../../svgs/arrow-bottom.svg';
 import Image from 'next/image';
 import Link from 'next/link';
-import ReactSelect from 'react-select';
 import Mobile from './Mobile';
+import PropTypes from 'prop-types';
 import SearchIcon from '../../svgs/search.svg';
+import Select from '../Select';
 import styled from 'styled-components';
 import TelIcon from '../../svgs/tel.svg';
+import requireStatic from '../../utils/require-static';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { theme } from '../../constants/theme';
 
-let widthSelect = '20px';
-
-const NavComp = (props) => {
+const NavComp = ({ cityShop, nav, phone, selectAgency }) => {
   const router = useRouter();
   const [scroll, setScroll] = useState(null);
   const [top, setTop] = useState(null);
   const [height, setHeight] = useState(null);
   const [overlayMobile, setOverlayMobile] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(props.nav[0]);
 
   const handleScroll = () => {
     setScroll(window.scrollY);
   };
 
-  const handleChange = (agency) => {
-    props.selectAgency(agency.value);
-    widthSelect = agency.value;
-    setSelectedOption(agency);
+  const onChangeAgency = agency => {
+    selectAgency(agency);
   };
 
   const addOverlayMobile = () => {
@@ -48,7 +44,7 @@ const NavComp = (props) => {
   }, [height,top,scroll])
 
   // Ajout d'un espace tous les 2 caractères
-  const phoneFormated = props.phone.toString().replace(/(\d)(?=(\d{2})+(?!\d))/g, '$1 ');
+  const phoneFormated = phone.toString().replace(/(\d)(?=(\d{2})+(?!\d))/g, '$1 ');
 
   return (
     <Wrapper>
@@ -58,7 +54,7 @@ const NavComp = (props) => {
           <Link href="/">
             <a>
               <Image
-                src="/images/logo-reezocar.svg"
+                src={requireStatic('images/logo-reezocar.svg')}
                 alt="reezocar"
                 width={244}
                 height={66}
@@ -68,25 +64,22 @@ const NavComp = (props) => {
           </Link>
         </div>
 
-        <div className="select" onClick={(e) => addOverlayMobile(e)}>
-          <ReactSelect
-            placeholder={props.nav[0].label}
-            options={props.nav}
-            styles={customStyles}
-            components={{ DropdownIndicator:() => null, IndicatorSeparator }}
-            onChange={(agency) => handleChange(agency)}
-            defaultValue={{ label: props.nav[0].value, value: props.nav[0].label }}
-            value={{ label: selectedOption.value, value: selectedOption.label }}
+        <div onClick={e => addOverlayMobile(e)}>
+          <Select
+            className="select-agency"
+            defaultValue={cityShop}
+            options={nav}
+            onChange={onChangeAgency}
           />
         </div>
       </Nav>
 
-      <Mobile data={props} />
+      <Mobile phone={phone} />
 
       {router.pathname === '/' &&
         <BottomNavMobile>
           <button className="btn btn-primary btn-phone">
-            <a href={`tel:${props.phone}`} rel="noopener noreferrer nofollow" target="_blank">
+            <a href={`tel:${phone}`} rel="noopener noreferrer nofollow" target="_blank">
               <TelIcon className="icon" />{phoneFormated}
             </a>
           </button>
@@ -122,7 +115,7 @@ const HeroComp = ({ headline }) => {
   }, [])
 
   return (
-    <Hero>
+    <Hero style={{ background: 'url(' + requireStatic('images/header-home.png') + ')' }}>
       <div className="container">
         <div>
           <h1>{headline}</h1>
@@ -144,7 +137,7 @@ const HeroComp = ({ headline }) => {
             <div className="col col-2">ou</div>
 
             <div className="col col-3">
-              <button className="btn btn-primary btn-green" onClick={seeAllCars}>Voir tous les véhicules</button>
+              <button className="btn btn-primary" onClick={seeAllCars}>Voir tous les véhicules</button>
             </div>
           </div>
         </div>
@@ -153,77 +146,24 @@ const HeroComp = ({ headline }) => {
   );
 };
 
-const Header = (props) => {
+const Header = ({ cityShop, headline, nav, phone, selectAgency }) => {
   const router = useRouter();
-
-  const selectAgency = (agency) => {
-    props.selectAgency(agency)
-  };
 
   return (
     <header>
-      <NavComp nav={props.nav} phone={props.phone} selectAgency={(agency) => selectAgency(agency)}/>
-      {router.pathname === '/' && <HeroComp headline={props.headline}/>}
+      <NavComp cityShop={cityShop} nav={nav} phone={phone} selectAgency={agency => selectAgency(agency)}/>
+      {router.pathname === '/' && <HeroComp headline={headline}/>}
     </header>
   );
 };
 
+Header.propTypes = {
+  cityShop: PropTypes.string.isRequired,
+  nav: PropTypes.array.isRequired,
+  phone: PropTypes.string.isRequired
+};
+
 export default Header;
-
-// React Select : Indicator icon
-const IndicatorSeparator = () => {
-  return <ArrowBottomIcon className="icon" />
-};
-
-// React Select : Styles
-const customStyles = {
-  option: (styles, state) => ({
-    ...styles,
-    fontSize: '16px',
-    borderTop: '1px solid #C1C1C1',
-    background: state.isSelected ? 'white' : 'white',
-    color: '#313131',
-    textTransform: 'Capitalize',
-    cursor: 'pointer',
-    "&:focus": {
-      background: 'white'
-    },
-    "&:hover": {
-      background: 'white'
-    },
-    "&:active": {
-      background: 'white'
-    }
-  }),
-  singleValue: (styles) => ({
-    ...styles
-  }),
-  control: styles => ({
-    ...styles,
-    width: `${widthSelect.length + 120}px`,
-    float: 'left',
-    fontSize: '20px',
-    fontWeight: '600',
-    color: '#C1C1C1',
-    border: 'none',
-    boxShadow: 'none',
-    background: 'transparent',
-    textTransform: 'Capitalize',
-    cursor: 'pointer',
-  }),
-  menu: styles => ({
-    ...styles,
-    position: 'absolute',
-    marginTop: '50px',
-    marginLeft: '100px',
-    border: 'none',
-    boxShadow: '1px 2px 13px rgba(0, 0, 0, 0.15)',
-    width: '240px',
-    borderRadius: '4px',
-    textTransform: 'Capitalize',
-    zIndex: '10'
-  })
-};
 
 export const Wrapper = styled.div`
   .wrapper-header-buttons {
@@ -245,10 +185,6 @@ export const Wrapper = styled.div`
     width: calc(50vw - 26px);
     padding: 0 0 0 16px;
     z-index: 8;
-    .icon {
-      position: absolute;
-      height: 30px;
-    }
     a {
       display: block;
       color: white;
@@ -318,18 +254,6 @@ export const Nav = styled.nav`
     border: 1px solid ${theme.grey700};
     box-shadow: 1px 2px 13px rgba(0, 0, 0, 0);
   }
-  .select {
-    position: relative;
-    top: 8px;
-    *:first-child {
-      border-top: none;
-    }
-    .icon {
-      * {
-        width: 15px;
-      }
-    }
-  }
   .logo {
     position: relative;
     top: 8px;
@@ -353,9 +277,6 @@ export const Nav = styled.nav`
         width: 244px;
         height: 66px;
       }
-    }
-    .select {
-      top: 27px;
     }
   }
 `;
@@ -381,7 +302,6 @@ export const Hero = styled.div`
   width: 100%;
   height: 630px;
   display: table;
-  background: url('/images/header-home.png');
   background-position: 0% 0%;
   background-size: cover;
   z-index: 1;
@@ -440,7 +360,7 @@ export const Hero = styled.div`
   }
   .col-2 {
     height: 50px;
-    margin-top: -3px;
+    margin-top: -15px;
     font-size: 26px;
     color: ${theme.black};
     text-align: center;

@@ -19,9 +19,10 @@ const HomePage = ({ data, newCars, oldCars, shop }) => {
   // console.log(shop.subDomain);
   // console.log(shopFromContext.subDomain);
   const agence = data.agencies[shopFromContext.subdomain];
+  const cityShop = shopFromContext.subdomain;
 
   return (
-    <Layout nav={data.nav} phone={agence.phone} headline={agence.headline} home>
+    <Layout cityShop={cityShop} nav={data.nav} phone={agence.phone} headline={agence.headline} home>
       <Vehicules newCars={newCars} oldCars={oldCars} subHeadline={agence.subHeadline} />
       <Constructeurs constructeurs={data.constructeurs} />
       <Promos subHeadline={agence.subHeadline} />
@@ -64,7 +65,7 @@ export default HomePage;
 
 const mockData = {
   nav: [
-    { value: 'lille', label: 'Agence Boulogne-Billacourt' },
+    { value: 'lille', label: 'Agence Boulogne-Billancourt' },
     { value: 'bordeaux', label: 'Agence Bordeaux' },
     { value: 'marseille', label: 'Agence Marseille' }
   ],
@@ -127,43 +128,49 @@ const mockData = {
   'constructeurs': [
     {
       nom: 'Renault',
+      picture: 'icons/renault.svg'
     },
     {
       nom: 'Peugeot',
+      picture: 'icons/peugeot.svg'
     },
     {
       nom: 'Audi',
+      picture: 'icons/audi.svg'
     },
     {
       nom: 'Volkswagen',
+      picture: 'icons/volkswagen.svg'
     },
     {
       nom: 'Ford',
+      picture: 'icons/ford.svg'
     },
     {
       nom: 'BMW',
+      picture: 'icons/bmw.svg'
     }
   ],
   'interlocuteurs': [
     {
       nom: 'Teddy',
       jobTitle: 'Customer Success manager',
-      picture: '/images/teddy.png'
+      picture: 'images/teddy.png'
     },
     {
       nom: 'Marine',
       jobTitle: 'Head of Business & Marketing',
-      picture: '/images/marine.png'
+      picture: 'images/marine.png'
     },
     {
       nom: 'Erlé',
       jobTitle: 'Acquistion & Digital Performance Manager',
-      picture: '/images/erle.png'
+      picture: 'images/erle.png'
     },
     {
       nom: 'Jonathan',
       jobTitle: 'Head of Sales',
-      picture: '/images/jonathan.png'
+      picture: 'images/jonathan.png'
     }
   ],
   pourquoi: {
