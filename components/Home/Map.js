@@ -80,6 +80,7 @@ const GoogleMap = ({ mapURL }) => {
         mapTypeControl={false}
         scaleControl={false}
         draggable={false}
+        yesIWantToUseGoogleMapApiInternals={true}
         onGoogleApiLoaded={({ map }) => handleApiLoaded(map)}
       >
         <Marker

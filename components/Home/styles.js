@@ -674,7 +674,7 @@ export const SectionGComp = styled.section`
     padding: 10px 50px 10px 10px;
     border: 1px solid ${theme.grey400};
     border-radius: 4px;
-    background: url('/icons/arrow-bottom-blue.svg') no-repeat calc(100% - 20px) 50%;
+    background: url(${requireStatic('icons/arrow-bottom-blue.svg')}) no-repeat calc(100% - 20px) 50%;
     background-size: 14px;
   }
   .btn {

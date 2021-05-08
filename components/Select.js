@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import React, { useState, useEffect, useRef } from 'react';
+import requireStatic from '../utils/require-static';
 import { theme } from '../constants/theme';
 
 const Select = ({ className, defaultValue, name, onChange, onReset, options, placeholder }) => {
@@ -94,7 +95,7 @@ export const SelectMenu = styled.div`
    font-size: 13px;
    line-height: 36px;
    padding: 0 7px;
-   background: white url('/icons/arrow-bottom-light.svg') no-repeat calc(100% - 10px) 50%;
+   background: white url(${requireStatic('icons/arrow-bottom-light.svg')}) no-repeat calc(100% - 10px) 50%;
    background-size: 13px;
    color: ${theme.black};
    border: 0.811966px solid ${theme.grey200};
@@ -114,7 +115,7 @@ export const SelectMenu = styled.div`
       font-size: 20px;
       text-transform: capitalize;
       padding-right: 35px;
-      background: transparent url('/icons/arrow-bottom.svg') no-repeat calc(100% - 5px) 52%;
+      background: transparent url(${requireStatic('icons/arrow-bottom.svg')}) no-repeat calc(100% - 5px) 52%;
       background-size: 18px;
       border: 0;
       ul {
