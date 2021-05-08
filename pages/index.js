@@ -1,7 +1,9 @@
 import graphQLQuery from '../utils/graphql';
 import getAds from './.graphql';
 import Layout from '../components/Layout';
+import { NextSeo } from 'next-seo';
 import PropTypes from 'prop-types';
+import SEO from '../next-seo.config';
 import useShop from '../hooks/useShop';
 import Vehicules from '../components/Home/Vehicules';
 import Constructeurs from '../components/Home/Constructeurs';
@@ -23,6 +25,10 @@ const HomePage = ({ data, newCars, oldCars, shop }) => {
 
   return (
     <Layout cityShop={cityShop} nav={data.nav} phone={agence.phone} headline={agence.headline} home>
+      <NextSeo
+        title={SEO.title}
+        description={SEO.description}
+      />
       <Vehicules newCars={newCars} oldCars={oldCars} subHeadline={agence.subHeadline} />
       <Constructeurs constructeurs={data.constructeurs} />
       <Promos subHeadline={agence.subHeadline} />

@@ -72,7 +72,7 @@ Select.propTypes = {
    defaultValue: PropTypes.string,
    options: PropTypes.array.isRequired,
    placeholder: PropTypes.string,
-   name: PropTypes.string.isRequired,
+   name: PropTypes.string,
    reset: PropTypes.bool
 };
 

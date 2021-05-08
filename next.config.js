@@ -16,7 +16,7 @@ module.exports = {
       };
 
       config.module.rules.push({
-         test: /\.(css|gif|jpg|jpeg|png|svg)$/,
+         test: /\.(ico|css|gif|jpg|jpeg|png|svg)$/,
          use: [
             {
                loader: 'file-loader',
