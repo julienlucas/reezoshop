@@ -2,7 +2,7 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import { useRouter } from 'next/router';
 
-function Layout({ cityShop, children, nav, headline, phone }) {
+function Layout({ cityShop, children, heroComp, nav, headline, phone }) {
   const router = useRouter();
 
   const preventDragHandler = e => {
@@ -17,6 +17,7 @@ function Layout({ cityShop, children, nav, headline, phone }) {
     <div onDragStart={e => preventDragHandler(e)}>
       <Header
         cityShop={cityShop}
+        heroComp={heroComp}
         nav={nav}
         phone={phone}
         headline={headline}

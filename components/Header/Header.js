@@ -133,18 +133,17 @@ const Hero = ({ headline }) => {
   );
 };
 
-const Header = ({ cityShop, headline, nav, phone, selectAgency }) => {
-  const router = useRouter();
-
+const Header = ({ cityShop, headline, heroComp, nav, phone, selectAgency }) => {
   return (
     <header>
       <Nav cityShop={cityShop} nav={nav} phone={phone} selectAgency={agency => selectAgency(agency)}/>
-      {router.pathname === '/' && <Hero headline={headline}/>}
+      {heroComp && <Hero headline={headline}/>}
     </header>
   );
 };
 
 Header.propTypes = {
+  heroComp: PropTypes.bool,
   cityShop: PropTypes.string.isRequired,
   nav: PropTypes.array.isRequired,
   phone: PropTypes.string.isRequired
