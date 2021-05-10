@@ -14,7 +14,7 @@ const CardCar = ({ brand, energy, gearbox, model, mileage, price, thumbnail, yea
    };
 
    return (
-      <Card className={router.pathname !== '/' ? 'small-width' : ''}>
+      <Card className={`card-car ${router.pathname !== '/' ? 'small-width' : ''}`}>
          <div className="thumbnail">
             {router.pathname !== '/' && <>
                <div className="promo">-20%</div>

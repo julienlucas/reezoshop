@@ -2,11 +2,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Mobile from './Mobile';
 import PropTypes from 'prop-types';
+import requireStatic from '../../utils/require-static';
 import SearchIcon from '../../svgs/search.svg';
 import Select from '../Select';
 import styled from 'styled-components';
-import TelIcon from '../../svgs/tel.svg';
-import requireStatic from '../../utils/require-static';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { theme } from '../../constants/theme';
@@ -80,7 +79,7 @@ const NavComp = ({ cityShop, nav, phone, selectAgency }) => {
         <BottomNavMobile>
           <button className="btn btn-primary btn-phone">
             <a href={`tel:${phone}`} rel="noopener noreferrer nofollow" target="_blank">
-              <TelIcon className="icon" />{phoneFormated}
+              {phoneFormated}
             </a>
           </button>
 
@@ -115,7 +114,7 @@ const HeroComp = ({ headline }) => {
   }, [])
 
   return (
-    <Hero style={{ background: 'url(' + requireStatic('images/header-home.png') + ')' }}>
+    <Hero style={{ background: 'url(' + requireStatic('images/header-home.png') + ')', backgroundSize: 'cover' }}>
       <div className="container">
         <div>
           <h1>{headline}</h1>

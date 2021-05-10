@@ -13,7 +13,7 @@ export const SectionAComp = styled.section`
   }
   .btn {
     position: relative;
-    margin: 45px auto 0;
+    margin: 15px auto 0;
     display: table;
     width: 100%;
     padding: 0 40px;
@@ -21,15 +21,20 @@ export const SectionAComp = styled.section`
   .slick-list {
     max-width: 1160px;
     width: 100%;
-    height: 340px !important;
+    height: 360px !important;
+  }
+  .container:first-child {
+    padding-left: 0;
   }
   .slider {
-    margin-left: 0;
     .slick-slide {
       margin: 0 -50px 0px 70px;
       * {
         outline: 0;
-        user-select: none
+        user-select: none;
+      }
+      .card-car {
+        left: 10px;
       }
     }
   }

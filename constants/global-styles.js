@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import requireStatic from '../utils/require-static';
 import { theme } from './theme';
 
 export const GlobalStyles = createGlobalStyle`
@@ -127,12 +128,10 @@ export const GlobalStyles = createGlobalStyle`
         }
       }
       &.btn-phone {
-        padding: 0 26px 0 44px;
-        .icon {
-          position: absolute;
-          margin-left: -27px;
-          height: 30px;
-        }
+        padding: 0 20px 0 44px;
+        background: ${theme.orange100} url(${requireStatic('icons/tel.svg')}) no-repeat;
+        background-position: 15px 50%;
+        background-size: 20px;
       }
       &.btn-orange {
         padding: 0 30px;
