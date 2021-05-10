@@ -9,7 +9,7 @@ function SearchWrapper({ cars, cityShop, count, filters, onFilters, onLoadMore, 
     <Wrapper>
       <div className="container">
         <Aside>
-          <Filters onFilters={filters => onFilters(filters)} />
+          <Filters count={count} onFilters={filters => onFilters(filters)} />
           <div className="wrapper-ad-desktop">
             <Ad/>
           </div>

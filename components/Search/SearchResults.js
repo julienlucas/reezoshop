@@ -1,6 +1,5 @@
 import CardCar from '../CardCar';
 import PropTypes from 'prop-types';
-import ReactSelect from 'react-select';
 import SearchAd from './Ad';
 import Select from '../Select';
 import React, { useEffect, useState } from 'react';
@@ -23,11 +22,6 @@ const SearchResults = ({ cars, cityShop, count, filters, onLoadMore, onSort }) =
       onLoadMore(nbrCars);
     }
   }, [nbrCars])
-
-  useEffect(() => {
-    console.log('FILTERS');
-    console.log(filters);
-  }, [filters])
 
   return (
     <Results>
@@ -79,7 +73,7 @@ const SearchResults = ({ cars, cityShop, count, filters, onLoadMore, onSort }) =
 SearchResults.propTypes = {
    cars: PropTypes.array.isRequired,
    cityShop: PropTypes.string,
-   count: PropTypes.number.isRequired,
+   count: PropTypes.array.isRequired,
    filters: PropTypes.object.isRequired,
    onLoadMore: PropTypes.func
 };

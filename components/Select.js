@@ -5,7 +5,6 @@ import { theme } from '../constants/theme';
 
 const Select = ({ name, onChange, onReset, options, placeholder }) => {
    const [state, setState] = useState({
-      selected: null,
       opened: false
    });
 
@@ -18,12 +17,12 @@ const Select = ({ name, onChange, onReset, options, placeholder }) => {
       });
    };
 
-   const onSelect = (option) => {
-      onChange(option.value, name);
+   const onSelect = option => {
       setState({
          selected: option,
          opened: false
       });
+      onChange(option.value, name);
    };
 
    useEffect(() => {
@@ -38,7 +37,7 @@ const Select = ({ name, onChange, onReset, options, placeholder }) => {
 
    return (
       <SelectMenu onClick={onOpen}>
-         <span>{state.selected ? state.selected.label : placeholder}</span>
+         <span>{state?.selected?.label || placeholder}</span>
          <ul className={state.opened ? 'show': 'hide'}>{getOptions()}</ul>
       </SelectMenu>
    );
@@ -87,13 +86,13 @@ export const SelectMenu = styled.div`
    ul {
       position: absolute;
       list-style: none;
-      margin: 36px 0 0 41px;
+      margin: 36px 0 0 16px;
       background: white;
       left: 0;
       box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.15);
       border-radius: 4px;
       min-width: 268px;
-      z-index: 3;
+      z-index: 9;
       li {
          display: block;
          padding: 5px 20px;
@@ -109,6 +108,11 @@ export const SelectMenu = styled.div`
       }
       &.hide{
          display:none;
+      }
+   }
+   @media (min-width: 990px) {
+      ul {
+         margin: 36px 0 0 41px;
       }
    }
 `;

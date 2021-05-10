@@ -46,7 +46,7 @@ export const MobileWrapper = styled.div`
       transition: all .3s ease-out;
    }
    .btn-mobile {
-      position: absolute;
+      position: fixed;
       top: 20px;
       right: 10px;
       float: right;

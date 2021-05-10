@@ -7,25 +7,20 @@ import { theme } from '../../constants/theme';
 import { bodies, colorsExt, doors, energies, gearbox } from '../../constants/search';
 import React, { useEffect, useState } from 'react';
 
-const Filters = ({ onFilters }) => {
+const Filters = ({ count, onFilters }) => {
    const [occasion, setOccasion] = useState(undefined);
    const [neuf, setNeuf] = useState(undefined);
    const [toogleFilters, setToogleFilters] = useState(false);
    const [filters, setFilters] = useState('');
+   const [activeMobileSearch, setActiveMobileSearch] = useState(false);
 
    const resetFilters = () => {
       setFilters('');
+      setActiveMobileSearch('');
       onFilters({ size: 12 });
    };
 
    const onReset = filters === '' ? true : false;
-
-   const onSearch = e => {
-      setFilters({
-         ...filters,
-         'match': e.target.value
-      });
-   };
 
    const onChange = (value, name) => {
       setFilters({
@@ -34,23 +29,50 @@ const Filters = ({ onFilters }) => {
       });
    };
 
-   useEffect(() => {
+   const onTypedSearch = e => {
+      e.preventDefault();
+      setFilters({
+         ...filters,
+         'match': e.target.value
+      });
+   };
+
+   const onFiltersSearch = e => {
       // console.log('occasion: ' + occasion);
       // console.log('neuf: ' + neuf);
-      // console.log(filters);
-      filters && onFilters(filters);
+
+      // Condition uniquement pour la recherche mobile (width =< 990px)
+      if (e) {
+        e.preventDefault();
+        setActiveMobileSearch(true);
+      }
+
+      onFilters(filters);
+   };
+
+   // Si width > 990px la recherche se lance automatiquement au changement d'un filtre
+   useEffect(() => {
+      function onResizeWidth() {
+         const width = document.documentElement.clientWidth;
+         if (width > 990) {
+            filters && onFiltersSearch();
+         }
+      }
+      window.addEventListener('resize', onResizeWidth);
+
+      onResizeWidth();
    }, [filters])
 
    return (
       <FiltersComp className={toogleFilters ? 'open' : ''}>
-         <button className="btn btn-secondary btn-filtres-mobile" onClick={() => setToogleFilters(!toogleFilters)}>Filtres(xxx)</button>
+         <button className="btn btn-secondary btn-filtres-mobile" onClick={() => setToogleFilters(!toogleFilters)}>Filtres{Object.keys(filters).length > 0 && ` (${Object.keys(filters).length})`}</button>
          <div className={`btn-close ${toogleFilters ? 'open' : ''}`} onClick={() => setToogleFilters(!toogleFilters)}>
             <span/>
             <span/>
             <span/>
          </div>
 
-         <input type="text" className="search" placeholder="Marque, Modèle" name="match" onChange={e => onSearch(e)}/>
+         <input type="text" className="search" placeholder="Marque, Modèle" name="match" onChange={e => onTypedSearch(e)} />
 
          <form>
             <div className="row">
@@ -124,13 +146,18 @@ const Filters = ({ onFilters }) => {
                onReset={onReset}
             />
 
-            <button className="btn btn-tertiary btn-search-mobile">Rechercher (XXX véhicules)</button>
+            <div className="wrapper-btn-search-mobile">
+               <button onClick={e => onFiltersSearch(e)} className="btn btn-tertiary btn-search-mobile">
+                  Rechercher {activeMobileSearch && count > 0 && ` (${count} véhicules)`}
+               </button>
+            </div>
          </form>
       </FiltersComp>
    )
 };
 
 Filters.propTypes = {
+   count: PropTypes.array.isRequired,
    onFilters: PropTypes.func.isRequired
 };
 
@@ -147,7 +174,7 @@ export const FiltersComp = styled.div`
       bottom: 0;
       display: block;
       width: 100%;
-      z-index: 9;
+      z-index: 999;
       background white;
       form {
          padding: 70px 0 0;
@@ -156,9 +183,6 @@ export const FiltersComp = styled.div`
          height: 100%;
          backrkound green;
          display: block;
-      }
-      .btn-filtres-mobile {
-         z-index: 0;
       }
    }
    .search {
@@ -174,13 +198,19 @@ export const FiltersComp = styled.div`
       border-radius: 4px;
       display: none;
    }
-   .btn-search-mobile {
+   .wrapper-btn-search-mobile {
       position: fixed;
-      left: 20px;
-      bottom: 20px;
       display: block;
-      width: calc(100% - 40px);
+      left: 0px;
+      bottom: 0;
+      padding: 12px 20px 20px;
+      background: white;
+      box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
       z-index: 7;
+      width: 100vw;
+   }
+   .btn-search-mobile {
+      width: 100%;
    }
    .btn-filtres-mobile {
       position: fixed;
@@ -193,7 +223,7 @@ export const FiltersComp = styled.div`
    .btn-close {
       position: fixed;
       top: 20px;
-      right: 16px;
+      right: 6px;
       width: 35px; height: 35px;
       display: none;
       cursor: pointer;
@@ -232,7 +262,7 @@ export const FiltersComp = styled.div`
       .btn-filtres-mobile {
          display: none;
       }
-      .btn-search-mobile {
+      .wrapper-btn-search-mobile {
          display: none;
       }
    }

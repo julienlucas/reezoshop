@@ -1,15 +1,20 @@
 export const bodies = [
-   { value: 'compacte', label: 'Compacte' },
-   { value: 'hatchback', label: 'Berline' },
-   { value: 'citadine', label: 'Citadine' },
-   { value: 'break', label: 'Break' },
-   { value: 'monospace', label: 'Monospace' },
+   { value: 'hatchback', label: 'Compacte' },
+   { value: 'saloon', label: 'Berline' },
+   { value: 'small', label: 'Citadine' },
+   { value: 'estate', label: 'Break' },
+   { value: 'mpv', label: 'Monospace' },
    { value: 'suv', label: 'SUV/4x4' },
-   { value: 'cabriolet', label: 'Cabriolet' },
+   { value: 'convertible', label: 'Cabriolet' },
    { value: 'coupe', label: 'Coupé' },
-   { value: 'collection', label: 'Collection' },
-   { value: 'utilitaire', label: 'Utilitaire' },
-   { value: 'other', label: 'Autres' },
+   { value: 'classic', label: 'Collection' },
+   { value: 'family', label: 'Familiale' },
+   { value: 'sports', label: 'Sportive' },
+   { value: 'old', label: 'Ancienne' },
+   { value: 'commercial', label: 'Utilitaire' },
+   { value: 'kombi', label :'Kombi' },
+   { value: 'limousine', label: 'Limousine' },
+   { value: 'other', label: 'Autres' }
 ];
 
 export const gearbox = [
