@@ -6,7 +6,7 @@ import { theme } from '../constants/theme';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
-const CardCar = ({ brand, energy, gearbox, model, mileage, price, thumbnail, year }) => {
+const CardCar = ({ className, brand, energy, gearbox, model, mileage, price, thumbnail, year }) => {
    const router = useRouter();
    const [cardSmallWidth, setCardSmallWidth] = useState(false);
 
@@ -20,7 +20,7 @@ const CardCar = ({ brand, energy, gearbox, model, mileage, price, thumbnail, yea
    }, [])
 
    return (
-      <Card className={`card-car ${cardSmallWidth ? 'small-width' : ''}`}>
+      <Card className={`card-car ${className}`}>
          <div className="thumbnail">
             {router.pathname !== '/' && <>
                <div className="promo">-20%</div>
@@ -55,6 +55,7 @@ const CardCar = ({ brand, energy, gearbox, model, mileage, price, thumbnail, yea
 };
 
 CardCar.propTypes = {
+   className: PropTypes.string,
    brand: PropTypes.string,
    energy: PropTypes.string,
    gearbox: PropTypes.string,
