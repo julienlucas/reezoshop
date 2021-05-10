@@ -5,7 +5,6 @@ import hocs from '../hooks/hocs';
 import SEO from '../next-seo.config';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyles } from '../constants/global-styles';
-import { ReactSlickStyles } from '../constants/react-slick';
 import { theme } from '../constants/theme';
 import { NextSeo } from 'next-seo';
 
@@ -33,7 +32,6 @@ class RZSApp extends App {
             <Head />
             <Component hocProps={hocProps} {...pageProps} />
             <GlobalStyles />
-            <ReactSlickStyles />
          </ThemeProvider>
       );
 

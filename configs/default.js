@@ -1,1 +1,1 @@
-export const graphQLEndpoint = 'DEV';
+export const graphQLEndpoint = 'https://gql-rc.front-uat.reezocar.com/graphql';

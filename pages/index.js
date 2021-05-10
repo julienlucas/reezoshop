@@ -1,8 +1,9 @@
 import graphQLQuery from '../utils/graphql';
 import getAds from './.graphql';
+import { homePropTypes } from '../constants/home-proptypes';
 import Layout from '../components/Layout';
 import { NextSeo } from 'next-seo';
-import PropTypes from 'prop-types';
+import { ReactSlickStyles } from '../constants/react-slick-style';
 import SEO from '../next-seo.config';
 import useShop from '../hooks/useShop';
 import Vehicules from '../components/Home/Vehicules';
@@ -36,6 +37,8 @@ const HomePage = ({ data, newCars, oldCars, shop }) => {
       <Interlocuteurs interlocuteurs={data.interlocuteurs} />
       <Pourquoi data={data.pourquoi} />
       <FAQS faqs={data.faqs} />
+
+      <ReactSlickStyles />
     </Layout>
   );
 };
@@ -60,12 +63,7 @@ HomePage.getInitialProps = async ({ shop }) => {
   return { data, newCars, oldCars, shop };
 };
 
-HomePage.propTypes = {
-  oldCars: PropTypes.array.isRequired,
-  newCars: PropTypes.array.isRequired,
-  data: PropTypes.object.isRequired,
-  shop: PropTypes.object.isRequired
-};
+HomePage.propTypes = homePropTypes;
 
 export default HomePage;
 

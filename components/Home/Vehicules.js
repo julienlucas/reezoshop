@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic'
 import CardCar from '../CardCar';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { ReactTabsStyles } from '../../constants/react-tabs';
+import { ReactTabsStyles } from '../../constants/react-tabs-style';
 import Slider from 'react-slick';
 import { SectionAComp } from './styles';
 const Tabs = dynamic(import('react-tabs').then(mod => mod.Tabs), { ssr: false }) // SSR désactivé : évite erreur rouge browser

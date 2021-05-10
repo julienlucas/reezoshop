@@ -10,7 +10,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { theme } from '../../constants/theme';
 
-const NavComp = ({ cityShop, nav, phone, selectAgency }) => {
+const Nav = ({ cityShop, nav, phone, selectAgency }) => {
   const router = useRouter();
   const [scroll, setScroll] = useState(null);
   const [top, setTop] = useState(null);
@@ -47,7 +47,7 @@ const NavComp = ({ cityShop, nav, phone, selectAgency }) => {
 
   return (
     <Wrapper>
-      <Nav className={`${scroll > top ? ' scroll' : null} ${router.pathname !== '/' ? 'bottomShadow' : ''}`}>
+      <NavContainer className={`${scroll > top ? ' scroll' : null} ${router.pathname !== '/' ? 'bottomShadow' : ''}`}>
         <div className={`overlay-mobile ${overlayMobile ? 'show' : 'hide'}`} onClick={() => setOverlayMobile(false)} />
         <div className="logo">
           <Link href="/">
@@ -71,7 +71,7 @@ const NavComp = ({ cityShop, nav, phone, selectAgency }) => {
             onChange={onChangeAgency}
           />
         </div>
-      </Nav>
+      </NavContainer>
 
       <Mobile phone={phone} />
 
@@ -102,16 +102,12 @@ const HeroComp = ({ headline }) => {
     router.push(`/recherche`);
   };
 
-  useEffect(() => {
-    const input = document.getElementById('search');
-    input.addEventListener('keyup', e => {
-      if (e.keyCode === 13) {
-        e.preventDefault();
-        const match = input.value;
-        router.push(`/recherche?match=${match}`);
-      }
-    });
-  }, [])
+  const onSearch = e => {
+    e.preventDefault();
+    const keyCode = e.keyCode;
+    const match = e.target.value;
+    if (keyCode === 13) router.push(`/recherche?match=${match}`);
+  };
 
   return (
     <Hero style={{ background: 'url(' + requireStatic('images/header-home.png') + ')', backgroundSize: 'cover' }}>
@@ -129,6 +125,7 @@ const HeroComp = ({ headline }) => {
                 placeholder="Marque, Modèle"
                 value={search}
                 onChange={e => onChange(e)}
+                onKeyUp={e => onSearch(e)}
               />
               <SearchIcon className="icon" />
             </div>
@@ -150,7 +147,7 @@ const Header = ({ cityShop, headline, nav, phone, selectAgency }) => {
 
   return (
     <header>
-      <NavComp cityShop={cityShop} nav={nav} phone={phone} selectAgency={agency => selectAgency(agency)}/>
+      <Nav cityShop={cityShop} nav={nav} phone={phone} selectAgency={agency => selectAgency(agency)}/>
       {router.pathname === '/' && <HeroComp headline={headline}/>}
     </header>
   );
@@ -220,7 +217,7 @@ export const Wrapper = styled.div`
   }
 `
 
-export const Nav = styled.nav`
+export const NavContainer = styled.nav`
   position: fixed;
   width: 100vw;
   height: 58px;

@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { theme } from '../constants/theme';
 
-const BoxGoogleRating = ({ className, adresse, headline, googleAvis, googleNote }) => {
+const BoxGoogleRating = ({ className, address, headline, googleAvis, googleNote }) => {
    return (
       <BoxGoogle className={`box-address ${className}`}>
          <MarkerIcon className="indicator" />
          <div className="address">
             <h3 className="big">{headline}</h3>
-            <p>{adresse}</p>
+            <p>{address}</p>
 
             <RatingStars>
                <span>4,2</span>
@@ -27,7 +27,7 @@ const BoxGoogleRating = ({ className, adresse, headline, googleAvis, googleNote 
 
 BoxGoogleRating.propTypes = {
    className: PropTypes.string,
-   adresse: PropTypes.string,
+   address: PropTypes.string,
    headline: PropTypes.string,
    googleNote: PropTypes.string,
    googleAvis: PropTypes.string

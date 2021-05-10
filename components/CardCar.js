@@ -4,17 +4,23 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { theme } from '../constants/theme';
 import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 
 const CardCar = ({ brand, energy, gearbox, model, mileage, price, thumbnail, year }) => {
    const router = useRouter();
+   const [cardSmallWidth, setCardSmallWidth] = useState(false);
 
    // Ajout d'un espace tous les 3 chiffres
    const numberFormat = num => {
       return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
    };
 
+   useEffect(() => {
+      if (router.pathname === '/recherche') setCardSmallWidth(true);
+   }, [])
+
    return (
-      <Card className={`card-car ${router.pathname !== '/' ? 'small-width' : ''}`}>
+      <Card className={`card-car ${cardSmallWidth ? 'small-width' : ''}`}>
          <div className="thumbnail">
             {router.pathname !== '/' && <>
                <div className="promo">-20%</div>
@@ -40,9 +46,9 @@ const CardCar = ({ brand, energy, gearbox, model, mileage, price, thumbnail, yea
                </Link>
             </h3>
             <p className="description">{gearbox && gearbox + ' ·'} {energy && energy + ' ·'} {year && year + ' ·'} {mileage && numberFormat(mileage) + ' km'}</p>
-            {router.pathname !== '/' && <button className="btn btn-neuf-occas">Neuf /0km</button>}
+            {cardSmallWidth && <button className="btn btn-neuf-occas">Neuf /0km</button>}
             <p className="prix">{price && numberFormat(price)} €</p>
-            {router.pathname !== '/' && <p className="prix-barre">{price && numberFormat(price)} €</p>}
+            {cardSmallWidth && <p className="prix-barre">{price && numberFormat(price)} €</p>}
          </div>
       </Card>
    );
