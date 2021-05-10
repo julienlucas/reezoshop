@@ -8,8 +8,8 @@ import { bodies, colorsExt, doors, energies, gearbox } from '../../constants/sea
 import React, { useEffect, useState } from 'react';
 
 const Filters = ({ count, onFilters }) => {
-   const [occasion, setOccasion] = useState(undefined);
-   const [neuf, setNeuf] = useState(undefined);
+   const [occasion, setOccasion] = useState(false);
+   const [neuf, setNeuf] = useState(false);
    const [toogleFilters, setToogleFilters] = useState(false);
    const [filters, setFilters] = useState('');
    const [activeMobileSearch, setActiveMobileSearch] = useState(false);
@@ -22,9 +22,17 @@ const Filters = ({ count, onFilters }) => {
 
    const onReset = filters === '' ? true : false;
 
-   const onChange = (value, name) => {
+   const onChange = (value, name, id) => {
+      if (id === 'occasion') {
+         setOccasion(!occasion)
+         value = !value;
+      };
+
+      if (id === 'neuf') setNeuf(!neuf);
+
       setFilters({
          ...filters,
+         size: 12,
          [name]: value
       });
    };
@@ -38,13 +46,17 @@ const Filters = ({ count, onFilters }) => {
    };
 
    const onFiltersSearch = e => {
-      // console.log('occasion: ' + occasion);
-      // console.log('neuf: ' + neuf);
-
       // Condition uniquement pour la recherche mobile (width =< 990px)
       if (e) {
         e.preventDefault();
         setActiveMobileSearch(true);
+      }
+
+      if ((neuf && occasion) || (!neuf && !occasion)) {
+         delete filters.onlyNew;
+         onFilters(filters);
+
+         return;
       }
 
       onFilters(filters);
@@ -65,7 +77,7 @@ const Filters = ({ count, onFilters }) => {
 
    return (
       <FiltersComp className={toogleFilters ? 'open' : ''}>
-         <button className="btn btn-secondary btn-filtres-mobile" onClick={() => setToogleFilters(!toogleFilters)}>Filtres{Object.keys(filters).length > 0 && ` (${Object.keys(filters).length})`}</button>
+         <button className="btn btn-secondary btn-filtres-mobile" onClick={() => setToogleFilters(!toogleFilters)}>Filtres</button>
          <div className={`btn-close ${toogleFilters ? 'open' : ''}`} onClick={() => setToogleFilters(!toogleFilters)}>
             <span/>
             <span/>
@@ -89,8 +101,8 @@ const Filters = ({ count, onFilters }) => {
             />
 
             <div className="row">
-               <div><Checkbox label="Neuf / 0km" id="neuf" name="onlyNew" onChange={onChange} /></div>
-               <div><Checkbox label="Occasion" id="occasion" name="onlyNew" onChange={onChange} /></div>
+               <div><Checkbox label="Neuf / 0km" id="neuf" name="onlyNew" onChange={onChange} onReset={onReset} /></div>
+               <div><Checkbox label="Occasion" id="occasion" name="onlyNew" onClick={() => setOccasion(!occasion)} onChange={onChange} onReset={onReset} /></div>
             </div>
 
             <div className="row">
@@ -148,7 +160,7 @@ const Filters = ({ count, onFilters }) => {
 
             <div className="wrapper-btn-search-mobile">
                <button onClick={e => onFiltersSearch(e)} className="btn btn-tertiary btn-search-mobile">
-                  Rechercher {activeMobileSearch && count > 0 && ` (${count} véhicules)`}
+                  Rechercher
                </button>
             </div>
          </form>

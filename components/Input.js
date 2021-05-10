@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { theme } from '../constants/theme';
 
 const Input = ({ name, onChange, onReset, placeholder, type }) => {
@@ -12,14 +12,17 @@ const Input = ({ name, onChange, onReset, placeholder, type }) => {
       onChange(value, name);
    };
 
+   useEffect(() => {
+      if (onReset) setState(null);
+   }, [onReset])
+
    return (
       <InputStyled
          type={type}
          name={name}
          placeholder={placeholder}
-         value={state}
+         value={!onReset && state}
          onChange={e => onChangeInput(e)}
-         onReset={() => setState(undefined)}
       />
    );
 };
@@ -27,7 +30,7 @@ const Input = ({ name, onChange, onReset, placeholder, type }) => {
 Input.propTypes = {
    name: PropTypes.string.isRequired,
    onChange: PropTypes.func.isRequired,
-   onReset: PropTypes.bool.isRequired,
+   onReset: PropTypes.bool,
    placeholder: PropTypes.string.isRequired,
    type: PropTypes.string.isRequired
 };

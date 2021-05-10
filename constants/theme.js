@@ -166,7 +166,7 @@ export const GlobalStyles = createGlobalStyle`
     .box-input-number {
       &::before {
         position: absolute;
-        margin: 9px 0 0 110px;
+        margin: 8px 0 0 110px;
         color: ${theme.black};
         content: '€';
         z-index: 1;

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
 import { theme } from '../constants/theme';
 
-const Checkbox = ({ id, label, name, onChange }) => {
+const Checkbox = ({ id, label, name, onChange, onReset }) => {
    const [value, setValue] = useState(null);
 
    const onClick = () => {
@@ -12,13 +12,17 @@ const Checkbox = ({ id, label, name, onChange }) => {
 
    useEffect(() => {
       if (value !== null) {
-         onChange(value, name);
+         onChange(value, name, id);
       }
    }, [value])
 
+   useEffect(() => {
+      onReset && setValue(null);
+   }, [onReset])
+
    return (
       <CustomCheckbox>
-         <input type="checkbox" className="checkbox" id={id} onClick={onClick} />
+         <input type="checkbox" className="checkbox" id={id} onClick={onClick} checked={value || false} readOnly />
          <label htmlFor={id}>{label}</label>
       </CustomCheckbox>
    );
@@ -28,7 +32,8 @@ Checkbox.propTypes = {
    id: PropTypes.string.isRequired,
    label: PropTypes.string.isRequired,
    name: PropTypes.string.isRequired,
-   onChange: PropTypes.func.isRequired
+   onChange: PropTypes.func.isRequired,
+   onReset: PropTypes.bool
 };
 
 export default Checkbox;

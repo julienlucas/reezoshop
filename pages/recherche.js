@@ -28,7 +28,9 @@ function Search({ data, search, shop }) {
   const onFilters = async filters => {
     setfilters(filters);
     const queryParams = {
-      queryParams: filters
+      queryParams: {
+        ...filters
+      }
     };
     const newSearch = await graphQLQuery(getAdsQuery, queryParams);
     setCount(newSearch.ads.count);
@@ -38,8 +40,8 @@ function Search({ data, search, shop }) {
   const onLoadMore = async nbrCars => {
     const queryParams = {
       queryParams: {
-        size: nbrCars,
-        ...filters
+        ...filters,
+        size: nbrCars
       }
     };
     const newSearch = await graphQLQuery(getAdsQuery, queryParams);
