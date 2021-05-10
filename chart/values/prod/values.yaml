@@ -1,0 +1,44 @@
+service:
+  type: ClusterIP
+  port: 3000
+
+ingress:
+  enabled: true
+  hosts:
+    - host: "www.paris.reezocar.com"
+      paths: ["/"]
+    - host: "www.lille.reezocar.com"
+      paths: ["/"]
+
+imagePullSecrets:
+  - "acr-secret"
+
+replicaCount: 32
+
+nodeSelector:
+  agentpool: reezoshop
+
+env:
+  CONF_ENV: production
+
+rzc-chart-reezogql:
+  enabled: false
+  service:
+    type: ClusterIP
+  
+  ingress:
+    enabled: true
+    hosts:
+    - host: "gql.reezocar.com"
+      paths: ["/"]
+  
+  imagePullSecrets:
+  - "acr-secret"
+
+  replicaCount: 9
+
+  nodeSelector:
+    agentpool: reezogql
+  
+  env:
+    NODE_ENV: production
