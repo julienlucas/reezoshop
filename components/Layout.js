@@ -20,7 +20,7 @@ function Layout({ cityShop, children, nav, headline, phone }) {
         nav={nav}
         phone={phone}
         headline={headline}
-        selectAgency={agency => selectAgency(agency)}
+        selectAgency={selectAgency}
       />
       <main>{children}</main>
       <Footer />

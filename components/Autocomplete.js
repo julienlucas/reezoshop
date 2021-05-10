@@ -181,7 +181,7 @@ export const Suggestions = styled.div`
       }
     }
   }
-  @media (min-width: 990px) {
+  @media (min-width: 800px) {
     .suggestions-list {
       max-width: 395px;
     }

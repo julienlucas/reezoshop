@@ -18,15 +18,15 @@ const Map = ({ data }) => {
 
       <BoxGoogleRating
         className="box-address-mobile"
-        adresse={data.adresse}
+        address={data.address}
         headline={data.headline}
         googleAvis={data.googleAvis}
         googleNote={data.googleNote}
       />
 
       <ul className="tabs">
-        <li onClick={() => setTab(1)} className={tab === 1 ? 'active' : ''}>Google Map</li>
-        <li onClick={() => setTab(2)} className={tab === 2 ? 'active' : ''}>Horaires d'ouverture</li>
+        <li className={tab === 1 ? 'active' : ''}><button onClick={() => setTab(1)}>Google Map</button></li>
+        <li className={tab === 2 ? 'active' : ''}><button onClick={() => setTab(2)}>Horaires d'ouverture</button></li>
       </ul>
 
       <GoogleMap data={data} tab={tab} mapURL={url => onMapURL(url)} />
@@ -35,7 +35,7 @@ const Map = ({ data }) => {
         <div className="container">
           <div className={`box-infos ${tab === 2 && window.innerWidth <= 990 ? 'active' : ''}`}>
             <BoxGoogleRating
-              adresse={data.adresse}
+              address={data.address}
               headline={data.headline}
               googleAvis={data.googleAvis}
               googleNote={data.googleNote}

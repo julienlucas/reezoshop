@@ -79,7 +79,7 @@ const Nav = ({ cityShop, nav, phone, selectAgency }) => {
         <BottomNavMobile>
           <button className="btn btn-primary btn-phone">
             <a href={`tel:${phone}`} rel="noopener noreferrer nofollow" target="_blank">
-              {phoneFormated}
+              <span>{phoneFormated}</span>
             </a>
           </button>
 
@@ -277,6 +277,9 @@ export const BottomNavMobile = styled.div`
   bottom: 0;
   padding: 20px 0;
   box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
+  .btn.btn-primary {
+    padding: 0;
+  }
   @media (min-width: 990px) {
     background: transparent;
     box-shadow: 0px -4px 10px rgba(0, 0, 0, 0);
@@ -337,7 +340,7 @@ export const HeroStyles = styled.div`
     align-items: center;
     justify-content: center;
   }
-  @media (min-width: 780px) {
+  @media (min-width: 800px) {
     top: auto;
     height: 640px;
     input[type="text"] {

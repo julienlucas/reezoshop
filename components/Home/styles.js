@@ -234,7 +234,7 @@ export const SectionDComp = styled.section`
   }
   .wrapper {
     position: absolute;
-    top: 305px;
+    top: 289px;
     height: 360px;
     width: 100vw;
     z-index: 1;
@@ -303,17 +303,27 @@ export const SectionDComp = styled.section`
     display: table;
     width: auto;
     li {
-      font-size: 18px;
+      position: relative;
       padding-bottom: 10px;
       margin-right: 20px;
       display: inline-block;
       list-style: none;
       border-bottom: 3px solid transparent;
       cursor: pointer;
+      button {
+        position: relative;
+        font-size: 18px;
+        border: 0;
+        color: ${theme.black};
+        background: transparent;
+        cursor: pointer;
+      }
       &.active {
-        font-weight: 700;
-        color: ${theme.blue100};
         border-color: ${theme.blue100};
+        button {
+          font-weight: 700;
+          color: ${theme.blue100};
+        }
       }
     }
   }

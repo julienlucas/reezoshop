@@ -128,10 +128,13 @@ export const GlobalStyles = createGlobalStyle`
         }
       }
       &.btn-phone {
-        padding: 0 20px 0 44px;
-        background: ${theme.orange100} url(${requireStatic('icons/tel.svg')}) no-repeat;
-        background-position: 15px 50%;
-        background-size: 20px;
+        padding: 0;
+        span {
+          padding: 0 20px 0 44px;
+          background: ${theme.orange100} url(${requireStatic('icons/tel.svg')}) no-repeat;
+          background-position: 15px 55%;
+          background-size: 20px;
+        }
       }
       &.btn-orange {
         padding: 0 30px;

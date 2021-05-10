@@ -6,13 +6,13 @@ import { NextSeo } from 'next-seo';
 import { ReactSlickStyles } from '../constants/react-slick-style';
 import SEO from '../next-seo.config';
 import useShop from '../hooks/useShop';
-import Vehicules from '../components/Home/Vehicules';
-import Constructeurs from '../components/Home/Constructeurs';
-import Promos from '../components/Home/Promos';
-import Map from '../components/Home/Map';
-import Interlocuteurs from '../components/Home/Interlocuteurs';
-import Pourquoi from '../components/Home/Pourquoi';
+import Advisors from '../components/Home/Advisors';
+import Brands from '../components/Home/Brands';
 import FAQS from '../components/Home/FAQS';
+import Map from '../components/Home/Map';
+import Models from '../components/Home/Models';
+import Offers from '../components/Home/Offers';
+import Why from '../components/Home/Why';
 
 const getAdsQuery = getAds.loc.source.body;
 
@@ -30,12 +30,12 @@ const HomePage = ({ data, newCars, oldCars, shop }) => {
         title={SEO.title}
         description={SEO.description}
       />
-      <Vehicules newCars={newCars} oldCars={oldCars} subHeadline={agence.subHeadline} />
-      <Constructeurs constructeurs={data.constructeurs} />
-      <Promos subHeadline={agence.subHeadline} />
+      <Models newCars={newCars} oldCars={oldCars} subHeadline={agence.subHeadline} />
+      <Brands brands={data.brands} />
+      <Offers subHeadline={agence.subHeadline} />
       <Map data={agence} />
-      <Interlocuteurs interlocuteurs={data.interlocuteurs} />
-      <Pourquoi data={data.pourquoi} />
+      <Advisors advisors={data.advisors} />
+      <Why data={data.pourquoi} />
       <FAQS faqs={data.faqs} />
 
       <ReactSlickStyles />
@@ -78,7 +78,7 @@ const mockData = {
       headline: 'Reezocar Lille - Seclin',
       subHeadline: 'agence Lilloise',
       description: '',
-      adresse: '11 Rue du Clauwiers, 59113 Seclin',
+      address: '11 Rue du Clauwiers, 59113 Seclin',
       horaires: {
         Lundi: ['09:00 : 18:00'],
         Mardi: ['09:00 : 18:00'],
@@ -96,7 +96,7 @@ const mockData = {
       headline: 'Reezocar Bordeaux',
       subHeadline: 'agence Bordelaise',
       description: '',
-      adresse: '11 Rue du des lumières, 33200 Bordeaux',
+      address: '11 Rue du des lumières, 33200 Bordeaux',
       horaires: {
         Lundi: ['09:00 : 18:00'],
         Mardi: ['09:00 : 18:00'],
@@ -114,7 +114,7 @@ const mockData = {
       headline: 'Reezocar Marseille',
       subHeadline: 'agence Marseillaise',
       description: '',
-      adresse: '32 Rue saint Antoine, 13000 Marseille',
+      address: '32 Rue saint Antoine, 13000 Marseille',
       horaires: {
         Lundi: ['09:00 : 18:00'],
         Mardi: ['09:00 : 18:00'],
@@ -129,7 +129,7 @@ const mockData = {
       googleNote: '4,2'
     }
   },
-  'constructeurs': [
+  'brands': [
     {
       nom: 'Renault',
       picture: 'icons/renault.svg'
@@ -155,7 +155,7 @@ const mockData = {
       picture: 'icons/bmw.svg'
     }
   ],
-  'interlocuteurs': [
+  'advisors': [
     {
       nom: 'Teddy',
       jobTitle: 'Customer Success manager',

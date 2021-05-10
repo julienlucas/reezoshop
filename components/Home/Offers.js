@@ -6,7 +6,7 @@ import Slider from 'react-slick';
 import { SectionCComp } from './styles';
 import React, { useEffect, useState } from 'react';
 
-function Promotions({ subHeadline }) {
+function Offers({ subHeadline }) {
   const [occasionPic, setOccasionPic] = useState('images/promo-occasion.png');
   const [neufPic, setNeufPic] = useState('images/promo-neuf.png');
 
@@ -77,8 +77,8 @@ function Promotions({ subHeadline }) {
   );
 };
 
-Promotions.propTypes = {
+Offers.propTypes = {
    subHeadline: PropTypes.string
 };
 
-export default Promotions;
+export default Offers;

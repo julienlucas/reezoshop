@@ -8,7 +8,7 @@ import { SectionAComp } from './styles';
 const Tabs = dynamic(import('react-tabs').then(mod => mod.Tabs), { ssr: false }) // SSR désactivé : évite erreur rouge browser
 import { Tab, TabList, TabPanel } from 'react-tabs';
 
-const Vehicules = ({ newCars, oldCars, subHeadline }) => {
+const Models = ({ newCars, oldCars, subHeadline }) => {
   const sliderSettings = {
     className: 'slider',
     arrows: false,
@@ -80,10 +80,10 @@ const Vehicules = ({ newCars, oldCars, subHeadline }) => {
   );
 };
 
-Vehicules.propTypes = {
+Models.propTypes = {
    newCars: PropTypes.array.isRequired,
    oldCars: PropTypes.array.isRequired,
    subHeadline: PropTypes.string
 };
 
-export default Vehicules;
+export default Models;
