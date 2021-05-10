@@ -1,9 +1,9 @@
+import Autocomplete from '../Autocomplete';
 import Image from 'next/image';
 import Link from 'next/link';
 import Mobile from './Mobile';
 import PropTypes from 'prop-types';
 import requireStatic from '../../utils/require-static';
-import SearchIcon from '../../svgs/search.svg';
 import Select from '../Select';
 import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
@@ -47,7 +47,7 @@ const Nav = ({ cityShop, nav, phone, selectAgency }) => {
 
   return (
     <Wrapper>
-      <NavContainer className={`${scroll > top ? ' scroll' : null} ${router.pathname !== '/' ? 'bottomShadow' : ''}`}>
+      <NavStyles className={`${scroll > top ? ' scroll' : null} ${router.pathname !== '/' ? 'bottomShadow' : ''}`}>
         <div className={`overlay-mobile ${overlayMobile ? 'show' : 'hide'}`} onClick={() => setOverlayMobile(false)} />
         <div className="logo">
           <Link href="/">
@@ -71,7 +71,7 @@ const Nav = ({ cityShop, nav, phone, selectAgency }) => {
             onChange={onChangeAgency}
           />
         </div>
-      </NavContainer>
+      </NavStyles>
 
       <Mobile phone={phone} />
 
@@ -89,7 +89,7 @@ const Nav = ({ cityShop, nav, phone, selectAgency }) => {
   );
 };
 
-const HeroComp = ({ headline }) => {
+const Hero = ({ headline }) => {
   const router = useRouter();
   const [search, setSearch] = useState('');
 
@@ -110,7 +110,7 @@ const HeroComp = ({ headline }) => {
   };
 
   return (
-    <Hero style={{ background: 'url(' + requireStatic('images/header-home.png') + ')', backgroundSize: 'cover' }}>
+    <HeroStyles style={{ background: 'url(' + requireStatic('images/header-home.png') + ')', backgroundSize: 'cover' }}>
       <div className="container">
         <div>
           <h1>{headline}</h1>
@@ -118,16 +118,7 @@ const HeroComp = ({ headline }) => {
 
           <div className="row">
             <div className="col col-1">
-              <input
-                id="search"
-                type="text"
-                className={search ? 'active' : null}
-                placeholder="Marque, Modèle"
-                value={search}
-                onChange={e => onChange(e)}
-                onKeyUp={e => onSearch(e)}
-              />
-              <SearchIcon className="icon" />
+              <Autocomplete suggestions={["Oranges", "Apples", "Banana", "Kiwi", "Mango"]} />
             </div>
 
             <div className="col col-2">ou</div>
@@ -138,7 +129,7 @@ const HeroComp = ({ headline }) => {
           </div>
         </div>
       </div>
-    </Hero>
+    </HeroStyles>
   );
 };
 
@@ -148,7 +139,7 @@ const Header = ({ cityShop, headline, nav, phone, selectAgency }) => {
   return (
     <header>
       <Nav cityShop={cityShop} nav={nav} phone={phone} selectAgency={agency => selectAgency(agency)}/>
-      {router.pathname === '/' && <HeroComp headline={headline}/>}
+      {router.pathname === '/' && <Hero headline={headline}/>}
     </header>
   );
 };
@@ -217,7 +208,7 @@ export const Wrapper = styled.div`
   }
 `
 
-export const NavContainer = styled.nav`
+export const NavStyles = styled.nav`
   position: fixed;
   width: 100vw;
   height: 58px;
@@ -292,7 +283,7 @@ export const BottomNavMobile = styled.div`
   }
 `
 
-export const Hero = styled.div`
+export const HeroStyles = styled.div`
   position: relative;
   top: -60px;
   width: 100%;
@@ -323,24 +314,6 @@ export const Hero = styled.div`
     width: 100%;
     padding-left: 0;
     padding-right: 0;
-  }
-  input[type="text"] {
-    position: relative;
-    padding: 0 14px;
-    font-size: 16px;
-    width: 100%;
-    height: 47px;
-    border-radius: 4px;
-    border: 1px solid white;
-    outline: 0;
-    color: ${theme.grey100};
-    &.active, &:focus, &:hover {
-      border: 1px solid ${theme.black};
-      color: ${theme.black};
-      &::placeholder {
-        color: ${theme.black};
-      }
-    }
   }
   .icon {
     position: absolute;
