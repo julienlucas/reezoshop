@@ -18,21 +18,18 @@ import FAQS from '../components/Home/FAQS';
 import { shops } from '../constants/shops';
 
 const HomePage = ({ data, newCars, usedCars }) => {
-  const { shops, shop } = useShop();
-  const agence = shops.lille;
-  const cityShop = shop;
-
+  const { shopKey, shop } = useShop();
   return (
     <Layout
-      cityShop={cityShop}
+      cityShop={shopKey}
       nav={data.nav}
       path="/"
     >
       <NextSeo title={SEO.title} description={SEO.description} />
       <Models newCars={newCars} usedCars={usedCars} />
       <Brands brands={data.brands} />
-      <Offers subHeadline={agence.subHeadline} />
-      <Map data={agence} />
+      <Offers subHeadline={shop.subHeadline} />
+      <Map data={shop} />
       <Advisors advisors={data.advisors} />
       <Why shop={data.why} />
       <FAQS faqs={data.faqs} />
