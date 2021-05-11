@@ -1,5 +1,4 @@
 import { createGlobalStyle } from 'styled-components';
-import requireStatic from '../utils/require-static';
 import { theme } from './theme';
 
 export const GlobalStyles = createGlobalStyle`
@@ -125,15 +124,6 @@ export const GlobalStyles = createGlobalStyle`
         background: ${theme.blue100};
         &:hover, &:focus {
           background: ${theme.blue200};
-        }
-      }
-      &.btn-phone {
-        padding: 0;
-        span {
-          padding: 0 20px 0 44px;
-          background: ${theme.orange100} url(${requireStatic('icons/tel.svg')}) no-repeat;
-          background-position: 15px 55%;
-          background-size: 20px;
         }
       }
       &.btn-orange {

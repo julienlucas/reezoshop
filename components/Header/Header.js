@@ -142,6 +142,14 @@ export const Wrapper = styled.div`
     width: calc(50vw - 26px);
     padding: 0 0 0 16px;
     z-index: 8;
+    span {
+      padding: 0 20px 0 44px;
+      width: auto;
+      line-height: 47px;
+      background: url(${requireStatic('icons/tel.svg')}) no-repeat;
+      background-position: 15px 55%;
+      background-size: 20px;
+    }
     a {
       display: block;
       color: white;
