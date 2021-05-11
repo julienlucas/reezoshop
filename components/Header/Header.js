@@ -13,23 +13,20 @@ import requireStatic from '../../utils/require-static';
 import useShop from '../../hooks/useShop';
 import { theme } from '../../constants/theme';
 
-import { shops } from '../../constants/shops';
-
 const Nav = ({ path }) => {
   const { onChangeShop, shops, shop, shopKey } = useShop();
-
   const router = useRouter();
   const [scroll, setScroll] = useState(null);
   const [top, setTop] = useState(null);
   const [height, setHeight] = useState(null);
-  const [overlayMobile, setOverlayMobile] = useState(false);
+  const [overlay, setOverlay] = useState(false);
 
   const handleScroll = () => {
     setScroll(window.scrollY);
   };
 
-  const addOverlayMobile = () => {
-    if (window.innerWidth <= 768) setOverlayMobile(!overlayMobile);
+  const openOverlay = () => {
+    if (window.innerWidth <= 990) setOverlay(!overlay);
   };
 
   useEffect(() => {
@@ -55,8 +52,8 @@ const Nav = ({ path }) => {
           }`}
         >
         <div
-          className={`overlay-mobile ${overlayMobile ? 'show' : 'hide'}`}
-          onClick={() => setOverlayMobile(false)}
+          className={`overlay-mobile ${overlay ? 'show' : 'hide'}`}
+          onClick={() => setOverlay(false)}
         />
         <div className="logo">
           <Link href="/">
@@ -72,17 +69,16 @@ const Nav = ({ path }) => {
           </Link>
         </div>
 
-        <div onClick={e => addOverlayMobile(e)}>
-          <Select
-            className="select-agency"
-            defaultValue={shopKey}
-            onChange={onChangeShop}
-            options={Object.keys(shops).map((shopKey) => ({
-              label: shops[shopKey].headline,
-              value: shopKey
-            }))}
-          />
-        </div>
+        <Select
+          className="select-agency"
+          defaultValue={shopKey}
+          onChange={onChangeShop}
+          onClick={openOverlay}
+          options={Object.keys(shops).map((shopKey) => ({
+            label: shops[shopKey].headline,
+            value: shopKey
+          }))}
+        />
       </NavStyles>
 
       <Mobile headline={shop.headline} phone={shop.phone} phoneFormated={shop.phoneFormated} />
@@ -101,8 +97,7 @@ const Nav = ({ path }) => {
 };
 
 const Header = ({ path }) => {
-  // const { shop } = useShop();
-  const shop = shops.lille;
+  const { shop } = useShop();
 
   return (
     <header>

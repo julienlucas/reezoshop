@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import requireStatic from '../utils/require-static';
 import { theme } from '../constants/theme';
 
-const Select = ({ className, defaultValue, name, onChange, onReset, options, placeholder }) => {
+const Select = ({ className, defaultValue, name, onChange, onClick, onReset, options, placeholder }) => {
    const node = useRef();
 
    const [state, setState] = useState({
@@ -32,6 +32,7 @@ const Select = ({ className, defaultValue, name, onChange, onReset, options, pla
             }
          });
 
+         onClick()
          return;
       }
 
@@ -42,6 +43,7 @@ const Select = ({ className, defaultValue, name, onChange, onReset, options, pla
          opened: false
          }
       });
+
    };
 
    useEffect(() => {
@@ -77,6 +79,7 @@ Select.propTypes = {
    placeholder: PropTypes.string,
    name: PropTypes.string,
    onChange: PropTypes.func,
+   onClick: PropTypes.func,
    onReset: PropTypes.bool
 };
 

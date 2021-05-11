@@ -82,7 +82,10 @@ Why.propTypes = {
 };
 
 ProgressRing.propTypes = {
-  percents: PropTypes.string.isRequired
+  percents: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ])
 };
 
 export default Why;
@@ -119,7 +122,7 @@ function ProgressRing({ percents }) {
           stroke="#11589A"
           fill="transparent"
           strokeWidth={ stroke }
-          strokeDasharray={ circumference + ' ' + circumference }
+          strokeDasharray={`${circumference} ${circumference}`}
           style={ { strokeDashoffset } }
           r={ normalizedRadius }
           cx={ radius }
