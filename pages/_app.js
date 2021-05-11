@@ -36,9 +36,11 @@ class RZSApp extends App {
             <ThemeProvider theme={theme}>
                <NextSeo {...SEO} />
                <Head />
-               <Layout cityShop={hocProps.shop.host} nav={nav} path={router.route}>
-                  <Component hocProps={hocProps} {...pageProps} />
-               </Layout>
+
+               {router.route === '/_error' ? <Component hocProps={hocProps} {...pageProps} /> :
+                  <Layout cityShop={hocProps.shop.host} nav={nav} path={router.route}>
+                     <Component hocProps={hocProps} {...pageProps} />
+                  </Layout>}
             </ThemeProvider>
          </>
       );
