@@ -25,13 +25,7 @@ const HomePage = ({ data, newCars, oldCars, shop }) => {
   const cityShop = shopFromContext.subdomain;
 
   return (
-    <Layout
-      cityShop={cityShop}
-      nav={data.nav}
-      phone={agence.phone}
-      headline={agence.headline}
-      heroComp={true}
-      home>
+    <Layout cityShop={cityShop} heroComp={true} nav={data.nav} phone={agence.phone} headline={agence.headline} home>
       <NextSeo
         title={SEO.title}
         description={SEO.description}

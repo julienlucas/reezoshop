@@ -8,10 +8,10 @@ const Autocomplete = ({ suggestions }) => {
   const node = useRef();
   const [open, setOpen] = useState(null);
   const [state, setState] = useState({
-      activeSuggestion: 0,
-      filteredSuggestions: [],
-      showSuggestions: false,
-      userInput: ''
+    activeSuggestion: 0,
+    filteredSuggestions: [],
+    showSuggestions: false,
+    userInput: ''
   });
   const { activeSuggestion, filteredSuggestions, showSuggestions , userInput } = state;
 
@@ -67,13 +67,16 @@ const Autocomplete = ({ suggestions }) => {
   };
 
   const onClickComp = e => {
+    // On inside click
     if (node.current.contains(e.target)) {
       setOpen(true);
       return;
     }
 
+    // On outside click
     setOpen(false);
   };
+
 
   useEffect(() => {
     document.addEventListener('mousedown', onClickComp);
@@ -186,4 +189,4 @@ export const Suggestions = styled.div`
       max-width: 395px;
     }
   }
-`
+`;
