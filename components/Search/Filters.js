@@ -3,20 +3,20 @@ import Checkbox from '../Checkbox';
 import Input from '../Input';
 import Select from '../Select';
 import styled from 'styled-components';
-import { theme } from '../../constants/theme';
 import { bodies, colorsExt, doors, energies, gearbox } from '../../constants/search';
 import React, { useEffect, useState } from 'react';
+import { theme } from '../../constants/theme';
+import { useRouter } from 'next/router';
 
-const Filters = ({ count, onFilters }) => {
+const Filters = ({ onFilters }) => {
+   const router = useRouter();
    const [occasion, setOccasion] = useState(false);
    const [neuf, setNeuf] = useState(false);
    const [toogleFilters, setToogleFilters] = useState(false);
    const [filters, setFilters] = useState('');
-   const [activeMobileSearch, setActiveMobileSearch] = useState(false);
 
    const resetFilters = () => {
       setFilters('');
-      setActiveMobileSearch('');
       onFilters({ size: 12 });
    };
 
@@ -49,7 +49,6 @@ const Filters = ({ count, onFilters }) => {
       // Condition uniquement pour la recherche mobile (width =< 990px)
       if (e) {
         e.preventDefault();
-        setActiveMobileSearch(true);
       }
 
       if ((neuf && occasion) || (!neuf && !occasion)) {
@@ -74,6 +73,12 @@ const Filters = ({ count, onFilters }) => {
 
       onResizeWidth();
    }, [filters])
+
+   // Si params dans l'URL, changer les filtres
+   useEffect(() => {
+      const URLParams = router.query;
+      if (URLParams) setFilters(URLParams);
+   }, [])
 
    return (
       <FiltersComp className={toogleFilters ? 'open' : ''}>
@@ -220,6 +225,17 @@ export const FiltersComp = styled.div`
       box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
       z-index: 7;
       width: 100vw;
+   }
+   .box-input-number {
+      position: relative;
+      &::before {
+         position: absolute;
+         margin: 7px 0 0 0;
+         right: 12px;
+         color: ${theme.black};
+         content: '€';
+         z-index: 1;
+      }
    }
    .btn-search-mobile {
       width: 100%;

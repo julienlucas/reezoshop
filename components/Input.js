@@ -53,7 +53,7 @@ export const InputStyled = styled.input`
       line-height: 1;
    }
    &[type="number"] {
-      padding: 0 7px;
+      padding: 0 20px 0 7px;
       display: block;
       width: 100%;
       &::placeholder {

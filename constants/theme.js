@@ -163,21 +163,6 @@ export const GlobalStyles = createGlobalStyle`
       }
     }
     ${''/* Inputs */}
-    .box-input-number {
-      &::before {
-        position: absolute;
-        margin: 8px 0 0 110px;
-        color: ${theme.black};
-        content: '€';
-        z-index: 1;
-      }
-      &.mois::before {
-        content: 'Mois';
-      }
-      &.kilometres::before {
-        content: 'Kms';
-      }
-    }
     input {
       margin-bottom: 16px;
       color: ${theme.black};
