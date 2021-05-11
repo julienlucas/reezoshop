@@ -1,12 +1,13 @@
 import Link from 'next/link';
-import NextImageLazy from '../utils/imgLazy';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { theme } from '../constants/theme';
-import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import styled from 'styled-components';
 
-const CardCar = ({ className, brand, energy, gearbox, model, mileage, price, thumbnail, year }) => {
+import NextImageLazy from '../utils/imgLazy';
+import { theme } from '../constants/theme';
+
+const CardCar = ({ className, brand, energy, gearbox, model, mileage, price, year }) => {
    const router = useRouter();
    const [cardSmallWidth, setCardSmallWidth] = useState(false);
 
@@ -30,7 +31,7 @@ const CardCar = ({ className, brand, energy, gearbox, model, mileage, price, thu
             <Link href="/">
                <a>
                   <NextImageLazy
-                     src={'https://picsum.photos/480/270'}
+                     src="https://picsum.photos/480/270"
                      width={367}
                      height={205}
                      layout="responsive"
@@ -45,8 +46,8 @@ const CardCar = ({ className, brand, energy, gearbox, model, mileage, price, thu
                   <a>{brand && brand} {model && model}</a>
                </Link>
             </h3>
-            <p className="description">{gearbox && gearbox + ' ·'} {energy && energy + ' ·'} {year && year + ' ·'} {mileage && numberFormat(mileage) + ' km'}</p>
-            {cardSmallWidth && <button className="btn btn-neuf-occas">Neuf /0km</button>}
+            <p className="description">{gearbox && `${gearbox} ·`} {energy && `${energy} ·`} {year && `${year} ·`} {mileage && `${numberFormat(mileage)} km`}</p>
+            {cardSmallWidth && <button className="btn btn-neuf-occas" type="button">Neuf /0km</button>}
             <p className="prix">{price && numberFormat(price)} €</p>
             {cardSmallWidth && <p className="prix-barre">{price && numberFormat(price)} €</p>}
          </div>
@@ -62,7 +63,7 @@ CardCar.propTypes = {
    model: PropTypes.string,
    mileage: PropTypes.number,
    price: PropTypes.number,
-   thumbnail: PropTypes.string,
+   // thumbnail: PropTypes.string,
    year: PropTypes.string
 };
 
@@ -140,7 +141,8 @@ export const Card = styled.div`
          padding: 5px 0;
          font-size: 14px;
          font-weight: 600;
-         color: ${theme.grey100}
+         color: ${theme.grey100};
+         text-transform: capitalize;
       }
       .prix {
          font-size: 26px;

@@ -1,19 +1,22 @@
 import PropTypes from 'prop-types';
 import React, { useRef, useEffect, useState } from 'react';
-import SearchIcon from '../svgs/search.svg';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
+
+import SearchIcon from '../svgs/search.svg';
 import { theme } from '../constants/theme';
 
-const Autocomplete = ({ suggestions }) => {
+const Autocomplete = ({ onSearch, suggestions }) => {
   const node = useRef();
+  const router = useRouter();
   const [open, setOpen] = useState(null);
   const [state, setState] = useState({
-    activeSuggestion: 0,
+    active: 0,
     filteredSuggestions: [],
     showSuggestions: false,
     userInput: ''
   });
-  const { activeSuggestion, filteredSuggestions, showSuggestions , userInput } = state;
+  const { active, filteredSuggestions, showSuggestions , userInput } = state;
 
   const onChange = e => {
     const userInput = e.currentTarget.value;
@@ -23,7 +26,7 @@ const Autocomplete = ({ suggestions }) => {
     );
 
     setState({
-      activeSuggestion: 0,
+      active: 0,
       filteredSuggestions,
       showSuggestions: true,
       userInput: e.currentTarget.value
@@ -31,38 +34,49 @@ const Autocomplete = ({ suggestions }) => {
   };
 
   const onClick = e => {
+    const { innerText } = e.currentTarget;
+
     setState({
-      activeSuggestion: 0,
+      active: 0,
       filteredSuggestions: [],
       showSuggestions: false,
-      userInput: e.currentTarget.innerText
+      userInput: innerText
     });
+
+    router.push(`/recherche?match=${innerText}`);
   };
 
-  const onKeyDown = e => {
-    // User pressed the enter key
+  const onKeyUp = e => {
+    e.preventDefault();
+    // Lorsque press enter
     if (e.keyCode === 13) {
-      setState({
-        activeSuggestion: 0,
-        showSuggestions: false,
-        userInput: filteredSuggestions[activeSuggestion]
-      });
+      const expression = filteredSuggestions[active];
+      setState({ userInput: expression });
+      router.push(`/recherche?match=${expression}`);
     }
-    // User pressed the up arrow
-    else if (e.keyCode === 38) {
-      if (activeSuggestion === 0) {
-        return;
-      }
 
-      setState({ activeSuggestion: activeSuggestion - 1 });
+    // Lorsque press up arrow
+    if (e.keyCode === 38) {
+      if (active === 0) return;
+
+      setState(prevState => {
+        return {
+          ...prevState,
+          active: prevState.active - 1
+        }
+      })
     }
-    // User pressed the down arrow
-    else if (e.keyCode === 40) {
-      if (activeSuggestion - 1 === filteredSuggestions.length) {
-        return;
-      }
 
-      setState({ activeSuggestion: activeSuggestion + 1 });
+    // Lorsque press down arrow
+    if (e.keyCode === 40) {
+      if (active - 1 === filteredSuggestions.length) return;
+
+      setState(prevState => {
+        return {
+          ...prevState,
+          active: prevState .active + 1
+        }
+      })
     }
   };
 
@@ -72,11 +86,13 @@ const Autocomplete = ({ suggestions }) => {
       setOpen(true);
       return;
     }
-
     // On outside click
     setOpen(false);
   };
 
+  useEffect(() => {
+    if (userInput) onSearch(userInput)
+  }, [userInput])
 
   useEffect(() => {
     document.addEventListener('mousedown', onClickComp);
@@ -91,11 +107,11 @@ const Autocomplete = ({ suggestions }) => {
     if (state.filteredSuggestions.length) {
       suggestionsListComponent = (
         <div className="suggestions-list">
-          <span>Suggestions</span>
+          <p>Suggestions</p>
           <ul>
             {filteredSuggestions.map((suggestion, i) =>
-              <li className={i === activeSuggestion ? 'suggestion-active' : ''} key={suggestion} onClick={onClick}>
-                {suggestion}
+              <li className={i === active ? 'suggestion-active' : ''} key={suggestion}>
+                <span onClick={onClick}>{suggestion}</span>
               </li>
             )}
           </ul>
@@ -104,12 +120,16 @@ const Autocomplete = ({ suggestions }) => {
     }
   };
 
+     //  const keyCode = e.keyCode;
+   //  const match = e.target.value;
+   //  if (keyCode === 13) router.push(`/recherche?match=${match}`);
+
   return (
     <Suggestions ref={node} className={!open ? 'hide-list' : ''} onClick={e => onClickComp(e)}>
       <input
         type="text"
         onChange={onChange}
-        onKeyDown={onKeyDown}
+        onKeyUp={onKeyUp}
         value={userInput}
         placeholder="Marque, Modèle"
       />
@@ -120,6 +140,7 @@ const Autocomplete = ({ suggestions }) => {
 };
 
 Autocomplete.propTypes = {
+  onSearch: PropTypes.func,
   suggestions: PropTypes.array
 };
 
@@ -167,7 +188,7 @@ export const Suggestions = styled.div`
     opacity: 1;
     box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.12);
     z-index: 3;
-    span {
+    p {
       padding: 0 15px;
       text-transform: uppercase;
       color: ${theme.grey100};
@@ -176,10 +197,14 @@ export const Suggestions = styled.div`
       font-size: 12px;
     }
     li {
-      padding: 5px 15px;
       list-style: none;
       cursor: pointer;
-      &:hover, &:focus {
+      span {
+        padding: 5px 15px;
+        width: 100%;
+        display: block;
+      }
+      &:hover, &:focus, &.suggestion-active {
         background: ${theme.grey400};
       }
     }

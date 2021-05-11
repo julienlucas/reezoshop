@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import React, { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/router';
+
 import requireStatic from '../utils/require-static';
 import { theme } from '../constants/theme';
 
@@ -57,7 +59,7 @@ const Select = ({ className, defaultValue, name, onChange, onReset, options, pla
    }, []);
 
    const getOptions = () => {
-      return options.map(o => <Option key={o.value} option={o} onSelect={onSelect} />);
+      return options.map(o => <Option className={className} key={o.value} option={o} onSelect={onSelect} />);
    };
 
    return (
@@ -74,19 +76,29 @@ Select.propTypes = {
    options: PropTypes.array.isRequired,
    placeholder: PropTypes.string,
    name: PropTypes.string,
-   reset: PropTypes.bool
+   onChange: PropTypes.func,
+   onReset: PropTypes.bool
+};
+
+Option.propTypes = {
+   className: PropTypes.string,
+   option: PropTypes.object,
+   onSelect: PropTypes.func
 };
 
 export default Select;
 
-function Option (props) {
-   const onSelect = (e) => {
-      e.preventDefault();
-      props.onSelect(props.option);
+function Option ({ className, option, onSelect }) {
+   const router = useRouter();
+
+   if (className === 'select-agency') {
+      return (
+         <li><a href={`https://${option.value}.reezocar.com${router.pathname}`} title="">{option.label}</a></li>
+      )
    }
 
    return (
-      <li onClick={onSelect}>{props.option.label}</li>
+      <li><span onClick={() => onSelect(option)}>{option.label}</span></li>
    );
 };
 
@@ -122,6 +134,10 @@ export const SelectMenu = styled.div`
          left: -35px;
          min-width: 290px;
          z-index: 9;
+         a {
+            color: ${theme.black};
+            text-decoration: none;
+         }
       }
       @media (min-width: 768px) {
          top: 30px;

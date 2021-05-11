@@ -1,12 +1,13 @@
 import React from 'react';
 import App from 'next/app';
-import Head from 'next/head'
+import Head from 'next/head';
+import { NextSeo } from 'next-seo';
+import { ThemeProvider } from 'styled-components';
+
 import hocs from '../hooks/hocs';
 import SEO from '../next-seo.config';
-import { ThemeProvider } from 'styled-components';
 import { GlobalStyles } from '../constants/global-styles';
 import { theme } from '../constants/theme';
-import { NextSeo } from 'next-seo';
 
 class RZSApp extends App {
    static async getInitialProps({ Component, ctx }) {
@@ -27,12 +28,14 @@ class RZSApp extends App {
       const { Component, hocProps, pageProps } = this.props;
 
       const cpnt = (
-         <ThemeProvider theme={theme}>
-            <NextSeo {...SEO}/>
-            <Head />
-            <Component hocProps={hocProps} {...pageProps} />
+         <>
             <GlobalStyles />
-         </ThemeProvider>
+            <ThemeProvider theme={theme}>
+               <NextSeo {...SEO} />
+               <Head />
+               <Component hocProps={hocProps} {...pageProps} />
+            </ThemeProvider>
+         </>
       );
 
       return hocs.reduce((children, hoc) => hoc({ children, ...hocProps }), cpnt);

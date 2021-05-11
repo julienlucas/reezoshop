@@ -1,11 +1,12 @@
 import Link from 'next/link';
-import styled from 'styled-components'
-import TelIcon from '../../svgs/tel.svg';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import styled from 'styled-components';
+
+import TelIcon from '../../svgs/tel.svg';
 import { theme } from '../../constants/theme';
 
-function Mobile({ phone }) {
+const Mobile = ({ headline, phone, phoneFormated }) => {
    const [mobileMenu, setMobileMenu] = useState(false);
 
    return (
@@ -16,10 +17,10 @@ function Mobile({ phone }) {
             <span/>
          </div>
 
-        {mobileMenu && <div className={`mobile-menu ${mobileMenu ? 'open' : ''}`}>
+         {mobileMenu && <div className={`mobile-menu ${mobileMenu ? 'open' : ''}`}>
             <div className="box-top">
                <ul>
-                  <li><strong>Agence Reezocar Lille</strong></li>
+                  <li><strong>Agence {headline}</strong></li>
                   <li><Link href=""><a>Véhicules d'occasion</a></Link></li>
                   <li><Link href=""><a>Véhicules neufs/0km</a></Link></li>
                   <li><Link href=""><a>Comment venir ?</a></Link></li>
@@ -27,21 +28,23 @@ function Mobile({ phone }) {
                </ul>
             </div>
             <div className="box-bottom">
-               <p><strong>Reezocar Lille-Seclin</strong></p>
+               <p><strong>{headline}</strong></p>
                <p>Lundi au Samedi - 09:00 à 18h00</p>
                <p>
                   <a href={`tel:${phone}`} rel="noopener noreferrer nofollow" target="_blank">
-                     <TelIcon className="icon" />01 42 53 65 29
+                     <TelIcon className="icon" />{phoneFormated}
                   </a>
                </p>
             </div>
-        </div>}
+         </div>}
       </MobileWrapper>
    );
 };
 
 Mobile.propTypes = {
-  phone: PropTypes.string.isRequired
+  headline: PropTypes.string.isRequired,
+  phone: PropTypes.string.isRequired,
+  phoneFormated: PropTypes.string.isRequired
 };
 
 export default Mobile;
@@ -107,6 +110,7 @@ export const MobileWrapper = styled.div`
       }
       .box-bottom {
          position: fixed;
+         display: none;
          bottom: 76px;
          * {
             margin-bottom: 5px;
@@ -123,6 +127,7 @@ export const MobileWrapper = styled.div`
             margin-bottom: 50px;
             font-size: 20px;
             list-style: none;
+            text-align: center;
          }
       }
       p {
@@ -142,6 +147,14 @@ export const MobileWrapper = styled.div`
    @media (min-width: 780px) {
       .mobile-menu {
          width: 400px;
+         .box-bottom {
+            display: block;
+         }
+         ul {
+            li {
+               text-align: left;
+            }
+         }
       }
       .btn-mobile {
          top: 38px;
@@ -149,7 +162,7 @@ export const MobileWrapper = styled.div`
             right: 35px;
          }
          span {
-         background: ${theme.black};
+            background: ${theme.black};
          }
       }
    }

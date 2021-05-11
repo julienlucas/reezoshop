@@ -1,8 +1,12 @@
-import NextImageLazy from '../../utils/imgLazy';
+import PropTypes from 'prop-types';
 import React from 'react';
+import styled from 'styled-components';
 import Slider from 'react-slick';
+
+import NextImageLazy from '../../utils/imgLazy';
 import requireStatic from '../../utils/require-static';
-import { SectionBComp } from './styles';
+import { ReactSlickStyles } from '../../constants/react-slick-styles';
+import { theme } from '../../constants/theme';
 
 const Brands = ({ brands }) => {
   const sliderSettings = {
@@ -17,16 +21,21 @@ const Brands = ({ brands }) => {
   };
 
   return (
-    <SectionBComp>
+    <SectionBrands>
       <div className="container">
         <h2 className="small">Les constructeurs populaires</h2>
 
         <Slider {...sliderSettings}>
           {brands?.map(brand => <CardBrand key={brand.nom} brand={brand} />)}
         </Slider>
+        <ReactSlickStyles/>
       </div>
-    </SectionBComp>
+    </SectionBrands>
   );
+};
+
+Brands.propTypes = {
+  brands: PropTypes.array.isRequired
 };
 
 export default Brands;
@@ -50,3 +59,85 @@ const CardBrand = ({ brand }) => {
     </div>
   );
 };
+
+CardBrand.propTypes = {
+  brand: PropTypes.object.isRequired
+};
+
+export const SectionBrands = styled.section`
+  padding: 5px 0 30px;
+  h2 {
+    padding-left: 5px
+  }
+  p, strong {
+    position: relative;
+    margin: 0 auto;
+    display: table;
+    padding: 0;
+    text-align: center;
+    width: 100%;
+    font-size: 14px;
+    line-height: 1;
+    color: ${theme.black}
+  }
+  strong {
+    margin-bottom: 3px;
+    font-weight: 600;
+    font-size: 18px;
+  }
+  .card-automaker {
+    padding: 0;
+    height: 125px;
+    width: 130px;
+    user-select: none;
+    outline: 0;
+    cursor: pointer;
+    border: 0.867528px solid ${theme.grey200};
+    border-radius: 3.47011px;
+    .logo {
+      height: 80px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      * {
+        position: absolute;
+        width: 100px;
+        height: 80px;
+        width: auto;
+        height: auto;
+        z-index: 2;
+      }
+    }
+  }
+  .slick-list {
+    padding-left: 8px;
+    max-width: 1160px;
+    width: 100%;
+  }
+  .slider {
+    .slick-slide {
+      margin: 0 5px;
+      * {
+        outline: 0;
+        user-select: none
+      }
+    }
+  }
+  @media (min-width: 768px) {
+    padding: 20px 0;
+    .container {
+      padding: 0 30px;
+    }
+    .card-automaker {
+      padding: 13px 0;
+      height: 154px;
+      width: 173px;
+    }
+    .slider {
+      .slick-slide {
+        margin: 0 10px;
+      }
+    }
+  }
+`;

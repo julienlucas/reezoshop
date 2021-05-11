@@ -1,16 +1,23 @@
-import Autocomplete from '../Autocomplete';
 import Image from 'next/image';
 import Link from 'next/link';
-import Mobile from './Mobile';
 import PropTypes from 'prop-types';
-import requireStatic from '../../utils/require-static';
-import Select from '../Select';
 import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+
+import Hero from './Hero';
+import Mobile from './Mobile';
+import Select from '../Select';
+
+import requireStatic from '../../utils/require-static';
+import useShop from '../../hooks/useShop';
 import { theme } from '../../constants/theme';
 
-const Nav = ({ cityShop, nav, phone, selectAgency }) => {
+import { shops } from '../../constants/shops';
+
+const Nav = ({ path }) => {
+  const { onChangeShop, shops, shop, shopKey } = useShop();
+
   const router = useRouter();
   const [scroll, setScroll] = useState(null);
   const [top, setTop] = useState(null);
@@ -19,10 +26,6 @@ const Nav = ({ cityShop, nav, phone, selectAgency }) => {
 
   const handleScroll = () => {
     setScroll(window.scrollY);
-  };
-
-  const onChangeAgency = agency => {
-    selectAgency(agency);
   };
 
   const addOverlayMobile = () => {
@@ -36,117 +39,85 @@ const Nav = ({ cityShop, nav, phone, selectAgency }) => {
     setHeight(el.offsetHeight)
     window.addEventListener('scroll', handleScroll)
 
-		scroll > top ?
-			document.body.style.paddingTop = `${height}px` :
-      document.body.style.paddingTop = 0
+		if (scroll > top) {
+      document.body.style.paddingTop = `${height}px`;
+    } else {
+      document.body.style.paddingTop = 0;
+    };
 
   }, [height,top,scroll])
 
-  // Ajout d'un espace tous les 2 caractères
-  const phoneFormated = phone.toString().replace(/(\d)(?=(\d{2})+(?!\d))/g, '$1 ');
-
   return (
-    <Wrapper>
-      <NavStyles className={`${scroll > top ? ' scroll' : null} ${router.pathname !== '/' ? 'bottomShadow' : ''}`}>
-        <div className={`overlay-mobile ${overlayMobile ? 'show' : 'hide'}`} onClick={() => setOverlayMobile(false)} />
+      <Wrapper>
+        <NavStyles
+          className={`${scroll > top ? ' scroll' : null} ${
+            router.pathname !== '/' ? 'bottomShadow' : ''
+          }`}
+        >
+        <div
+          className={`overlay-mobile ${overlayMobile ? 'show' : 'hide'}`}
+          onClick={() => setOverlayMobile(false)}
+        />
         <div className="logo">
           <Link href="/">
-            <a>
-              <Image
-                src={requireStatic('images/logo-reezocar.svg')}
-                alt="reezocar"
-                width={244}
-                height={66}
-                layout="responsive"
-              />
-            </a>
+              <a>
+                <Image
+                  src={requireStatic('images/logo-reezocar.svg')}
+                  alt="reezocar"
+                  width={244}
+                  height={66}
+                  layout="responsive"
+                />
+              </a>
           </Link>
         </div>
 
         <div onClick={e => addOverlayMobile(e)}>
           <Select
             className="select-agency"
-            defaultValue={cityShop}
-            options={nav}
-            onChange={onChangeAgency}
+            defaultValue={shopKey}
+            onChange={onChangeShop}
+            options={Object.keys(shops).map((shopKey) => ({
+              label: shops[shopKey].headline,
+              value: shopKey
+            }))}
           />
         </div>
       </NavStyles>
 
-      <Mobile phone={phone} />
+      <Mobile headline={shop.headline} phone={shop.phone} phoneFormated={shop.phoneFormated} />
 
-      {router.pathname === '/' &&
+      {path === '/' && (
         <BottomNavMobile>
-          <button className="btn btn-primary btn-phone">
-            <a href={`tel:${phone}`} rel="noopener noreferrer nofollow" target="_blank">
-              <span>{phoneFormated}</span>
+          <button className="btn btn-primary btn-phone" type="button">
+            <a href={`tel:${shop.phone}`} rel="noopener noreferrer nofollow" target="_blank">
+              <span>{shop.phoneFormated}</span>
             </a>
           </button>
-
-          <button className="btn btn-secondary btn-rdv">Prendre rendez-vous</button>
-        </BottomNavMobile>}
+        <button className="btn btn-secondary btn-rdv" type="button">Prendre rendez-vous</button>
+      </BottomNavMobile>)}
     </Wrapper>
   );
 };
 
-const Hero = ({ headline }) => {
-  const router = useRouter();
-  const [search, setSearch] = useState('');
+const Header = ({ path }) => {
+  // const { shop } = useShop();
+  const shop = shops.lille;
 
-  const onChange = e => {
-    e.preventDefault();
-    setSearch(e.target.value);
-  };
-
-  const seeAllCars = () => {
-    router.push(`/recherche`);
-  };
-
-  const onSearch = e => {
-    e.preventDefault();
-    const keyCode = e.keyCode;
-    const match = e.target.value;
-    if (keyCode === 13) router.push(`/recherche?match=${match}`);
-  };
-
-  return (
-    <HeroStyles style={{ background: 'url(' + requireStatic('images/header-home.png') + ')', backgroundSize: 'cover' }}>
-      <div className="container">
-        <div>
-          <h1>{headline}</h1>
-          <h2 className="sub-headline">Voiture d'occasion et neuves à vendre dans notre agence</h2>
-
-          <div className="row">
-            <div className="col col-1">
-              <Autocomplete suggestions={["Oranges", "Apples", "Banana", "Kiwi", "Mango"]} />
-            </div>
-
-            <div className="col col-2">ou</div>
-
-            <div className="col col-3">
-              <button className="btn btn-primary" onClick={seeAllCars}>Voir tous les véhicules</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </HeroStyles>
-  );
-};
-
-const Header = ({ cityShop, headline, heroComp, nav, phone, selectAgency }) => {
   return (
     <header>
-      <Nav cityShop={cityShop} nav={nav} phone={phone} selectAgency={agency => selectAgency(agency)}/>
-      {heroComp && <Hero headline={headline}/>}
+      <Nav path={path} />
+      {path && <Hero headline={shop.headline} />}
     </header>
   );
 };
 
 Header.propTypes = {
-  heroComp: PropTypes.bool,
-  cityShop: PropTypes.string.isRequired,
-  nav: PropTypes.array.isRequired,
-  phone: PropTypes.string.isRequired
+  path: PropTypes.string,
+};
+
+Nav.propTypes = {
+  path: PropTypes.string,
 };
 
 export default Header;
@@ -284,75 +255,3 @@ export const BottomNavMobile = styled.div`
     box-shadow: 0px -4px 10px rgba(0, 0, 0, 0);
   }
 `
-
-export const HeroStyles = styled.div`
-  position: relative;
-  top: -60px;
-  width: 100%;
-  height: 630px;
-  display: table;
-  background-position: 0% 0%;
-  background-size: cover;
-  z-index: 1;
-  .container {
-    position: absolute;
-    top: calc(50% - 30px);
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    transform: translateY(-50%);
-    display: flex;
-    align-items: center;
-    max-width: 820px;
-    div {
-      width: 100%;
-    }
-  }
-  .btn {
-    position: relative;
-    margin: 0 auto;
-    display: table;
-    min-width: 270px;
-    width: 100%;
-    padding-left: 0;
-    padding-right: 0;
-  }
-  .icon {
-    position: absolute;
-    margin: 15px 0 0 -30px;
-  }
-  .row {
-    position: relative;
-    padding-top: 10px;
-    display: block;
-    grid-gap: 20px;
-    max-width: 720px;
-    width: 100%;
-  }
-  .col-2 {
-    height: 50px;
-    margin-top: -15px;
-    font-size: 26px;
-    color: ${theme.black};
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  @media (min-width: 800px) {
-    top: auto;
-    height: 640px;
-    input[type="text"] {
-      width: 395px;
-    }
-    .row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-    }
-    .col-2 {
-      display: block;
-      margin-top: 3px;
-      color: white;
-    }
-  }
-`;
