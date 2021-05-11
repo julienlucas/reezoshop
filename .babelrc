@@ -4,6 +4,7 @@
     ],
     "plugins": [
         "inline-react-svg",
-        "import-graphql"
+        "import-graphql",
+        "styled-components"
     ]
 }

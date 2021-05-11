@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { NextSeo } from 'next-seo';
 
 import graphQLQuery from '../utils/graphql';
-import Layout from '../components/Layout';
 import SEO from '../next-seo.config';
+import { shops } from '../constants/shops';
 import useShop from '../hooks/useShop';
 
 import Models from '../components/Home/Models';
@@ -15,16 +15,11 @@ import Advisors from '../components/Home/Advisors';
 import Why from '../components/Home/Why';
 import FAQS from '../components/Home/FAQS';
 
-import { shops } from '../constants/shops';
-
 const HomePage = ({ data, newCars, usedCars }) => {
-  const { shopKey, shop } = useShop();
+  const { shop } = useShop();
+
   return (
-    <Layout
-      cityShop={shopKey}
-      nav={data.nav}
-      path="/"
-    >
+   <>
       <NextSeo title={SEO.title} description={SEO.description} />
       <Models newCars={newCars} usedCars={usedCars} />
       <Brands brands={data.brands} />
@@ -33,7 +28,7 @@ const HomePage = ({ data, newCars, usedCars }) => {
       <Advisors advisors={data.advisors} />
       <Why shop={data.why} />
       <FAQS faqs={data.faqs} />
-    </Layout>
+   </>
   );
 };
 
@@ -105,11 +100,6 @@ const adsQuery = `query getAds($queryParamsNew: AdQueryParams!, $queryParamsUsed
 }`;
 
 const mockData = {
-   nav: [
-      { value: 'lille', label: 'Agence Boulogne-Billancourt' },
-      { value: 'bordeaux', label: 'Agence Bordeaux' },
-      { value: 'marseille', label: 'Agence Marseille' },
-   ],
    agencies: shops,
    brands: [
       {

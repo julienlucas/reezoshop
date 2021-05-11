@@ -2,7 +2,7 @@
 
 import { __DEV__ } from '../constants/env';
 
-export default (file, trycatch = false) => {
+const requireStatic = (file, trycatch = false) => {
    file = file.replace(/!/, '');
 
    let r = null;
@@ -19,3 +19,5 @@ export default (file, trycatch = false) => {
 
    return (r || {}).default;
 };
+
+export default requireStatic;

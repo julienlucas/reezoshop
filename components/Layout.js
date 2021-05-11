@@ -22,7 +22,7 @@ const Layout = ({ children, nav, path }) => {
 };
 
 Layout.propTypes = {
-  children: PropTypes.array.isRequired,
+  children: PropTypes.object.isRequired,
   nav: PropTypes.array.isRequired,
   path: PropTypes.string
 };
