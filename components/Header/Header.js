@@ -3,22 +3,18 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 
-import Hero from './Hero';
+import Button from '../Button';
 import Mobile from './Mobile';
 import Select from '../Select';
 
 import requireStatic from '../../utils/require-static';
 import useShop from '../../hooks/useShop';
-import { theme } from '../../constants/theme';
+import { medias, theme } from '../../constants/theme';
 
-const Nav = ({ path }) => {
+const Header = ({ path }) => {
   const { onChangeShop, shops, shop, shopKey } = useShop();
-  const router = useRouter();
   const [scroll, setScroll] = useState(null);
-  const [top, setTop] = useState(null);
-  const [height, setHeight] = useState(null);
   const [overlay, setOverlay] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
 
@@ -35,28 +31,17 @@ const Nav = ({ path }) => {
   };
 
   useEffect(() => {
-    // Au scroll changement du style de la nav
-    const el = document.querySelector('nav')
-    setTop(el.offsetTop)
-    setHeight(el.offsetHeight)
     window.addEventListener('scroll', handleScroll)
-
-		if (scroll > top) {
-      document.body.style.paddingTop = `${height}px`;
-    } else {
-      document.body.style.paddingTop = 0;
-    };
-
-  }, [height,top,scroll])
+  }, [scroll])
 
   return (
-      <Wrapper>
-        <NavStyles
-          className={`${scroll > top ? ' scroll' : null} ${
-            router.pathname !== '/' ? 'bottomShadow' :
-            mobileMenu ? 'mobile-menu-open' : ''
-          }`}
-        >
+    <HeaderStyled>
+      <NavStyled
+        className={`${scroll ? 'scroll' : ''} ${
+          path !== '/' ? 'bottomShadow' :
+          mobileMenu ? 'mobile-menu-open' : ''
+        }`}
+      >
         <div
           className={`overlay-mobile ${overlay && !mobileMenu ? 'show' : 'hide'}`}
           onClick={() => setOverlay(false)}
@@ -85,31 +70,20 @@ const Nav = ({ path }) => {
             value: shopKey
           }))}
         />
-      </NavStyles>
+      </NavStyled>
 
       <Mobile headline={shop.headline} onMobileMenu={onMobileMenu} phone={shop.phone} phoneFormated={shop.phoneFormated} />
 
       {path === '/' && (
-        <BottomNavMobile>
-          <button className="btn btn-primary btn-phone" type="button">
+        <div className="bottom-buttons-nav">
+          <Button primary className="button-phone">
             <a href={`tel:${shop.phone}`} rel="noopener noreferrer nofollow" target="_blank">
               <span>{shop.phoneFormated}</span>
             </a>
-          </button>
-        <button className="btn btn-secondary btn-rdv" type="button">Prendre rendez-vous</button>
-      </BottomNavMobile>)}
-    </Wrapper>
-  );
-};
-
-const Header = ({ path }) => {
-  const { shop } = useShop();
-
-  return (
-    <header>
-      <Nav path={path} />
-      {path && <Hero headline={shop.headline} />}
-    </header>
+          </Button>
+        {/* <Button secondary className="button-rdv">Prendre rendez-vous</Button> */}
+      </div>)}
+    </HeaderStyled>
   );
 };
 
@@ -117,77 +91,56 @@ Header.propTypes = {
   path: PropTypes.string,
 };
 
-Nav.propTypes = {
-  path: PropTypes.string,
-};
-
 export default Header;
 
-export const Wrapper = styled.div`
-  .wrapper-header-buttons {
-    &.search-page {
-      .btn-phone {
-        display: block;
-      }
-      .btn-rdv {
-        display: none
-      }
-    }
-  }
-  .btn-phone {
+export const HeaderStyled = styled.header`
+  .bottom-buttons-nav {
     position: fixed;
-    bottom: 20px;
-    margin-right: 0;
-    float: right;
-    right: 20px;
-    width: calc(50vw - 26px);
-    padding: 0 0 0 16px;
-    z-index: 8;
-    span {
-      padding: 0 20px 0 44px;
-      width: auto;
-      line-height: 47px;
-      background: url(${requireStatic('icons/tel.svg')}) no-repeat;
-      background-position: 15px 55%;
-      background-size: 20px;
+    bottom: 0;
+    z-index: 6;
+    height: 87px;
+    background: white;
+    padding: 20px;
+    box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
+    .button-phone {
+      float: none;
+      margin: auto;
+      width: 100%;
+      z-index: 8;
     }
-    a {
+    .button-rdv {
+      position: absolute;
       display: block;
-      color: white;
-      text-decoration: none;
+      bottom: 20px;
+      left: 20px;
+      width: calc(50vw - 26px);
+      padding: 0;
     }
   }
-  .btn-rdv {
-    position: fixed;
-    display: block;
-    bottom: 20px;
-    left: 20px;
-    width: calc(50vw - 26px);
-    padding: 0;
-  }
-  @media (min-width: 990px) {
-    .wrapper-header-buttons {
-      &.search-page {
-        .btn-phone {
-          display: none;
-        }
+  ${medias.min990} {
+    .bottom-buttons-nav {
+      right: 0;
+      bottom: auto;
+      background: transparent;
+      box-shadow: 0px -4px 10px rgba(0, 0, 0, 0);
+      .button-phone {
+        margin: 4px 75px 0 0;
+        width: auto;
+        float: right;
+      }
+      .button-rdv {
+        display: none;
       }
     }
-    .btn-phone {
-      position: fixed;
-      top: 23px;
-      right: 0;
-      margin-right: 95px;
-      padding: 0 26px 0 44px;
-      width: auto;
-    }
-    .btn-rdv {
-      display: none;
+  }
+  @media (max-width: 990px) {
+    .bottom-buttons-nav {
+      width: 100%
     }
   }
 `
 
-export const NavStyles = styled.nav`
+export const NavStyled = styled.nav`
   position: fixed;
   width: 100vw;
   height: 58px;
@@ -229,23 +182,25 @@ export const NavStyles = styled.nav`
     top: 8px;
     float: left;
     cursor: pointer;
-    &.mobile-menu-open {
-      * {
-        filter: grayscale(1) brightness(300%);
-      }
-    }
     * {
       width: 163px;
       height: 44px;
     }
   }
-  @media (min-width: 990px) {
+  ${medias.min990} {
     z-index: 6;
     &.bottomShadow {
       box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.12);
     }
   }
-  @media (min-width: 768px) {
+  @media (max-width: 780px) {
+    .logo.mobile-menu-open {
+      * {
+        filter: grayscale(1) brightness(300%);
+      }
+    }
+  }
+  ${medias.min768} {
     height: 92px;
     .logo {
       top: 16px;
@@ -256,21 +211,3 @@ export const NavStyles = styled.nav`
     }
   }
 `;
-
-export const BottomNavMobile = styled.div`
-  position: fixed;
-  z-index: 6;
-  width: 100%;
-  height: 87px;
-  background: white;
-  bottom: 0;
-  padding: 20px 0;
-  box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
-  .btn.btn-primary {
-    padding: 0;
-  }
-  @media (min-width: 990px) {
-    background: transparent;
-    box-shadow: 0px -4px 10px rgba(0, 0, 0, 0);
-  }
-`

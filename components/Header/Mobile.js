@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import TelIcon from '../../svgs/tel.svg';
-import { theme } from '../../constants/theme';
+import { medias, theme } from '../../constants/theme';
 
 const Mobile = ({ headline, phone, phoneFormated, onMobileMenu }) => {
    const [mobileMenu, setMobileMenu] = useState(false);
@@ -106,17 +106,22 @@ export const MobileWrapper = styled.div`
       background: ${theme.blue100};
       right: -400px;
       display: none;
+      flex-direction: column;
       visibility: hidden;
       z-index: 7;
       &.open {
          right: 0;
-         display: block;
+         display: flex;
          visibility: visible;
       }
+      .box-top {
+         align-items: top;
+         height: 100%;
+      }
       .box-bottom {
-         position: fixed;
+         align-items: end;
          display: none;
-         bottom: 76px;
+         bottom: 56px;
          * {
             margin-bottom: 5px;
          }
@@ -149,7 +154,7 @@ export const MobileWrapper = styled.div`
          left: -10px;
       }
    }
-   @media (min-width: 780px) {
+   ${medias.min780} {
       .mobile-menu {
          width: 400px;
          .box-bottom {

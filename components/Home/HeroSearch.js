@@ -4,14 +4,16 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import Autocomplete from '../Autocomplete';
+import Button from '../Button';
+
 import getSuggestions from './getSuggestions.graphql';
 import graphQLQuery from '../../utils/graphql';
 import requireStatic from '../../utils/require-static';
-import { theme } from '../../constants/theme';
+import { medias, theme } from '../../constants/theme';
 
 const getSuggestionsQuery = getSuggestions.loc.source.body;
 
-const Hero = ({ headline }) => {
+const HeroSearch = ({ headline }) => {
    const router = useRouter();
    const [params, setParams] = useState({ "query": ""});
    const [suggestions, setSuggestions] = useState([]);
@@ -60,9 +62,9 @@ const Hero = ({ headline }) => {
             <div className="col col-2">ou</div>
 
             <div className="col col-3">
-              <button className="btn btn-primary" onClick={seeAllCars} type="button">
+              <Button primary onClick={seeAllCars}>
                 Voir tous les véhicules
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -71,13 +73,13 @@ const Hero = ({ headline }) => {
   );
 };
 
-export default Hero;
+export default HeroSearch;
 
-Hero.propTypes = {
+HeroSearch.propTypes = {
   headline: PropTypes.string.isRequired
 };
 
-export const HeroStyles = styled.div`
+export const HeroStyles = styled.section`
   position: relative;
   top: -60px;
   width: 100%;
@@ -99,16 +101,7 @@ export const HeroStyles = styled.div`
     div {
       width: 100%;
     }
-  }
-  .btn {
-    position: relative;
-    margin: 0 auto;
-    display: table;
-    min-width: 270px;
-    width: 100%;
-    padding-left: 0;
-    padding-right: 0;
-  }
+
   .icon {
     position: absolute;
     margin: 15px 0 0 -30px;
@@ -131,8 +124,12 @@ export const HeroStyles = styled.div`
     align-items: center;
     justify-content: center;
   }
-  @media (min-width: 800px) {
-    top: auto;
+  button {
+    width: 100%;
+    min-width: 100%;
+  }
+  ${medias.min800} {
+    top: 50%;
     height: 640px;
     input[type="text"] {
       width: 395px;
@@ -145,6 +142,10 @@ export const HeroStyles = styled.div`
       display: block;
       margin-top: 3px;
       color: white;
+    }
+    button {
+      width: auto;
+      min-width: 270px;
     }
   }
 `;

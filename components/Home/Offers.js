@@ -4,9 +4,10 @@ import Slider from 'react-slick';
 import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
 
+import Button from '../Button';
 import NextImageLazy from '../../utils/imgLazy';
 import requireStatic from '../../utils/require-static';
-import { theme } from '../../constants/theme';
+import { medias, theme } from '../../constants/theme';
 
 function Offers({ subHeadline }) {
   const [occasionPic, setOccasionPic] = useState('images/promo-occasion.png');
@@ -48,7 +49,7 @@ function Offers({ subHeadline }) {
             <div className="card-promo">
               <Link href="/">
                 <a>
-                  <button className="btn btn-secondary btn-orange" type="button">Profitez-en !</button>
+                  <Button primary className="small-height">Profitez-en !</Button>
                   <NextImageLazy
                     src={requireStatic(neufPic)}
                     width={560}
@@ -62,7 +63,7 @@ function Offers({ subHeadline }) {
             <div className="card-promo">
               <Link href="/">
                 <a>
-                  <button className="btn btn-secondary btn-orange" type="button">Profitez-en !</button>
+                  <Button primary className="small-height">Profitez-en !</Button>
                   <NextImageLazy
                     src={requireStatic(occasionPic)}
                     width={560}
@@ -112,24 +113,22 @@ export const SectionOffers = styled.section`
       &:hover .btn-secondary {
         background: ${theme.orange200}
       }
-      *:not(.btn-secondary) {
+      *:not(button) {
         height: 300px;
         outline: 0;
         user-select: none;
       }
-      .btn-secondary {
+      button {
         position: absolute;
         left: 0;
         right: 0;
         bottom: 20px;
-        margin: 0 auto;
-        display: table;
         z-index: 2;
-        max-width: 150px;
+        width: 150px;
       }
     }
   }
-  @media (min-width: 768px) {
+  ${medias.min768} {
     padding: 30px 0;
     h2 {
       margin: 0 0 25px;
@@ -143,10 +142,10 @@ export const SectionOffers = styled.section`
         * {
           height: auto;
         }
-        .btn-secondary {
-          margin: 0;
+        button {
           left: auto;
           right: 20px;
+          width: auto;
         }
       }
     }

@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import Button from '../Button';
 import NextImageLazy from '../../utils/imgLazy';
 import requireStatic from '../../utils/require-static';
-import { theme } from '../../constants/theme';
+import { medias, theme } from '../../constants/theme';
 
 const FAQS = ({ faqs }) => {
   return (
@@ -28,7 +29,7 @@ const FAQS = ({ faqs }) => {
           </div>
         </div>
       </div>
-      <button className="btn btn-primary" type="button">Accéder à la F.A.Q</button>
+      <Button primary className="button">Accéder à la F.A.Q</Button>
     </SectionGComp>
   );
 };
@@ -65,12 +66,12 @@ export const SectionGComp = styled.section`
     background: url(${requireStatic('icons/arrow-bottom-blue.svg')}) no-repeat calc(100% - 20px) 50%;
     background-size: 14px;
   }
-  .btn {
+  .button {
     position: relative;
     margin: 50px auto 0;
     display: table;
   }
-  @media (min-width: 768px) {
+  ${medias.min768} {
     padding: 60px 0 110px;
     .row {
       padding-top: 40px;

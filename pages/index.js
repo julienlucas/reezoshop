@@ -7,6 +7,7 @@ import SEO from '../next-seo.config';
 import { shops } from '../constants/shops';
 import useShop from '../hooks/useShop';
 
+import HeroSearch from '../components/Home/HeroSearch';
 import Models from '../components/Home/Models';
 import Brands from '../components/Home/Brands';
 import Offers from '../components/Home/Offers';
@@ -21,6 +22,7 @@ const HomePage = ({ data, newCars, usedCars }) => {
   return (
    <>
       <NextSeo title={SEO.title} description={SEO.description} />
+      <HeroSearch headline={shop.headline} />
       <Models newCars={newCars} usedCars={usedCars} />
       <Brands brands={data.brands} />
       <Offers subHeadline={shop.subHeadline} />

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import NextImageLazy from '../../utils/imgLazy';
 import requireStatic from '../../utils/require-static';
-import { theme } from '../../constants/theme';
+import { medias, theme } from '../../constants/theme';
 
 const Advisors = ({ advisors }) => {
   return (
@@ -97,7 +97,7 @@ export const SectionAdvisors = styled.section`
       }
     }
   }
-  @media (min-width: 1200px) {
+  ${medias.min1200} {
     .row {
       .card-interlocuteur {
         .box-text {
@@ -106,7 +106,7 @@ export const SectionAdvisors = styled.section`
       }
     }
   }
-  @media (min-width: 990px) {
+  ${medias.min990} {
     .row {
       grid-template-columns: repeat(4, 1fr);
     }

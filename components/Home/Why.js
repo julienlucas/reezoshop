@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import NextImageLazy from '../../utils/imgLazy';
 import requireStatic from '../../utils/require-static';
-import { theme } from '../../constants/theme';
+import { medias, theme } from '../../constants/theme';
 
 function Why({ shop }) {
   return (
@@ -268,7 +268,7 @@ export const SectionWhy = styled.section`
       font-size: 14px;
     }
   }
-  @media (min-width: 768px) {
+  ${medias.min768} {
     .col-left {
       float: left;
       width: 60%;

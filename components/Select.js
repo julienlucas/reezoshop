@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 
 import requireStatic from '../utils/require-static';
-import { theme } from '../constants/theme';
+import { medias, theme } from '../constants/theme';
 
 const Select = ({ className, defaultValue, name, onChange, onClick, onReset, options, placeholder }) => {
    const node = useRef();
@@ -65,10 +65,10 @@ const Select = ({ className, defaultValue, name, onChange, onClick, onReset, opt
    };
 
    return (
-      <SelectMenu className={className} ref={node} onClick={e => onOpen(e)}>
+      <SelectStyled className={className} ref={node} onClick={e => onOpen(e)}>
          <span>{state.selected ? state.selected.label : placeholder || defaultValue}</span>
          <ul className={state.opened ? 'show': 'hide'}>{getOptions()}</ul>
-      </SelectMenu>
+      </SelectStyled>
    );
 };
 
@@ -105,7 +105,7 @@ function Option ({ className, option, onSelect }) {
    );
 };
 
-export const SelectMenu = styled.div`
+export const SelectStyled = styled.div`
    margin-bottom: 16px;
    font-size: 13px;
    line-height: 36px;
@@ -133,15 +133,6 @@ export const SelectMenu = styled.div`
       background: transparent url(${requireStatic('icons/arrow-bottom.svg')}) no-repeat calc(100% - 5px) 52%;
       background-size: 18px;
       border: 0;
-      &.mobile-menu-open {
-        filter: grayscale(1) brightness(600%);
-        ul {
-           filter: brightness(100%);
-           * {
-              filter: brightness(0%);
-           }
-        }
-      }
       ul {
          left: -155px;
          min-width: 290px;
@@ -150,10 +141,6 @@ export const SelectMenu = styled.div`
             color: ${theme.black};
             text-decoration: none;
          }
-      }
-      @media (min-width: 768px) {
-         top: 30px;
-         left: 240px;
       }
    }
    * {
@@ -168,7 +155,6 @@ export const SelectMenu = styled.div`
       box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.15);
       border-radius: 4px;
       min-width: 268px;
-      z-index: 3;
       li {
          display: block;
          padding: 5px 20px;
@@ -184,6 +170,25 @@ export const SelectMenu = styled.div`
       }
       &.hide{
          display:none;
+      }
+   }
+   @media (max-width: 780px) {
+      &.select-agency {
+         &.mobile-menu-open {
+            filter: grayscale(1) brightness(600%);
+            ul {
+               filter: brightness(100%);
+               * {
+                  filter: brightness(0%);
+               }
+            }
+         }
+      }
+   }
+   ${medias.min768} {
+      &.select-agency {
+         top: 30px;
+         left: 240px;
       }
    }
 `;

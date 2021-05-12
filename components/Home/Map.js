@@ -3,9 +3,10 @@ import GoogleMapReact from 'google-map-react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import Button from '../Button';
 import BoxGoogleRating from '../BoxGoogleRating';
 import MarkerIcon from '../../svgs/marker-b.svg';
-import { theme } from '../../constants/theme';
+import { medias, theme } from '../../constants/theme';
 
 const Map = ({ shop }) => {
   const [tab, setTab] = useState(1);
@@ -53,7 +54,7 @@ const Map = ({ shop }) => {
               </ul>
             </div>
           </div>
-          <a href={mapURL} rel="noopener noreferrer nofollow" target="_blank" title=""><button className="btn btn-secondary" type="button">Ouvrir sur Maps</button></a>
+          <Button secondary className="small-size"><a href={mapURL} rel="noopener noreferrer nofollow" target="_blank" title="">Ouvrir sur Maps</a></Button>
         </div>
       </div>
     </SectionMap>
@@ -229,16 +230,13 @@ export const SectionMap = styled.section`
       }
     }
   }
-  .btn {
+  button.small-size {
     position: absolute;
     right: 20px;
     bottom: 70px;
-    height: 40px;
-    font-size: 14px;
     z-index: 2;
-    padding: 0 15px;
   }
-  @media (min-width: 990px) {
+  ${medias.min990} {
     h2 {
       margin-bottom: 50px;
     }
@@ -278,10 +276,9 @@ export const SectionMap = styled.section`
       columns: 2;
       display: block;
     }
-    .btn {
+    button.small-size {
       right: 0px;
       bottom: -90px;
-      padding: 0 50px;
     }
   }
 `

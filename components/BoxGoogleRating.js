@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import MarkerIcon from '../svgs/marker.svg';
-import { theme } from '../constants/theme';
+import { medias, theme } from '../constants/theme';
 
 const BoxGoogleRating = ({ className, address, headline, googleAvis, googleNote }) => {
    return (
@@ -50,13 +50,10 @@ export const BoxGoogle = styled.div`
       h3.big {
          font-size: 20px;
       }
-      @media (min-width: 990px) {
-         &.box-address-mobile {
-            display: none;
-         }
+      ${medias.min990} {
+         display: none;
       }
-      @media (max-width: 380px) {
-         margin: 0 20px 25px;
+      ${medias.min380} {
          width: calc(100% - 40px)
       }
    }

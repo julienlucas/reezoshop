@@ -6,9 +6,11 @@ import styled from 'styled-components';
 import { Tab, TabList, TabPanel } from 'react-tabs';
 import Slider from 'react-slick';
 
+import Button from '../Button';
 import CardCar from '../CardCar';
 import { ReactSlickStyles } from '../../constants/react-slick-styles';
 import { ReactTabsStyles } from '../../constants/react-tabs-styles';
+import { medias } from '../../constants/theme';
 import useShop from '../../hooks/useShop';
 
 const Models = ({ newCars, usedCars }) => {
@@ -72,7 +74,7 @@ const Models = ({ newCars, usedCars }) => {
       <ReactSlickStyles/>
 
       <div className="container">
-        <button className="btn btn-primary" type="button">Voir toutes les annonces d’occasion</button>
+        <Button primary>Voir toutes les annonces d’occasion</Button>
       </div>
     </SectionModels>
   );
@@ -127,7 +129,7 @@ export const SectionModels = styled.section`
     padding-left: 0;
   }
   .slider {
-    margin-left: 30px;
+    margin-left: 20px;
     .slick-slide {
       margin: 0 -50px 0px 70px;
       * {
@@ -139,14 +141,17 @@ export const SectionModels = styled.section`
       }
     }
   }
-  @media (min-width: 768px) {
+  ${medias.min768} {
     padding: 125px 0 40px;
     h2 {
       margin: 0 -10px 25px 30px;
       max-width: 100%;
     }
+    .slider {
+      margin-left: 30px;
+    }
   }
-  @media (min-width: 620px) {
+  ${medias.min620} {
     .btn {
       width: auto;
     }

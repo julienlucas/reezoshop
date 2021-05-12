@@ -6,7 +6,7 @@ import Slider from 'react-slick';
 import NextImageLazy from '../../utils/imgLazy';
 import requireStatic from '../../utils/require-static';
 import { ReactSlickStyles } from '../../constants/react-slick-styles';
-import { theme } from '../../constants/theme';
+import { medias, theme } from '../../constants/theme';
 
 const Brands = ({ brands }) => {
   const sliderSettings = {
@@ -124,7 +124,7 @@ export const SectionBrands = styled.section`
       }
     }
   }
-  @media (min-width: 768px) {
+  ${medias.min768} {
     padding: 20px 0;
     .container {
       padding: 0 30px;

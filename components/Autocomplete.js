@@ -3,8 +3,8 @@ import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
-import SearchIcon from '../svgs/search.svg';
-import { theme } from '../constants/theme';
+import Input from './Input';
+import { medias, theme } from '../constants/theme';
 
 const Autocomplete = ({ onSearch, suggestions }) => {
   const node = useRef();
@@ -18,8 +18,7 @@ const Autocomplete = ({ onSearch, suggestions }) => {
   });
   const { active, filteredSuggestions, showSuggestions , userInput } = state;
 
-  const onChange = e => {
-    const userInput = e.currentTarget.value;
+  const onChange = (value) => {
     const filteredSuggestions = suggestions.filter(
       suggestion =>
         suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
@@ -29,7 +28,7 @@ const Autocomplete = ({ onSearch, suggestions }) => {
       active: 0,
       filteredSuggestions,
       showSuggestions: true,
-      userInput: e.currentTarget.value
+      userInput: value
     });
   };
 
@@ -120,20 +119,15 @@ const Autocomplete = ({ onSearch, suggestions }) => {
     }
   };
 
-     //  const keyCode = e.keyCode;
-   //  const match = e.target.value;
-   //  if (keyCode === 13) router.push(`/recherche?match=${match}`);
-
   return (
     <Suggestions ref={node} className={!open ? 'hide-list' : ''} onClick={e => onClickComp(e)}>
-      <input
+      <Input
+        search
         type="text"
-        onChange={onChange}
         onKeyUp={onKeyUp}
-        value={userInput}
+        onChange={onChange}
         placeholder="Marque, Modèle"
       />
-      <SearchIcon className="icon" />
       {suggestionsListComponent}
     </Suggestions>
   );
@@ -152,25 +146,6 @@ export const Suggestions = styled.div`
       visibility: hidden;
       opacity: 0;
       box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-    }
-  }
-  input {
-    position: relative;
-    padding: 0 14px;
-    font-size: 16px;
-    width: 100%;
-    height: 47px;
-    border-radius: 4px;
-    border: 0;
-    outline: 0;
-    color: ${theme.grey100};
-    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-    &.active, &:focus, &:hover {
-      box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.12);
-      color: ${theme.black};
-      &::placeholder {
-        color: ${theme.black};
-      }
     }
   }
   .suggestions-list {
@@ -209,7 +184,7 @@ export const Suggestions = styled.div`
       }
     }
   }
-  @media (min-width: 800px) {
+  ${medias.min800} {
     .suggestions-list {
       max-width: 395px;
     }
