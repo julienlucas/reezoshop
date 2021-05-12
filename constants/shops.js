@@ -17,8 +17,17 @@ export const shops = {
       },
       phone: '0142536529',
       phoneFormated: '01 23 45 56 78',
-      googleAvis: '891',
-      googleNote: '4,2',
+      recoPourcents: '94',
+      economiesPourcents: '15',
+      clientsSatisfaits: '10k',
+      facebook: {
+         note: '4.1',
+         avis: '236',
+      },
+      google: {
+         note: '4.2',
+         avis: '570',
+      }
    },
    paris: {
       name: 'Paris',
@@ -37,7 +46,16 @@ export const shops = {
       },
       phone: '0142536529',
       phoneFormated: '01 00 00 00 00',
-      googleAvis: '51',
-      googleNote: '4,2',
+      recoPourcents: '94',
+      economiesPourcents: '15',
+      clientsSatisfaits: '10k',
+      facebook: {
+         note: '4.1',
+         avis: '236',
+      },
+      google: {
+         note: '4.2',
+         avis: '570',
+      }
    },
 };

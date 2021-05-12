@@ -24,9 +24,9 @@ const HomePage = ({ data, newCars, usedCars }) => {
       <Models newCars={newCars} usedCars={usedCars} />
       <Brands brands={data.brands} />
       <Offers subHeadline={shop.subHeadline} />
-      <Map data={shop} />
+      <Map shop={shop} />
       <Advisors advisors={data.advisors} />
-      <Why shop={data.why} />
+      <Why shop={shop} />
       <FAQS faqs={data.faqs} />
    </>
   );
@@ -149,19 +149,6 @@ const mockData = {
          picture: 'images/jonathan.png',
       },
    ],
-   why: {
-      recoPourcents: '94',
-      economiesPourcents: '15',
-      clientsSatisfaits: '10k',
-      facebook: {
-         note: '4.1',
-         avis: '236',
-      },
-      google: {
-         note: '4.2',
-         avis: '570',
-      },
-   },
    faqs: [
       'Integer pellentesque nunc ac consectetur pharetra, et neque in tristique ?',
       'Integer pellentesque nunc ac consectetur pharetra, et neque in tristique ?',

@@ -7,7 +7,7 @@ import BoxGoogleRating from '../BoxGoogleRating';
 import MarkerIcon from '../../svgs/marker-b.svg';
 import { theme } from '../../constants/theme';
 
-const Map = ({ data }) => {
+const Map = ({ shop }) => {
   const [tab, setTab] = useState(1);
   const [mapURL, setMapURL] = useState('');
 
@@ -21,10 +21,10 @@ const Map = ({ data }) => {
 
       <BoxGoogleRating
         className="box-address-mobile"
-        address={data.address}
-        headline={data.headline}
-        googleAvis={data.googleAvis}
-        googleNote={data.googleNote}
+        address={shop.address}
+        headline={shop.headline}
+        googleAvis={shop.google.avis}
+        googleNote={shop.google.note}
       />
 
       <ul className="tabs">
@@ -32,22 +32,22 @@ const Map = ({ data }) => {
         <li className={tab === 2 ? 'active' : ''}><button onClick={() => setTab(2)} type="button">Horaires d'ouverture</button></li>
       </ul>
 
-      <GoogleMap data={data} tab={tab} mapURL={url => onMapURL(url)} />
+      <GoogleMap shop={shop} tab={tab} mapURL={url => onMapURL(url)} />
 
       <div className="wrapper">
         <div className="container">
           <div className={`box-infos ${tab === 2 && window.innerWidth <= 990 ? 'active' : ''}`}>
             <BoxGoogleRating
-              address={data.address}
-              headline={data.headline}
-              googleAvis={data.googleAvis}
-              googleNote={data.googleNote}
+              address={shop.address}
+              headline={shop.headline}
+              googleAvis={shop.google.avis}
+              googleNote={shop.google.note}
             />
 
             <div className="open-hours">
               <h3 className="big">Horaires d'ouverture</h3>
               <ul>
-                {data?.horaires && Object.entries(data.horaires).map(([day, hours], i) =>
+                {shop?.horaires && Object.entries(shop.horaires).map(([day, hours], i) =>
                   <li key={i}><strong>{day} :</strong> {hours}</li>
                 )}
               </ul>
@@ -96,7 +96,7 @@ const GoogleMap = ({ mapURL }) => {
 };
 
 Map.propTypes = {
-  data: PropTypes.object.isRequired
+  shop: PropTypes.object.isRequired
 };
 
 GoogleMap.propTypes = {
@@ -136,7 +136,7 @@ export const SectionMap = styled.section`
   }
   .wrapper {
     position: absolute;
-    top: 289px;
+    top: 315px;
     height: 360px;
     width: 100vw;
     z-index: 1;
