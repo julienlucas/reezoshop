@@ -20,6 +20,7 @@ const Nav = ({ path }) => {
   const [top, setTop] = useState(null);
   const [height, setHeight] = useState(null);
   const [overlay, setOverlay] = useState(false);
+  const [mobileMenu, setMobileMenu] = useState(false);
 
   const handleScroll = () => {
     setScroll(window.scrollY);
@@ -27,6 +28,10 @@ const Nav = ({ path }) => {
 
   const openOverlay = () => {
     if (window.innerWidth <= 990) setOverlay(!overlay);
+  };
+
+  const onMobileMenu = (boolean) => {
+    if (window.innerWidth <= 990) setMobileMenu(boolean)
   };
 
   useEffect(() => {
@@ -48,14 +53,15 @@ const Nav = ({ path }) => {
       <Wrapper>
         <NavStyles
           className={`${scroll > top ? ' scroll' : null} ${
-            router.pathname !== '/' ? 'bottomShadow' : ''
+            router.pathname !== '/' ? 'bottomShadow' :
+            mobileMenu ? 'mobile-menu-open' : ''
           }`}
         >
         <div
-          className={`overlay-mobile ${overlay ? 'show' : 'hide'}`}
+          className={`overlay-mobile ${overlay && !mobileMenu ? 'show' : 'hide'}`}
           onClick={() => setOverlay(false)}
         />
-        <div className="logo">
+        <div className={`logo ${mobileMenu ? 'mobile-menu-open' : ''}`}>
           <Link href="/">
               <a>
                 <Image
@@ -70,7 +76,7 @@ const Nav = ({ path }) => {
         </div>
 
         <Select
-          className="select-agency"
+          className={`select-agency ${mobileMenu ? 'mobile-menu-open' : ''}`}
           defaultValue={shopKey}
           onChange={onChangeShop}
           onClick={openOverlay}
@@ -81,7 +87,7 @@ const Nav = ({ path }) => {
         />
       </NavStyles>
 
-      <Mobile headline={shop.headline} phone={shop.phone} phoneFormated={shop.phoneFormated} />
+      <Mobile headline={shop.headline} onMobileMenu={onMobileMenu} phone={shop.phone} phoneFormated={shop.phoneFormated} />
 
       {path === '/' && (
         <BottomNavMobile>
@@ -196,7 +202,7 @@ export const NavStyles = styled.nav`
     width: 100vw;
     height: 100vh;
     content: '';
-    z-index: 8;
+    z-index: 6;
     &.show {
       visibility: visible;
       background: rgba(0, 0, 0, 0.3);
@@ -214,17 +220,27 @@ export const NavStyles = styled.nav`
     border: 1px solid ${theme.grey700};
     box-shadow: 1px 2px 13px rgba(0, 0, 0, 0);
   }
+  &.mobile-menu-open {
+    box-shadow: none;
+    background: transparent;
+  }
   .logo {
     position: relative;
     top: 8px;
     float: left;
     cursor: pointer;
+    &.mobile-menu-open {
+      * {
+        filter: grayscale(1) brightness(300%);
+      }
+    }
     * {
       width: 163px;
       height: 44px;
     }
   }
   @media (min-width: 990px) {
+    z-index: 6;
     &.bottomShadow {
       box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.12);
     }
@@ -243,7 +259,7 @@ export const NavStyles = styled.nav`
 
 export const BottomNavMobile = styled.div`
   position: fixed;
-  z-index: 8;
+  z-index: 6;
   width: 100%;
   height: 87px;
   background: white;

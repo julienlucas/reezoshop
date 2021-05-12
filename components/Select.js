@@ -133,8 +133,17 @@ export const SelectMenu = styled.div`
       background: transparent url(${requireStatic('icons/arrow-bottom.svg')}) no-repeat calc(100% - 5px) 52%;
       background-size: 18px;
       border: 0;
+      &.mobile-menu-open {
+        filter: grayscale(1) brightness(600%);
+        ul {
+           filter: brightness(100%);
+           * {
+              filter: brightness(0%);
+           }
+        }
+      }
       ul {
-         left: -35px;
+         left: -155px;
          min-width: 290px;
          z-index: 9;
          a {

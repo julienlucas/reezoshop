@@ -1,13 +1,17 @@
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import TelIcon from '../../svgs/tel.svg';
 import { theme } from '../../constants/theme';
 
-const Mobile = ({ headline, phone, phoneFormated }) => {
+const Mobile = ({ headline, phone, phoneFormated, onMobileMenu }) => {
    const [mobileMenu, setMobileMenu] = useState(false);
+
+   useEffect(() => {
+      onMobileMenu(mobileMenu)
+   }, [mobileMenu])
 
    return (
       <MobileWrapper>
@@ -43,6 +47,7 @@ const Mobile = ({ headline, phone, phoneFormated }) => {
 
 Mobile.propTypes = {
   headline: PropTypes.string.isRequired,
+  onMobileMenu: PropTypes.func.isRequired,
   phone: PropTypes.string.isRequired,
   phoneFormated: PropTypes.string.isRequired
 };
@@ -56,7 +61,7 @@ export const MobileWrapper = styled.div`
    .btn-mobile {
       position: fixed;
       top: 20px;
-      right: 25px;
+      right: 15px;
       float: right;
       width: 35px; height: 35px;
       display: block;
@@ -102,7 +107,7 @@ export const MobileWrapper = styled.div`
       right: -400px;
       display: none;
       visibility: hidden;
-      z-index: 9;
+      z-index: 7;
       &.open {
          right: 0;
          display: block;
@@ -158,6 +163,7 @@ export const MobileWrapper = styled.div`
       }
       .btn-mobile {
          top: 38px;
+         right: 25px;
          .cross {
             right: 35px;
          }
