@@ -32,7 +32,7 @@ const Input = ({ className, name, onChange, onReset, placeholder, type, ...input
 
 Input.propTypes = {
    className: PropTypes.string,
-   name: PropTypes.string.isRequired,
+   name: PropTypes.string,
    onChange: PropTypes.func.isRequired,
    onReset: PropTypes.bool,
    placeholder: PropTypes.string.isRequired,

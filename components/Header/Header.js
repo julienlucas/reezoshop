@@ -32,7 +32,7 @@ const Header = ({ path }) => {
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll)
-  }, [scroll])
+  }, [])
 
   return (
     <HeaderStyled>
