@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
 import { theme } from '../constants/theme';
 
-const Input = ({ name, onChange, onReset, placeholder, type }) => {
+const Input = ({ className, name, onChange, onReset, placeholder, type }) => {
    const [state, setState] = useState(null);
 
    const onChangeInput = e => {
@@ -18,6 +18,7 @@ const Input = ({ name, onChange, onReset, placeholder, type }) => {
 
    return (
       <InputStyled
+         className={className}
          type={type}
          name={name}
          placeholder={placeholder}
@@ -28,6 +29,7 @@ const Input = ({ name, onChange, onReset, placeholder, type }) => {
 };
 
 Input.propTypes = {
+   className: PropTypes.string,
    name: PropTypes.string.isRequired,
    onChange: PropTypes.func.isRequired,
    onReset: PropTypes.bool,
@@ -48,11 +50,13 @@ export const InputStyled = styled.input`
    appearance: none;
    font-size: 13px;
    background: white;
-   &[type="number"], &[type="text"] {
-      height: 36px;
-      line-height: 1;
+   height: 36px;
+   line-height: 1;
+   &.multi-select {
+      background: white url('/icons/arrow-bottom-light.svg') no-repeat calc(100% - 10px) 50%;
+      background-size: 13px;
    }
-   &[type="number"] {
+   &[type="number"], &[type="text"] {
       padding: 0 20px 0 7px;
       display: block;
       width: 100%;

@@ -27,7 +27,7 @@ export const energies = [
    { value: 'diesel', label: 'Diesel' },
    { value: 'hybrid', label: 'Hybride' },
    { value: 'electric', label: 'Électrique' },
-   { value: 'lpg', label: 'Gaz de pétrole liquéfié' }
+   { value: 'lpg', label: 'GPL' }
 ];
 
 export const doors = [
@@ -39,20 +39,20 @@ export const doors = [
 ];
 
 export const colorsExt = [
-   { value: 'black', label: 'Noir' },
-   { value: 'white', label: 'Blanc' },
-   { value: 'grey', label: 'Gris' },
-   { value: 'silver', label: 'Argent' },
-   { value: 'red', label: 'Rouge' },
-   { value: 'blue', label: 'Bleu' },
-   { value: 'green', label: 'Vert' },
-   { value: 'brown', label: 'Marron' },
-   { value: 'beige', label: 'Beige' },
-   { value: 'yellow', label: 'Jaune' },
-   { value: 'orange', label: 'Orange' },
-   { value: 'gold', label: 'Or' },
-   { value: 'purple', label: 'Violet' },
-   { value: 'burgundy', label: 'Bourgogne' }
+   { value: 'black', label: 'Noir', color: '#000' },
+   { value: 'white', label: 'Blanc', color: '#FFF' },
+   { value: 'grey', label: 'Gris', color: '#919191' },
+   { value: 'silver', label: 'Argent', color: 'linear-gradient(#dcdcdc,#acacac)' },
+   { value: 'red', label: 'Rouge', color: '#e20101' },
+   { value: 'blue', label: 'Bleu', color: '#0445d8' },
+   { value: 'green', label: 'Vert', color: '#2fbd00' },
+   { value: 'brown', label: 'Marron', color: '#863100' },
+   { value: 'beige', label: 'Beige', color: '#c8ad7f' },
+   { value: 'yellow', label: 'Jaune', color: '#ffd707' },
+   { value: 'orange', label: 'Orange', color: '#f34300' },
+   { value: 'gold', label: 'Or', color: 'linear-gradient(#f7e994,#d9a600)'  },
+   { value: 'purple', label: 'Violet', color: '#673ab7' },
+   { value: 'burgundy', label: 'Bourgogne', color: '#bb0000' }
 ];
 
 export const sorting = [

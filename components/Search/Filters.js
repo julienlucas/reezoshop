@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { useRouter } from 'next/router';
+
 import Checkbox from '../Checkbox';
 import Input from '../Input';
+import MultiSelect from '../MultiSelect';
 import Select from '../Select';
-import styled from 'styled-components';
+
 import { bodies, colorsExt, doors, energies, gearbox } from '../../constants/search';
-import React, { useEffect, useState } from 'react';
 import { theme } from '../../constants/theme';
-import { useRouter } from 'next/router';
 
 const Filters = ({ onFilters }) => {
    const router = useRouter();
@@ -35,6 +38,10 @@ const Filters = ({ onFilters }) => {
          size: 12,
          [name]: value
       });
+   };
+
+   const onPopupSelect = () => {
+
    };
 
    const onTypedSearch = e => {
@@ -82,7 +89,7 @@ const Filters = ({ onFilters }) => {
 
    return (
       <FiltersComp className={toogleFilters ? 'open' : ''}>
-         <button className="btn btn-secondary btn-filtres-mobile" onClick={() => setToogleFilters(!toogleFilters)}>Filtres</button>
+         <button className="btn btn-secondary btn-filtres-mobile" onClick={() => setToogleFilters(!toogleFilters)} type="button">Filtres</button>
          <div className={`btn-close ${toogleFilters ? 'open' : ''}`} onClick={() => setToogleFilters(!toogleFilters)}>
             <span/>
             <span/>
@@ -94,15 +101,12 @@ const Filters = ({ onFilters }) => {
          <form>
             <div className="row">
                <h3>Filtres</h3>
-               <p className="btn-reset" onClick={resetFilters}>Réinitialiser les filtres</p>
+               <p className="btn-reset"><span onClick={onPopupSelect}>Réinitialiser les filtres</span></p>
             </div>
 
-            <Select
-               name="body"
-               options={bodies}
+            <MultiSelect
                placeholder="Type de véhicules"
-               onChange={onChange}
-               onReset={onReset}
+               options={bodies}
             />
 
             <div className="row">
@@ -131,40 +135,30 @@ const Filters = ({ onFilters }) => {
                </div>
             </div>
 
-            <Select
-               name="energy"
+            <MultiSelect
                options={energies}
                placeholder="Énergie"
-               onChange={onChange}
-               onReset={onReset}
             />
 
-            <Select
-               name="gearbox"
+            <MultiSelect
+               className="gearbox"
                options={gearbox}
                placeholder="Tranmission"
-               onChange={onChange}
-               onReset={onReset}
             />
 
-            <Select
-               name="doors"
+            <MultiSelect
                options={doors}
                placeholder="Nombre de portes"
-               onChange={onChange}
-               onReset={onReset}
             />
 
-            <Select
-               name="colorExt"
+            <MultiSelect
+               className="colorsExt"
                options={colorsExt}
                placeholder="Couleur extérieure"
-               onChange={onChange}
-               onReset={onReset}
             />
 
             <div className="wrapper-btn-search-mobile">
-               <button onClick={e => onFiltersSearch(e)} className="btn btn-tertiary btn-search-mobile">
+               <button onClick={e => onFiltersSearch(e)} className="btn btn-tertiary btn-search-mobile" type="button">
                   Rechercher
                </button>
             </div>
@@ -174,7 +168,6 @@ const Filters = ({ onFilters }) => {
 };
 
 Filters.propTypes = {
-   count: PropTypes.array.isRequired,
    onFilters: PropTypes.func.isRequired
 };
 
