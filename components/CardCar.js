@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import NextImageLazy from '../utils/imgLazy';
 import { theme } from '../constants/theme';
 
-const CardCar = ({ className, brand, energy, gearbox, model, mileage, thumbnail, price, year }) => {
+const CardCar = ({ className, brand, energy, isNew, gearbox, model, mileage, thumbnail, price, year }) => {
    // Ajout d'un espace tous les 3 chiffres
    const numberFormat = num => {
       return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
@@ -42,7 +42,7 @@ const CardCar = ({ className, brand, energy, gearbox, model, mileage, thumbnail,
             </h3>
 
             <p className="description">{gearbox && `${gearbox} ·`} {energy && `${energy} ·`} {year && `${year} ·`} {mileage && `${numberFormat(mileage)} km`}</p>
-            {className === 'small-width' && <button className="btn btn-neuf-occas" type="button">Neuf /0km</button>}
+            {isNew && <button className="btn btn-neuf-occas" type="button">Neuf /0km</button>}
 
             <div className="box-prix">
                <p className="prix">{price && numberFormat(price)} €</p>
@@ -58,6 +58,7 @@ CardCar.propTypes = {
    brand: PropTypes.string,
    energy: PropTypes.string,
    gearbox: PropTypes.string,
+   isNew: PropTypes.bool,
    model: PropTypes.string,
    mileage: PropTypes.number,
    price: PropTypes.number,

@@ -69,11 +69,9 @@ const StyledButton = styled.button(({ styles = {}, theme, ...props }) => {
       },
 
       ...(props.full ? buttonFull : {}),
-
       ...(props.primary ? buttonFormat('primary', theme) : {}),
       ...(props.secondary ? buttonFormat('secondary', theme) : {}),
       ...(props.third ? buttonFormat('third', theme) : {}),
-
       ...styles,
    }
 });

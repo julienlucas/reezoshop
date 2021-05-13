@@ -15,7 +15,7 @@ const Filters = ({ onFilters }) => {
    const router = useRouter();
    const [occasion, setOccasion] = useState(false);
    const [neuf, setNeuf] = useState(false);
-   const [toogleFilters, setToogleFilters] = useState(false);
+   const [openFilters, setOpenFilters] = useState(false);
    const [filters, setFilters] = useState('');
 
    const resetFilters = () => {
@@ -23,7 +23,7 @@ const Filters = ({ onFilters }) => {
       onFilters({ size: 12 });
    };
 
-   const onReset = filters === '' ? true : false;
+   const onReset = filters === '' && true;
 
    const onChange = (value, name, id) => {
       if (id === 'occasion') {
@@ -42,29 +42,25 @@ const Filters = ({ onFilters }) => {
 
    const onFiltersSearch = e => {
       // Condition uniquement pour la recherche mobile (width =< 990px)
-      if (e) {
-        e.preventDefault();
-      }
+      if (e) e.preventDefault()
 
       if ((neuf && occasion) || (!neuf && !occasion)) {
-         delete filters.onlyNew;
-         onFilters(filters);
+         delete filters.onlyNew
+         onFilters(filters)
 
          return;
       }
 
-      onFilters(filters);
+      onFilters(filters)
    };
 
    // Si width > 990px la recherche se lance automatiquement au changement d'un filtre
    useEffect(() => {
       function onResizeWidth() {
          const width = document.documentElement.clientWidth;
-         if (width > 990) {
-            filters && onFiltersSearch();
-         }
+         if (width > 990 && filters) onFiltersSearch()
       }
-      window.addEventListener('resize', onResizeWidth);
+      window.addEventListener('resize', onResizeWidth)
 
       onResizeWidth();
    }, [filters])
@@ -72,12 +68,12 @@ const Filters = ({ onFilters }) => {
    // Si params dans l'URL, changer les filtres
    useEffect(() => {
       const URLParams = router.query;
-      if (URLParams) setFilters(URLParams);
-   }, [])
+      if (URLParams) setFilters(URLParams)
+   },[])
 
    return (
-      <FiltersComp className={toogleFilters ? 'open' : ''}>
-         <div className={`btn-close ${toogleFilters ? 'open' : ''}`} onClick={() => setToogleFilters(!toogleFilters)}>
+      <FiltersComp className={openFilters ? 'open' : ''}>
+         <div className={`btn-close ${openFilters ? 'open' : ''}`} onClick={() => setOpenFilters(!openFilters)}>
             <span/>
             <span/>
             <span/>
@@ -90,8 +86,11 @@ const Filters = ({ onFilters }) => {
             </div>
 
             <MultiSelect
+               name="body"
                placeholder="Type de véhicules"
                options={bodies}
+               onChange={onChange}
+               onReset={onReset}
             />
 
             <div className="row">
@@ -117,35 +116,45 @@ const Filters = ({ onFilters }) => {
             </div>
 
             <MultiSelect
-               options={energies}
+               name="energy"
                placeholder="Énergie"
+               options={energies}
+               onChange={onChange}
+               onReset={onReset}
             />
 
             <MultiSelect
+               name="gearbox"
                className="gearbox"
-               options={gearbox}
                placeholder="Tranmission"
+               options={gearbox}
+               onChange={onChange}
+               onReset={onReset}
             />
 
             <MultiSelect
-               options={doors}
+               name="doors"
                placeholder="Nombre de portes"
+               options={doors}
+               onChange={onChange}
+               onReset={onReset}
             />
 
             <MultiSelect
-               className="colorsExt"
-               options={colorsExt}
+               name="colorExt"
+               className="colorExt"
                placeholder="Couleur extérieure"
+               options={colorsExt}
+               onChange={onChange}
+               onReset={onReset}
             />
 
             <div className="wrapper-btn-search-mobile">
-               <Button third onClick={e => onFiltersSearch(e)}>
-                  Rechercher
-               </Button>
+               <Button third onClick={e => onFiltersSearch(e)}>Rechercher</Button>
             </div>
-
-            <Button secondary className="button-filtres-mobile" onClick={() => setToogleFilters(!toogleFilters)}>Filtres</Button>
          </form>
+
+         <Button secondary className="button-filtres-mobile" onClick={() => setOpenFilters(!openFilters)}>Filtres</Button>
       </FiltersComp>
    )
 };
@@ -167,7 +176,7 @@ export const FiltersComp = styled.div`
       bottom: 0;
       display: block;
       width: 100%;
-      z-index: 99;
+      z-index: 999;
       background white;
       form {
          padding: 70px 0 0;
@@ -226,8 +235,13 @@ export const FiltersComp = styled.div`
          text-decoration: none;
       }
    }
-   button.button-filtres-mobile {
+   .button-filtres-mobile {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 6;
       display: block;
+      width: calc(50vw - 26px);
    }
    .btn-close {
       position: fixed;
@@ -265,7 +279,7 @@ export const FiltersComp = styled.div`
       form {
          display: block;
       }
-      button.button-filtres-mobile {
+      .button-filtres-mobile {
          display: none;
       }
       .wrapper-btn-search-mobile {

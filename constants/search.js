@@ -1,5 +1,4 @@
 /* eslint-disable */
-
 export const bodies = [
    { value: 'hatchback', label: 'Compacte' },
    { value: 'saloon', label: 'Berline' },
@@ -33,11 +32,9 @@ export const energies = [
 ];
 
 export const doors = [
-   { value: '2', label: '2' },
-   { value: '3', label: '3' },
-   { value: '4', label: '4' },
-   { value: '5', label: '5' },
-   { value: '6', label: '6' }
+   { value: ["2","3"], label: '2/3 portes' },
+   { value: ["4","5"], label: '4/5 portes' },
+   { value: ["6","7","8"], label: '6 portes et +' }
 ];
 
 export const colorsExt = [
@@ -58,6 +55,7 @@ export const colorsExt = [
 ];
 
 export const sorting = [
+   { value: 'defaultValue', label: 'Tri par défaut' },
    { value: 'prices-asc', label: 'Prix croissant' },
    { value: 'prices-dsc', label: 'Prix décroissant' }
 ];

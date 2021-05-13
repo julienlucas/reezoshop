@@ -129,7 +129,7 @@ export const SectionModels = styled.section`
     padding-left: 0;
   }
   .slider {
-    margin-left: 20px;
+    margin-left: 30px;
     .slick-slide {
       margin: 0 -50px 0px 70px;
       * {

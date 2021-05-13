@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import requireStatic from '../utils/require-static';
 import { medias, theme } from '../constants/theme';
 
-const Select = ({ className, defaultValue, name, onChange, onReset, options, placeholder }) => {
+const Select = ({ className, defaultValue, name, onChange, onClick, onReset, options, placeholder }) => {
    const node = useRef();
 
    const [state, setState] = useState({
@@ -15,6 +15,8 @@ const Select = ({ className, defaultValue, name, onChange, onReset, options, pla
    });
 
    const onSelect = option => {
+      if (option.value === 'defaultValue') return
+
       onChange(option.value, name);
       setState({
          selected: option,
@@ -32,6 +34,7 @@ const Select = ({ className, defaultValue, name, onChange, onReset, options, pla
             }
          });
 
+         onClick()
          return;
       }
 
@@ -76,6 +79,7 @@ Select.propTypes = {
    options: PropTypes.array.isRequired,
    placeholder: PropTypes.string,
    name: PropTypes.string,
+   onClick: PropTypes.func,
    onChange: PropTypes.func,
    onReset: PropTypes.bool
 };

@@ -16,9 +16,7 @@ const Checkbox = ({ id, label, name, onChange, onReset }) => {
    };
 
    useEffect(() => {
-      if (value !== null) {
-         onChange(value, name, id)
-      }
+      if (value !== null) onChange(value, name, id)
    }, [value])
 
    useEffect(() => {

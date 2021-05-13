@@ -11,10 +11,7 @@ const Layout = ({ children, nav, path }) => {
 
    return (
       <div onDragStart={(e) => preventDragHandler(e)}>
-         <Header
-            path={path}
-            nav={nav}
-         />
+         <Header path={path} nav={nav}/>
          <main>{children}</main>
          <Footer />
       </div>

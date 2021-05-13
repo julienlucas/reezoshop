@@ -3,23 +3,36 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import Input from './Input';
+
 import { theme } from '../constants/theme';
 
-
-const MultiSelect = ({ className, options, placeholder }) => {
+const MultiSelect = ({ className, name, onChange, onReset, options, placeholder }) => {
    const node = useRef();
    const [open, setOpen] = useState(false);
-   const [actives, setActives] = useState([]);
+   const [optionsSelected, setOptionsSeleted] = useState([]);
 
    const onSelect = (value) => {
-      const index = actives.indexOf(value);
+      let index = optionsSelected.indexOf(value);
+
+
+      if (name === 'doors') {
+         index = optionsSelected.indexOf(value[0])
+         if (index > -1) {
+            const newActives = optionsSelected.filter((item) => item !== value[0]).filter((item) => item !== value[1]).filter((item) => item !== value[2]).map((item) => item)
+            setOptionsSeleted([...newActives])
+         } else {
+            optionsSelected.push(...value)
+            setOptionsSeleted([...optionsSelected])
+         }
+         return
+      }
 
       if (index > -1) {
-         const newActives = actives.filter((item) => item !== value).map((item) => item)
-         setActives([...newActives])
+         const newActives = optionsSelected.filter((item) => item !== value).map((item) => item)
+         setOptionsSeleted([...newActives])
       } else {
-         actives.push(value)
-         setActives([...actives])
+         optionsSelected.push(value)
+         setOptionsSeleted([...optionsSelected])
       }
    };
 
@@ -34,6 +47,15 @@ const MultiSelect = ({ className, options, placeholder }) => {
    };
 
    useEffect(() => {
+      const value = optionsSelected;
+      onChange(value, name)
+   }, [optionsSelected])
+
+   useEffect(() => {
+      if (onReset && optionsSelected.length !== 0) setOptionsSeleted([])
+   }, [onReset])
+
+   useEffect(() => {
       document.addEventListener('mousedown', onClick);
       return () => {
          document.removeEventListener('mousedown', onClick);
@@ -42,20 +64,20 @@ const MultiSelect = ({ className, options, placeholder }) => {
 
    return (
       <MultiSelectStyled className={className} ref={node}>
-         <Input className="multi-select" type="text" placeholder={placeholder} onClick={onClick} />
+         <Input multiSelect type="text" value={placeholder} onClick={onClick} onChange={null} />
 
          <div className={`multi-select-popup ${open ? 'show' : ''}`}>
             <p>{placeholder}</p>
 
             <ul>
                {options.map(o =>
-                  <li key={o.value} className={actives.includes(o.value) ? 'active' : ''}>
+                  <li key={o.value} className={optionsSelected.includes(o.value) || optionsSelected.includes(o.value[0]) ? 'active' : ''}>
                      <div
                         className={o.value}
                         style={{ background: o.color }}
                         onClick={() => onSelect(o.value)}
                      >
-                        <span>{className !== 'colorsExt' && o.label}</span>
+                        <span>{className !== 'colorExt' && o.label}</span>
                      </div>
                   </li>
                )}
@@ -67,6 +89,9 @@ const MultiSelect = ({ className, options, placeholder }) => {
 
 MultiSelect.propTypes = {
    className: PropTypes.string,
+   name: PropTypes.string.isRequired,
+   onChange: PropTypes.func.isRequired,
+   onReset: PropTypes.bool,
    options: PropTypes.array.isRequired,
    placeholder: PropTypes.string.isRequired
 };
@@ -74,34 +99,64 @@ MultiSelect.propTypes = {
 export default MultiSelect;
 
 export const MultiSelectStyled = styled.div`
-   input {
-      cursor: pointer;
-   }
    &.gearbox {
       ul {
          grid-template-columns: repeat(2, 1fr);
       }
    }
-   &.colorsExt {
+   &.colorExt {
       ul {
          grid-template-columns: repeat(6, 1fr);
          li {
             width: 47px;
             height: 47px;
-            transition: all .3s ease-out;
+            border: 0;
             &.active {
-               border: 0;
-               div, div.white {
-                  border: 0;
+               div {
+                  &::before {
+                     height: 48px;
+                     width: 48px;
+                  }
+                  &::before, &::after {
+                     top: calc(50%);
+                     border-radius: 4px;
+                  }
                }
             }
          }
          div {
+            position: relative;
             border-radius: 4px;
-            height: 100%;
-            width: 100%;
+            height: 47px;
+            width: 47px;
+            &::before, &::after {
+               position: absolute;
+               left: 0;
+               right: 0;
+               margin: 0 auto;
+               display: table;
+               top: 50%;
+               transform: translateY(-50%);
+               content: '';
+               background: inherit;
+               width: 27px;
+               height: 27px;
+               border-radius: 2px;
+               transition: all .15s ease-out;
+               z-index: 3;
+            }
+            &::after {
+               top: calc(50% - 1px);
+               width: 47px;
+               height: 48px;
+               background: white;
+               z-index: 2;
+               border: 1px solid ${theme.grey600};
+            }
             &.white {
-               border: 1px solid ${theme.grey600}
+               &::before {
+                  border: 1px solid ${theme.grey600}
+               }
             }
          }
       }

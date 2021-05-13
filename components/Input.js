@@ -5,17 +5,20 @@ import React, { useEffect, useState } from 'react';
 import requireStatic from '../utils/require-static';
 import { theme } from '../constants/theme';
 
-const Input = ({ className, name, onChange, onReset, placeholder, type, ...inputProps }) => {
-   const [state, setState] = useState(undefined);
 
-   const onChangeInput = e => {
-      const { value, name } = e.target;
-      setState(value);
-      onChange(value, name);
+const Input = ({ className, name, onChange, onReset, placeholder, type, ...inputProps }) => {
+   const [state, setState] = useState(undefined)
+
+   const onChangeInput = (e) => {
+      if (!inputProps.multiSelect) {
+         const { value, name } = e.target
+         setState(value)
+         onChange(value, name)
+      }
    };
 
    useEffect(() => {
-      if (onReset) setState(undefined);
+      if (onReset) setState(undefined)
    }, [onReset])
 
    return (
@@ -82,7 +85,9 @@ const InputStyled = styled.input(({ styles = {}, theme, ...props }) => {
          '-webkit-appearance': 'none',
          margin: 0
       },
+
       ...(props.search ? inputFormat('search', theme) : {}),
+      ...(props.multiSelect ? inputFormat('multiSelect', theme) : {}),
       ...styles,
    }
 });
@@ -94,9 +99,8 @@ const inputFormat = (format, theme) => ({
       height: '47px',
       minWidth: '393px',
       fontSize: '16px',
-      background: `white url(${requireStatic('icons/search.svg')}) no-repeat`,
-      backgroundPosition: 'calc(100% - 20px) 50%',
-      backgroundSize: '18px',
+      background: `white url(${requireStatic('icons/search.svg')}) no-repeat calc(100% - 20px) 50%`,
+      backgroundSize: 18,
       boxSadow: '0 0 0 rgba(0, 0, 0, 0)',
       color: theme.grey100,
       '&::placeholder': {
@@ -110,8 +114,14 @@ const inputFormat = (format, theme) => ({
          }
       }
    },
-   'multi-select': {
-      background: `white url(${requireStatic('icons/arrow-bottom-light.svg')}') no-repeat calc(100% - 10px) 50%`,
-      backgroundSize: '13px'
+   multiSelect: {
+      color: 'transparent',
+      textShadow: `0 0 0 ${theme.black}`,
+      background: `white url(${requireStatic('icons/arrow-bottom-light.svg')}) no-repeat calc(100% - 10px) 50%`,
+      backgroundSize: 13,
+      cursor: 'pointer',
+      '&:focus, &:hover': {
+         cursor: 'pointer'
+      }
    }
 }[format]);
