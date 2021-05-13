@@ -137,7 +137,7 @@ export const SectionMap = styled.section`
   }
   .wrapper {
     position: absolute;
-    top: 315px;
+    top: 302px;
     height: 360px;
     width: 100vw;
     z-index: 1;
@@ -156,7 +156,7 @@ export const SectionMap = styled.section`
     padding: 0;
   }
   .box-infos {
-    position: relative;
+    position: absolute;
     background: white;
     box-shadow: none;
     border-radius: 4px;
@@ -205,6 +205,7 @@ export const SectionMap = styled.section`
     margin: 0 auto;
     display: table;
     width: auto;
+    z-index: 2;
     li {
       position: relative;
       padding-bottom: 10px;
