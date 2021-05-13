@@ -1,0 +1,10 @@
+query getSuggestions($query: String!, $searchType: SearchType) {
+   suggestions: querySuggestions(count: 10, query: $query, searchType: $searchType) {
+      count
+      suggestions {
+         query
+         withTag
+         matchedWords
+      }
+   }
+}

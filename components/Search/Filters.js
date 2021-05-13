@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
+import Button from '../Button';
 import Checkbox from '../Checkbox';
 import Input from '../Input';
 import MultiSelect from '../MultiSelect';
-import Select from '../Select';
 
 import { bodies, colorsExt, doors, energies, gearbox } from '../../constants/search';
-import { theme } from '../../constants/theme';
+import { medias, theme } from '../../constants/theme';
 
 const Filters = ({ onFilters }) => {
    const router = useRouter();
@@ -37,18 +37,6 @@ const Filters = ({ onFilters }) => {
          ...filters,
          size: 12,
          [name]: value
-      });
-   };
-
-   const onPopupSelect = () => {
-
-   };
-
-   const onTypedSearch = e => {
-      e.preventDefault();
-      setFilters({
-         ...filters,
-         'match': e.target.value
       });
    };
 
@@ -89,19 +77,16 @@ const Filters = ({ onFilters }) => {
 
    return (
       <FiltersComp className={toogleFilters ? 'open' : ''}>
-         <button className="btn btn-secondary btn-filtres-mobile" onClick={() => setToogleFilters(!toogleFilters)} type="button">Filtres</button>
          <div className={`btn-close ${toogleFilters ? 'open' : ''}`} onClick={() => setToogleFilters(!toogleFilters)}>
             <span/>
             <span/>
             <span/>
          </div>
 
-         <input type="text" className="search" placeholder="Marque, Modèle" name="match" onChange={e => onTypedSearch(e)} />
-
          <form>
             <div className="row">
                <h3>Filtres</h3>
-               <p className="btn-reset"><span onClick={onPopupSelect}>Réinitialiser les filtres</span></p>
+               <p className="reset-filters"><span onClick={resetFilters}>Réinitialiser les filtres</span></p>
             </div>
 
             <MultiSelect
@@ -110,29 +95,25 @@ const Filters = ({ onFilters }) => {
             />
 
             <div className="row">
-               <div><Checkbox label="Neuf / 0km" id="neuf" name="onlyNew" onChange={onChange} onReset={onReset} /></div>
-               <div><Checkbox label="Occasion" id="occasion" name="onlyNew" onClick={() => setOccasion(!occasion)} onChange={onChange} onReset={onReset} /></div>
+               <Checkbox label="Neuf / 0km" id="neuf" name="onlyNew" onChange={onChange} onReset={onReset} />
+               <Checkbox label="Occasion" id="occasion" name="onlyNew" onClick={() => setOccasion(!occasion)} onChange={onChange} onReset={onReset} />
             </div>
 
             <div className="row">
-               <div className="box-input-number">
-                  <Input
-                     type="number"
-                     name="priceMin"
-                     placeholder="Prix min"
-                     onChange={onChange}
-                     onReset={onReset}
-                  />
-               </div>
-               <div className="box-input-number">
-                  <Input
-                     type="number"
-                     name="priceMax"
-                     placeholder="Prix max"
-                     onChange={onChange}
-                     onReset={onReset}
-                  />
-               </div>
+               <Input
+                  type="number"
+                  name="priceMin"
+                  placeholder="Prix min"
+                  onChange={onChange}
+                  onReset={onReset}
+               />
+               <Input
+                  type="number"
+                  name="priceMax"
+                  placeholder="Prix max"
+                  onChange={onChange}
+                  onReset={onReset}
+               />
             </div>
 
             <MultiSelect
@@ -158,10 +139,12 @@ const Filters = ({ onFilters }) => {
             />
 
             <div className="wrapper-btn-search-mobile">
-               <button onClick={e => onFiltersSearch(e)} className="btn btn-tertiary btn-search-mobile" type="button">
+               <Button third onClick={e => onFiltersSearch(e)}>
                   Rechercher
-               </button>
+               </Button>
             </div>
+
+            <Button secondary className="button-filtres-mobile" onClick={() => setToogleFilters(!toogleFilters)}>Filtres</Button>
          </form>
       </FiltersComp>
    )
@@ -184,7 +167,7 @@ export const FiltersComp = styled.div`
       bottom: 0;
       display: block;
       width: 100%;
-      z-index: 999;
+      z-index: 99;
       background white;
       form {
          padding: 70px 0 0;
@@ -195,12 +178,22 @@ export const FiltersComp = styled.div`
          display: block;
       }
    }
-   .search {
-      position: fixed;
-      top: 48px;
-      right: 90px;
-      display: none;
-      z-index: 8;
+   h3 {
+      margin: 0;
+      padding: 0;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 30px;
+   }
+   .row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 10px;
+   }
+   label {
+      position: absolute;
+      margin: 6px 0 0 6px;
+      font-size: 13px;
    }
    form {
       padding: 21px 16px 27px;
@@ -219,27 +212,22 @@ export const FiltersComp = styled.div`
       z-index: 7;
       width: 100vw;
    }
-   .box-input-number {
+   .reset-filters {
       position: relative;
-      &::before {
-         position: absolute;
-         margin: 7px 0 0 0;
-         right: 12px;
-         color: ${theme.black};
-         content: '€';
-         z-index: 1;
+      height: 20px;
+      margin-top: 2px;
+      font-size: 14px;
+      text-align: right;
+      float: right;
+      color: ${theme.grey100};
+      text-decoration: underline;
+      cursor: pointer;
+      &:hover {
+         text-decoration: none;
       }
    }
-   .btn-search-mobile {
-      width: 100%;
-   }
-   .btn-filtres-mobile {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      z-index: 7;
+   button.button-filtres-mobile {
       display: block;
-      width: calc(50vw - 26px);
    }
    .btn-close {
       position: fixed;
@@ -271,16 +259,13 @@ export const FiltersComp = styled.div`
          }
       }
    }
-   @media (min-width: 990px) {
+   ${medias.min990} {
       padding: 0;
-      .search {
-         display: block;
-      }
+      display: block;
       form {
          display: block;
       }
-      display: block;
-      .btn-filtres-mobile {
+      button.button-filtres-mobile {
          display: none;
       }
       .wrapper-btn-search-mobile {

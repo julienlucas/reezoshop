@@ -1,5 +1,5 @@
 # dependencies
-node_modules/**
+/node_modules
 
 # testing
 /coverage
@@ -10,15 +10,17 @@ node_modules/**
 /dist
 /.next
 
-# External sources
-utils/next-routes.js
-
-# sources
-pages/mentions-legales.js
-
 # misc
+.dccache
 .DS_Store
 .env
 .idea
 *-debug.log
 *-error.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+yarn.lock

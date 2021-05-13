@@ -1,25 +1,30 @@
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
-import { useRouter } from 'next/router';
 
-function Layout({ children, nav, headline, phone }) {
-  const router = useRouter();
+const Layout = ({ children, nav, path }) => {
+   const preventDragHandler = (e) => {
+      e.preventDefault();
+   };
 
-  const preventDragHandler = e => {
-    e.preventDefault()
-  };
+   return (
+      <div onDragStart={(e) => preventDragHandler(e)}>
+         <Header
+            path={path}
+            nav={nav}
+         />
+         <main>{children}</main>
+         <Footer />
+      </div>
+   );
+};
 
-  const selectAgency = (agency) => {
-    window.location.href=`https://${agency}.reezocar.com${router.pathname}`;
-  };
-
-  return (
-    <div onDragStart={(e) => preventDragHandler(e)}>
-      <Header nav={nav} phone={phone} headline={headline} selectAgency={(agency) => selectAgency(agency)} />
-      <main>{children}</main>
-      <Footer />
-    </div>
-  );
+Layout.propTypes = {
+  children: PropTypes.object.isRequired,
+  nav: PropTypes.array.isRequired,
+  path: PropTypes.string
 };
 
 export default Layout;

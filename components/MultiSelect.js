@@ -41,7 +41,7 @@ const MultiSelect = ({ className, options, placeholder }) => {
    }, []);
 
    return (
-      <MultiSelectStyles className={className} ref={node}>
+      <MultiSelectStyled className={className} ref={node}>
          <Input className="multi-select" type="text" placeholder={placeholder} onClick={onClick} />
 
          <div className={`multi-select-popup ${open ? 'show' : ''}`}>
@@ -61,7 +61,7 @@ const MultiSelect = ({ className, options, placeholder }) => {
                )}
             </ul>
          </div>
-      </MultiSelectStyles>
+      </MultiSelectStyled>
    )
 };
 
@@ -73,7 +73,7 @@ MultiSelect.propTypes = {
 
 export default MultiSelect;
 
-export const MultiSelectStyles = styled.div`
+export const MultiSelectStyled = styled.div`
    input {
       cursor: pointer;
    }

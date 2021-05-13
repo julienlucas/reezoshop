@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 export const bodies = [
    { value: 'hatchback', label: 'Compacte' },
    { value: 'saloon', label: 'Berline' },

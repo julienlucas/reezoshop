@@ -1,30 +1,31 @@
 import Link from 'next/link';
-import NextImageLazy from '../utils/imgLazy';
 import PropTypes from 'prop-types';
+import React from 'react';
 import styled from 'styled-components';
+
+import NextImageLazy from '../utils/imgLazy';
 import { theme } from '../constants/theme';
-import { useRouter } from 'next/router';
 
-const CardCar = ({ brand, energy, gearbox, isNew, model, mileage, price, thumbnail, year }) => {
-   const router = useRouter();
-
+const CardCar = ({ className, brand, energy, gearbox, model, mileage, thumbnail, price, year }) => {
    // Ajout d'un espace tous les 3 chiffres
    const numberFormat = num => {
       return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
    };
 
+   thumbnail = "https://picsum.photos/480/270";
+
    return (
-      <Card className={`box-card ${router.pathname !== '/' ? 'small-width' : ''}`}>
+      <Card className={className}>
          <div className="thumbnail">
-            {router.pathname !== '/' && <>
-               <div className="promo">-XX%</div>
+            {className === 'small-width' && <>
+               <div className="promo">-20%</div>
                <div className="en-magasin">En magasin</div>
             </>}
 
             <Link href="/">
                <a>
                   <NextImageLazy
-                     src={'https://picsum.photos/480/270'}
+                     src={thumbnail}
                      width={367}
                      height={205}
                      layout="responsive"
@@ -40,12 +41,12 @@ const CardCar = ({ brand, energy, gearbox, isNew, model, mileage, price, thumbna
                </Link>
             </h3>
 
-            <p className="description">{gearbox && gearbox + ' ·'} {energy && energy + ' ·'} {year && year + ' ·'} {mileage && numberFormat(mileage) + ' km'}</p>
-            {router.pathname !== '/' && isNew && <button className="btn btn-neuf-occas">Neuf /0km</button>}
+            <p className="description">{gearbox && `${gearbox} ·`} {energy && `${energy} ·`} {year && `${year} ·`} {mileage && `${numberFormat(mileage)} km`}</p>
+            {className === 'small-width' && <button className="btn btn-neuf-occas" type="button">Neuf /0km</button>}
 
             <div className="box-prix">
                <p className="prix">{price && numberFormat(price)} €</p>
-               {router.pathname !== '/' && <p className="prix-barre">{price && numberFormat(price)} €</p>}
+               {className === 'small-width' && <p className="prix-barre">{price && numberFormat(price)} €</p>}
             </div>
          </div>
       </Card>
@@ -53,12 +54,12 @@ const CardCar = ({ brand, energy, gearbox, isNew, model, mileage, price, thumbna
 };
 
 CardCar.propTypes = {
+   className: PropTypes.string,
    brand: PropTypes.string,
    energy: PropTypes.string,
    gearbox: PropTypes.string,
-   isNew: PropTypes.bool,
    model: PropTypes.string,
-   mileage: PropTypes.string,
+   mileage: PropTypes.number,
    price: PropTypes.number,
    thumbnail: PropTypes.string,
    year: PropTypes.string
@@ -199,7 +200,6 @@ export const Card = styled.div`
       .btn-neuf-occas {
          padding: 0 20px;
       }
-
    }
    @media (min-width: 750px) {
       &.small-width {

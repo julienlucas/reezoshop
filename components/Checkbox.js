@@ -7,17 +7,22 @@ const Checkbox = ({ id, label, name, onChange, onReset }) => {
    const [value, setValue] = useState(null);
 
    const onClick = () => {
-      value === null ? setValue(true) : setValue(!value);
+      if (value === null) {
+         setValue(true)
+      }
+      else {
+         setValue(!value)
+      }
    };
 
    useEffect(() => {
       if (value !== null) {
-         onChange(value, name, id);
+         onChange(value, name, id)
       }
    }, [value])
 
    useEffect(() => {
-      onReset && setValue(null);
+      if (onReset) setValue(null)
    }, [onReset])
 
    return (
@@ -41,11 +46,11 @@ export default Checkbox;
 export const CustomCheckbox = styled.div`
    input.checkbox {
       position: relative;
-      height: 24px;
       opacity: 0;
+      margin: 15px 0 30px 0;
       & + label {
          position: relative;
-         top: -20px;
+         left: -6px;
          cursor: pointer;
          color: ${theme.black};
          padding: 0;

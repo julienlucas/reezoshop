@@ -1,19 +1,25 @@
-import Ad from './Ad';
-import Filters from './Filters';
 import PropTypes from 'prop-types';
+import React from 'react';
+import styled from 'styled-components';
+
+import Ad from './Ad';
+import InputSuggestions from '../InputSuggestions/InputSuggestions';
+import Filters from './Filters';
 import SearchResults from './SearchResults';
-import { Aside, Wrapper } from './styles';
+
+import { medias } from '../../constants/theme';
 
 function SearchWrapper({ cars, cityShop, count, filters, onFilters, onLoadMore, onSort }) {
   return (
-    <Wrapper>
+    <WrapperStyled>
       <div className="container">
-        <Aside>
+        <InputSuggestions className="search-page"/>
+
+        <AsideStyled>
           <Filters count={count} onFilters={filters => onFilters(filters)} />
-          <div className="wrapper-ad-desktop">
-            <Ad/>
-          </div>
-        </Aside>
+          <Ad/>
+        </AsideStyled>
+
         <SearchResults
           cars={cars}
           cityShop={cityShop}
@@ -23,17 +29,42 @@ function SearchWrapper({ cars, cityShop, count, filters, onFilters, onLoadMore, 
           onSort={sorting => onSort(sorting)}
         />
       </div>
-    </Wrapper>
+    </WrapperStyled>
   );
 };
 
 SearchWrapper.propTypes = {
   cars: PropTypes.array.isRequired,
   cityShop: PropTypes.string.isRequired,
-  count: PropTypes.array.isRequired,
+  count: PropTypes.number.isRequired,
   filters: PropTypes.object.isRequired,
+  onFilters: PropTypes.func.isRequired,
   onLoadMore: PropTypes.func.isRequired,
   onSort: PropTypes.func.isRequired
 };
 
 export default SearchWrapper;
+
+export const WrapperStyled = styled.section`
+   margin: 80px 0;
+   .container {
+      padding: 0 25px;
+      max-width: 1400px;
+   }
+   ${medias.min990} {
+      margin: 135px 0;
+   }
+   @media (max-width: 768px) {
+      margin: 40px 0 80px;
+   }
+`
+
+export const AsideStyled = styled.aside`
+   float: none;
+   max-width: 100%;
+   width: 100%;
+   ${medias.min990} {
+      float: left;
+      max-width: 300px;
+   }
+`

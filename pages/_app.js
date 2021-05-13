@@ -1,11 +1,16 @@
 import React from 'react';
 import App from 'next/app';
-import Head from 'next/head'
-import { ThemeProvider } from 'styled-components'
-import { theme, GlobalStyles } from '../constants/theme'
-import { NextSeo } from 'next-seo'
-import SEO from '../next-seo.config'
+import Head from 'next/head';
+import { NextSeo } from 'next-seo';
+import { ThemeProvider } from 'styled-components';
+
 import hocs from '../hooks/hocs';
+import SEO from '../next-seo.config';
+import { GlobalStyles } from '../constants/global-styles';
+import { theme } from '../constants/theme';
+
+import Layout from '../components/Layout';
+import { nav } from '../constants/nav';
 
 class RZSApp extends App {
    static async getInitialProps({ Component, ctx }) {
@@ -23,17 +28,21 @@ class RZSApp extends App {
    }
 
    render() {
-      const { Component, hocProps, pageProps } = this.props;
+      const { Component, hocProps, pageProps, router } = this.props;
 
       const cpnt = (
-         <ThemeProvider theme={theme}>
-            <NextSeo {...SEO}/>
-            <Head>
-            <meta content="width=device-width, initial-scale=1" name="viewport" />
-            </Head>
-            <Component hocProps={hocProps} {...pageProps} />
+         <>
             <GlobalStyles />
-         </ThemeProvider>
+            <ThemeProvider theme={theme}>
+               <NextSeo {...SEO} />
+               <Head />
+
+               {router.route === '/_error' ? <Component hocProps={hocProps} {...pageProps} /> :
+                  <Layout cityShop={hocProps.shop.host} nav={nav} path={router.route}>
+                     <Component hocProps={hocProps} {...pageProps} />
+                  </Layout>}
+            </ThemeProvider>
+         </>
       );
 
       return hocs.reduce((children, hoc) => hoc({ children, ...hocProps }), cpnt);

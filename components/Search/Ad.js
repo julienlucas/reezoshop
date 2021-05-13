@@ -1,32 +1,54 @@
 import Image from 'next/image';
+import PropTypes from 'prop-types';
+import React from 'react';
 import styled from 'styled-components';
 
-const SearchAd = () => {
+import Button from '../Button';
+
+import { medias } from '../../constants/theme';
+import requireStatic from '../../utils/require-static';
+
+const Ad = ({ className }) => {
    return (
-      <Ad>
-         <div className="box-text">
-            <div>
-            <p>Trouvez plus d'annonces sur reezocar.com</p>
-            <button className="btn btn-secondary">Voir plus d'annonces</button>
+      <AdStyled className={className}>
+         <div className="box-ad">
+            <div className="box-text">
+               <div>
+               <p>Trouvez plus d'annonces sur reezocar.com</p>
+               <Button secondary>Voir plus d'annonces</Button>
+               </div>
             </div>
+            <Image
+               src={requireStatic('images/ad-voitures.png')}
+               width={300}
+               height={235}
+               layout="responsive"
+            />
          </div>
-         <Image
-            src="/images/ad-voitures.png"
-            width={300}
-            height={235}
-            layout="responsive"
-         />
-      </Ad>
+      </AdStyled>
    )
 };
 
-export default SearchAd;
+Ad.propTypes = {
+   className: PropTypes.string
+};
 
-export const Ad = styled.div`
+export default Ad;
+
+export const AdStyled = styled.div`
    margin-top: 25px;
    border-radius: 4px;
    overflow: hidden;
    max-height: 240px;
+   display: none;
+   &.ad-mobile {
+      display: block;
+      margin-top: 64px;
+      .box-text {
+         width: calc(100% - 51px);
+         justify-content: center;
+      }
+   }
    .box-text {
       position: absolute;
       width: 300px;
@@ -34,7 +56,7 @@ export const Ad = styled.div`
       display: flex;
       align-items: center;
       z-index: 2;
-      .btn-secondary {
+      button {
          margin: 0 36px;
          width: calc(100% - 72px);
          padding: 0;
@@ -47,6 +69,16 @@ export const Ad = styled.div`
          font-weight: 700;
          color: white;
          text-align: center;
+      }
+   }
+   ${medias.min990} {
+      display: block;
+      &.ad-mobile {
+         display: none;
+         .box-text {
+            width: calc(100% - 51px);
+            justify-content: center;
+         }
       }
    }
 }`

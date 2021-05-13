@@ -1,10 +1,14 @@
-import CardCar from '../CardCar';
 import PropTypes from 'prop-types';
-import SearchAd from './Ad';
-import Select from '../Select';
 import React, { useEffect, useState } from 'react';
-import { Results } from './styles';
+import styled from 'styled-components';
+
+import Button from '../Button';
+import CardCar from '../CardCar';
+import Ad from './Ad';
+import Select from '../Select';
+
 import { sorting } from '../../constants/search';
+import { medias } from '../../constants/theme';
 
 const SearchResults = ({ cars, cityShop, count, filters, onLoadMore, onSort }) => {
   const [nbrCars, setNbrCars] = useState(12);
@@ -24,7 +28,7 @@ const SearchResults = ({ cars, cityShop, count, filters, onLoadMore, onSort }) =
   }, [nbrCars])
 
   return (
-    <Results>
+    <ResultsStyled>
       <h2>
         {filters?.match ? filters.match : 'Véhicules '}
         {filters?.onlyNew === true && filters.match ? 'neufs ' : filters?.onlyNew === true ? 'neuves ' : filters?.onlyNew === false ? "d'occasion " : ''}
@@ -32,18 +36,18 @@ const SearchResults = ({ cars, cityShop, count, filters, onLoadMore, onSort }) =
       </h2>
       <p className="count"><span className="blue">{count}</span> voitures dispos</p>
 
-      <div className="wrapper-select-sorting">
-        <Select
-          name="sorting"
-          options={sorting}
-          placeholder="Meilleures prix"
-          onChange={sorting => onSort(sorting)}
-        />
-      </div>
+      <Select
+        className="sorting"
+        name="sorting"
+        options={sorting}
+        placeholder="Tri par défaut"
+        onChange={sorting => onSort(sorting)}
+      />
 
       <div className="row">
         {cars?.map(car =>
           <CardCar
+            className="small-width"
             key={car._id}
             year={car.year}
             gearbox={car.gearbox}
@@ -59,74 +63,72 @@ const SearchResults = ({ cars, cityShop, count, filters, onLoadMore, onSort }) =
 
       <div className="row row-btn">
         <div/>
-        <button className="btn btn-tertiary" onClick={loadMore}>Voir plus de véhicules</button>
+        <Button third onClick={loadMore}>Voir plus de véhicules</Button>
         <div/>
       </div>
 
-      <div className="wrapper-ad-mobile">
-        <SearchAd />
-      </div>
-    </Results>
+      <Ad className="ad-mobile" />
+    </ResultsStyled>
   );
 };
 
 SearchResults.propTypes = {
    cars: PropTypes.array.isRequired,
    cityShop: PropTypes.string,
-   count: PropTypes.array.isRequired,
+   count: PropTypes.number.isRequired,
    filters: PropTypes.object.isRequired,
-   onLoadMore: PropTypes.func
+   onLoadMore: PropTypes.func.isRequired,
+   onSort: PropTypes.func.isRequired
 };
 
 export default SearchResults;
 
-// React Select : Styles
-const customStyles = {
-  option: (styles, state) => ({
-    ...styles,
-    fontSize: '16px',
-    borderTop: '1px solid #C1C1C1',
-    background: state.isSelected ? 'white' : 'white',
-    color: '#313131',
-    cursor: 'pointer',
-    "&:focus": {
-      background: 'white'
-    },
-    "&:hover": {
-      background: 'white'
-    },
-    "&:active": {
-      background: 'white'
+export const ResultsStyled = styled.div`
+  padding: 0 0 0 0;
+  float: none;
+  width: 100%;
+  h2 {
+    margin: -8px 0 20px 0;
+  }
+  .count {
+    font-size: 20px;
+    span {
+      font-weight: 700;
     }
-  }),
-  singleValue: (styles) => ({
-    ...styles
-  }),
-  control: styles => ({
-    ...styles,
-    position: 'absolute',
-    top: '-40px',
-    right: '-50px',
-    width: '200px',
-    fontSize: '14px',
-    padding: '0 5px',
-    color: '#313131',
-    border: '1px solid #C4C4C4',
-    background: 'white url("/icons/arrow-bottom-light.svg") no-repeat',
-    backgroundPosition: 'calc(100% - 10px) 50%',
-    backgroundSize: '13px',
-    boxShadow: 'none',
-    cursor: 'pointer',
-  }),
-  menu: styles => ({
-    ...styles,
-    position: 'absolute',
-    right: '-50px',
-    padding: '0',
-    border: 'none',
-    boxShadow: '1px 2px 13px rgba(0, 0, 0, 0.15)',
-    width: '240px',
-    borderRadius: '4px',
-    zIndex: '10'
-  })
-};
+  }
+  select {
+    display: none;
+  }
+  .row {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 22px;
+    width: 100%;
+    &.row-btn {
+        display: block;
+        .btn {
+          width: 100%;
+        }
+    }
+  }
+  ${medias.min990} {
+    float: left;
+    width: calc(100% - 300px);
+    padding: 0 51px;
+    select {
+      display: block;
+    }
+    .row {
+      width: calc(100% + 51px);
+      &.row-btn {
+        display: grid;
+      }
+    }
+  }
+  ${medias.min750} {
+    .row {
+        grid-template-columns: repeat(3, 1fr);
+    }
+  }
+`

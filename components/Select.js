@@ -1,28 +1,47 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import React, { useState, useEffect } from 'react';
-import { theme } from '../constants/theme';
+import React, { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/router';
 
-const Select = ({ name, onChange, onReset, options, placeholder }) => {
+import requireStatic from '../utils/require-static';
+import { medias, theme } from '../constants/theme';
+
+const Select = ({ className, defaultValue, name, onChange, onReset, options, placeholder }) => {
+   const node = useRef();
+
    const [state, setState] = useState({
+      selected: null,
       opened: false
    });
 
-   const onOpen = () => {
-      setState(prevState => {
-         return {
-         ...prevState,
-         opened: !state.opened
-         }
-      });
-   };
-
    const onSelect = option => {
+      onChange(option.value, name);
       setState({
          selected: option,
          opened: false
       });
-      onChange(option.value, name);
+   };
+
+   const onOpen = e => {
+      // On inside click
+      if (node.current.contains(e.target)) {
+         setState(prevState => {
+            return {
+            ...prevState,
+            opened: true
+            }
+         });
+
+         return;
+      }
+
+      // On outside click
+      setState(prevState => {
+         return {
+         ...prevState,
+         opened: false
+         }
+      });
    };
 
    useEffect(() => {
@@ -31,44 +50,64 @@ const Select = ({ name, onChange, onReset, options, placeholder }) => {
       });
    }, [onReset])
 
+   useEffect(() => {
+      document.addEventListener('mousedown', onOpen);
+
+      return () => {
+         document.removeEventListener('mousedown', onOpen);
+      };
+   }, []);
+
    const getOptions = () => {
-      return options.map(o => <Option key={o.value} option={o} onSelect={onSelect} />);
+      return options.map(o => <Option className={className} key={o.value} option={o} onSelect={onSelect} />);
    };
 
    return (
-      <SelectMenu onClick={onOpen}>
-         <span>{state?.selected?.label || placeholder}</span>
+      <SelectStyled className={className} ref={node} onClick={e => onOpen(e)}>
+         <span>{state.selected ? state.selected.label : placeholder || defaultValue}</span>
          <ul className={state.opened ? 'show': 'hide'}>{getOptions()}</ul>
-      </SelectMenu>
+      </SelectStyled>
    );
 };
 
 Select.propTypes = {
+   className: PropTypes.string,
+   defaultValue: PropTypes.string,
    options: PropTypes.array.isRequired,
-   placeholder: PropTypes.string.isRequired,
-   name: PropTypes.string.isRequired,
-   reset: PropTypes.bool
+   placeholder: PropTypes.string,
+   name: PropTypes.string,
+   onChange: PropTypes.func,
+   onReset: PropTypes.bool
+};
+
+Option.propTypes = {
+   className: PropTypes.string,
+   option: PropTypes.object,
+   onSelect: PropTypes.func
 };
 
 export default Select;
 
-function Option (props) {
-   const onSelect = (e) => {
-      e.preventDefault();
-      props.onSelect(props.option);
+function Option ({ className, option, onSelect }) {
+   const router = useRouter();
+
+   if (className === 'select-agency') {
+      return (
+         <li><a href={`https://${option.value}.reezocar.com${router.pathname}`} title="">{option.label}</a></li>
+      )
    }
 
    return (
-      <li onClick={onSelect}>{props.option.label}</li>
+      <li><span onClick={() => onSelect(option)}>{option.label}</span></li>
    );
 };
 
-export const SelectMenu = styled.div`
+export const SelectStyled = styled.div`
    margin-bottom: 16px;
    font-size: 13px;
    line-height: 36px;
    padding: 0 7px;
-   background: white url('/icons/arrow-bottom-light.svg') no-repeat calc(100% - 10px) 50%;
+   background: white url(${requireStatic('icons/arrow-bottom-light.svg')}) no-repeat calc(100% - 10px) 50%;
    background-size: 13px;
    color: ${theme.black};
    border: 0.811966px solid ${theme.grey200};
@@ -83,16 +122,49 @@ export const SelectMenu = styled.div`
    * {
       cursor: pointer;
    }
+   &.select-agency {
+      position: absolute;
+      top: 10px;
+      left: 160px;
+      width: auto;
+      font-size: 20px;
+      text-transform: capitalize;
+      padding-right: 35px;
+      background: transparent url(${requireStatic('icons/arrow-bottom.svg')}) no-repeat calc(100% - 5px) 52%;
+      background-size: 18px;
+      border: 0;
+      ul {
+         left: -155px;
+         min-width: 290px;
+         z-index: 9;
+         a {
+            color: ${theme.black};
+            text-decoration: none;
+         }
+      }
+   }
+   &.sorting {
+      position: absolute;
+      margin-top: -27px;
+      right: 25px;
+      float: right;
+      max-width: 200px;
+      width: 100%;
+      ul {
+         left: auto;
+         right: 0;
+      }
+   }
    ul {
       position: absolute;
       list-style: none;
-      margin: 36px 0 0 16px;
+      margin: 36px 0 0 41px;
       background: white;
       left: 0;
       box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.15);
       border-radius: 4px;
       min-width: 268px;
-      z-index: 9;
+      z-index: 5;
       li {
          display: block;
          padding: 5px 20px;
@@ -110,9 +182,23 @@ export const SelectMenu = styled.div`
          display:none;
       }
    }
-   @media (min-width: 990px) {
-      ul {
-         margin: 36px 0 0 41px;
+   @media (max-width: 780px) {
+      &.select-agency {
+         &.mobile-menu-open {
+            filter: grayscale(1) brightness(600%);
+            ul {
+               filter: brightness(100%);
+               * {
+                  filter: brightness(0%);
+               }
+            }
+         }
+      }
+   }
+   ${medias.min768} {
+      &.select-agency {
+         top: 30px;
+         left: 240px;
       }
    }
 `;

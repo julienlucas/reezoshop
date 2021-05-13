@@ -1,11 +1,17 @@
 import Link from 'next/link';
-import styled from 'styled-components'
-import TelIcon from '../../svgs/tel.svg';
-import React, { useState } from 'react';
-import { theme } from '../../constants/theme';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
-function Mobile({ data }) {
+import TelIcon from '../../svgs/tel.svg';
+import { medias, theme } from '../../constants/theme';
+
+const Mobile = ({ headline, phone, phoneFormated, onMobileMenu }) => {
    const [mobileMenu, setMobileMenu] = useState(false);
+
+   useEffect(() => {
+      onMobileMenu(mobileMenu)
+   }, [mobileMenu])
 
    return (
       <MobileWrapper>
@@ -15,10 +21,10 @@ function Mobile({ data }) {
             <span/>
          </div>
 
-        {mobileMenu && <div className={`mobile-menu ${mobileMenu ? 'open' : ''}`}>
+         {mobileMenu && <div className={`mobile-menu ${mobileMenu ? 'open' : ''}`}>
             <div className="box-top">
                <ul>
-                  <li><strong>Agence Reezocar Lille</strong></li>
+                  <li><strong>Agence {headline}</strong></li>
                   <li><Link href=""><a>Véhicules d'occasion</a></Link></li>
                   <li><Link href=""><a>Véhicules neufs/0km</a></Link></li>
                   <li><Link href=""><a>Comment venir ?</a></Link></li>
@@ -26,17 +32,24 @@ function Mobile({ data }) {
                </ul>
             </div>
             <div className="box-bottom">
-               <p><strong>Reezocar Lille-Seclin</strong></p>
+               <p><strong>{headline}</strong></p>
                <p>Lundi au Samedi - 09:00 à 18h00</p>
                <p>
-                  <a href={`tel:${data.phone}`} rel="noopener noreferrer nofollow" target="_blank">
-                     <TelIcon className="icon" />01 42 53 65 29
+                  <a href={`tel:${phone}`} rel="noopener noreferrer nofollow" target="_blank">
+                     <TelIcon className="icon" />{phoneFormated}
                   </a>
                </p>
             </div>
-        </div>}
+         </div>}
       </MobileWrapper>
    );
+};
+
+Mobile.propTypes = {
+  headline: PropTypes.string.isRequired,
+  onMobileMenu: PropTypes.func.isRequired,
+  phone: PropTypes.string.isRequired,
+  phoneFormated: PropTypes.string.isRequired
 };
 
 export default Mobile;
@@ -48,7 +61,7 @@ export const MobileWrapper = styled.div`
    .btn-mobile {
       position: fixed;
       top: 20px;
-      right: 10px;
+      right: 15px;
       float: right;
       width: 35px; height: 35px;
       display: block;
@@ -93,16 +106,22 @@ export const MobileWrapper = styled.div`
       background: ${theme.blue100};
       right: -400px;
       display: none;
+      flex-direction: column;
       visibility: hidden;
-      z-index: 9;
+      z-index: 7;
       &.open {
          right: 0;
-         display: block;
+         display: flex;
          visibility: visible;
       }
+      .box-top {
+         align-items: top;
+         height: 100%;
+      }
       .box-bottom {
-         position: fixed;
-         bottom: 76px;
+         align-items: end;
+         display: none;
+         bottom: 56px;
          * {
             margin-bottom: 5px;
          }
@@ -118,6 +137,7 @@ export const MobileWrapper = styled.div`
             margin-bottom: 50px;
             font-size: 20px;
             list-style: none;
+            text-align: center;
          }
       }
       p {
@@ -134,22 +154,26 @@ export const MobileWrapper = styled.div`
          left: -10px;
       }
    }
-   @media (min-width:990px) {
+   ${medias.min780} {
+      .mobile-menu {
+         width: 400px;
+         .box-bottom {
+            display: block;
+         }
+         ul {
+            li {
+               text-align: left;
+            }
+         }
+      }
       .btn-mobile {
          top: 38px;
          right: 25px;
-      }
-   }
-   @media (min-width: 780px) {
-      .mobile-menu {
-         width: 400px;
-      }
-      .btn-mobile {
          .cross {
             right: 35px;
          }
          span {
-         background: ${theme.black};
+            background: ${theme.black};
          }
       }
    }
