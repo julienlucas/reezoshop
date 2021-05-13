@@ -64,7 +64,7 @@ const MultiSelect = ({ className, name, onChange, onReset, options, placeholder 
 
    return (
       <MultiSelectStyled className={className} ref={node}>
-         <Input multiSelect type="text" value={placeholder} onClick={onClick} onChange={null} />
+         <Input multiSelect type="text" placeholder={placeholder} value={optionsSelected} onClick={onClick} onChange={null} />
 
          <div className={`multi-select-popup ${open ? 'show' : ''}`}>
             <p>{placeholder}</p>

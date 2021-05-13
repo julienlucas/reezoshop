@@ -120,6 +120,11 @@ const inputFormat = (format, theme) => ({
       background: `white url(${requireStatic('icons/arrow-bottom-light.svg')}) no-repeat calc(100% - 10px) 50%`,
       backgroundSize: 13,
       cursor: 'pointer',
+      textTransform: 'capitalize',
+      '&::placeholder': {
+         textTransform: 'none',
+         color: `${theme.black} !important`
+      },
       '&:focus, &:hover': {
          cursor: 'pointer'
       }
