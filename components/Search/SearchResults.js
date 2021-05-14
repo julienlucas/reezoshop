@@ -13,7 +13,7 @@ import { medias } from '../../constants/theme';
 const SearchResults = ({ cars, cityShop, count, filters, onLoadMore, onSort }) => {
   const [nbrCars, setNbrCars] = useState(12);
 
-  const capitalizeFirstLetter = str => {
+  const capitalize1stLetter = str => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
@@ -27,13 +27,16 @@ const SearchResults = ({ cars, cityShop, count, filters, onLoadMore, onSort }) =
     }
   }, [nbrCars])
 
+  const headlineCustom = () => {
+    if (!filters.match) {
+      return <>Véhicules {filters?.body ? filters.body : ''} {filters?.onlyNew === true ? 'neufs' : ''} {filters?.onlyNew === false ? "d'occasion " : ''} en vente <span className="blue">près de {capitalize1stLetter(cityShop)}</span></>;
+    };
+    return <><span className="capitalize">{filters?.match ? filters.match : ''}</span> {filters?.onlyNew === true ? 'neuves' : ''} {filters?.onlyNew === false ? "d'occasion " : ''} en vente <span className="blue">près de {capitalize1stLetter(cityShop)}</span></>;
+  };
+
   return (
     <ResultsStyled>
-      <h2>
-        {filters?.match ? filters.match : 'Véhicules '}
-        {filters?.onlyNew === true && filters.match ? 'neufs ' : filters?.onlyNew === true ? 'neuves ' : filters?.onlyNew === false ? "d'occasion " : ''}
-        <span className="blue">près de {capitalizeFirstLetter(cityShop)}</span>
-      </h2>
+      <h2>{headlineCustom()}</h2>
       <p className="count"><span className="blue">{count}</span> voitures dispos</p>
 
       <Select
@@ -89,6 +92,9 @@ export const ResultsStyled = styled.div`
   width: 100%;
   h2 {
     margin: -8px 0 20px 0;
+    span.capitalize {
+      text-transform: capitalize;
+    }
   }
   .count {
     font-size: 20px;
