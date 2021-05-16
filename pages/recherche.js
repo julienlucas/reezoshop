@@ -13,36 +13,37 @@ function Search({ search }) {
   const [filters, setfilters] = useState({});
   const { shopKey } = useShop();
 
-  const onSort = sorting => {
+  let queryParams = { queryParams: { ...filters } };
+
+  const fetchGraphQL = async (getAdsQuery, queryParams) => {
+    const newSearch = await graphQLQuery(getAdsQuery, queryParams)
+    setCount(newSearch.ads.count)
+    setCars(newSearch.ads.ads)
+  };
+
+  const onSort = async sorting => {
     if (sorting === 'prices-dsc') {
       setCars(prevState => sortDsc(prevState, 'price'));
     } else if (sorting === 'prices-asc') {
       setCars(prevState => sortAsc(prevState, 'price'));
+    } else {
+      fetchGraphQL(getAdsQuery, queryParams)
     }
   };
 
   const onFilters = async filters => {
-    setfilters(filters);
-    const queryParams = {
-      queryParams: {
-        ...filters
-      }
-    };
-    const newSearch = await graphQLQuery(getAdsQuery, queryParams);
-    setCount(newSearch.ads.count);
-    setCars(newSearch.ads.ads);
+    setfilters(filters)
+    fetchGraphQL(getAdsQuery, queryParams)
   };
 
   const onLoadMore = async nbrCars => {
-    const queryParams = {
+    queryParams = {
       queryParams: {
         ...filters,
         size: nbrCars
       }
     };
-    const newSearch = await graphQLQuery(getAdsQuery, queryParams);
-    setCount(newSearch.ads.count);
-    setCars(newSearch.ads.ads);
+    fetchGraphQL(getAdsQuery, queryParams)
   };
 
   // Chargement initial
