@@ -1,7 +1,9 @@
 import Image from 'next/image';
 import React from 'react';
-import styled from 'styled-components'
-import { medias, theme } from '../../constants/theme'
+import styled from 'styled-components';
+
+import { medias, theme } from '../../constants/theme';
+import requireStatic from '../../utils/require-static';
 
 const Footer = () => {
   return (
@@ -34,7 +36,7 @@ const Footer = () => {
 
         <div className="logo">
           <Image
-            src="/images/logo-reezocar.svg"
+            src={requireStatic('images/logo-reezocar.svg')}
             alt="reezocar"
             width={211}
             height={57}
