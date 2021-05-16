@@ -10,7 +10,7 @@ import MarkerIcon from '../../svgs/marker-b.svg';
 import configs from '../../configs';
 import { medias, theme } from '../../constants/theme';
 
-const { GoogleMapKey } = configs;
+const { googleMapKey } = configs;
 
 const Map = ({ shop }) => {
   const [tab, setTab] = useState(1);
@@ -80,7 +80,7 @@ const GoogleMap = ({ shop, mapURL }) => {
   return (
     <div className="google-map">
       <GoogleMapReact
-        bootstrapURLKeys={{ key: GoogleMapKey }} // Clé test de dev, donc à changer une clé prod
+        bootstrapURLKeys={{ key: googleMapKey }}
         defaultCenter={center}
         defaultZoom={zoom}
         scrollwheel={false}
