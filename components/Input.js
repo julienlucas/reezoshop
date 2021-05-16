@@ -77,7 +77,7 @@ const inputFormat = (format, theme) => ({
       borderRadius: '4px',
       border: 0,
       height: '47px',
-      minWidth: '393px',
+      minWidth: '100%',
       fontSize: '16px',
       background: `white url(${requireStatic('icons/search.svg')}) no-repeat`,
       backgroundPosition: 'calc(100% - 20px) 50%',
@@ -93,10 +93,13 @@ const inputFormat = (format, theme) => ({
          '&::placeholder': {
             color: theme.black
          }
+      },
+      '@media(min-width: 450px)': {
+         minWidth: '393px'
       }
    },
    'multi-select': {
       background: `white url(${requireStatic('icons/arrow-bottom-light.svg')}') no-repeat calc(100% - 10px) 50%`,
       backgroundSize: '13px'
-   }
+   },
 }[format]);
