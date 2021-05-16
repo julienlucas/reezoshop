@@ -76,7 +76,6 @@ Select.propTypes = {
    options: PropTypes.array.isRequired,
    placeholder: PropTypes.string,
    name: PropTypes.string,
-   onClick: PropTypes.func,
    onChange: PropTypes.func,
    onReset: PropTypes.bool
 };
