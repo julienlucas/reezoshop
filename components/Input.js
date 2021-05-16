@@ -7,7 +7,7 @@ import { theme } from '../constants/theme';
 
 
 const Input = ({ className, name, onChange, onReset, placeholder, type, ...inputProps }) => {
-   const [state, setState] = useState(undefined)
+   const [state, setState] = useState('')
 
    const onChangeInput = (e) => {
       if (!inputProps.multiSelect) {
@@ -18,7 +18,7 @@ const Input = ({ className, name, onChange, onReset, placeholder, type, ...input
    };
 
    useEffect(() => {
-      if (onReset) setState(undefined)
+      if (onReset) setState('')
    }, [onReset])
 
    return (
