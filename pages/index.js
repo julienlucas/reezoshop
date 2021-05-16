@@ -31,7 +31,7 @@ const HomePage = ({ data, newCars, usedCars }) => {
   );
 };
 
-HomePage.getInitialProps = async () => {
+export async function getStaticProps() {
    const queryParamsUsed = { onlyNew: true, size: 3 };
    const queryParamsNew = { ...queryParamsUsed, onlyNew: true };
 
@@ -42,7 +42,12 @@ HomePage.getInitialProps = async () => {
       homeDatas = {};
    }
 
-   return { ...homeDatas, data: mockData };
+   return {
+      props: {
+         ...homeDatas,
+         data: mockData
+      }
+   };
 };
 
 HomePage.propTypes = {

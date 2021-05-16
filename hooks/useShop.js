@@ -24,8 +24,7 @@ withShop.getProps = ({ req, shop }) => {
    if (req) {
       let { host } = req.headers;
 
-      // if (host === 'localhost:3000') host = 'lille';
-           host = 'lille';
+      if (host === 'localhost:3000') host = 'lille';
       const shopKey = getShopFromHost(host);
       const currentShop = shops[shopKey];
 
@@ -34,8 +33,7 @@ withShop.getProps = ({ req, shop }) => {
 
    if (!shop) {
       let { hostname: host } = window.location;
-      // if (host === 'localhost:3000') host = 'lille';
-      host = 'lille';
+      if (host === 'localhost:3000') host = 'lille';
       const shopKey = getShopFromHost(host);
       const currentShop = shops[shopKey];
 
