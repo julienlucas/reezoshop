@@ -72,13 +72,13 @@ const Header = ({ path }) => {
         />
       </NavStyled>
 
-      <Mobile headline={shop.headline} onMobileMenu={onMobileMenu} phone={shop.phone} phoneFormated={shop.phoneFormated} />
+      <Mobile headline={shop?.headline} onMobileMenu={onMobileMenu} phone={shop?.phone} phoneFormated={shop?.phoneFormated} />
 
       {path === '/' && (
         <div className="bottom-buttons-nav">
           <Button primary className="button-phone">
-            <a href={`tel:${shop.phone}`} rel="noopener noreferrer nofollow" target="_blank">
-              <span>{shop.phoneFormated}</span>
+            <a href={`tel:${shop?.phone}`} rel="noopener noreferrer nofollow" target="_blank">
+              <span>{shop?.phoneFormated}</span>
             </a>
           </Button>
         {/* <Button secondary className="button-rdv">Prendre rendez-vous</Button> */}

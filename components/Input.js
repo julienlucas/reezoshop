@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import requireStatic from '../utils/require-static';
 
 const Input = ({ className, name, onChange, onReset, placeholder, type, ...inputProps }) => {
-   const [state, setState] = useState(null);
+   const [state, setState] = useState('');
 
    const onChangeInput = e => {
       const { value, name } = e.target;
@@ -14,7 +14,7 @@ const Input = ({ className, name, onChange, onReset, placeholder, type, ...input
    };
 
    useEffect(() => {
-      if (onReset) setState(null);
+      if (onReset) setState('');
    }, [onReset])
 
    return (

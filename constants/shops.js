@@ -5,7 +5,11 @@ export const shops = {
       headline: 'Reezocar Lille - Seclin',
       subHeadline: 'agence Lilloise',
       description: '',
-      address: '11 Rue du Clauwiers, 59113 Seclin',
+      address: '11 Rue du Clauwiers',
+      locality: 'Seclin',
+      region: 'Lille Métropole',
+      postalCode: '59113',
+      country: 'France',
       horaires: {
          Lundi: ['09:00 : 18:00'],
          Mardi: ['09:00 : 18:00'],
@@ -15,6 +19,11 @@ export const shops = {
          Samedi: ['09:00 : 18:00'],
          Dimanche: 'Fermé',
       },
+      geo: {
+         lat: 50.541850,
+         lng: 3.017110
+      },
+      email: "hello@reezocar.com",
       phone: '0142536529',
       phoneFormated: '01 23 45 56 78',
       recoPourcents: '94',
@@ -34,7 +43,11 @@ export const shops = {
       headline: 'Reezocar Paris',
       subHeadline: 'agence Parisienne',
       description: '',
-      address: "20 rue d'Issy 92100 Boulogne-billancourt",
+      address: "20 rue d'Issy",
+      locality: 'Boulogne-billancourt',
+      region: 'Paris Métropole',
+      postalCode: '92100',
+      country: 'France',
       horaires: {
          Lundi: ['09:00 : 18:00'],
          Mardi: ['09:00 : 18:00'],
@@ -44,6 +57,11 @@ export const shops = {
          Samedi: ['09:00 : 18:00'],
          Dimanche: 'Fermé',
       },
+      geo: {
+         lat: 48.829501,
+         lng: 2.2433932
+      },
+      email: "hello@reezocar.com",
       phone: '0142536529',
       phoneFormated: '01 00 00 00 00',
       recoPourcents: '94',

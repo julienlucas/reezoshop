@@ -1,16 +1,15 @@
 import React from 'react';
 import App from 'next/app';
 import Head from 'next/head';
-import { NextSeo } from 'next-seo';
 import { ThemeProvider } from 'styled-components';
 
-import hocs from '../hooks/hocs';
-import SEO from '../next-seo.config';
-import { GlobalStyles } from '../constants/global-styles';
-import { theme } from '../constants/theme';
-
 import Layout from '../components/Layout';
+import SEO from '../components/SEO';
+
+import hocs from '../hooks/hocs';
+import { GlobalStyles } from '../constants/global-styles';
 import { nav } from '../constants/nav';
+import { theme } from '../constants/theme';
 
 class RZSApp extends App {
    static async getInitialProps({ Component, ctx }) {
@@ -29,16 +28,18 @@ class RZSApp extends App {
 
    render() {
       const { Component, hocProps, pageProps, router } = this.props;
+      const { shop, shopKey } = hocProps.shop;
+      const path = router.route;
 
       const cpnt = (
          <>
             <GlobalStyles />
             <ThemeProvider theme={theme}>
-               <NextSeo {...SEO} />
+               <SEO path={path} shop={shop} shopKey={shopKey} />
                <Head />
 
-               {router.route === '/_error' ? <Component hocProps={hocProps} {...pageProps} /> :
-                  <Layout cityShop={hocProps.shop.host} nav={nav} path={router.route}>
+               {path === '/_error' ? <Component hocProps={hocProps} {...pageProps} /> :
+                  <Layout cityShop={hocProps.shop.host} nav={nav} path={path}>
                      <Component hocProps={hocProps} {...pageProps} />
                   </Layout>}
             </ThemeProvider>

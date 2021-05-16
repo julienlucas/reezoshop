@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NextSeo } from 'next-seo';
 
 import graphQLQuery from '../utils/graphql';
-import SEO from '../next-seo.config';
 import { shops } from '../constants/shops';
 import useShop from '../hooks/useShop';
 
@@ -21,7 +19,6 @@ const HomePage = ({ data, newCars, usedCars }) => {
 
   return (
    <>
-      <NextSeo title={SEO.title} description={SEO.description} />
       <HeroSearch headline={shop.headline} />
       <Models newCars={newCars} usedCars={usedCars} />
       <Brands brands={data.brands} />
@@ -49,9 +46,9 @@ HomePage.getInitialProps = async () => {
 };
 
 HomePage.propTypes = {
-   usedCars: PropTypes.array.isRequired,
+   data: PropTypes.object.isRequired,
    newCars: PropTypes.array.isRequired,
-   data: PropTypes.object.isRequired
+   usedCars: PropTypes.array.isRequired,
 };
 
 export default HomePage;

@@ -6,7 +6,11 @@ import styled from 'styled-components';
 import Button from '../Button';
 import BoxGoogleRating from '../BoxGoogleRating';
 import MarkerIcon from '../../svgs/marker-b.svg';
+
+import configs from '../../configs';
 import { medias, theme } from '../../constants/theme';
+
+const { GoogleMapKey } = configs;
 
 const Map = ({ shop }) => {
   const [tab, setTab] = useState(1);
@@ -22,7 +26,7 @@ const Map = ({ shop }) => {
 
       <BoxGoogleRating
         className="box-address-mobile"
-        address={shop.address}
+        address={`${shop.address} ${shop.locality} ${shop.postalCode}`}
         headline={shop.headline}
         googleAvis={shop.google.avis}
         googleNote={shop.google.note}
@@ -39,7 +43,7 @@ const Map = ({ shop }) => {
         <div className="container">
           <div className={`box-infos ${tab === 2 && window.innerWidth <= 990 ? 'active' : ''}`}>
             <BoxGoogleRating
-              address={shop.address}
+              address={`${shop.address} ${shop.locality} ${shop.postalCode}`}
               headline={shop.headline}
               googleAvis={shop.google.avis}
               googleNote={shop.google.note}
@@ -63,8 +67,8 @@ const Map = ({ shop }) => {
 
 export default Map;
 
-const GoogleMap = ({ mapURL }) => {
-  const center = {lat: 43.9178047, lng: 4.8899898};
+const GoogleMap = ({ shop, mapURL }) => {
+  const center = { lat: shop.geo.lat, lng: shop.geo.lng };
   const zoom = 18;
 
   const handleApiLoaded = (map) => {
@@ -76,7 +80,7 @@ const GoogleMap = ({ mapURL }) => {
   return (
     <div className="google-map">
       <GoogleMapReact
-        bootstrapURLKeys={{ key: 'AIzaSyDMts3UNSnNeHy09kR0X75SgW75KVMIuWY' }} // Clé test de dev, donc à changer une clé prod
+        bootstrapURLKeys={{ key: GoogleMapKey }} // Clé test de dev, donc à changer une clé prod
         defaultCenter={center}
         defaultZoom={zoom}
         scrollwheel={false}
@@ -101,6 +105,7 @@ Map.propTypes = {
 };
 
 GoogleMap.propTypes = {
+  shop: PropTypes.object.isRequired,
   mapURL: PropTypes.func
 };
 
@@ -137,7 +142,7 @@ export const SectionMap = styled.section`
   }
   .wrapper {
     position: absolute;
-    top: 302px;
+    top: 315px;
     height: 360px;
     width: 100vw;
     z-index: 1;
@@ -156,7 +161,7 @@ export const SectionMap = styled.section`
     padding: 0;
   }
   .box-infos {
-    position: absolute;
+    position: relative;
     background: white;
     box-shadow: none;
     border-radius: 4px;
@@ -205,7 +210,6 @@ export const SectionMap = styled.section`
     margin: 0 auto;
     display: table;
     width: auto;
-    z-index: 2;
     li {
       position: relative;
       padding-bottom: 10px;
