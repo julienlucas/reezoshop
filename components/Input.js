@@ -18,7 +18,7 @@ const Input = ({ className, name, onChange, onReset, placeholder, type, ...input
    }, [onReset])
 
    return (
-      <InputStyled
+      <StyledInput
          className={className}
          type={type}
          name={name}
@@ -41,7 +41,7 @@ Input.propTypes = {
 
 export default Input;
 
-const InputStyled = styled.input(({ styles = {}, theme, ...props }) => {
+const StyledInput = styled.input(({ styles = {}, theme, ...props }) => {
    return {
       marginBottom: 16,
       color: theme.black,

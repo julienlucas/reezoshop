@@ -65,10 +65,10 @@ const Select = ({ className, defaultValue, name, onChange, onClick, onReset, opt
    };
 
    return (
-      <SelectStyled className={className} ref={node} onClick={e => onOpen(e)}>
+      <StyledSelect className={className} ref={node} onClick={e => onOpen(e)}>
          <span>{state.selected ? state.selected.label : placeholder || defaultValue}</span>
          <ul className={state.opened ? 'show': 'hide'}>{getOptions()}</ul>
-      </SelectStyled>
+      </StyledSelect>
    );
 };
 
@@ -105,7 +105,7 @@ function Option ({ className, option, onSelect }) {
    );
 };
 
-export const SelectStyled = styled.div`
+export const StyledSelect = styled.div`
    margin-bottom: 16px;
    font-size: 13px;
    line-height: 36px;

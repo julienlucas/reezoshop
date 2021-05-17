@@ -35,7 +35,7 @@ const Header = ({ path }) => {
   }, [])
 
   return (
-    <HeaderStyled>
+    <StyledHeader>
       <NavStyled
         className={`${scroll ? 'scroll' : ''} ${
           path !== '/' ? 'bottomShadow' :
@@ -83,7 +83,7 @@ const Header = ({ path }) => {
           </Button>
         {/* <Button secondary className="button-rdv">Prendre rendez-vous</Button> */}
       </div>)}
-    </HeaderStyled>
+    </StyledHeader>
   );
 };
 
@@ -93,7 +93,7 @@ Header.propTypes = {
 
 export default Header;
 
-export const HeaderStyled = styled.header`
+export const StyledHeader = styled.header`
   .bottom-buttons-nav {
     position: fixed;
     bottom: 0;

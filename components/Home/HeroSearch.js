@@ -17,7 +17,7 @@ const HeroSearch = ({ headline }) => {
    };
 
   return (
-    <HeroStyles
+    <StyledHero
       style={{
         background: `url(${requireStatic('images/header-home.png')})`,
         backgroundSize: 'cover'
@@ -46,7 +46,7 @@ const HeroSearch = ({ headline }) => {
           </div>
         </div>
       </div>
-    </HeroStyles>
+    </StyledHero>
   );
 };
 
@@ -56,7 +56,7 @@ HeroSearch.propTypes = {
 
 export default HeroSearch;
 
-export const HeroStyles = styled.section`
+export const StyledHero = styled.section`
   position: relative;
   top: -60px;
   width: 100%;
