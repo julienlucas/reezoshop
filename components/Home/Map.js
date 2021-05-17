@@ -65,6 +65,10 @@ const Map = ({ shop }) => {
   );
 };
 
+Map.propTypes = {
+  shop: PropTypes.object.isRequired
+};
+
 export default Map;
 
 const GoogleMap = ({ shop, mapURL }) => {
@@ -98,10 +102,6 @@ const GoogleMap = ({ shop, mapURL }) => {
       </GoogleMapReact>
     </div>
   );
-};
-
-Map.propTypes = {
-  shop: PropTypes.object.isRequired
 };
 
 GoogleMap.propTypes = {

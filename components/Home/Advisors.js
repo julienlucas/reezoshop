@@ -20,6 +20,10 @@ const Advisors = ({ advisors }) => {
   );
 };
 
+Advisors.propTypes = {
+  advisors: PropTypes.array.isRequired
+};
+
 export default Advisors;
 
 const CardAdvisor = ({ advisor }) => {
@@ -41,10 +45,6 @@ const CardAdvisor = ({ advisor }) => {
       </div>
     </div>
   );
-};
-
-Advisors.propTypes = {
-  advisors: PropTypes.array.isRequired
 };
 
 CardAdvisor.propTypes = {
