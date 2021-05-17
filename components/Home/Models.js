@@ -89,9 +89,8 @@ Models.propTypes = {
 export default Models;
 
 const Tabs = dynamic(
-  import('react-tabs').then((mod) => mod.Tabs),
-  { ssr: false },
-); // SSR désactivé : évite erreur rouge browser
+  import('react-tabs').then((mod) => mod.Tabs)
+);
 
 const sliderSettings = {
   className: 'slider',

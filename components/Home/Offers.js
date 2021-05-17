@@ -9,7 +9,7 @@ import NextImageLazy from '../../utils/imgLazy';
 import requireStatic from '../../utils/require-static';
 import { medias, theme } from '../../constants/theme';
 
-function Offers({ subHeadline }) {
+const Offers = ({ subHeadline }) => {
   const [occasionPic, setOccasionPic] = useState('images/promo-occasion.png');
   const [neufPic, setNeufPic] = useState('images/promo-neuf.png');
 
