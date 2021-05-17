@@ -6,11 +6,11 @@ import styled from 'styled-components';
 import TelIcon from '../../svgs/tel.svg';
 import { medias, theme } from '../../constants/theme';
 
-const Menu = ({ headline, phone, phoneFormated, onMenu }) => {
+const Menu = ({ headline, phone, phoneFormated, onIsVisible }) => {
    const [menu, setMenu] = useState(false);
 
    useEffect(() => {
-      onMenu(menu)
+      onIsVisible(menu)
    }, [menu])
 
    return (
@@ -47,7 +47,7 @@ const Menu = ({ headline, phone, phoneFormated, onMenu }) => {
 
 Menu.propTypes = {
   headline: PropTypes.string.isRequired,
-  onMenu: PropTypes.func.isRequired,
+  onIsVisible: PropTypes.func.isRequired,
   phone: PropTypes.string.isRequired,
   phoneFormated: PropTypes.string.isRequired
 };

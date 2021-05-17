@@ -72,7 +72,7 @@ const Header = ({ path }) => {
         />
       </NavStyled>
 
-      <Menu headline={shop?.headline} onMenu={onMenu} phone={shop?.phone} phoneFormated={shop?.phoneFormated} />
+      <Menu headline={shop?.headline} onIsVisible={onMenu} phone={shop?.phone} phoneFormated={shop?.phoneFormated} />
 
       {path === '/' && (
         <div className="bottom-buttons-nav">
