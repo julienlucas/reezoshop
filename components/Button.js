@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
+
 import requireStatic from '../utils/require-static';
 
 const Button = ({ children, component = 'button', type = 'button', ...buttonProps }) => (
@@ -59,13 +60,21 @@ const StyledButton = styled.button(({ styles = {}, theme, ...props }) => {
             backgroundSize: '20px'
          }
       },
+      '&.button-filtres-mobile': {
+         position: 'fixed',
+         bottom: 20,
+         left: 20,
+         zIndex: 6,
+         width: 'calc(50vw - 26px)',
+      },
 
       ...(props.full ? buttonFull : {}),
-
       ...(props.primary ? buttonFormat('primary', theme) : {}),
       ...(props.secondary ? buttonFormat('secondary', theme) : {}),
       ...(props.third ? buttonFormat('third', theme) : {}),
-
+      ...(props.fourth ? buttonFormat('fourth', theme) : {}),
+      ...(props.neuf ? buttonFormat('neuf', theme) : {}),
+      ...(props.clear ? buttonFormat('clear', theme) : {}),
       ...styles,
    }
 });
@@ -98,12 +107,50 @@ const buttonFormat = (format, theme) => ({
       border: `1px solid ${theme.grey100}`,
       fontSize: 14,
       marginTop: 8,
-      width: '100%',
-      padding: 0,
+      paddingLeft: 110,
+      paddingRight: 110,
       color: 'white',
       background: theme.blue100,
       '&:hover, &:focus': {
          background: theme.blue200
       }
+   },
+   fourth: {
+      border: `1px solid ${theme.grey200}`,
+      fontSize: 14,
+      lineHeight: '37px',
+      paddingLeft: 15,
+      paddingRight: 15,
+      color: theme.black,
+      height: 42,
+      background: theme.grey300,
+      '&:hover, &:focus, &.active': {
+         background: theme.black,
+         color: 'white'
+      }
+   },
+   neuf: {
+      fontSize: 14,
+      height: 30,
+      lineHeight: '27px',
+      background: 'white',
+      border: `1px solid ${theme.blue100}`,
+      color: theme.blue100,
+      padding: '0 25px',
+   },
+   clear: {
+      position: 'relative',
+      padding: 0,
+      margin: 0,
+      fontSize: 14,
+      fontWeight: 700,
+      lineHeight: 1.2,
+      height: 'auto',
+      background: 'transparent',
+      border: 0,
+      color: theme.black,
+      textAlign: 'left',
+      display: 'inline',
+      width: '100%'
    }
 }[format]);

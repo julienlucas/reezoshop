@@ -1,43 +1,20 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 
-import Autocomplete from '../Autocomplete';
 import Button from '../Button';
+import InputSuggestions from '../InputSuggestions/InputSuggestions';
 
-import getSuggestions from './getSuggestions.graphql';
-import graphQLQuery from '../../utils/graphql';
 import requireStatic from '../../utils/require-static';
 import { medias, theme } from '../../constants/theme';
 
-const getSuggestionsQuery = getSuggestions.loc.source.body;
-
 const HeroSearch = ({ headline }) => {
    const router = useRouter();
-   const [params, setParams] = useState({ "query": ""});
-   const [suggestions, setSuggestions] = useState([]);
 
    const seeAllCars = () => {
       router.push(`/recherche`);
    };
-
-   const onSearch = (inputSearch) => {
-      setParams({ "query": inputSearch });
-   };
-
-   const fetchGraphQL = async (query, params) => {
-      const res = await graphQLQuery(query, params)
-      return res
-   };
-
-   useEffect(() => {
-      const arrayFormated = [];
-
-      fetchGraphQL(getSuggestionsQuery, params)
-         .then(res => res.suggestions.suggestions.map(item => arrayFormated.push(item.query)))
-         .then(() => setSuggestions(arrayFormated))
-   }, [params])
 
   return (
     <HeroStyles
@@ -56,7 +33,7 @@ const HeroSearch = ({ headline }) => {
 
           <div className="row">
             <div className="col col-1">
-              <Autocomplete onSearch={onSearch} suggestions={suggestions} />
+              <InputSuggestions />
             </div>
 
             <div className="col col-2">ou</div>
