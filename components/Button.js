@@ -157,6 +157,6 @@ const buttonFormat = (format, theme) => ({
       color: theme.black,
       textAlign: 'left',
       display: 'inline',
-      width: '100%'
+      width: '100%',
    }
 }[format]);

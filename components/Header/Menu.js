@@ -3,25 +3,23 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import ButtonHamb from '../ButtonHamb';
+
 import TelIcon from '../../svgs/tel.svg';
 import { medias, theme } from '../../constants/theme';
 
 const Menu = ({ headline, phone, phoneFormated, onIsVisible }) => {
-   const [menu, setMenu] = useState(false);
+   const [isVisible, setIsVisible] = useState(false);
 
    useEffect(() => {
-      onIsVisible(menu)
-   }, [menu])
+      onIsVisible(isVisible)
+   }, [isVisible])
 
    return (
       <StyledMenu>
-         <div className={`button-menu ${menu ? 'open' : ''}`} onClick={() => setMenu(!menu)}>
-            <span/>
-            <span/>
-            <span/>
-         </div>
+         <ButtonHamb className={isVisible} onClick={() => setIsVisible(!isVisible)} />
 
-         {menu && <div className={`menu ${menu ? 'open' : ''}`}>
+         {isVisible && <div className={`menu ${isVisible ? 'open' : ''}`}>
             <div className="box-top">
                <ul>
                   <li><strong>Agence {headline}</strong></li>
@@ -164,16 +162,6 @@ export const StyledMenu = styled.div`
             li {
                text-align: left;
             }
-         }
-      }
-      .button-menu {
-         top: 38px;
-         right: 25px;
-         .cross {
-            right: 35px;
-         }
-         span {
-            background: ${theme.black};
          }
       }
    }
