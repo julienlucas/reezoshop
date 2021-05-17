@@ -21,7 +21,7 @@ const Brands = ({ brands }) => {
   };
 
   return (
-    <SectionBrands>
+    <StyledBrands>
       <div className="container">
         <h2 className="small">Les constructeurs populaires</h2>
 
@@ -30,7 +30,7 @@ const Brands = ({ brands }) => {
         </Slider>
         <ReactSlickStyles/>
       </div>
-    </SectionBrands>
+    </StyledBrands>
   );
 };
 
@@ -64,7 +64,7 @@ CardBrand.propTypes = {
   brand: PropTypes.object.isRequired
 };
 
-export const SectionBrands = styled.section`
+export const StyledBrands = styled.section`
   padding: 5px 0 30px;
   h2 {
     padding-left: 5px

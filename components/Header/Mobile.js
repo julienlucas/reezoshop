@@ -14,7 +14,7 @@ const Mobile = ({ headline, phone, phoneFormated, onMobileMenu }) => {
    }, [mobileMenu])
 
    return (
-      <MobileWrapper>
+      <StyledMobile>
          <div className={`btn-mobile ${mobileMenu ? 'open' : ''}`} onClick={() => setMobileMenu(!mobileMenu)}>
             <span/>
             <span/>
@@ -41,7 +41,7 @@ const Mobile = ({ headline, phone, phoneFormated, onMobileMenu }) => {
                </p>
             </div>
          </div>}
-      </MobileWrapper>
+      </StyledMobile>
    );
 };
 
@@ -54,7 +54,7 @@ Mobile.propTypes = {
 
 export default Mobile;
 
-export const MobileWrapper = styled.div`
+export const StyledMobile = styled.div`
    * {
       transition: all .3s ease-out;
    }

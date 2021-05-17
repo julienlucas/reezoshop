@@ -8,7 +8,7 @@ import { medias, theme } from '../../constants/theme';
 
 const Advisors = ({ advisors }) => {
   return (
-    <SectionAdvisors>
+    <StyledAdvisors>
       <div className="container">
         <h2 className="text-center">Vos interlocuteurs privilégiés</h2>
 
@@ -16,7 +16,7 @@ const Advisors = ({ advisors }) => {
           {advisors?.map(advisor => <CardAdvisor key={advisor.nom} advisor={advisor} />)}
         </div>
       </div>
-    </SectionAdvisors>
+    </StyledAdvisors>
   );
 };
 
@@ -51,7 +51,7 @@ CardAdvisor.propTypes = {
   advisor: PropTypes.object.isRequired
 };
 
-export const SectionAdvisors = styled.section`
+export const StyledAdvisors = styled.section`
   padding: 50px 0;
   .row {
     margin-top: 50px;

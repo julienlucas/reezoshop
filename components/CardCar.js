@@ -13,7 +13,7 @@ const CardCar = ({ className, brand, energy, gearbox, model, mileage, price, yea
    };
 
    return (
-      <Card className={`card-car ${className}`}>
+      <StyledCard className={`card-car ${className}`}>
          <div className="thumbnail">
             {className === 'small-width' && <>
                <div className="promo">-20%</div>
@@ -43,7 +43,7 @@ const CardCar = ({ className, brand, energy, gearbox, model, mileage, price, yea
             <p className="prix">{price && numberFormat(price)} €</p>
             {className === 'small-width' && <p className="prix-barre">{price && numberFormat(price)} €</p>}
          </div>
-      </Card>
+      </StyledCard>
    );
 };
 
@@ -61,7 +61,7 @@ CardCar.propTypes = {
 
 export default CardCar;
 
-export const Card = styled.div`
+export const StyledCard = styled.div`
    position: relative;
    height: 336px;
    width: 367px;

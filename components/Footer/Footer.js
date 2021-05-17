@@ -7,7 +7,7 @@ import requireStatic from '../../utils/require-static';
 
 const Footer = () => {
   return (
-    <FooterStyled>
+    <StyledFooter>
       <div className="container">
         <div className="row">
           <div className="col col-1">
@@ -46,13 +46,13 @@ const Footer = () => {
 
         <p className="copyright text-center">Reezocar {new Date().getFullYear()} - Tous droits réservés</p>
       </div>
-    </FooterStyled>
+    </StyledFooter>
   )
 }
 
 export default Footer;
 
-export const FooterStyled = styled.footer`
+export const StyledFooter = styled.footer`
   padding: 65px 20px 30px;
   background: ${theme.grey300};
   .row {

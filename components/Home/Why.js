@@ -8,7 +8,7 @@ import { medias, theme } from '../../constants/theme';
 
 function Why({ shop }) {
   return (
-    <SectionWhy>
+    <StyledWhy>
       <div className="container">
         <h2 className="text-center">Pourquoi choisir Reezocar ?</h2>
 
@@ -73,7 +73,7 @@ function Why({ shop }) {
           </div>
         </div>
       </div>
-    </SectionWhy>
+    </StyledWhy>
   );
 };
 
@@ -133,7 +133,7 @@ function ProgressRing({ percents }) {
   );
 };
 
-export const SectionWhy = styled.section`
+export const StyledWhy = styled.section`
   padding: 0;
   .col-left {
     float: none;

@@ -9,7 +9,7 @@ import { medias, theme } from '../../constants/theme';
 
 const FAQS = ({ faqs }) => {
   return (
-    <SectionGComp>
+    <StyledFAQ>
       <div className="container">
         <h2 className="text-center">Foire aux questions</h2>
 
@@ -30,7 +30,7 @@ const FAQS = ({ faqs }) => {
         </div>
       </div>
       <Button primary className="button">Accéder à la F.A.Q</Button>
-    </SectionGComp>
+    </StyledFAQ>
   );
 };
 
@@ -40,7 +40,7 @@ FAQS.propTypes = {
 
 export default FAQS;
 
-export const SectionGComp = styled.section`
+export const StyledFAQ = styled.section`
   padding: 0 0 110px;
   .row {
     padding-top: 20px;

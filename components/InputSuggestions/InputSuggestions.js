@@ -170,7 +170,7 @@ const Autocomplete = ({ className }) => {
    }, [queryParams])
 
    return (
-      <Suggestions ref={node} className={`${className} ${!open ? 'hide-list' : ''}`} onClick={e => onClickComp(e)}>
+      <StyledSuggestions ref={node} className={`${className} ${!open ? 'hide-list' : ''}`} onClick={e => onClickComp(e)}>
          <Input
          search
          id="input-suggest"
@@ -181,7 +181,7 @@ const Autocomplete = ({ className }) => {
          placeholder="Marque, Modèle"
          />
          {suggestionsListComponent}
-      </Suggestions>
+      </StyledSuggestions>
    );
 };
 
@@ -191,7 +191,7 @@ Autocomplete.propTypes = {
 
 export default Autocomplete;
 
-export const Suggestions = styled.div`
+export const StyledSuggestions = styled.div`
    &.search-page {
       position: fixed;
       top: 23px;

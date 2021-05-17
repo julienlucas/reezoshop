@@ -21,7 +21,7 @@ const Map = ({ shop }) => {
   };
 
   return (
-    <SectionMap>
+    <StyledMap>
       <h2 className="text-center">Comment s'y rendre ?</h2>
 
       <BoxGoogleRating
@@ -61,7 +61,7 @@ const Map = ({ shop }) => {
           <Button secondary className="small-size"><a href={mapURL} rel="noopener noreferrer nofollow" target="_blank" title="">Ouvrir sur Maps</a></Button>
         </div>
       </div>
-    </SectionMap>
+    </StyledMap>
   );
 };
 
@@ -109,7 +109,7 @@ GoogleMap.propTypes = {
   mapURL: PropTypes.func
 };
 
-export const SectionMap = styled.section`
+export const StyledMap = styled.section`
   position: relative;
   padding: 30px 0 10px;
   h2 {

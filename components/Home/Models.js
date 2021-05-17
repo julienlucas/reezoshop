@@ -19,7 +19,7 @@ const Models = ({ newCars, usedCars }) => {
   const { shop } = useShop();
 
   return (
-    <SectionModels>
+    <StyledModels>
       <h2 className="text-center">Les affaires du mois dans votre <span className="blue">{shop && shop.subHeadline}</span></h2>
 
       <ReactTabsStyles>
@@ -76,7 +76,7 @@ const Models = ({ newCars, usedCars }) => {
       <div className="container">
         <Button primary>Voir toutes les annonces d’occasion</Button>
       </div>
-    </SectionModels>
+    </StyledModels>
   );
 };
 
@@ -104,7 +104,7 @@ const sliderSettings = {
   variableWidth: true,
 };
 
-export const SectionModels = styled.section`
+export const StyledModels = styled.section`
   padding: 85px 0 40px;
   h2 {
     position: relative;

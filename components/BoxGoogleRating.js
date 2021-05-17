@@ -7,7 +7,7 @@ import { medias, theme } from '../constants/theme';
 
 const BoxGoogleRating = ({ className, address, headline, googleAvis, googleNote }) => {
    return (
-      <BoxGoogle className={`box-address ${className}`}>
+      <StyledBoxGoogle className={`box-address ${className}`}>
          <MarkerIcon className="indicator" />
          <div className="address">
             <h3 className="big">{headline}</h3>
@@ -23,7 +23,7 @@ const BoxGoogleRating = ({ className, address, headline, googleAvis, googleNote 
                <span>sur {googleAvis} avis Google</span>
             </RatingStars>
          </div>
-      </BoxGoogle>
+      </StyledBoxGoogle>
    );
 };
 
@@ -37,7 +37,7 @@ BoxGoogleRating.propTypes = {
 
 export default BoxGoogleRating;
 
-export const BoxGoogle = styled.div`
+export const StyledBoxGoogle = styled.div`
    &.box-address-mobile {
       position: relative;
       padding: 22px;
