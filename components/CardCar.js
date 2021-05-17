@@ -1,29 +1,21 @@
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import React from 'react';
 import styled from 'styled-components';
 
 import NextImageLazy from '../utils/imgLazy';
 import { theme } from '../constants/theme';
 
 const CardCar = ({ className, brand, energy, gearbox, model, mileage, price, year }) => {
-   const router = useRouter();
-   const [cardSmallWidth, setCardSmallWidth] = useState(false);
-
    // Ajout d'un espace tous les 3 chiffres
    const numberFormat = num => {
       return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
    };
 
-   useEffect(() => {
-      if (router.pathname === '/recherche') setCardSmallWidth(true);
-   }, [])
-
    return (
       <Card className={`card-car ${className}`}>
          <div className="thumbnail">
-            {router.pathname !== '/' && <>
+            {className === 'small-width' && <>
                <div className="promo">-20%</div>
                <div className="en-magasin">En magasin</div>
             </>}
@@ -47,9 +39,9 @@ const CardCar = ({ className, brand, energy, gearbox, model, mileage, price, yea
                </Link>
             </h3>
             <p className="description">{gearbox && `${gearbox} ·`} {energy && `${energy} ·`} {year && `${year} ·`} {mileage && `${numberFormat(mileage)} km`}</p>
-            {cardSmallWidth && <button className="btn btn-neuf-occas" type="button">Neuf /0km</button>}
+            {className === 'small-width' && <button className="btn btn-neuf-occas" type="button">Neuf /0km</button>}
             <p className="prix">{price && numberFormat(price)} €</p>
-            {cardSmallWidth && <p className="prix-barre">{price && numberFormat(price)} €</p>}
+            {className === 'small-width' && <p className="prix-barre">{price && numberFormat(price)} €</p>}
          </div>
       </Card>
    );
