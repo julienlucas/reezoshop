@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Button from '../Button';
+import BoxQuestion from '../BoxQuestion';
+
 import NextImageLazy from '../../utils/imgLazy';
 import requireStatic from '../../utils/require-static';
-import { medias, theme } from '../../constants/theme';
+import { medias } from '../../constants/theme';
 
 const FAQS = ({ faqs }) => {
   return (
@@ -23,9 +25,7 @@ const FAQS = ({ faqs }) => {
             />
           </div>
           <div className="col col-right">
-            {faqs?.map((faq, i) => <div key={faq + i} className="box-question">
-              {faq}
-            </div>)}
+            {faqs?.map((faq, i) => <BoxQuestion key={faq + i} question={faq} />)}
           </div>
         </div>
       </div>
@@ -58,14 +58,6 @@ export const StyledFAQ = styled.section`
     float: none;
     width: 100%;
   }
-  .box-question {
-    margin-bottom: 10px;
-    padding: 10px 50px 10px 10px;
-    border: 1px solid ${theme.grey400};
-    border-radius: 4px;
-    background: url(${requireStatic('icons/arrow-bottom-blue.svg')}) no-repeat calc(100% - 20px) 50%;
-    background-size: 14px;
-  }
   .button {
     position: relative;
     margin: 50px auto 0;
@@ -78,9 +70,6 @@ export const StyledFAQ = styled.section`
     }
     .col-left {
       display: block;
-    }
-    .box-question {
-      padding: 20px 50px 20px 20px;
     }
     .col-right {
       float: left;
