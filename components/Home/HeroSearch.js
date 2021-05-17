@@ -50,11 +50,11 @@ const HeroSearch = ({ headline }) => {
   );
 };
 
-export default HeroSearch;
-
 HeroSearch.propTypes = {
   headline: PropTypes.string.isRequired
 };
+
+export default HeroSearch;
 
 export const HeroStyles = styled.section`
   position: relative;

@@ -49,17 +49,6 @@ const StyledButton = styled.button(({ styles = {}, theme, ...props }) => {
          height: 35,
          lineHeight: '30px'
       },
-      '&.button-phone': {
-         padding: '0 0 0 16px',
-         'span': {
-            padding: '0 20px 0 34px',
-            width: 'auto',
-            lineHeight: '47px',
-            background: `url(${requireStatic('icons/tel.svg')}) no-repeat`,
-            backgroundPosition: '3px 55%',
-            backgroundSize: '20px'
-         }
-      },
       '&.button-filtres-mobile': {
          position: 'fixed',
          bottom: 20,
@@ -74,6 +63,7 @@ const StyledButton = styled.button(({ styles = {}, theme, ...props }) => {
       ...(props.third ? buttonFormat('third', theme) : {}),
       ...(props.fourth ? buttonFormat('fourth', theme) : {}),
       ...(props.neuf ? buttonFormat('neuf', theme) : {}),
+      ...(props.phone ? buttonFormat('phone', theme) : {}),
       ...(props.clear ? buttonFormat('clear', theme) : {}),
       ...styles,
    }
@@ -127,6 +117,22 @@ const buttonFormat = (format, theme) => ({
       '&:hover, &:focus, &.active': {
          background: theme.black,
          color: 'white'
+      }
+   },
+   phone: {
+      padding: '0 0 0 16px',
+      color: 'white',
+      backgroundColor: theme.orange100,
+      '&:hover': {
+         backgroundColor: theme.orange200
+      },
+      'span': {
+         padding: '0 20px 0 34px',
+         width: 'auto',
+         lineHeight: '47px',
+         background: `url(${requireStatic('icons/tel.svg')}) no-repeat`,
+         backgroundPosition: '3px 55%',
+         backgroundSize: '20px'
       }
    },
    neuf: {

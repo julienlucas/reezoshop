@@ -76,7 +76,7 @@ const Header = ({ path }) => {
 
       {path === '/' && (
         <div className="bottom-buttons-nav">
-          <Button primary className="button-phone">
+          <Button phone className="button-phone">
             <a href={`tel:${shop?.phone}`} rel="noopener noreferrer nofollow" target="_blank">
               <span>{shop?.phoneFormated}</span>
             </a>
