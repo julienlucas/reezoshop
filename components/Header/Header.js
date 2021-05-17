@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
 
 import Button from '../Button';
-import Mobile from './Mobile';
+import Menu from './Menu';
 import Select from '../Select';
 
 import requireStatic from '../../utils/require-static';
@@ -16,7 +16,7 @@ const Header = ({ path }) => {
   const { onChangeShop, shops, shop, shopKey } = useShop();
   const [scroll, setScroll] = useState(null);
   const [overlay, setOverlay] = useState(false);
-  const [mobileMenu, setMobileMenu] = useState(false);
+  const [menu, setMenu] = useState(false);
 
   const handleScroll = () => {
     setScroll(window.scrollY);
@@ -26,8 +26,8 @@ const Header = ({ path }) => {
     if (window.innerWidth <= 990) setOverlay(!overlay);
   };
 
-  const onMobileMenu = (boolean) => {
-    if (window.innerWidth <= 990) setMobileMenu(boolean)
+  const onMenu = (boolean) => {
+    if (window.innerWidth <= 990) setMenu(boolean)
   };
 
   useEffect(() => {
@@ -39,14 +39,14 @@ const Header = ({ path }) => {
       <NavStyled
         className={`${scroll ? 'scroll' : ''} ${
           path !== '/' ? 'bottomShadow' :
-          mobileMenu ? 'mobile-menu-open' : ''
+          menu ? 'menu-open' : ''
         }`}
       >
         <div
-          className={`overlay-mobile ${overlay && !mobileMenu ? 'show' : 'hide'}`}
+          className={`overlay-mobile ${overlay && !menu ? 'show' : 'hide'}`}
           onClick={() => setOverlay(false)}
         />
-        <div className={`logo ${mobileMenu ? 'mobile-menu-open' : ''}`}>
+        <div className={`logo ${menu ? 'menu-open' : ''}`}>
           <Link href="/">
               <a>
                 <Image
@@ -61,7 +61,7 @@ const Header = ({ path }) => {
         </div>
 
         <Select
-          className={`select-agency ${mobileMenu ? 'mobile-menu-open' : ''}`}
+          className={`select-agency ${menu ? 'menu-open' : ''}`}
           defaultValue={shopKey}
           onChange={onChangeShop}
           onClick={openOverlay}
@@ -72,7 +72,7 @@ const Header = ({ path }) => {
         />
       </NavStyled>
 
-      <Mobile headline={shop?.headline} onMobileMenu={onMobileMenu} phone={shop?.phone} phoneFormated={shop?.phoneFormated} />
+      <Menu headline={shop?.headline} onMenu={onMenu} phone={shop?.phone} phoneFormated={shop?.phoneFormated} />
 
       {path === '/' && (
         <div className="bottom-buttons-nav">
@@ -173,7 +173,7 @@ export const NavStyled = styled.nav`
     border: 1px solid ${theme.grey700};
     box-shadow: 1px 2px 13px rgba(0, 0, 0, 0);
   }
-  &.mobile-menu-open {
+  &.menu-open {
     box-shadow: none;
     background: transparent;
   }
@@ -194,7 +194,7 @@ export const NavStyled = styled.nav`
     }
   }
   @media (max-width: 780px) {
-    .logo.mobile-menu-open {
+    .logo.menu-open {
       * {
         filter: grayscale(1) brightness(300%);
       }

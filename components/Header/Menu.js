@@ -6,22 +6,22 @@ import styled from 'styled-components';
 import TelIcon from '../../svgs/tel.svg';
 import { medias, theme } from '../../constants/theme';
 
-const Mobile = ({ headline, phone, phoneFormated, onMobileMenu }) => {
-   const [mobileMenu, setMobileMenu] = useState(false);
+const Menu = ({ headline, phone, phoneFormated, onMenu }) => {
+   const [menu, setMenu] = useState(false);
 
    useEffect(() => {
-      onMobileMenu(mobileMenu)
-   }, [mobileMenu])
+      onMenu(menu)
+   }, [menu])
 
    return (
-      <StyledMobile>
-         <div className={`btn-mobile ${mobileMenu ? 'open' : ''}`} onClick={() => setMobileMenu(!mobileMenu)}>
+      <StyledMenu>
+         <div className={`button-menu ${menu ? 'open' : ''}`} onClick={() => setMenu(!menu)}>
             <span/>
             <span/>
             <span/>
          </div>
 
-         {mobileMenu && <div className={`mobile-menu ${mobileMenu ? 'open' : ''}`}>
+         {menu && <div className={`menu ${menu ? 'open' : ''}`}>
             <div className="box-top">
                <ul>
                   <li><strong>Agence {headline}</strong></li>
@@ -41,24 +41,24 @@ const Mobile = ({ headline, phone, phoneFormated, onMobileMenu }) => {
                </p>
             </div>
          </div>}
-      </StyledMobile>
+      </StyledMenu>
    );
 };
 
-Mobile.propTypes = {
+Menu.propTypes = {
   headline: PropTypes.string.isRequired,
-  onMobileMenu: PropTypes.func.isRequired,
+  onMenu: PropTypes.func.isRequired,
   phone: PropTypes.string.isRequired,
   phoneFormated: PropTypes.string.isRequired
 };
 
-export default Mobile;
+export default Menu;
 
-export const StyledMobile = styled.div`
+export const StyledMenu = styled.div`
    * {
       transition: all .3s ease-out;
    }
-   .btn-mobile {
+   .button-menu {
       position: fixed;
       top: 20px;
       right: 15px;
@@ -97,7 +97,7 @@ export const StyledMobile = styled.div`
          &:nth-child(3) {top: 16px}
       }
    }
-   .mobile-menu {
+   .menu {
       position: fixed;
       top: 0;
       height: 100vh;
@@ -155,7 +155,7 @@ export const StyledMobile = styled.div`
       }
    }
    ${medias.min780} {
-      .mobile-menu {
+      .menu {
          width: 400px;
          .box-bottom {
             display: block;
@@ -166,7 +166,7 @@ export const StyledMobile = styled.div`
             }
          }
       }
-      .btn-mobile {
+      .button-menu {
          top: 38px;
          right: 25px;
          .cross {

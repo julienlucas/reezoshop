@@ -174,7 +174,7 @@ export const StyledSelect = styled.div`
    }
    @media (max-width: 780px) {
       &.select-agency {
-         &.mobile-menu-open {
+         &.menu-open {
             filter: grayscale(1) brightness(600%);
             ul {
                filter: brightness(100%);
