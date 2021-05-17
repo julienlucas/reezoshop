@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
+import BreadCrumb from '../components/BreadCrumb';
 import SearchWrapper from '../components/Search/SearchWrapper';
 
 import graphQLQuery from '../utils/graphql';
@@ -53,15 +54,18 @@ function Search({ search }) {
   }, [search])
 
   return (
-    <SearchWrapper
-      cars={cars}
-      cityShop={shopKey}
-      count={count}
-      filters={filters}
-      onFilters={filters => onFilters(filters)}
-      onLoadMore={nbrCars => onLoadMore(nbrCars)}
-      onSort={sorting => onSort(sorting)}
-    />
+    <>
+      <SearchWrapper
+        cars={cars}
+        cityShop={shopKey}
+        count={count}
+        filters={filters}
+        onFilters={filters => onFilters(filters)}
+        onLoadMore={nbrCars => onLoadMore(nbrCars)}
+        onSort={sorting => onSort(sorting)}
+      />
+      <BreadCrumb params={filters} />
+    </>
   );
 };
 

@@ -49,17 +49,6 @@ const StyledButton = styled.button(({ styles = {}, theme, ...props }) => {
          height: 35,
          lineHeight: '30px'
       },
-      '&.button-phone': {
-         padding: '0 0 0 16px',
-         'span': {
-            padding: '0 20px 0 34px',
-            width: 'auto',
-            lineHeight: '47px',
-            background: `url(${requireStatic('icons/tel.svg')}) no-repeat`,
-            backgroundPosition: '3px 55%',
-            backgroundSize: '20px'
-         }
-      },
       '&.button-filtres-mobile': {
          position: 'fixed',
          bottom: 20,
@@ -72,6 +61,11 @@ const StyledButton = styled.button(({ styles = {}, theme, ...props }) => {
       ...(props.primary ? buttonFormat('primary', theme) : {}),
       ...(props.secondary ? buttonFormat('secondary', theme) : {}),
       ...(props.third ? buttonFormat('third', theme) : {}),
+      ...(props.fourth ? buttonFormat('fourth', theme) : {}),
+      ...(props.neuf ? buttonFormat('neuf', theme) : {}),
+      ...(props.phone ? buttonFormat('phone', theme) : {}),
+      ...(props.clear ? buttonFormat('clear', theme) : {}),
+      ...(props.breadcrumb ? buttonFormat('breadcrumb', theme) : {}),
       ...styles,
    }
 });
@@ -104,12 +98,82 @@ const buttonFormat = (format, theme) => ({
       border: `1px solid ${theme.grey100}`,
       fontSize: 14,
       marginTop: 8,
-      width: '100%',
-      padding: 0,
+      paddingLeft: 110,
+      paddingRight: 110,
       color: 'white',
       background: theme.blue100,
       '&:hover, &:focus': {
          background: theme.blue200
+      }
+   },
+   fourth: {
+      border: `1px solid ${theme.grey200}`,
+      fontSize: 14,
+      lineHeight: '37px',
+      paddingLeft: 15,
+      paddingRight: 15,
+      color: theme.black,
+      height: 42,
+      background: theme.grey300,
+      '&:hover, &:focus, &.active': {
+         background: theme.black,
+         color: 'white'
+      }
+   },
+   phone: {
+      padding: '0 0 0 16px',
+      color: 'white',
+      backgroundColor: theme.orange100,
+      '&:hover': {
+         backgroundColor: theme.orange200
+      },
+      'span': {
+         padding: '0 20px 0 34px',
+         width: 'auto',
+         lineHeight: '47px',
+         background: `url(${requireStatic('icons/tel.svg')}) no-repeat`,
+         backgroundPosition: '3px 55%',
+         backgroundSize: '20px'
+      }
+   },
+   neuf: {
+      fontSize: 14,
+      height: 30,
+      lineHeight: '27px',
+      background: 'white',
+      border: `1px solid ${theme.blue100}`,
+      color: theme.blue100,
+      padding: '0 25px',
+   },
+   clear: {
+      position: 'relative',
+      padding: 0,
+      margin: 0,
+      fontSize: 14,
+      fontWeight: 700,
+      lineHeight: 1.2,
+      height: 'auto',
+      background: 'transparent',
+      border: 0,
+      color: theme.black,
+      textAlign: 'left',
+      display: 'inline',
+      width: '100%',
+   },
+   breadcrumb: {
+      position: 'relative',
+      padding: 0,
+      margin: 0,
+      fontSize: 14,
+      fontWeight: 400,
+      lineHeight: 1.2,
+      height: 'auto',
+      background: 'transparent',
+      border: 0,
+      color: theme.black,
+      textAlign: 'left',
+      'a': {
+         color: theme.black
       }
    }
 }[format]);
