@@ -10,8 +10,6 @@ import graphQLQuery from '../../utils/graphql';
 import getSuggestions from './getSuggestions.graphql';
 import { medias, theme } from '../../constants/theme';
 
-const getSuggestionsQuery = getSuggestions.loc.source.body;
-
 const Autocomplete = ({ className }) => {
    const node = useRef();
    const router = useRouter();
@@ -164,7 +162,7 @@ const Autocomplete = ({ className }) => {
    useEffect(() => {
       const arrayFormated = [];
 
-      fetchGraphQL(getSuggestionsQuery, queryParams)
+      fetchGraphQL(getSuggestions.loc.source.body, queryParams)
          .then(res => res.suggestions.suggestions.map(item => arrayFormated.push(item.query)))
          .then(() => setSuggestions(arrayFormated))
    }, [queryParams])
