@@ -98,8 +98,7 @@ const buttonFormat = (format, theme) => ({
       border: `1px solid ${theme.grey100}`,
       fontSize: 14,
       marginTop: 8,
-      paddingLeft: 110,
-      paddingRight: 110,
+      width: '100%',
       color: 'white',
       background: theme.blue100,
       '&:hover, &:focus': {
