@@ -31,7 +31,7 @@ const Select = ({ children, className, defaultValue, name, onChange, onClick, on
             }
          });
 
-         onClick()
+         if (selectProps.agencies) onClick()
          return;
       }
 

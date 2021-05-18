@@ -1,15 +1,17 @@
-import MarkerIcon from '../svgs/marker.svg';
 import PropTypes from 'prop-types';
+import React from 'react';
 import styled from 'styled-components';
-import { theme } from '../constants/theme';
 
-const BoxGoogleRating = ({ adresse, headline, googleAvis, googleNote }) => {
+import MarkerIcon from '../svgs/marker.svg';
+import { medias, theme } from '../constants/theme';
+
+const BoxGoogleRating = ({ className, address, headline, googleAvis, googleNote }) => {
    return (
-      <BoxGoogle className="box-address">
+      <StyledBoxGoogle className={`box-address ${className}`}>
          <MarkerIcon className="indicator" />
          <div className="address">
             <h3 className="big">{headline}</h3>
-            <p>{adresse}</p>
+            <p>{address}</p>
 
             <RatingStars>
                <span>4,2</span>
@@ -21,20 +23,40 @@ const BoxGoogleRating = ({ adresse, headline, googleAvis, googleNote }) => {
                <span>sur {googleAvis} avis Google</span>
             </RatingStars>
          </div>
-      </BoxGoogle>
+      </StyledBoxGoogle>
    );
 };
 
 BoxGoogleRating.propTypes = {
-   adresse: PropTypes.string,
+   className: PropTypes.string,
+   address: PropTypes.string,
    headline: PropTypes.string,
-   googleNote: PropTypes.number,
-   googleAvis: PropTypes.number,
+   googleNote: PropTypes.string,
+   googleAvis: PropTypes.string
 };
 
 export default BoxGoogleRating;
 
-export const BoxGoogle = styled.div`
+export const StyledBoxGoogle = styled.div`
+   &.box-address-mobile {
+      position: relative;
+      padding: 22px;
+      margin: 0 auto 25px;
+      border: 1px solid ${theme.grey200};
+      border-radius: 4px;
+      display: table;
+      max-width: 340px;
+      width: 100%;
+      h3.big {
+         font-size: 20px;
+      }
+      ${medias.min990} {
+         display: none;
+      }
+      ${medias.min380} {
+         width: calc(100% - 40px)
+      }
+   }
    .indicator {
       position: relative;
       top: 4px;

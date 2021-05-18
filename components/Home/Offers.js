@@ -9,7 +9,7 @@ import NextImageLazy from '../../utils/imgLazy';
 import requireStatic from '../../utils/require-static';
 import { medias, theme } from '../../constants/theme';
 
-function Offers({ subHeadline }) {
+const Offers = ({ subHeadline }) => {
   const [occasionPic, setOccasionPic] = useState('images/promo-occasion.png');
   const [neufPic, setNeufPic] = useState('images/promo-neuf.png');
 
@@ -41,7 +41,7 @@ function Offers({ subHeadline }) {
   }, []);
 
   return (
-    <SectionOffers>
+    <StyledOffers>
       <h2 className="text-center">En ce moment dans votre <span className="blue">{subHeadline}</span></h2>
 
       <div className="container">
@@ -76,7 +76,7 @@ function Offers({ subHeadline }) {
             </div>
         </Slider>
       </div>
-    </SectionOffers>
+    </StyledOffers>
   );
 };
 
@@ -86,7 +86,7 @@ Offers.propTypes = {
 
 export default Offers;
 
-export const SectionOffers = styled.section`
+export const StyledOffers = styled.section`
   padding: 30px 0 10px;
   h2 {
     position: relative;

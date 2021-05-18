@@ -26,13 +26,13 @@ export default ButtonHamb;
 export const StyledButtonHamb = styled.div`
    position: fixed;
    top: 5px;
-   right: 12px;
+   right: 13px;
    float: right;
    width: 35px;
    height: 35px;
    display: block;
    cursor: pointer;
-   z-index: 10;
+   z-index: 9;
    &:not(.open) span {
       background: ${theme.black};
    }
@@ -63,8 +63,8 @@ export const StyledButtonHamb = styled.div`
       &:nth-child(3) {top: 16px}
    }
    ${medias.min780} {
-      top: 20px;
-      right: 25px;
+      top: 18px;
+      right: 32px;
       .cross {
          right: 35px;
       }

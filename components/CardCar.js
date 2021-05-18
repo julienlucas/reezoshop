@@ -4,7 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import NextImageLazy from '../utils/imgLazy';
-import { theme } from '../constants/theme';
+import { medias, theme } from '../constants/theme';
 
 const CardCar = ({ className, brand, energy, isNew, gearbox, model, mileage, thumbnail, price, year }) => {
    // Ajout d'un espace tous les 3 chiffres
@@ -177,7 +177,7 @@ export const Card = styled.div`
       color: ${theme.blue100};
       padding: 0 5px;
    }
-   @media (min-width: 1400px) {
+   ${medias.min(1400)} {
       &.small-width {
          min-height: 336px;
          .box-text {
@@ -192,7 +192,7 @@ export const Card = styled.div`
          }
       }
    }
-   @media (min-width: 1100px) {
+   ${medias.min(1100)} {
       .btn-neuf-occas {
          padding: 0 20px;
       }
@@ -202,7 +202,7 @@ export const Card = styled.div`
          padding: 0 20px;
       }
    }
-   @media (min-width: 750px) {
+   ${medias.min(750)} {
       &.small-width {
          max-width: 335px;
       }

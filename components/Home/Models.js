@@ -19,7 +19,7 @@ const Models = ({ newCars, usedCars }) => {
   const { shop } = useShop();
 
   return (
-    <SectionModels>
+    <StyledModels>
       <h2 className="text-center">Les affaires du mois dans votre <span className="blue">{shop && shop.subHeadline}</span></h2>
 
       <ReactTabsStyles>
@@ -76,7 +76,7 @@ const Models = ({ newCars, usedCars }) => {
       <div className="container">
         <Button primary>Voir toutes les annonces d’occasion</Button>
       </div>
-    </SectionModels>
+    </StyledModels>
   );
 };
 
@@ -89,9 +89,8 @@ Models.propTypes = {
 export default Models;
 
 const Tabs = dynamic(
-  import('react-tabs').then((mod) => mod.Tabs),
-  { ssr: false },
-); // SSR désactivé : évite erreur rouge browser
+  import('react-tabs').then((mod) => mod.Tabs)
+);
 
 const sliderSettings = {
   className: 'slider',
@@ -104,7 +103,7 @@ const sliderSettings = {
   variableWidth: true,
 };
 
-export const SectionModels = styled.section`
+export const StyledModels = styled.section`
   padding: 85px 0 40px;
   h2 {
     position: relative;
@@ -129,7 +128,7 @@ export const SectionModels = styled.section`
     padding-left: 0;
   }
   .slider {
-    margin-left: 30px;
+    margin-left: 20px;
     .slick-slide {
       margin: 0 -50px 0px 70px;
       * {

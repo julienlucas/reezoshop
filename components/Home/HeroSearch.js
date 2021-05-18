@@ -6,14 +6,18 @@ import { useRouter } from 'next/router';
 import Button from '../Button';
 import InputSuggestions from '../InputSuggestions/InputSuggestions';
 
-import { medias, theme } from '../../constants/theme';
 import requireStatic from '../../utils/require-static';
+import { medias, theme } from '../../constants/theme';
 
 const HeroSearch = ({ headline }) => {
-  const router = useRouter();
+   const router = useRouter();
+
+   const seeAllCars = () => {
+      router.push(`/recherche`);
+   };
 
   return (
-    <HeroStyled
+    <StyledHero
       style={{
         background: `url(${requireStatic('images/header-home.png')})`,
         backgroundSize: 'cover'
@@ -26,6 +30,7 @@ const HeroSearch = ({ headline }) => {
             Voiture d'occasion et neuves à vendre dans notre agence
           </h2>
 
+
           <div className="row">
             <div className="col col-1">
               <InputSuggestions />
@@ -34,24 +39,24 @@ const HeroSearch = ({ headline }) => {
             <div className="col col-2">ou</div>
 
             <div className="col col-3">
-              <Button primary onClick={() => router.push(`/recherche`)}>
+              <Button primary onClick={seeAllCars}>
                 Voir tous les véhicules
               </Button>
             </div>
           </div>
         </div>
       </div>
-    </HeroStyled>
+    </StyledHero>
   );
 };
-
-export default HeroSearch;
 
 HeroSearch.propTypes = {
   headline: PropTypes.string.isRequired
 };
 
-export const HeroStyled = styled.section`
+export default HeroSearch;
+
+export const StyledHero = styled.section`
   position: relative;
   top: -60px;
   width: 100%;

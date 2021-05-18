@@ -1,0 +1,42 @@
+service:
+  type: ClusterIP
+  port: 3000
+
+ingress:
+  enabled: true
+  hosts:
+    - host: "reezoshop-lille-ci${DEV_ID}${RAND_VALUE}.front-uat.reezocar.com"
+      paths: ["/"]
+    - host: "reezoshop-paris-ci${DEV_ID}${RAND_VALUE}.front-uat.reezocar.com"
+      paths: ["/"]
+
+imagePullSecrets:
+  - "acr-secret"
+
+nodeSelector:
+  agentpool: ci
+
+env:
+  CONF_ENV: uat
+  CONF_API_BASE: https://reezoshop-gql-ci${DEV_ID}${RAND_VALUE}.front-uat.reezocar.com
+
+
+rzc-chart-reezogql:
+  enabled: true
+  service:
+    type: ClusterIP
+  
+  ingress:
+    enabled: true
+    hosts:
+    - host: "reezoshop-gql-ci${DEV_ID}${RAND_VALUE}.front-uat.reezocar.com"
+      paths: ["/"]
+  
+  imagePullSecrets:
+  - "acr-secret"
+
+  nodeSelector:
+    agentpool: ci
+  
+  env:
+    NODE_ENV: uat

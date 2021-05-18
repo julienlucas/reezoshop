@@ -10,7 +10,7 @@ import MarkerIcon from '../../svgs/marker-b.svg';
 import configs from '../../configs';
 import { medias, theme } from '../../constants/theme';
 
-const { GoogleMapKey } = configs;
+const { googleMapKey } = configs;
 
 const Map = ({ shop }) => {
   const [tab, setTab] = useState(1);
@@ -21,12 +21,12 @@ const Map = ({ shop }) => {
   };
 
   return (
-    <SectionMap>
+    <StyledMap>
       <h2 className="text-center">Comment s'y rendre ?</h2>
 
       <BoxGoogleRating
         className="box-address-mobile"
-        address={shop.address}
+        address={`${shop.address} ${shop.locality} ${shop.postalCode}`}
         headline={shop.headline}
         googleAvis={shop.google.avis}
         googleNote={shop.google.note}
@@ -43,7 +43,7 @@ const Map = ({ shop }) => {
         <div className="container">
           <div className={`box-infos ${tab === 2 && window.innerWidth <= 990 ? 'active' : ''}`}>
             <BoxGoogleRating
-              address={shop.address}
+              address={`${shop.address} ${shop.locality} ${shop.postalCode}`}
               headline={shop.headline}
               googleAvis={shop.google.avis}
               googleNote={shop.google.note}
@@ -61,14 +61,18 @@ const Map = ({ shop }) => {
           <Button secondary className="small-size"><a href={mapURL} rel="noopener noreferrer nofollow" target="_blank" title="">Ouvrir sur Maps</a></Button>
         </div>
       </div>
-    </SectionMap>
+    </StyledMap>
   );
+};
+
+Map.propTypes = {
+  shop: PropTypes.object.isRequired
 };
 
 export default Map;
 
-const GoogleMap = ({ mapURL }) => {
-  const center = {lat: 43.9178047, lng: 4.8899898};
+const GoogleMap = ({ shop, mapURL }) => {
+  const center = { lat: shop.geo.lat, lng: shop.geo.lng };
   const zoom = 18;
 
   const handleApiLoaded = (map) => {
@@ -80,7 +84,7 @@ const GoogleMap = ({ mapURL }) => {
   return (
     <div className="google-map">
       <GoogleMapReact
-        bootstrapURLKeys={{ key: GoogleMapKey }} // Clé test de dev, donc à changer une clé prod
+        bootstrapURLKeys={{ key: googleMapKey }}
         defaultCenter={center}
         defaultZoom={zoom}
         scrollwheel={false}
@@ -100,15 +104,12 @@ const GoogleMap = ({ mapURL }) => {
   );
 };
 
-Map.propTypes = {
-  shop: PropTypes.object.isRequired
-};
-
 GoogleMap.propTypes = {
+  shop: PropTypes.object.isRequired,
   mapURL: PropTypes.func
 };
 
-export const SectionMap = styled.section`
+export const StyledMap = styled.section`
   position: relative;
   padding: 30px 0 10px;
   h2 {
