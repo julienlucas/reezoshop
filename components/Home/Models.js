@@ -34,6 +34,7 @@ const Models = ({ newCars, usedCars }) => {
                 <Slider {...sliderSettings}>
                   {usedCars?.map(car =>
                     <CardCar
+                      className="cardcar-home"
                       key={car._id}
                       year={car.year}
                       gearbox={car.gearbox}
@@ -54,6 +55,7 @@ const Models = ({ newCars, usedCars }) => {
                 <Slider {...sliderSettings}>
                   {newCars?.map(car =>
                     <CardCar
+                      className="cardcar-home"
                       key={car._id}
                       year={car.year}
                       gearbox={car.gearbox}
@@ -125,20 +127,23 @@ export const StyledModels = styled.section`
     height: 360px !important;
   }
   .container:first-child {
-    padding-left: 0;
+    padding: 0;
   }
   .slider {
-    margin-left: 20px;
+    margin-left: 10px;
     .slick-slide {
-      margin: 0 -50px 0px 70px;
+      margin: 0 10px;
       * {
         outline: 0;
         user-select: none;
       }
-      .card-car {
+      .cardcar-home {
         left: 10px;
       }
     }
+  }
+  button {
+    width: 100%
   }
   ${medias.min768} {
     padding: 125px 0 40px;
@@ -151,7 +156,7 @@ export const StyledModels = styled.section`
     }
   }
   ${medias.min620} {
-    .btn {
+    button {
       width: auto;
     }
   }
