@@ -29,9 +29,9 @@ const SearchResults = ({ cars, cityShop, count, filters, onLoadMore, onSort }) =
 
   const headlineCustom = () => {
     if (!filters.match) {
-      return <>Véhicules {filters?.body ? filters.body : ''} {filters?.onlyNew === true ? 'neufs' : ''} {filters?.onlyNew === false ? "d'occasion " : ''} en vente <span className="blue">près de {capitalize1stLetter(cityShop)}</span></>;
+      return <>Véhicules {filters?.body ? filters.body : ''} {filters?.onlyNew === true ? 'neufs 0km' : ''} {filters?.onlyNew === false ? "d'occasions" : ''} en vente <span className="blue">près de {capitalize1stLetter(cityShop)}</span></>;
     };
-    return <><span className="capitalize">{filters?.match ? filters.match : ''}</span> {filters?.onlyNew === true ? 'neuves' : ''} {filters?.onlyNew === false ? "d'occasion " : ''} en vente <span className="blue">près de {capitalize1stLetter(cityShop)}</span></>;
+    return <><span className="capitalize">{filters?.match ? filters.match : ''}</span> {filters?.onlyNew === true ? 'neuves 0km' : ''} {filters?.onlyNew === false ? "d'occasion " : ''} en vente <span className="blue">près de {capitalize1stLetter(cityShop)}</span></>;
   };
 
   return (

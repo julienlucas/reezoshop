@@ -1,3 +1,4 @@
+import { NextSeo } from 'next-seo';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
@@ -12,7 +13,7 @@ function Search({ search }) {
   const [cars, setCars] = useState([]);
   const [count, setCount] = useState(0);
   const [filters, setfilters] = useState({});
-  const { shopKey } = useShop();
+  const { shop, shopKey } = useShop();
 
   let queryParams = { queryParams: { ...filters } };
 
@@ -55,6 +56,14 @@ function Search({ search }) {
 
   return (
     <>
+      {/* Balise SEO title/description spécifique à la Recherche Vertical (Neuf ou Occassion) */}
+      {(filters?.onlyNew === true || filters?.onlyNew === false) && <NextSeo
+        title={`Annonces voitures ${filters.onlyNew === true ? 'neuves' : "d'occasions"} près de ${shop.name} | Reezocar ${shop.locality}`}
+        description={` Acheter une nouvelle voiture ${filters.onlyNew === true ? 'neuves' : "d'occasions"} près de ${shop.name} grâce
+        à Reezocar ${shop.locality}. Faites l’expérience du conseil personnalisé et de l’accompagnement reezocar dans votre projet
+        d'acquisition d’une nouvelle voiture.`}
+      />}
+
       <SearchWrapper
         cars={cars}
         cityShop={shopKey}
