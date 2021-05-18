@@ -4,9 +4,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 
 import requireStatic from '../utils/require-static';
-import { medias, theme } from '../constants/theme';
 
-const Select = ({ className, defaultValue, name, onChange, onReset, options, placeholder }) => {
+const Select = ({ children, className, defaultValue, name, onChange, onClick, onReset, options, placeholder , ...selectProps }) => {
    const node = useRef();
 
    const [state, setState] = useState({
@@ -32,6 +31,7 @@ const Select = ({ className, defaultValue, name, onChange, onReset, options, pla
             }
          });
 
+         onClick()
          return;
       }
 
@@ -63,7 +63,7 @@ const Select = ({ className, defaultValue, name, onChange, onReset, options, pla
    };
 
    return (
-      <SelectStyled className={className} ref={node} onClick={e => onOpen(e)}>
+      <SelectStyled className={className} ref={node} {...selectProps} onClick={e => onOpen(e)}>
          <span>{state.selected ? state.selected.label : placeholder || defaultValue}</span>
          <ul className={state.opened ? 'show': 'hide'}>{getOptions()}</ul>
       </SelectStyled>
@@ -71,11 +71,13 @@ const Select = ({ className, defaultValue, name, onChange, onReset, options, pla
 };
 
 Select.propTypes = {
+   children: PropTypes.node,
    className: PropTypes.string,
    defaultValue: PropTypes.string,
    options: PropTypes.array.isRequired,
    placeholder: PropTypes.string,
    name: PropTypes.string,
+   onClick: PropTypes.func,
    onChange: PropTypes.func,
    onReset: PropTypes.bool
 };
@@ -102,103 +104,155 @@ function Option ({ className, option, onSelect }) {
    );
 };
 
-export const SelectStyled = styled.div`
-   margin-bottom: 16px;
-   font-size: 13px;
-   line-height: 36px;
-   padding: 0 7px;
-   background: white url(${requireStatic('icons/arrow-bottom-light.svg')}) no-repeat calc(100% - 10px) 50%;
-   background-size: 13px;
-   color: ${theme.black};
-   border: 0.811966px solid ${theme.grey200};
-   border-radius: 3.24786px;
-   display: block;
-   width: 100%;
-   height: 36px;
-   box-shadow: none;
-   outline: 0;
-   appearance: none;
-   cursor: pointer;
-   * {
-      cursor: pointer;
+const SelectStyled = styled.div(({ styles = {}, theme, ...props }) => {
+   return {
+      marginBottom: 16,
+      fontSize: '13px',
+      lineHeight: 36,
+      padding: '0 7px',
+      background: `white url(${requireStatic('icons/arrow-bottom-light.svg')}) no-repeat calc(100% - 10px) 50%`,
+      backgroundSize: 13,
+      color: theme.black,
+      border: `0.811966px solid ${theme.grey200}`,
+      borderRadius: 3.24786,
+      display: 'block',
+      width: '100%',
+      height: '36px',
+      boxShadow: 'none',
+      outline: 0,
+      appearance: 'none',
+      cursor: 'pointer',
+      ul: {
+         position: 'absolute',
+         margin: '36px 0 0 41px',
+         background: 'white',
+         left: 0,
+         boxShadow: '1px 2px 13px rgba(0, 0, 0, 0.15)',
+         borderRadius: 4,
+         minWidth: 268,
+         zIndex: 5,
+         '&.show': {
+            display:'inline-block',
+         },
+         '&.hide': {
+            display: 'none'
+         },
+         li: {
+            display: 'block',
+            padding: '5px 20px',
+            borderBottom: `1px solid ${theme.grey200}`,
+            textDecoration: 'none',
+            color: theme.black,
+            '&:last-child': {
+               borderColor: 'transparent'
+            }
+         },
+      },
+
+      ...(props.agencies ? selectFormat('agencies', theme) : {}),
+      ...(props.sorting ? selectFormat('sorting', theme) : {}),
+      ...styles
    }
-   &.select-agency {
-      position: absolute;
-      top: 10px;
-      left: 160px;
-      width: auto;
-      font-size: 20px;
-      text-transform: capitalize;
-      padding-right: 35px;
-      background: transparent url(${requireStatic('icons/arrow-bottom.svg')}) no-repeat calc(100% - 5px) 52%;
-      background-size: 18px;
-      border: 0;
-      ul {
-         left: -155px;
-         min-width: 290px;
-         z-index: 9;
-         a {
-            color: ${theme.black};
-            text-decoration: none;
-         }
-      }
-   }
-   &.sorting {
-      position: absolute;
-      margin-top: -27px;
-      right: 25px;
-      float: right;
-      max-width: 200px;
-      width: 100%;
-      ul {
-         left: auto;
-         right: 0;
-      }
-   }
-   ul {
-      position: absolute;
-      list-style: none;
-      margin: 36px 0 0 41px;
-      background: white;
-      left: 0;
-      box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.15);
-      border-radius: 4px;
-      min-width: 268px;
-      z-index: 5;
-      li {
-         display: block;
-         padding: 5px 20px;
-         border-bottom: 1px solid ${theme.grey200};
-         text-decoration: none;
-         color: ${theme.black};
-         &:last-child {
-            border-color: transparent;
-         }
-      }
-      &.show{
-         display:inline-block;
-      }
-      &.hide{
-         display:none;
-      }
-   }
-   @media (max-width: 780px) {
-      &.select-agency {
-         &.mobile-menu-open {
-            filter: grayscale(1) brightness(600%);
-            ul {
-               filter: brightness(100%);
-               * {
-                  filter: brightness(0%);
+});
+
+const selectFormat = (format, theme) => ({
+   agencies: {
+      position: 'absolute',
+      top: 10,
+      left: 160,
+      width: 'auto',
+      fontSize: '20px',
+      lineHeight: '36px',
+      color: theme.black,
+      textTransform: 'capitalize',
+      paddingRight: 35,
+      background: `transparent url(${requireStatic('icons/arrow-bottom.svg')}) no-repeat calc(100% - 5px) 52%`,
+      backgroundSize: 18,
+      border: 0,
+      ul: {
+         position: 'absolute',
+         margin: '41px 0 0 41px',
+         background: 'white',
+         boxShadow: '1px 2px 13px rgba(0, 0, 0, 0.15)',
+         borderRadius: 4,
+         minWidth: 268,
+         left: -155,
+         minWdth: 290,
+         zIndex: 9,
+         '&.show': {
+            display:'inline-block',
+         },
+         '&.hide': {
+            display: 'none'
+         },
+         a: {
+            color: theme.black,
+            textDecoration: 'none'
+         },
+         li: {
+            display: 'block',
+            padding: '5px 20px',
+            borderBottom: `1px solid ${theme.grey200}`,
+            textDecoration: 'none',
+            color: theme.black,
+            '&:last-child': {
+               borderColor: 'transparent'
+            }
+         },
+      },
+      '@media screen and (max-width: 780px)': {
+         '&.menu-open': {
+            filter: 'grayscale(1) brightness(600%)',
+            ul: {
+               filter: 'brightness(100%)',
+               '*': {
+                  filter: 'brightness(0%)'
                }
+            }
+         }
+      },
+      '@media screen and (min-width: 768px)': {
+         top: 30,
+         left: 240
+      }
+   },
+   sorting: {
+      position: 'absolute',
+      marginTop: -27,
+      right: 25,
+      float: 'right',
+      maxWidth: 200,
+      width: '100%',
+      fontSize: 13,
+      lineHeight: '36px',
+      color: theme.black,
+      ul: {
+         position: 'absolute',
+         margin: '36px 0 0 41px',
+         background: 'white',
+         lineHeight: '36px',
+         left: 'auto',
+         right: 0,
+         boxShadow: '1px 2px 13px rgba(0, 0, 0, 0.15)',
+         borderRadius: 4,
+         minWidth: 268,
+         zIndex: 5,
+         '&.show': {
+            display:'inline-block',
+         },
+         '&.hide': {
+            display: 'none'
+         },
+         li: {
+            display: 'block',
+            padding: '5px 20px',
+            borderBottom: `1px solid ${theme.grey200}`,
+            textDecoration: 'none',
+            color: theme.black,
+            '&:last-child': {
+               borderColor: 'transparent'
             }
          }
       }
    }
-   ${medias.min768} {
-      &.select-agency {
-         top: 30px;
-         left: 240px;
-      }
-   }
-`;
+}[format])

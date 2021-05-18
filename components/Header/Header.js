@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
 
 import Button from '../Button';
-import Mobile from './Mobile';
+import Menu from './Menu';
 import Select from '../Select';
 
 import requireStatic from '../../utils/require-static';
@@ -16,7 +16,7 @@ const Header = ({ path }) => {
   const { onChangeShop, shops, shop, shopKey } = useShop();
   const [scroll, setScroll] = useState(null);
   const [overlay, setOverlay] = useState(false);
-  const [mobileMenu, setMobileMenu] = useState(false);
+  const [menuIsVisible, setMenuIsVisible] = useState(false);
 
   const handleScroll = () => {
     setScroll(window.scrollY);
@@ -26,8 +26,8 @@ const Header = ({ path }) => {
     if (window.innerWidth <= 990) setOverlay(!overlay);
   };
 
-  const onMobileMenu = (boolean) => {
-    if (window.innerWidth <= 990) setMobileMenu(boolean)
+  const onMenu = (boolean) => {
+    if (window.innerWidth <= 990) setMenuIsVisible(boolean)
   };
 
   useEffect(() => {
@@ -35,18 +35,21 @@ const Header = ({ path }) => {
   }, [])
 
   return (
-    <HeaderStyled>
+    <StyledHeader>
       <NavStyled
-        className={`${scroll ? 'scroll' : ''}
-        ${path !== '/'  ? 'bottomShadow' : ''}
-        ${mobileMenu ? 'mobile-menu-open' : ''}
+        className={`
+          ${scroll ? 'scroll' : ''}
+          ${path !== '/' ? 'bottomShadow' : ''}
+          ${menuIsVisible ? 'menu-open' : ''}
         `}
       >
+
         <div
-          className={`overlay-mobile ${overlay && !mobileMenu ? 'show' : 'hide'}`}
-          onClick={() => setOverlay(false)}
+          className={`overlay-mobile ${overlay && !menuIsVisible ? 'show' : 'hide'}`}
+          onClick={() => setOverlay()}
         />
-        <div className={`logo ${mobileMenu ? 'mobile-menu-open' : ''}`}>
+
+        <div className={`logo ${menuIsVisible ? 'menu-open' : ''}`}>
           <Link href="/">
               <a>
                 <Image
@@ -61,7 +64,8 @@ const Header = ({ path }) => {
         </div>
 
         <Select
-          className={`select-agency ${mobileMenu ? 'mobile-menu-open' : ''}`}
+          agencies
+          className={menuIsVisible ? 'menu-open' : ''}
           defaultValue={shopKey}
           onChange={onChangeShop}
           onClick={openOverlay}
@@ -72,18 +76,17 @@ const Header = ({ path }) => {
         />
       </NavStyled>
 
-      <Mobile headline={shop.headline} onMobileMenu={onMobileMenu} phone={shop.phone} phoneFormated={shop.phoneFormated} />
+      <Menu headline={shop?.headline} onIsVisible={onMenu} phone={shop?.phone} phoneFormated={shop?.phoneFormated} />
 
-      {(path === '/' || path === '/recherche') && (
-        <div className={`bottom-buttons-nav ${path === '/recherche' ? 'search' : ''}`}>
-          <Button primary className="button-phone">
-            <a href={`tel:${shop.phone}`} rel="noopener noreferrer nofollow" target="_blank">
-              <span>{shop.phoneFormated}</span>
-            </a>
-          </Button>
+      <div className="bottom-buttons-nav">
+        <Button phone className={`button-phone ${path === '/' ? 'homepage' : ''}`}>
+          <a href={`tel:${shop?.phone}`} rel="noopener noreferrer nofollow" target="_blank">
+            <span>{shop?.phoneFormated}</span>
+          </a>
+        </Button>
         {/* <Button secondary className="button-rdv">Prendre rendez-vous</Button> */}
-      </div>)}
-    </HeaderStyled>
+      </div>
+    </StyledHeader>
   );
 };
 
@@ -93,7 +96,7 @@ Header.propTypes = {
 
 export default Header;
 
-export const HeaderStyled = styled.header`
+export const StyledHeader = styled.header`
   .bottom-buttons-nav {
     position: fixed;
     bottom: 0;
@@ -102,18 +105,15 @@ export const HeaderStyled = styled.header`
     background: white;
     padding: 20px;
     box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
-    &.search {
-      .button-phone {
-        width: calc(50vw - 26px);
-        float: right;
-        display: block;
-      }
-    }
     .button-phone {
-      float: none;
+      float: right;
       margin: auto;
-      width: 100%;
+      width: calc(50vw - 26px);
       z-index: 8;
+      &.homepage {
+        width: 100%;
+        float: none;
+      }
     }
     .button-rdv {
       position: absolute;
@@ -130,15 +130,14 @@ export const HeaderStyled = styled.header`
       bottom: auto;
       background: transparent;
       box-shadow: 0px -4px 10px rgba(0, 0, 0, 0);
-      &.search {
-        .button-phone {
-          display: none;
-        }
-      }
       .button-phone {
         margin: 4px 75px 0 0;
         width: auto;
         float: right;
+        display: none;
+        &.homepage {
+          display: block;
+        }
       }
       .button-rdv {
         display: none;
@@ -157,7 +156,7 @@ export const NavStyled = styled.nav`
   width: 100vw;
   height: 58px;
   top: 0;
-  z-index: 8;
+  z-index: 9;
   box-shadow: 0 0 0 rgba(0, 0, 0, 0);
   transition: all .3s ease-out;
   .overlay-mobile {
@@ -185,10 +184,10 @@ export const NavStyled = styled.nav`
     border: 1px solid ${theme.grey700};
     box-shadow: 1px 2px 13px rgba(0, 0, 0, 0);
   }
-  &.mobile-menu-open {
+  &.menu-open, &.menu-open.scroll, &.menu-open.bottomShadow {
+    border: 0;
     box-shadow: none;
     background: transparent;
-    border-color: transparent;
   }
   .logo {
     position: relative;
@@ -207,7 +206,7 @@ export const NavStyled = styled.nav`
     }
   }
   @media (max-width: 780px) {
-    .logo.mobile-menu-open {
+    .logo.menu-open {
       * {
         filter: grayscale(1) brightness(300%);
       }

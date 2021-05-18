@@ -3,25 +3,23 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import ButtonHamb from '../ButtonHamb';
+
 import TelIcon from '../../svgs/tel.svg';
 import { medias, theme } from '../../constants/theme';
 
-const Mobile = ({ headline, phone, phoneFormated, onMobileMenu }) => {
-   const [mobileMenu, setMobileMenu] = useState(false);
+const Menu = ({ headline, phone, phoneFormated, onIsVisible }) => {
+   const [isVisible, setIsVisible] = useState(false);
 
    useEffect(() => {
-      onMobileMenu(mobileMenu)
-   }, [mobileMenu])
+      onIsVisible(isVisible)
+   }, [isVisible])
 
    return (
-      <MobileWrapper>
-         <div className={`btn-mobile ${mobileMenu ? 'open' : ''}`} onClick={() => setMobileMenu(!mobileMenu)}>
-            <span/>
-            <span/>
-            <span/>
-         </div>
+      <StyledMenu>
+         <ButtonHamb className={isVisible} onClick={() => setIsVisible(!isVisible)} />
 
-         {mobileMenu && <div className={`mobile-menu ${mobileMenu ? 'open' : ''}`}>
+         {isVisible && <div className={`menu ${isVisible ? 'open' : ''}`}>
             <div className="box-top">
                <ul>
                   <li><strong>Agence {headline}</strong></li>
@@ -41,24 +39,24 @@ const Mobile = ({ headline, phone, phoneFormated, onMobileMenu }) => {
                </p>
             </div>
          </div>}
-      </MobileWrapper>
+      </StyledMenu>
    );
 };
 
-Mobile.propTypes = {
+Menu.propTypes = {
   headline: PropTypes.string.isRequired,
-  onMobileMenu: PropTypes.func.isRequired,
+  onIsVisible: PropTypes.func.isRequired,
   phone: PropTypes.string.isRequired,
   phoneFormated: PropTypes.string.isRequired
 };
 
-export default Mobile;
+export default Menu;
 
-export const MobileWrapper = styled.div`
+export const StyledMenu = styled.div`
    * {
       transition: all .3s ease-out;
    }
-   .btn-mobile {
+   .button-menu {
       position: fixed;
       top: 20px;
       right: 15px;
@@ -97,7 +95,7 @@ export const MobileWrapper = styled.div`
          &:nth-child(3) {top: 16px}
       }
    }
-   .mobile-menu {
+   .menu {
       position: fixed;
       top: 0;
       height: 100vh;
@@ -155,7 +153,7 @@ export const MobileWrapper = styled.div`
       }
    }
    ${medias.min780} {
-      .mobile-menu {
+      .menu {
          width: 400px;
          .box-bottom {
             display: block;
@@ -164,16 +162,6 @@ export const MobileWrapper = styled.div`
             li {
                text-align: left;
             }
-         }
-      }
-      .btn-mobile {
-         top: 38px;
-         right: 25px;
-         .cross {
-            right: 35px;
-         }
-         span {
-            background: ${theme.black};
          }
       }
    }

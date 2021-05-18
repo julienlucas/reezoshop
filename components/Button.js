@@ -49,12 +49,15 @@ const StyledButton = styled.button(({ styles = {}, theme, ...props }) => {
          height: 35,
          lineHeight: '30px'
       },
-      '&.button-filtres-mobile': {
+      '&.button-filtres': {
          position: 'fixed',
          bottom: 20,
          left: 20,
          zIndex: 6,
          width: 'calc(50vw - 26px)',
+         '@media screen and (min-width: 990px)': {
+            display: 'none'
+         }
       },
 
       ...(props.full ? buttonFull : {}),
@@ -66,6 +69,7 @@ const StyledButton = styled.button(({ styles = {}, theme, ...props }) => {
       ...(props.phone ? buttonFormat('phone', theme) : {}),
       ...(props.clear ? buttonFormat('clear', theme) : {}),
       ...(props.breadcrumb ? buttonFormat('breadcrumb', theme) : {}),
+      ...(props.close ? buttonFormat('close', theme) : {}),
       ...styles,
    }
 });
@@ -173,6 +177,46 @@ const buttonFormat = (format, theme) => ({
       textAlign: 'left',
       'a': {
          color: theme.black
+      }
+   },
+   close: {
+      position: 'fixed',
+      top: 20,
+      right: 0,
+      background: 'white',
+      width: 61,
+      height: 35,
+      paddingLeft: 20,
+      display: 'none',
+      cursor: 'pointer',
+      zIndex: 11,
+      '&.open': {
+         display: 'block'
+      },
+      span: {
+         position: 'absolute',
+         width: 24,
+         height: 2,
+         borderRadius: 1,
+         background: theme.blue100,
+         '&:nth-child(1)': {
+            top: '.4rem',
+            transform: 'rotate(135deg)'
+         },
+         '&:nth-child(2)': {
+            top: '.4rem',
+            transform: 'rotate(-135deg)'
+         },
+         '&:nth-child(3)': {
+            top: '.4rem',
+            transform: 'rotate(-135deg)'
+         }
+      },
+      '@media screen and (min-width: 990px)': {
+         display: 'none',
+         '&.open': {
+            display: 'none'
+         }
       }
    }
 }[format]);

@@ -41,7 +41,7 @@ const Filters = ({ onFilters }) => {
    };
 
    const onFiltersSearch = e => {
-      // Condition uniquement pour la recherche mobile (width =< 990px)
+      // Condition onResizeWidth uniquement pour la recherche mobile (width =< 990px)
       if (e) e.preventDefault()
 
       if ((neuf && occasion) || (!neuf && !occasion)) {
@@ -65,97 +65,98 @@ const Filters = ({ onFilters }) => {
       onResizeWidth();
    }, [filters])
 
-   // Si params dans l'URL, changer les filtres
    useEffect(() => {
       const URLParams = router.query;
       if (URLParams) setFilters(URLParams)
    },[])
 
    return (
-      <FiltersComp className={openFilters ? 'open' : ''}>
-         <div className={`btn-close ${openFilters ? 'open' : ''}`} onClick={() => setOpenFilters(!openFilters)}>
+      <>
+         <Button close className={openFilters ? 'open' : ''} onClick={() => setOpenFilters(!openFilters)}>
             <span/>
             <span/>
             <span/>
-         </div>
+         </Button>
 
-         <form>
-            <div className="row">
-               <h3>Filtres</h3>
-               <p className="reset-filters"><span onClick={resetFilters}>Réinitialiser les filtres</span></p>
-            </div>
+         <Button secondary className="button-filtres" onClick={() => setOpenFilters(!openFilters)}>Filtres</Button>
 
-            <MultiSelect
-               name="body"
-               placeholder="Type de véhicules"
-               options={bodies}
-               onChange={onChange}
-               onReset={onReset}
-            />
+         <FiltersComp className={openFilters ? 'open' : ''}>
+            <form>
+               <div className="row">
+                  <h3>Filtres</h3>
+                  <p className="reset-filters"><span onClick={resetFilters}>Réinitialiser les filtres</span></p>
+               </div>
 
-            <div className="row">
-               <Checkbox label="Neuf / 0km" id="neuf" name="onlyNew" onChange={onChange} onReset={onReset} />
-               <Checkbox label="Occasion" id="occasion" name="onlyNew" onClick={() => setOccasion(!occasion)} onChange={onChange} onReset={onReset} />
-            </div>
-
-            <div className="row">
-               <Input
-                  type="number"
-                  name="priceMin"
-                  placeholder="Prix min"
+               <MultiSelect
+                  name="body"
+                  placeholder="Type de véhicules"
+                  options={bodies}
                   onChange={onChange}
                   onReset={onReset}
                />
-               <Input
-                  type="number"
-                  name="priceMax"
-                  placeholder="Prix max"
+
+               <div className="row">
+                  <Checkbox label="Neuf / 0km" id="neuf" name="onlyNew" onChange={onChange} onReset={onReset} />
+                  <Checkbox label="Occasion" id="occasion" name="onlyNew" onClick={() => setOccasion(!occasion)} onChange={onChange} onReset={onReset} />
+               </div>
+
+               <div className="row">
+                  <Input
+                     type="number"
+                     name="priceMin"
+                     placeholder="Prix min"
+                     onChange={onChange}
+                     onReset={onReset}
+                  />
+                  <Input
+                     type="number"
+                     name="priceMax"
+                     placeholder="Prix max"
+                     onChange={onChange}
+                     onReset={onReset}
+                  />
+               </div>
+
+               <MultiSelect
+                  name="energy"
+                  placeholder="Énergie"
+                  options={energies}
                   onChange={onChange}
                   onReset={onReset}
                />
-            </div>
 
-            <MultiSelect
-               name="energy"
-               placeholder="Énergie"
-               options={energies}
-               onChange={onChange}
-               onReset={onReset}
-            />
+               <MultiSelect
+                  name="gearbox"
+                  className="gearbox"
+                  placeholder="Tranmission"
+                  options={gearbox}
+                  onChange={onChange}
+                  onReset={onReset}
+               />
 
-            <MultiSelect
-               name="gearbox"
-               className="gearbox"
-               placeholder="Tranmission"
-               options={gearbox}
-               onChange={onChange}
-               onReset={onReset}
-            />
+               <MultiSelect
+                  name="doors"
+                  placeholder="Nombre de portes"
+                  options={doors}
+                  onChange={onChange}
+                  onReset={onReset}
+               />
 
-            <MultiSelect
-               name="doors"
-               placeholder="Nombre de portes"
-               options={doors}
-               onChange={onChange}
-               onReset={onReset}
-            />
+               <MultiSelect
+                  name="colorExt"
+                  className="colorExt"
+                  placeholder="Couleur extérieure"
+                  options={colorsExt}
+                  onChange={onChange}
+                  onReset={onReset}
+               />
 
-            <MultiSelect
-               name="colorExt"
-               className="colorExt"
-               placeholder="Couleur extérieure"
-               options={colorsExt}
-               onChange={onChange}
-               onReset={onReset}
-            />
-
-            <div className="wrapper-btn-search-mobile">
-               <Button third onClick={e => onFiltersSearch(e)}>Rechercher</Button>
-            </div>
-         </form>
-
-         <Button secondary className="button-filtres-mobile" onClick={() => setOpenFilters(!openFilters)}>Filtres</Button>
-      </FiltersComp>
+               <div className="wrapper-button-search">
+                  <Button third onClick={e => onFiltersSearch(e)}>Rechercher</Button>
+               </div>
+            </form>
+         </FiltersComp>
+      </>
    )
 };
 
@@ -166,18 +167,20 @@ Filters.propTypes = {
 export default Filters;
 
 export const FiltersComp = styled.div`
+   position: fixed;
    width: 100%;
    padding: 21px 16px 27px;
+   top: 0;
    &.open {
-      position: fixed;
-      top: 0;
       left: 0;
       right: 0;
       bottom: 0;
       display: block;
       width: 100%;
-      z-index: 999;
+      z-index: 8;
       background white;
+      display: flex;
+      flex-direction: column;
       form {
          padding: 70px 0 0;
          background: white;
@@ -210,8 +213,8 @@ export const FiltersComp = styled.div`
       border-radius: 4px;
       display: none;
    }
-   .wrapper-btn-search-mobile {
-      position: fixed;
+   .wrapper-button-search {
+      position: absolute;
       display: block;
       left: 0px;
       bottom: 0;
@@ -235,54 +238,14 @@ export const FiltersComp = styled.div`
          text-decoration: none;
       }
    }
-   .button-filtres-mobile {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      z-index: 6;
-      display: block;
-      width: calc(50vw - 26px);
-   }
-   .btn-close {
-      position: fixed;
-      top: 20px;
-      right: 6px;
-      width: 35px; height: 35px;
-      display: none;
-      cursor: pointer;
-      z-index: 999;
-      &.open {
-         display: block;
-      }
-      span {
-         position: absolute;
-         width: 29px; height: 3px;
-         border-radius: 1px;
-         background: ${theme.blue100};
-         &:nth-child(1) {
-            top: .4rem;
-            transform: rotate(135deg)
-         }
-         &:nth-child(2) {
-            top: .4rem;
-            transform: rotate(-135deg);
-         }
-         &:nth-child(3) {
-            top: .4rem;
-            transform: rotate(-135deg);
-         }
-      }
-   }
    ${medias.min990} {
+      position: relative;
       padding: 0;
       display: block;
       form {
          display: block;
       }
-      .button-filtres-mobile {
-         display: none;
-      }
-      .wrapper-btn-search-mobile {
+      .wrapper-button-search {
          display: none;
       }
    }

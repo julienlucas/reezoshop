@@ -40,7 +40,7 @@ const SearchResults = ({ cars, cityShop, count, filters, onLoadMore, onSort }) =
       <p className="count"><span className="blue">{count}</span> voitures dispos</p>
 
       <Select
-        className="sorting"
+        sorting
         name="sorting"
         options={sorting}
         placeholder="Tri par défaut"
@@ -87,7 +87,7 @@ SearchResults.propTypes = {
 export default SearchResults;
 
 export const ResultsStyled = styled.div`
-  padding: 0 0 0 0;
+  padding: 40px 0 0 0;
   float: none;
   width: 100%;
   h2 {
