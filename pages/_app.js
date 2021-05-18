@@ -16,7 +16,6 @@ class RZSApp extends App {
       // HOCs props
       const hocProps = getHocProps({ ...ctx });
 
-      console.log('hocProps', hocProps);
 
       let pageProps = {};
       if (Component.getInitialProps) {
