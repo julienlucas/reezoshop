@@ -13,8 +13,7 @@ import React from 'react';
                 enhanceApp: (App) => (props) => sheet.collectStyles(<App {...props} />),
              });
 
-          let initialProps = {};
-          if(Document.getInitialProps)  initialProps = await Document.getInitialProps(ctx);
+          const initialProps = await Document.getInitialProps(ctx);
 
           return {
              ...initialProps,
