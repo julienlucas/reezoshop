@@ -8,7 +8,7 @@ import NextImageLazy from '../utils/imgLazy';
 import { numberFormat } from '../utils/formaters';
 import { medias, theme } from '../constants/theme';
 
-const CardCar = ({ _id, className, brand, energy, isNew, gearbox, model, mileage, price, prices, thumbnail, year }) => {
+const CardCar = ({ _id, className, brand, energy, isNew, gearbox, model, mileage, price, prices, title, thumbnail, year }) => {
    const url = makeCarURL({ _id, brand, isNew, model, year });
    const priceDiscounted = prices?.percentage && (price - (price * `.${prices.percentage}`)).toFixed(0);
 
@@ -26,19 +26,13 @@ const CardCar = ({ _id, className, brand, energy, isNew, gearbox, model, mileage
             </>}
 
             <Link href={`annonce/${url}`}>
-               <NextImageLazy
-                  src={thumbnail}
-                  width={367}
-                  height={205}
-                  layout="responsive"
-                  alt=""
-               />
+               <><NextImageLazy src={thumbnail} width={367} height={205} layout="responsive" alt=""/></>
             </Link>
          </div>
          <div className="box-text">
             <h3>
-               <Link href="/">
-                  <a>{brand && brand} {model && model}</a>
+               <Link href={`annonce/${url}`}>
+                  <>{title && title} {!title && `${brand} ${model}`}</>
                </Link>
             </h3>
 
@@ -64,7 +58,8 @@ CardCar.propTypes = {
    model: PropTypes.string,
    mileage: PropTypes.number,
    price: PropTypes.number,
-   prices: PropTypes.number,
+   prices: PropTypes.object,
+   title: PropTypes.string,
    thumbnail: PropTypes.string,
    year: PropTypes.string
 };

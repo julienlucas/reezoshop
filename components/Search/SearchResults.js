@@ -50,15 +50,17 @@ const SearchResults = ({ cars, cityShop, count, filters, onLoadMore, onSort }) =
             className="small-width"
             _id={car._id}
             key={car._id}
-            year={car.year}
+            brand={car.brand}
             gearbox={car.gearbox}
             energy={car.energy}
-            mileage={car.mileage}
-            brand={car.brand}
-            model={car.model}
-            thumbnail={car.oneImage[0]}
-            price={car.price}
             isNew={car.isNew}
+            mileage={car.mileage}
+            model={car.model}
+            price={car.price}
+            prices={car.prices}
+            title={car.title}
+            thumbnail={car.oneImage[0]}
+            year={car.year}
           />)}
       </div>
 

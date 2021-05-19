@@ -113,6 +113,7 @@ const getAdsQuery = `query getAds($queryParams: AdQueryParams!) {
          oneImage:images(count: 1, width: W320)
          price
          prices { originalPrice: originalCommercializationPrice, percentage }
+         title
          thumbs:images(width: W320)
          year
       }
