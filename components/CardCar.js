@@ -5,35 +5,34 @@ import styled from 'styled-components';
 
 import { makeCarURL } from '../utils/url';
 import NextImageLazy from '../utils/imgLazy';
+import { numberFormat } from '../utils/formaters';
 import { medias, theme } from '../constants/theme';
 
-const CardCar = ({ _id, className, brand, energy, isNew, gearbox, model, mileage, thumbnail, price, year }) => {
-   const url = makeCarURL({ _id, brand, isNew, model, year })
-   thumbnail = "https://picsum.photos/480/270";
+const CardCar = ({ _id, className, brand, energy, isNew, gearbox, model, mileage, price, prices, thumbnail, year }) => {
+   const url = makeCarURL({ _id, brand, isNew, model, year });
+   const priceDiscounted = prices?.percentage && (price - (price * `.${prices.percentage}`)).toFixed(0);
 
-   // Ajout d'un espace tous les 3 chiffres
-   const numberFormat = num => {
-      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
-   };
+   // Fake data, à remplacer lorsque que clé 'En Magasin' sera dans l'API
+   const isEnMagasin = true;
+
+   // thumbnail = "https://picsum.photos/480/270";
 
    return (
       <Card className={className}>
          <div className="thumbnail">
             {className === 'small-width' && <>
-               <div className="promo">-20%</div>
-               <div className="en-magasin">En magasin</div>
+               {prices?.percentage && <div className="promo">{prices.percentage}%</div>}
+               {isEnMagasin && <div className="en-magasin">En magasin</div>}
             </>}
 
             <Link href={`annonce/${url}`}>
-               <a>
-                  <NextImageLazy
-                     src={thumbnail}
-                     width={367}
-                     height={205}
-                     layout="responsive"
-                     alt=""
-                  />
-               </a>
+               <NextImageLazy
+                  src={thumbnail}
+                  width={367}
+                  height={205}
+                  layout="responsive"
+                  alt=""
+               />
             </Link>
          </div>
          <div className="box-text">
@@ -48,7 +47,7 @@ const CardCar = ({ _id, className, brand, energy, isNew, gearbox, model, mileage
 
             <div className="box-prix">
                <p className="prix">{price && numberFormat(price)} €</p>
-               {className === 'small-width' && <p className="prix-barre">{price && numberFormat(price)} €</p>}
+               {className === 'small-width' && priceDiscounted  && <p className="prix-barre">{priceDiscounted} €</p>}
             </div>
          </div>
       </Card>
@@ -65,6 +64,7 @@ CardCar.propTypes = {
    model: PropTypes.string,
    mileage: PropTypes.number,
    price: PropTypes.number,
+   prices: PropTypes.number,
    thumbnail: PropTypes.string,
    year: PropTypes.string
 };

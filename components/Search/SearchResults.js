@@ -7,15 +7,12 @@ import CardCar from '../CardCar';
 import Ad from './Ad';
 import Select from '../Select';
 
-import { sorting } from '../../constants/search';
 import { medias } from '../../constants/theme';
+import { capitalize1stLetter, numberFormat } from '../../utils/formaters';
+import { sorting } from '../../constants/search';
 
 const SearchResults = ({ cars, cityShop, count, filters, onLoadMore, onSort }) => {
   const [nbrCars, setNbrCars] = useState(12);
-
-  const capitalize1stLetter = str => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  };
 
   const loadMore = () => {
     setNbrCars((prevState) => prevState + 12);
@@ -37,7 +34,7 @@ const SearchResults = ({ cars, cityShop, count, filters, onLoadMore, onSort }) =
   return (
     <ResultsStyled>
       <h2>{headlineCustom()}</h2>
-      <p className="count"><span className="blue">{count}</span> voitures dispos</p>
+      <p className="count"><span className="blue">{numberFormat(count)}</span> voitures dispos</p>
 
       <Select
         sorting
