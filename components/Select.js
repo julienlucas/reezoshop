@@ -237,6 +237,7 @@ const selectFormat = (format, theme) => ({
          borderRadius: 4,
          minWidth: 268,
          zIndex: 5,
+         listStyle: 'none',
          '&.show': {
             display:'inline-block',
          },
@@ -244,11 +245,13 @@ const selectFormat = (format, theme) => ({
             display: 'none'
          },
          li: {
-            display: 'block',
-            padding: '5px 20px',
             borderBottom: `1px solid ${theme.grey200}`,
             textDecoration: 'none',
             color: theme.black,
+            span: {
+               display: 'block',
+               padding: '5px 20px',
+            },
             '&:last-child': {
                borderColor: 'transparent'
             }

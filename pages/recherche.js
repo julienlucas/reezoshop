@@ -1,57 +1,84 @@
 import { NextSeo } from 'next-seo';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 import BreadCrumb from '../components/BreadCrumb';
 import SearchWrapper from '../components/Search/SearchWrapper';
 
 import graphQLQuery from '../utils/graphql';
 import useShop from '../hooks/useShop';
-import { sortAsc, sortDsc } from '../utils/sorting';
+import { sort } from '../utils/sorting';
 
 function Search({ search }) {
   const [cars, setCars] = useState([]);
   const [count, setCount] = useState(0);
   const [filters, setfilters] = useState({});
+  const [sortOrder, setSortOrder] = useState(null);
   const { shop, shopKey } = useShop();
+  const router = useRouter();
 
   let queryParams = { queryParams: { ...filters } };
 
   const fetchGraphQL = async (getAdsQuery, queryParams) => {
-    const newSearch = await graphQLQuery(getAdsQuery, queryParams)
-    setCount(newSearch.ads.count)
-    setCars(newSearch.ads.ads)
+    const newSearch = await graphQLQuery(getAdsQuery, queryParams);
+    setCount(newSearch.ads.count);
+
+
+    console.log(filters)
+
+    const sortOrder = sortOrder || 'pricesAsc';
+    const sortedCars = sort(newSearch.ads.ads, 'price', sortOrder);
+    setCars(sortedCars);
   };
 
   const onSort = async sorting => {
-    if (sorting === 'prices-dsc') {
-      setCars(prevState => sortDsc(prevState, 'price'));
-    } else if (sorting === 'prices-asc') {
-      setCars(prevState => sortAsc(prevState, 'price'));
-    } else {
-      fetchGraphQL(getAdsQuery, queryParams)
-    }
+    queryParams = { queryParams: { ...filters, size: 12 } };
+    setSortOrder(sorting);
+    fetchGraphQL(getAdsQuery, queryParams);
   };
 
   const onFilters = async filters => {
-    setfilters(filters)
-    fetchGraphQL(getAdsQuery, queryParams)
+    queryParams = { queryParams: { ...filters, size: 12 } };
+    fetchGraphQL(getAdsQuery, queryParams);
+    setfilters(filters);
   };
 
   const onLoadMore = async nbrCars => {
-    queryParams = {
-      queryParams: {
-        ...filters,
-        size: nbrCars
-      }
-    };
-    fetchGraphQL(getAdsQuery, queryParams)
+    queryParams = { queryParams: { ...filters, size: nbrCars } };
+    fetchGraphQL(getAdsQuery, queryParams);
   };
+
+  const onResetFilters = () => {
+    queryParams = { queryParams: { size: 12 } };
+    fetchGraphQL(getAdsQuery, queryParams);
+    setfilters({});
+    setSortOrder(null);
+    router.push({ pathname: '/recherche' }, undefined, { shallow: true });
+  };
+
+  useEffect(() => {
+    // Affichage les params URL lors des filters
+    if (sortOrder || Object.keys(filters).length > 1) {
+      delete filters.size;
+      const query = { ...filters }
+      if (sortOrder) query.sort = sortOrder;
+
+      // Converti en Strings les Arrays des filters
+      Object.keys(query).map((item) => {
+        query[item] = query[item].toString()
+        return null
+      });
+
+      router.push({ pathname: '/recherche', query }, undefined, { shallow: true });
+    }
+  }, [filters, sortOrder])
 
   // Chargement initial
   useEffect(() => {
     setCount(search.ads.count);
-    setCars(sortAsc(search.ads.ads, 'price'));
+    const IntialSorting = sort(search.ads.ads, 'price', 'pricesAsc');
+    setCars(IntialSorting);
   }, [search])
 
   return (
@@ -72,18 +99,23 @@ function Search({ search }) {
         onFilters={filters => onFilters(filters)}
         onLoadMore={nbrCars => onLoadMore(nbrCars)}
         onSort={sorting => onSort(sorting)}
+        onResetFilters={onResetFilters}
       />
       <BreadCrumb params={filters} />
     </>
   );
 };
 
-Search.getInitialProps = async () => {
+Search.getInitialProps = async ({ query }) => {
    const initialQueryParams = { queryParams: { size: 12 } };
 
    let search;
    try {
-      search = await graphQLQuery(getAdsQuery, initialQueryParams);
+     if (query) {
+       search = await graphQLQuery(getAdsQuery, { queryParams: { ...query, size: 12 } });
+     } else {
+       search = await graphQLQuery(getAdsQuery, initialQueryParams);
+     }
    } catch (err) {
       search = {};
    }

@@ -15,13 +15,13 @@ const CardCar = ({ _id, className, brand, energy, isNew, gearbox, model, mileage
    // Fake data, à remplacer lorsque que clé 'En Magasin' sera dans l'API
    const isEnMagasin = true;
 
-   // thumbnail = "https://picsum.photos/480/270";
+   thumbnail = "https://picsum.photos/480/270";
 
    return (
       <Card className={className}>
          <div className="thumbnail">
             {className === 'small-width' && <>
-               {prices?.percentage && <div className="promo">{prices.percentage}%</div>}
+               {prices?.percentage && <div className="promo">-{prices.percentage}%</div>}
                {isEnMagasin && <div className="en-magasin">En magasin</div>}
             </>}
 
@@ -92,7 +92,7 @@ export const Card = styled.div`
    }
    .promo {
       position: absolute;
-      padding: 3px 0 0 3px;
+      padding: 3px 0 0 6px;
       display: flex;
       align-item: center;
       margin-top: 15px;

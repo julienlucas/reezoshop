@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useRouter } from 'next/router';
 
 import Button from '../Button';
 import Checkbox from '../Checkbox';
@@ -11,19 +10,17 @@ import MultiSelect from '../MultiSelect';
 import { bodies, colorsExt, doors, energies, gearbox } from '../../constants/search';
 import { medias, theme } from '../../constants/theme';
 
-const Filters = ({ onFilters }) => {
-   const router = useRouter();
+const Filters = ({ onFilters, onResetFilters }) => {
    const [occasion, setOccasion] = useState(false);
    const [neuf, setNeuf] = useState(false);
    const [openFilters, setOpenFilters] = useState(false);
-   const [filters, setFilters] = useState({ size: 12 });
+   const [filters, setFilters] = useState({size: 12});
+   const reset = filters === '' && true;
 
    const resetFilters = () => {
       setFilters('');
-      onFilters({ size: 12 });
+      onResetFilters();
    };
-
-   const onReset = filters === '' && true;
 
    const onChange = (value, name, id) => {
       if (id === 'occasion') {
@@ -56,7 +53,7 @@ const Filters = ({ onFilters }) => {
 
    // Si width > 990px la recherche se lance automatiquement au changement d'un filtre
    useEffect(() => {
-      function onResizeWidth() {
+      const onResizeWidth = () => {
          const width = document.documentElement.clientWidth;
          if (width > 990 && filters) onFiltersSearch()
       }
@@ -64,11 +61,6 @@ const Filters = ({ onFilters }) => {
 
       onResizeWidth();
    }, [filters])
-
-   useEffect(() => {
-      const URLParams = router.query;
-      if (URLParams) setFilters(URLParams)
-   },[])
 
    return (
       <>
@@ -92,12 +84,12 @@ const Filters = ({ onFilters }) => {
                   placeholder="Type de véhicules"
                   options={bodies}
                   onChange={onChange}
-                  onReset={onReset}
+                  onReset={reset}
                />
 
                <div className="row">
-                  <Checkbox label="Neuf / 0km" id="neuf" name="onlyNew" onChange={onChange} onReset={onReset} />
-                  <Checkbox label="Occasion" id="occasion" name="onlyNew" onClick={() => setOccasion(!occasion)} onChange={onChange} onReset={onReset} />
+                  <Checkbox label="Neuf / 0km" id="neuf" name="onlyNew" onClick={() => setNeuf(!neuf)} onChange={onChange} onReset={reset} />
+                  <Checkbox label="Occasion" id="occasion" name="onlyNew" onClick={() => setOccasion(!occasion)} onChange={onChange} onReset={reset} />
                </div>
 
                <div className="row">
@@ -106,14 +98,14 @@ const Filters = ({ onFilters }) => {
                      name="priceMin"
                      placeholder="Prix min"
                      onChange={onChange}
-                     onReset={onReset}
+                     onReset={reset}
                   />
                   <Input
                      type="number"
                      name="priceMax"
                      placeholder="Prix max"
                      onChange={onChange}
-                     onReset={onReset}
+                     onReset={reset}
                   />
                </div>
 
@@ -122,7 +114,7 @@ const Filters = ({ onFilters }) => {
                   placeholder="Énergie"
                   options={energies}
                   onChange={onChange}
-                  onReset={onReset}
+                  onReset={reset}
                />
 
                <MultiSelect
@@ -131,7 +123,7 @@ const Filters = ({ onFilters }) => {
                   placeholder="Tranmission"
                   options={gearbox}
                   onChange={onChange}
-                  onReset={onReset}
+                  onReset={reset}
                />
 
                <MultiSelect
@@ -139,7 +131,7 @@ const Filters = ({ onFilters }) => {
                   placeholder="Nombre de portes"
                   options={doors}
                   onChange={onChange}
-                  onReset={onReset}
+                  onReset={reset}
                />
 
                <MultiSelect
@@ -148,7 +140,7 @@ const Filters = ({ onFilters }) => {
                   placeholder="Couleur extérieure"
                   options={colorsExt}
                   onChange={onChange}
-                  onReset={onReset}
+                  onReset={reset}
                />
 
                <div className="wrapper-button-search">
@@ -161,7 +153,8 @@ const Filters = ({ onFilters }) => {
 };
 
 Filters.propTypes = {
-   onFilters: PropTypes.func.isRequired
+   onFilters: PropTypes.func.isRequired,
+   onResetFilters: PropTypes.func.isRequired
 };
 
 export default Filters;

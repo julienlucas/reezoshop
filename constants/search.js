@@ -56,6 +56,6 @@ export const colorsExt = [
 
 export const sorting = [
    { value: 'defaultValue', label: 'Tri par défaut' },
-   { value: 'prices-asc', label: 'Prix croissant' },
-   { value: 'prices-dsc', label: 'Prix décroissant' }
+   { value: 'priceAsc', label: 'Prix croissant' },
+   { value: 'priceDsc', label: 'Prix décroissant' }
 ];

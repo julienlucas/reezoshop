@@ -14,7 +14,6 @@ const MultiSelect = ({ className, name, onChange, onReset, options, placeholder 
    const onSelect = (value) => {
       let index = optionsSelected.indexOf(value);
 
-
       if (name === 'doors') {
          index = optionsSelected.indexOf(value[0])
          if (index > -1) {
@@ -48,7 +47,7 @@ const MultiSelect = ({ className, name, onChange, onReset, options, placeholder 
 
    useEffect(() => {
       const value = optionsSelected;
-      onChange(value, name)
+      if (Object.keys(optionsSelected).length > 0) onChange(value, name)
    }, [optionsSelected])
 
    useEffect(() => {
@@ -170,7 +169,7 @@ export const MultiSelectStyled = styled.div`
       box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.15);
       opacity: 0;
       visibility: hidden;
-      z-index: 8;
+      z-index: 5;
       &.show {
          opacity: 1;
          visibility: visible;
