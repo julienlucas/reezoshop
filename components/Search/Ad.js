@@ -15,7 +15,11 @@ const Ad = ({ className }) => {
             <div className="box-text">
                <div>
                <p>Trouvez plus d'annonces sur reezocar.com</p>
-               <Button secondary>Voir plus d'annonces</Button>
+               <Button secondary>
+                  <a href="https://reezocar.com/" target="_blank" rel="noopener noreferrer">
+                     Voir plus d'annonces
+                  </a>
+               </Button>
                </div>
             </div>
             <Image

@@ -91,7 +91,8 @@ const buttonFormat = (format, theme) => ({
       color: theme.black,
       backgroundColor: 'white',
       'a': {
-         color: theme.grey500
+         color: theme.grey500,
+         display: 'block'
       },
       '&:hover, &:focus': {
          background: theme.grey600
