@@ -61,7 +61,8 @@ const Header = ({ path }) => {
         </div>
 
         <Select
-          className={`select-agency ${menu ? 'menu-open' : ''}`}
+          agencies
+          className={menu ? 'menu-open' : ''}
           defaultValue={shopKey}
           onChange={onChangeShop}
           onClick={openOverlay}

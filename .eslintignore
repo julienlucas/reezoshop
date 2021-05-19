@@ -22,3 +22,6 @@ pages/mentions-legales.js
 .idea
 *-debug.log
 *-error.log
+
+# Runtime data
+yarn.lock
