@@ -3,16 +3,18 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 
+import { makeCarURL } from '../utils/url';
 import NextImageLazy from '../utils/imgLazy';
 import { medias, theme } from '../constants/theme';
 
-const CardCar = ({ className, brand, energy, isNew, gearbox, model, mileage, thumbnail, price, year }) => {
+const CardCar = ({ _id, className, brand, energy, isNew, gearbox, model, mileage, thumbnail, price, year }) => {
+   const url = makeCarURL({ _id, brand, isNew, model, year })
+   thumbnail = "https://picsum.photos/480/270";
+
    // Ajout d'un espace tous les 3 chiffres
    const numberFormat = num => {
       return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
    };
-
-   thumbnail = "https://picsum.photos/480/270";
 
    return (
       <Card className={className}>
@@ -22,7 +24,7 @@ const CardCar = ({ className, brand, energy, isNew, gearbox, model, mileage, thu
                <div className="en-magasin">En magasin</div>
             </>}
 
-            <Link href="/">
+            <Link href={`annonce/${url}`}>
                <a>
                   <NextImageLazy
                      src={thumbnail}
@@ -54,6 +56,7 @@ const CardCar = ({ className, brand, energy, isNew, gearbox, model, mileage, thu
 };
 
 CardCar.propTypes = {
+   _id: PropTypes.string,
    className: PropTypes.string,
    brand: PropTypes.string,
    energy: PropTypes.string,

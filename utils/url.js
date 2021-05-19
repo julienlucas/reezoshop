@@ -12,3 +12,12 @@ export const domainToShop = (host) => {
 //
 export const shopToDomain = ({ currentShopKey, host, shopKey }) =>
    (host || '').replace(currentShopKey, shopKey);
+
+export const makeCarURL = ({ _id, brand, isNew, model, year }) => {
+   brand = brand.toLowerCase().trim().replace(/ /g,'')
+   model = model.toLowerCase().trim().replace(/ /g,'')
+   year = year.toLowerCase().trim()
+   isNew = isNew === true ? 'neuve' : isNew === false ? 'occasion' : ''
+
+   return `annonce-${isNew}-${brand && brand}-${model && model}-${year && year}-${_id}`;
+};

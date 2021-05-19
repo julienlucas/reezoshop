@@ -51,13 +51,14 @@ const SearchResults = ({ cars, cityShop, count, filters, onLoadMore, onSort }) =
         {cars?.map(car =>
           <CardCar
             className="small-width"
+            _id={car._id}
             key={car._id}
             year={car.year}
             gearbox={car.gearbox}
             energy={car.energy}
             mileage={car.mileage}
             brand={car.brand}
-            modele={car.model}
+            model={car.model}
             thumbnail={car.oneImage[0]}
             price={car.price}
             isNew={car.isNew}
