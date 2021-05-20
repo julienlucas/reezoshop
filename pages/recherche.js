@@ -10,10 +10,10 @@ import graphQLQuery from '../utils/graphql';
 import useShop from '../hooks/useShop';
 import { sort } from '../utils/sorting';
 
-function Search({ search, query }) {
+const Search = ({ search, query }) => {
   const [cars, setCars] = useState([]);
   const [count, setCount] = useState(0);
-  const [filters, setFilters] = useState(query ? query : {});
+  const [filters, setFilters] = useState({});
   const [sortOrder, setSortOrder] = useState(null);
   const { shop, shopKey } = useShop();
   const router = useRouter();
