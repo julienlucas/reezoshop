@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import GoogleMapReact from 'google-map-react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -37,7 +37,7 @@ const Map = ({ shop }) => {
         <li className={tab === 2 ? 'active' : ''}><button onClick={() => setTab(2)} type="button">Horaires d'ouverture</button></li>
       </ul>
 
-      <GoogleMap shop={shop} tab={tab} mapURL={url => onMapURL(url)} />
+      <GoogleMap shop={shop} tab={tab} onMapURL={url => onMapURL(url)} />
 
       <div className="wrapper">
         <div className="container">
@@ -71,15 +71,15 @@ Map.propTypes = {
 
 export default Map;
 
-const GoogleMap = ({ shop, mapURL }) => {
+const GoogleMap = ({ shop, onMapURL }) => {
   const center = { lat: shop.geo.lat, lng: shop.geo.lng };
   const zoom = 18;
 
-  const handleApiLoaded = (map) => {
-    mapURL(map)
-  };
-
   const Marker = () => <div><MarkerIcon /></div>;
+
+  useEffect(() => {
+    onMapURL(`https://maps.google.com/maps?ll=${shop.geo.lat},${shop.geo.lng}&z=${zoom}`)
+  }, [])
 
   return (
     <div className="google-map">
@@ -93,7 +93,6 @@ const GoogleMap = ({ shop, mapURL }) => {
         scaleControl={false}
         draggable={false}
         yesIWantToUseGoogleMapApiInternals
-        onGoogleApiLoaded={({ map }) => handleApiLoaded(map)}
       >
         <Marker
           lat={center.lat}
@@ -106,7 +105,7 @@ const GoogleMap = ({ shop, mapURL }) => {
 
 GoogleMap.propTypes = {
   shop: PropTypes.object.isRequired,
-  mapURL: PropTypes.func
+  onMapURL: PropTypes.func
 };
 
 export const StyledMap = styled.section`
