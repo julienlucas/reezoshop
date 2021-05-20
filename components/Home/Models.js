@@ -34,15 +34,20 @@ const Models = ({ newCars, usedCars }) => {
                 <Slider {...sliderSettings}>
                   {usedCars?.map(car =>
                     <CardCar
+                      className="card-car"
+                      _id={car._id}
                       key={car._id}
-                      year={car.year}
+                      brand={car.brand}
                       gearbox={car.gearbox}
                       energy={car.energy}
+                      isNew={car.isNew}
                       mileage={car.mileage}
-                      brand={car.brand}
                       model={car.model}
-                      thumbnail={car.oneImage[0]}
                       price={car.price}
+                      prices={car.prices}
+                      title={car.title}
+                      thumbnail={car.oneImage[0]}
+                      year={car.year}
                     />
                   )}
                 </Slider>
@@ -54,15 +59,20 @@ const Models = ({ newCars, usedCars }) => {
                 <Slider {...sliderSettings}>
                   {newCars?.map(car =>
                     <CardCar
+                      className="card-car"
+                      _id={car._id}
                       key={car._id}
-                      year={car.year}
+                      brand={car.brand}
                       gearbox={car.gearbox}
                       energy={car.energy}
+                      isNew={car.isNew}
                       mileage={car.mileage}
-                      brand={car.brand}
-                      modele={car.model}
-                      thumbnail={car.oneImage[0]}
+                      model={car.model}
                       price={car.price}
+                      prices={car.prices}
+                      title={car.title}
+                      thumbnail={car.oneImage[0]}
+                      year={car.year}
                     />
                   )}
                 </Slider>
