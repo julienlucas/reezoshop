@@ -6,26 +6,22 @@ import Input from './Input';
 
 import { theme } from '../constants/theme';
 
-const MultiSelect = ({ className, name, onChange, onReset, options, placeholder }) => {
+const MultiSelectDoors = ({ className, name, onChange, onReset, options, placeholder }) => {
    const node = useRef();
    const [open, setOpen] = useState(false);
-   const [valuesInput, setValuesInput] = useState('');
    const [optionsSelected, setOptionsSeleted] = useState([]);
 
-   const onSelect = (value, label) => {
-      const index = optionsSelected.indexOf(value);
+   const onSelect = (value) => {
+      let index = optionsSelected.indexOf(value);
 
+      index = optionsSelected.indexOf(value[0])
       if (index > -1) {
-         const newActives = optionsSelected.filter((item) => item !== value).map((item) => item)
+         const newActives = optionsSelected.filter((item) => item !== value[0]).filter((item) => item !== value[1]).filter((item) => item !== value[2]).map((item) => item)
          setOptionsSeleted([...newActives])
-
-         valuesInput.replace(label,'')
       } else {
-         optionsSelected.push(value)
+         optionsSelected.push(...value)
          setOptionsSeleted([...optionsSelected])
-
-         setValuesInput(`${valuesInput && valuesInput} ${label && `${label},`}`)
-      };
+      }
    };
 
    const onClick = e => {
@@ -39,15 +35,12 @@ const MultiSelect = ({ className, name, onChange, onReset, options, placeholder 
    };
 
    useEffect(() => {
-      const values = optionsSelected;
-      if (Object.keys(optionsSelected).length > 0) onChange(values, name)
+      const value = optionsSelected;
+      if (Object.keys(optionsSelected).length > 0) onChange(value, name)
    }, [optionsSelected])
 
    useEffect(() => {
-      if (onReset && optionsSelected.length !== 0) {
-         setOptionsSeleted([])
-         setValuesInput('')
-      }
+      if (onReset && optionsSelected.length !== 0) setOptionsSeleted([])
    }, [onReset])
 
    useEffect(() => {
@@ -58,31 +51,27 @@ const MultiSelect = ({ className, name, onChange, onReset, options, placeholder 
    }, []);
 
    return (
-      <StyledMultiSelect className={className} ref={node}>
-         <Input multiSelect type="text" placeholder={placeholder} value={valuesInput} onClick={onClick} onChange={null} />
+      <StyledMultiSelectDoors className={className} ref={node}>
+         <Input multiSelect type="text" placeholder={placeholder} value={optionsSelected} onClick={onClick} onChange={null} />
 
          <div className={`multi-select-popup ${open ? 'show' : ''}`}>
             <p>{placeholder}</p>
 
             <ul>
-               {Object.keys(options).map(item =>
-                  <li key={item} className={optionsSelected.includes(item) ? 'active' : ''}>
-                     <div
-                        className={item}
-                        style={{ background: item }}
-                        onClick={() => onSelect(item, options[item])}
-                     >
-                        <span>{className !== 'colorExt' && options[item]}</span>
+               {options.map(o =>
+                  <li key={o.value} className={optionsSelected.includes(o.value) || optionsSelected.includes(o.value[0]) ? 'active' : ''}>
+                     <div className={o.value} onClick={() => onSelect(o.value)}>
+                        <span>{o.label}</span>
                      </div>
                   </li>
                )}
             </ul>
          </div>
-      </StyledMultiSelect>
+      </StyledMultiSelectDoors>
    )
 };
 
-MultiSelect.propTypes = {
+MultiSelectDoors.propTypes = {
    className: PropTypes.string,
    name: PropTypes.string.isRequired,
    onChange: PropTypes.func.isRequired,
@@ -91,9 +80,9 @@ MultiSelect.propTypes = {
    placeholder: PropTypes.string.isRequired
 };
 
-export default MultiSelect;
+export default MultiSelectDoors;
 
-export const StyledMultiSelect = styled.div`
+export const StyledMultiSelectDoors = styled.div`
    &.gearbox {
       ul {
          grid-template-columns: repeat(2, 1fr);
@@ -124,36 +113,6 @@ export const StyledMultiSelect = styled.div`
             border-radius: 4px;
             height: 47px;
             width: 47px;
-            &.gold::before {
-               background: linear-gradient(#f7e994,#d9a600)
-            };
-            &.grey::before {
-               background: #919191
-            };
-            &.silver::before {
-               background: linear-gradient(#dcdcdc,#acacac);
-            };
-            &.blue::before {
-               background: #0445d8;
-            };
-            &.green::before {
-               background: #2fbd00;
-            };
-            &.beige::before {
-               background: #c8ad7f
-            };
-            &.yellow::before {
-               background: #ffd707
-            };
-            &.orange::before {
-               background: #f34300
-            };
-            &.purple::before {
-               background: #673ab7
-            };
-            &.burgundy::before {
-               background: #bb0000
-            };
             &::before, &::after {
                position: absolute;
                left: 0;

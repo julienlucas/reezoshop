@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import ButtonHamb from '../ButtonHamb';
+import ButtonHamb from '../Buttons/ButtonHamb';
 
 import TelIcon from '../../svgs/tel.svg';
 import { medias, theme } from '../../constants/theme';
@@ -55,6 +55,46 @@ export default Menu;
 export const StyledMenu = styled.div`
    * {
       transition: all .3s ease-out;
+   }
+   .button-menu {
+      position: fixed;
+      top: 20px;
+      right: 15px;
+      float: right;
+      width: 35px;
+      height: 35px;
+      display: block;
+      cursor: pointer;
+      z-index: 999;
+      &:not(.open) span {
+         background: ${theme.black};
+      }
+      &.open {
+         span {
+            background: white;
+            &:nth-child(1) {
+               top: .4rem;
+               transform: rotate(135deg)
+            }
+               &:nth-child(2) {
+               top: .4rem;
+               transform: rotate(-135deg);
+            }
+               &:nth-child(3) {
+               top: .4rem;
+               transform: rotate(-135deg);
+            }
+         }
+      }
+      span {
+         position: absolute;
+         width: 29px; height: 3px;
+         border-radius: 1px;
+         background: ${theme.blue100};
+         &:nth-child(1) {top: 0px}
+         &:nth-child(2) {top: 8px}
+         &:nth-child(3) {top: 16px}
+      }
    }
    .menu {
       position: fixed;

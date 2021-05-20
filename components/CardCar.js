@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 
+import ButtonIsNew from './Buttons/ButtonIsNew';
+
 import { makeCarURL } from '../utils/url';
 import NextImageLazy from '../utils/imgLazy';
 import { numberFormat } from '../utils/formaters';
 import { medias, theme } from '../constants/theme';
+import { bodies, colorsExt, doors, energies, gearboxes } from '../constants/search';
 
 const CardCar = ({ _id, className, brand, energy, isNew, gearbox, model, mileage, price, prices, title, thumbnail, year }) => {
    const url = makeCarURL({ _id, brand, isNew, model, year });
@@ -25,19 +28,19 @@ const CardCar = ({ _id, className, brand, energy, isNew, gearbox, model, mileage
                {isEnMagasin && <div className="en-magasin">En magasin</div>}
             </>}
 
-            <Link href={`annonce/${url}`}>
-               <><NextImageLazy src={thumbnail} width={367} height={205} layout="responsive" alt=""/></>
+            <Link href={url}>
+               <a><NextImageLazy src={thumbnail} width={367} height={205} layout="responsive" alt=""/></a>
             </Link>
          </div>
          <div className="box-text">
             <h3>
-               <Link href={`annonce/${url}`}>
-                  <>{title && title} {!title && `${brand} ${model}`}</>
+               <Link href={url}>
+                  <a>{title && title}</a>
                </Link>
             </h3>
 
-            <p className="description">{gearbox && `${gearbox} ·`} {energy && `${energy} ·`} {year && `${year} ·`} {mileage && `${numberFormat(mileage)} km`}</p>
-            {isNew && <button className="btn btn-neuf-occas" type="button">Neuf /0km</button>}
+            <p className="description">{gearbox && `${(gearboxes[gearbox] || '')} ·`} {energy && `${energies[energy] || ''} ·`} {year && `${year} ·`} {mileage && `${numberFormat(mileage)} km`}</p>
+            {(isNew && className === 'small-width') && <ButtonIsNew className="button-isnew">Neuf /0km</ButtonIsNew>}
 
             <div className="box-prix">
                <p className="prix">{price && numberFormat(price)} €</p>
@@ -164,16 +167,10 @@ export const Card = styled.div`
       text-decoration: line-through;
       font-size: 16px;
    }
-   .btn-neuf-occas {
+   .button-isnew {
       position: absolute;
       bottom: 20px;
       float: left;
-      font-size: 14px;
-      height: 26px;
-      background: white;
-      border: 1px solid ${theme.blue100};
-      color: ${theme.blue100};
-      padding: 0 5px;
    }
    ${medias.min(1400)} {
       &.small-width {
@@ -188,16 +185,6 @@ export const Card = styled.div`
          .prix {
             padding-bottom: 0;
          }
-      }
-   }
-   ${medias.min(1100)} {
-      .btn-neuf-occas {
-         padding: 0 20px;
-      }
-   }
-   @media (max-width: 990px) {
-      .btn-neuf-occas {
-         padding: 0 20px;
       }
    }
    ${medias.min(750)} {

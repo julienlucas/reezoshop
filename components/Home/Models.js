@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Tab, TabList, TabPanel } from 'react-tabs';
 import Slider from 'react-slick';
 
-import Button from '../Button';
+import Button from '../Buttons/Button';
 import CardCar from '../CardCar';
 import { ReactSlickStyles } from '../../constants/react-slick-styles';
 import { ReactTabsStyles } from '../../constants/react-tabs-styles';
@@ -34,16 +34,20 @@ const Models = ({ newCars, usedCars }) => {
                 <Slider {...sliderSettings}>
                   {usedCars?.map(car =>
                     <CardCar
-                      className="cardcar-home"
+                      className="card-car"
+                      _id={car._id}
                       key={car._id}
-                      year={car.year}
+                      brand={car.brand}
                       gearbox={car.gearbox}
                       energy={car.energy}
+                      isNew={car.isNew}
                       mileage={car.mileage}
-                      brand={car.brand}
                       model={car.model}
-                      thumbnail={car.oneImage[0]}
                       price={car.price}
+                      prices={car.prices}
+                      title={car.title}
+                      thumbnail={car.oneImage[0]}
+                      year={car.year}
                     />
                   )}
                 </Slider>
@@ -55,16 +59,20 @@ const Models = ({ newCars, usedCars }) => {
                 <Slider {...sliderSettings}>
                   {newCars?.map(car =>
                     <CardCar
-                      className="cardcar-home"
+                      className="card-car"
+                      _id={car._id}
                       key={car._id}
-                      year={car.year}
+                      brand={car.brand}
                       gearbox={car.gearbox}
                       energy={car.energy}
+                      isNew={car.isNew}
                       mileage={car.mileage}
-                      brand={car.brand}
-                      modele={car.model}
-                      thumbnail={car.oneImage[0]}
+                      model={car.model}
                       price={car.price}
+                      prices={car.prices}
+                      title={car.title}
+                      thumbnail={car.oneImage[0]}
+                      year={car.year}
                     />
                   )}
                 </Slider>
@@ -127,23 +135,20 @@ export const StyledModels = styled.section`
     height: 360px !important;
   }
   .container:first-child {
-    padding: 0;
+    padding-left: 0;
   }
   .slider {
-    margin-left: 10px;
+    margin-left: 20px;
     .slick-slide {
-      margin: 0 10px;
+      margin: 0 -50px 0px 70px;
       * {
         outline: 0;
         user-select: none;
       }
-      .cardcar-home {
+      .card-car {
         left: 10px;
       }
     }
-  }
-  button {
-    width: 100%
   }
   ${medias.min768} {
     padding: 125px 0 40px;
@@ -156,7 +161,7 @@ export const StyledModels = styled.section`
     }
   }
   ${medias.min620} {
-    button {
+    .btn {
       width: auto;
     }
   }

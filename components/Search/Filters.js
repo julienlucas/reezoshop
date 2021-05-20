@@ -6,8 +6,9 @@ import Button from '../Button';
 import Checkbox from '../Checkbox';
 import Input from '../Input';
 import MultiSelect from '../MultiSelect';
+import MultiSelectDoors from '../MultiSelectDoors';
 
-import { bodies, colorsExt, doors, energies, gearbox } from '../../constants/search';
+import { bodies, colorsExt, doors, energies, gearboxes } from '../../constants/search';
 import { medias, theme } from '../../constants/theme';
 
 const Filters = ({ onFilters, onResetFilters }) => {
@@ -121,12 +122,12 @@ const Filters = ({ onFilters, onResetFilters }) => {
                   name="gearbox"
                   className="gearbox"
                   placeholder="Tranmission"
-                  options={gearbox}
+                  options={gearboxes}
                   onChange={onChange}
                   onReset={reset}
                />
 
-               <MultiSelect
+               <MultiSelectDoors
                   name="doors"
                   placeholder="Nombre de portes"
                   options={doors}

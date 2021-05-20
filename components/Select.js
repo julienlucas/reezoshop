@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 
 import requireStatic from '../utils/require-static';
 
-const Select = ({ children, className, defaultValue, name, onChange, onClick, onReset, options, placeholder , ...selectProps }) => {
+const Select = ({ children, className, defaultValue, name, onChange, onClick, onReset, options, placeholder, ...selectProps }) => {
    const node = useRef();
 
    const [state, setState] = useState({
@@ -59,8 +59,9 @@ const Select = ({ children, className, defaultValue, name, onChange, onClick, on
    }, []);
 
    const getOptions = () => {
-      return options.map(o => <Option className={className} key={o.value} option={o} onSelect={onSelect} />);
+      return options.map(o => <Option className={className} key={o.value} option={o} onSelect={onSelect} selectProps={selectProps} />);
    };
+
 
    return (
       <SelectStyled className={className} ref={node} {...selectProps} onClick={e => onOpen(e)}>
@@ -79,21 +80,22 @@ Select.propTypes = {
    name: PropTypes.string,
    onClick: PropTypes.func,
    onChange: PropTypes.func,
-   onReset: PropTypes.bool
+   onReset: PropTypes.bool,
+   selectProps: PropTypes.object
 };
 
 Option.propTypes = {
-   className: PropTypes.string,
    option: PropTypes.object,
-   onSelect: PropTypes.func
+   onSelect: PropTypes.func,
+   selectProps: PropTypes.object
 };
 
 export default Select;
 
-function Option ({ className, option, onSelect }) {
+function Option ({ option, onSelect, selectProps}) {
    const router = useRouter();
 
-   if (className === 'select-agency') {
+   if (selectProps.agencies) {
       return (
          <li><a href={`https://${option.value}.reezocar.com${router.pathname}`} title="">{option.label}</a></li>
       )
@@ -187,11 +189,12 @@ const selectFormat = (format, theme) => ({
          },
          a: {
             color: theme.black,
-            textDecoration: 'none'
+            textDecoration: 'none',
+            display: 'block',
+            padding: '5px 20px'
          },
          li: {
-            display: 'block',
-            padding: '5px 20px',
+            listStyle: 'none',
             borderBottom: `1px solid ${theme.grey200}`,
             textDecoration: 'none',
             color: theme.black,

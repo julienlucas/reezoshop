@@ -137,7 +137,7 @@ const Autocomplete = ({ className }) => {
             <ul>
                {filteredSuggestions.map((suggestion, i) =>
                   <Suggestion
-                     className={i === active && true}
+                     className={i === active ? true : false}
                      index={i}
                      key={suggestion}
                      onClick={onClick}

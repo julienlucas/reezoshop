@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
 
-import Button from '../Button';
+import ButtonPhone from '../Buttons/ButtonPhone';
 import Menu from './Menu';
 import Select from '../Select';
 
@@ -16,7 +16,7 @@ const Header = ({ path }) => {
   const { onChangeShop, shops, shop, shopKey } = useShop();
   const [scroll, setScroll] = useState(null);
   const [overlay, setOverlay] = useState(false);
-  const [menuIsVisible, setMenuIsVisible] = useState(false);
+  const [menu, setMenu] = useState(false);
 
   const handleScroll = () => {
     setScroll(window.scrollY);
@@ -27,7 +27,7 @@ const Header = ({ path }) => {
   };
 
   const onMenu = (boolean) => {
-    if (window.innerWidth <= 990) setMenuIsVisible(boolean)
+    if (window.innerWidth <= 990) setMenu(boolean)
   };
 
   useEffect(() => {
@@ -36,20 +36,17 @@ const Header = ({ path }) => {
 
   return (
     <StyledHeader>
-      <NavStyled
-        className={`
-          ${scroll ? 'scroll' : ''}
-          ${path !== '/' ? 'bottomShadow' : ''}
-          ${menuIsVisible ? 'menu-open' : ''}
-        `}
+      <StyledNav
+        className={`${scroll ? 'scroll' : ''} ${
+          path !== '/' ? 'bottomShadow' :
+          menu ? 'menu-open' : ''
+        }`}
       >
-
         <div
-          className={`overlay-mobile ${overlay && !menuIsVisible ? 'show' : 'hide'}`}
-          onClick={() => setOverlay()}
+          className={`overlay-mobile ${overlay && !menu ? 'show' : 'hide'}`}
+          onClick={() => setOverlay(false)}
         />
-
-        <div className={`logo ${menuIsVisible ? 'menu-open' : ''}`}>
+        <div className={`logo ${menu ? 'menu-open' : ''}`}>
           <Link href="/">
               <a>
                 <Image
@@ -65,7 +62,7 @@ const Header = ({ path }) => {
 
         <Select
           agencies
-          className={menuIsVisible ? 'menu-open' : ''}
+          className={menu ? 'menu-open' : ''}
           defaultValue={shopKey}
           onChange={onChangeShop}
           onClick={openOverlay}
@@ -74,18 +71,19 @@ const Header = ({ path }) => {
             value: shopKey
           }))}
         />
-      </NavStyled>
+      </StyledNav>
 
       <Menu headline={shop?.headline} onIsVisible={onMenu} phone={shop?.phone} phoneFormated={shop?.phoneFormated} />
 
-      <div className="bottom-buttons-nav">
-        <Button phone className={`button-phone ${path === '/' ? 'homepage' : ''}`}>
-          <a href={`tel:${shop?.phone}`} rel="noopener noreferrer nofollow" target="_blank">
-            <span>{shop?.phoneFormated}</span>
-          </a>
-        </Button>
+      {path === '/' && (
+        <div className="bottom-buttons-nav">
+          <ButtonPhone className="button-phone">
+            <a href={`tel:${shop?.phone}`} rel="noopener noreferrer nofollow" target="_blank">
+              <span>{shop?.phoneFormated}</span>
+            </a>
+          </ButtonPhone>
         {/* <Button secondary className="button-rdv">Prendre rendez-vous</Button> */}
-      </div>
+      </div>)}
     </StyledHeader>
   );
 };
@@ -106,14 +104,10 @@ export const StyledHeader = styled.header`
     padding: 20px;
     box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
     .button-phone {
-      float: right;
+      float: none;
       margin: auto;
-      width: calc(50vw - 26px);
+      width: 100%;
       z-index: 8;
-      &.homepage {
-        width: 100%;
-        float: none;
-      }
     }
     .button-rdv {
       position: absolute;
@@ -134,10 +128,6 @@ export const StyledHeader = styled.header`
         margin: 4px 75px 0 0;
         width: auto;
         float: right;
-        display: none;
-        &.homepage {
-          display: block;
-        }
       }
       .button-rdv {
         display: none;
@@ -151,12 +141,12 @@ export const StyledHeader = styled.header`
   }
 `
 
-export const NavStyled = styled.nav`
+export const StyledNav = styled.nav`
   position: fixed;
   width: 100vw;
   height: 58px;
   top: 0;
-  z-index: 9;
+  z-index: 8;
   box-shadow: 0 0 0 rgba(0, 0, 0, 0);
   transition: all .3s ease-out;
   .overlay-mobile {
@@ -184,8 +174,7 @@ export const NavStyled = styled.nav`
     border: 1px solid ${theme.grey700};
     box-shadow: 1px 2px 13px rgba(0, 0, 0, 0);
   }
-  &.menu-open, &.menu-open.scroll, &.menu-open.bottomShadow {
-    border: 0;
+  &.menu-open {
     box-shadow: none;
     background: transparent;
   }
