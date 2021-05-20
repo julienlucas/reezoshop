@@ -39,7 +39,7 @@ export async function getStaticProps() {
    try {
       homeDatas = await fetchDatas({ queryParamsNew, queryParamsUsed });
    } catch (err) {
-      homeDatas = {};
+      homeDatas = {newCars: [], usedCars: []};
    }
 
    return {
