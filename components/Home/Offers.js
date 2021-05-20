@@ -100,6 +100,7 @@ export const StyledOffers = styled.section`
     width: 100%;
   }
   .slider {
+    left: 10px;
     .slick-slide {
       position: relative;
       margin: 0 5px;
@@ -135,6 +136,7 @@ export const StyledOffers = styled.section`
       max-width: 100%;
     }
     .slider {
+      left: 0;
       .slick-slide {
         margin: 0 10px;
         height: 300px;
