@@ -75,15 +75,14 @@ const Header = ({ path }) => {
 
       <Menu headline={shop?.headline} onIsVisible={onMenu} phone={shop?.phone} phoneFormated={shop?.phoneFormated} />
 
-      {path === '/' && (
-        <div className="bottom-buttons-nav">
-          <ButtonPhone className="button-phone">
-            <a href={`tel:${shop?.phone}`} rel="noopener noreferrer nofollow" target="_blank">
-              <span>{shop?.phoneFormated}</span>
-            </a>
-          </ButtonPhone>
+      <div className="bottom-buttons-nav">
+        <ButtonPhone className={`button-phone ${path === '/recherche' ? 'search-page' : ''}`}>
+          <a href={`tel:${shop?.phone}`} rel="noopener noreferrer nofollow" target="_blank">
+            <span>{shop?.phoneFormated}</span>
+          </a>
+        </ButtonPhone>
         {/* <Button secondary className="button-rdv">Prendre rendez-vous</Button> */}
-      </div>)}
+      </div>
     </StyledHeader>
   );
 };
@@ -108,6 +107,11 @@ export const StyledHeader = styled.header`
       margin: auto;
       width: 100%;
       z-index: 8;
+      &.search-page {
+        float: right;
+        width: calc(50vw - 26px);
+        display: block;
+      }
     }
     .button-rdv {
       position: absolute;
@@ -128,6 +132,9 @@ export const StyledHeader = styled.header`
         margin: 4px 75px 0 0;
         width: auto;
         float: right;
+        &.search-page {
+          display: none;
+        }
       }
       .button-rdv {
         display: none;
