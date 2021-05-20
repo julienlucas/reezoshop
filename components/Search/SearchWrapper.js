@@ -9,7 +9,7 @@ import SearchResults from './SearchResults';
 
 import { medias } from '../../constants/theme';
 
-function SearchWrapper({ cars, cityShop, count, filters, onFilters, onLoadMore, onSort, onResetFilters }) {
+function SearchWrapper({ cars, cityShop, count, filters, onFilters, onLoadMore, onSort, onResetFilters, onResetSorting }) {
   return (
     <WrapperStyled>
       <div className="container">
@@ -27,6 +27,7 @@ function SearchWrapper({ cars, cityShop, count, filters, onFilters, onLoadMore, 
           filters={filters}
           onLoadMore={nbrCars => onLoadMore(nbrCars)}
           onSort={sorting => onSort(sorting)}
+          onResetSorting={onResetSorting}
         />
       </div>
     </WrapperStyled>
@@ -44,7 +45,8 @@ SearchWrapper.propTypes = {
   onFilters: PropTypes.func.isRequired,
   onLoadMore: PropTypes.func.isRequired,
   onSort: PropTypes.func.isRequired,
-  onResetFilters: PropTypes.func.isRequired
+  onResetFilters: PropTypes.func.isRequired,
+  onResetSorting: PropTypes.bool.isRequired
 };
 
 export default SearchWrapper;

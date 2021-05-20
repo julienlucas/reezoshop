@@ -83,68 +83,6 @@ MultiSelectDoors.propTypes = {
 export default MultiSelectDoors;
 
 export const StyledMultiSelectDoors = styled.div`
-   &.gearbox {
-      ul {
-         grid-template-columns: repeat(2, 1fr);
-      }
-   }
-   &.colorExt {
-      ul {
-         grid-template-columns: repeat(6, 1fr);
-         li {
-            width: 47px;
-            height: 47px;
-            border: 0;
-            &.active {
-               div {
-                  &::before {
-                     height: 48px;
-                     width: 48px;
-                  }
-                  &::before, &::after {
-                     top: calc(50%);
-                     border-radius: 4px;
-                  }
-               }
-            }
-         }
-         div {
-            position: relative;
-            border-radius: 4px;
-            height: 47px;
-            width: 47px;
-            &::before, &::after {
-               position: absolute;
-               left: 0;
-               right: 0;
-               margin: 0 auto;
-               display: table;
-               top: 50%;
-               transform: translateY(-50%);
-               content: '';
-               background: inherit;
-               width: 27px;
-               height: 27px;
-               border-radius: 2px;
-               transition: all .15s ease-out;
-               z-index: 3;
-            }
-            &::after {
-               top: calc(50% - 1px);
-               width: 47px;
-               height: 48px;
-               background: white;
-               z-index: 2;
-               border: 1px solid ${theme.grey600};
-            }
-            &.white {
-               &::before {
-                  border: 1px solid ${theme.grey600}
-               }
-            }
-         }
-      }
-   }
    .multi-select-popup {
       position: absolute;
       margin-top: -7px;

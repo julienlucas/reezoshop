@@ -9,7 +9,7 @@ import { makeCarURL } from '../utils/url';
 import NextImageLazy from '../utils/imgLazy';
 import { numberFormat } from '../utils/formaters';
 import { medias, theme } from '../constants/theme';
-import { bodies, colorsExt, doors, energies, gearboxes } from '../constants/search';
+import { energies, gearboxes } from '../constants/search';
 
 const CardCar = ({ _id, className, brand, energy, isNew, gearbox, model, mileage, price, prices, title, thumbnail, year }) => {
    const url = makeCarURL({ _id, brand, isNew, model, year });

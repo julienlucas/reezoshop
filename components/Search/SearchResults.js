@@ -11,7 +11,7 @@ import { medias } from '../../constants/theme';
 import { capitalize1stLetter, numberFormat } from '../../utils/formaters';
 import { sorting } from '../../constants/search';
 
-const SearchResults = ({ cars, cityShop, count, filters, onLoadMore, onSort }) => {
+const SearchResults = ({ cars, cityShop, count, filters, onLoadMore, onSort, onResetSorting }) => {
   const [nbrCars, setNbrCars] = useState(12);
 
   const loadMore = () => {
@@ -42,6 +42,7 @@ const SearchResults = ({ cars, cityShop, count, filters, onLoadMore, onSort }) =
         options={sorting}
         placeholder="Tri par défaut"
         onChange={sorting => onSort(sorting)}
+        onReset={onResetSorting}
       />
 
       <div className="row">
@@ -81,7 +82,8 @@ SearchResults.propTypes = {
    count: PropTypes.number.isRequired,
    filters: PropTypes.object.isRequired,
    onLoadMore: PropTypes.func.isRequired,
-   onSort: PropTypes.func.isRequired
+   onSort: PropTypes.func.isRequired,
+   onResetSorting: PropTypes.bool.isRequired
 };
 
 export default SearchResults;

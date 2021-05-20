@@ -10,41 +10,33 @@ import graphQLQuery from '../utils/graphql';
 import useShop from '../hooks/useShop';
 import { sort } from '../utils/sorting';
 
-function Search({ search }) {
+function Search({ search, query }) {
   const [cars, setCars] = useState([]);
   const [count, setCount] = useState(0);
-  const [filters, setfilters] = useState({});
+  const [filters, setFilters] = useState(query ? query : {});
   const [sortOrder, setSortOrder] = useState(null);
   const { shop, shopKey } = useShop();
   const router = useRouter();
 
-  let queryParams = { queryParams: { ...filters } };
+  let queryParams = { queryParams: { ...filters, size: 12 } };
 
   const fetchGraphQL = async (getAdsQuery, queryParams) => {
     const newSearch = await graphQLQuery(getAdsQuery, queryParams);
     setCount(newSearch.ads.count);
 
-
-    console.log(filters)
-
-    const sortOrder = sortOrder || 'pricesAsc';
-    const sortedCars = sort(newSearch.ads.ads, 'price', sortOrder);
+    const sortedCars = sort(newSearch.ads.ads, 'price', sortOrder || 'pricesAsc');
     setCars(sortedCars);
   };
 
-  const onSort = async sorting => {
-    queryParams = { queryParams: { ...filters, size: 12 } };
-    setSortOrder(sorting);
-    fetchGraphQL(getAdsQuery, queryParams);
-  };
+  const onSort = sorting => setSortOrder(sorting);
 
-  const onFilters = async filters => {
-    queryParams = { queryParams: { ...filters, size: 12 } };
-    fetchGraphQL(getAdsQuery, queryParams);
-    setfilters(filters);
-  };
+  const onFilters = filters => setFilters(filters);
 
-  const onLoadMore = async nbrCars => {
+  useEffect(() => {
+    if (sortOrder) fetchGraphQL(getAdsQuery, queryParams);
+  }, [sortOrder, filters])
+
+  const onLoadMore = nbrCars => {
     queryParams = { queryParams: { ...filters, size: nbrCars } };
     fetchGraphQL(getAdsQuery, queryParams);
   };
@@ -52,23 +44,23 @@ function Search({ search }) {
   const onResetFilters = () => {
     queryParams = { queryParams: { size: 12 } };
     fetchGraphQL(getAdsQuery, queryParams);
-    setfilters({});
+    setFilters({});
     setSortOrder(null);
     router.push({ pathname: '/recherche' }, undefined, { shallow: true });
   };
 
   useEffect(() => {
-    // Affichage les params URL lors des filters
+    // Affiche les params URL en formatant les filters pour le query
     if (sortOrder || Object.keys(filters).length > 1) {
       delete filters.size;
       const query = { ...filters }
-      if (sortOrder) query.sort = sortOrder;
 
-      // Converti en Strings les Arrays des filters
       Object.keys(query).map((item) => {
-        query[item] = query[item].toString()
+        query[item] = query[item].toString().replace(/,/g, '-')
         return null
       });
+
+      if (sortOrder) query.sort = sortOrder; // Ajoute dans le query le sort
 
       router.push({ pathname: '/recherche', query }, undefined, { shallow: true });
     }
@@ -100,6 +92,7 @@ function Search({ search }) {
         onLoadMore={nbrCars => onLoadMore(nbrCars)}
         onSort={sorting => onSort(sorting)}
         onResetFilters={onResetFilters}
+        onResetSorting={sortOrder === null && true}
       />
       <BreadCrumb params={filters} />
     </>
@@ -112,15 +105,22 @@ Search.getInitialProps = async ({ query }) => {
    let search;
    try {
      if (query) {
-       search = await graphQLQuery(getAdsQuery, { queryParams: { ...query, size: 12 } });
-     } else {
-       search = await graphQLQuery(getAdsQuery, initialQueryParams);
-     }
+
+        Object.keys(query).forEach((item) => {
+          const array = query[item].split('-', 2);
+          query[item] = array
+          return;
+        });
+        search = await graphQLQuery(getAdsQuery, { queryParams: { ...query, size: 12 } });
+
+      } else {
+        search = await graphQLQuery(getAdsQuery, initialQueryParams);
+      }
    } catch (err) {
       search = {};
    }
 
-   return { search };
+   return { search, query };
 };
 
 Search.propTypes = {

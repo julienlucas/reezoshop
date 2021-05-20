@@ -87,7 +87,7 @@ MultiSelect.propTypes = {
    name: PropTypes.string.isRequired,
    onChange: PropTypes.func.isRequired,
    onReset: PropTypes.bool,
-   options: PropTypes.array.isRequired,
+   options: PropTypes.object.isRequired,
    placeholder: PropTypes.string.isRequired
 };
 
