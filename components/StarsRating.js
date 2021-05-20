@@ -6,7 +6,7 @@ import { theme } from '../constants/theme';
 
 const Stars = ({ nbrAvis, note }) => (
    <StyledStarsRating>
-      <span>4,2</span>
+      <span>{note}</span>
       <div className={note > '1' ? 'active' : ''}>★</div>
       <div className={note > '2' ? 'active' : ''}>★</div>
       <div className={note > '3' ? 'active' : ''}>★</div>
