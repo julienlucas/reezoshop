@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 
-import Button from '../Button';
+import Button from '../Buttons/Button';
 
 import { medias } from '../../constants/theme';
 import requireStatic from '../../utils/require-static';

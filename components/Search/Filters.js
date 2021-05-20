@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import Button from '../Button';
+import Button from '../Buttons/Button';
+import ButtonClose from '../Buttons/ButtonClose';
 import Checkbox from '../Checkbox';
 import Input from '../Input';
 import MultiSelect from '../MultiSelect';
@@ -65,11 +66,11 @@ const Filters = ({ onFilters, onResetFilters }) => {
 
    return (
       <>
-         <Button close className={openFilters ? 'open' : ''} onClick={() => setOpenFilters(!openFilters)}>
+         <ButtonClose className={openFilters ? 'open' : ''} onClick={() => setOpenFilters(false)}>
             <span/>
             <span/>
             <span/>
-         </Button>
+         </ButtonClose>
 
          <Button secondary className="button-filtres" onClick={() => setOpenFilters(!openFilters)}>Filtres</Button>
 
@@ -145,7 +146,7 @@ const Filters = ({ onFilters, onResetFilters }) => {
                />
 
                <div className="wrapper-button-search">
-                  <Button third onClick={e => onFiltersSearch(e)}>Rechercher</Button>
+                  <Button third className="full-width" onClick={e => onFiltersSearch(e)}>Rechercher</Button>
                </div>
             </form>
          </FiltersComp>

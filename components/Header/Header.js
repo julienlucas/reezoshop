@@ -16,7 +16,7 @@ const Header = ({ path }) => {
   const { onChangeShop, shops, shop, shopKey } = useShop();
   const [scroll, setScroll] = useState(null);
   const [overlay, setOverlay] = useState(false);
-  const [menu, setMenu] = useState(false);
+  const [menuIsVisible, setMenuIsVisible] = useState(false);
 
   const handleScroll = () => {
     setScroll(window.scrollY);
@@ -27,7 +27,7 @@ const Header = ({ path }) => {
   };
 
   const onMenu = (boolean) => {
-    if (window.innerWidth <= 990) setMenu(boolean)
+    if (window.innerWidth <= 990) setMenuIsVisible(boolean)
   };
 
   useEffect(() => {
@@ -37,16 +37,17 @@ const Header = ({ path }) => {
   return (
     <StyledHeader>
       <StyledNav
-        className={`${scroll ? 'scroll' : ''} ${
-          path !== '/' ? 'bottomShadow' :
-          menu ? 'menu-open' : ''
-        }`}
+        className={`
+          ${scroll ? 'scroll' : ''}
+          ${path !== '/' ? 'bottomShadow' : ''}
+          ${menuIsVisible ? 'menu-open' : ''}
+        `}
       >
         <div
-          className={`overlay-mobile ${overlay && !menu ? 'show' : 'hide'}`}
+          className={`overlay-mobile ${overlay && !menuIsVisible ? 'show' : 'hide'}`}
           onClick={() => setOverlay(false)}
         />
-        <div className={`logo ${menu ? 'menu-open' : ''}`}>
+        <div className={`logo ${menuIsVisible ? 'menu-open' : ''}`}>
           <Link href="/">
               <a>
                 <Image
@@ -62,7 +63,7 @@ const Header = ({ path }) => {
 
         <Select
           agencies
-          className={menu ? 'menu-open' : ''}
+          className={menuIsVisible ? 'menu-open' : ''}
           defaultValue={shopKey}
           onChange={onChangeShop}
           onClick={openOverlay}
@@ -153,7 +154,7 @@ export const StyledNav = styled.nav`
   width: 100vw;
   height: 58px;
   top: 0;
-  z-index: 8;
+  z-index: 9;
   box-shadow: 0 0 0 rgba(0, 0, 0, 0);
   transition: all .3s ease-out;
   .overlay-mobile {
@@ -181,7 +182,8 @@ export const StyledNav = styled.nav`
     border: 1px solid ${theme.grey700};
     box-shadow: 1px 2px 13px rgba(0, 0, 0, 0);
   }
-  &.menu-open {
+  &.menu-open, &.menu-open.scroll, &.menu-open.bottomShadow {
+    border: 0;
     box-shadow: none;
     background: transparent;
   }

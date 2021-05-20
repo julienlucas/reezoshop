@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import Button from './Button';
+import Button from './Buttons/Button';
 
 import { theme } from '../constants/theme';
 

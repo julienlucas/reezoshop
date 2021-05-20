@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react';
 import requireStatic from '../utils/require-static';
 import { theme } from '../constants/theme';
 
-
 const Input = ({ className, name, onChange, onReset, placeholder, type, ...inputProps }) => {
    const [state, setState] = useState('')
 

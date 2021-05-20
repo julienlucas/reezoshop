@@ -2,13 +2,14 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 
-const Button = ({ children, component = 'button', type = 'button', ...buttonProps }) => (
-    <StyledButton as={component} type={type} {...buttonProps}>
+const Button = ({ className, children, component = 'button', type = 'button', ...buttonProps }) => (
+    <StyledButton className={className} as={component} type={type} {...buttonProps}>
        {children}
     </StyledButton>
  );
 
 Button.propTypes = {
+   className: PropTypes.string,
    children: PropTypes.node,
    component: PropTypes.string,
    type: PropTypes.string,
@@ -47,20 +48,29 @@ const StyledButton = styled.button(({ styles = {}, theme, ...props }) => {
          height: 35,
          lineHeight: '30px'
       },
-      ...(props.full ? buttonFull : {}),
+      '&.full-width': {
+         width: '100%'
+      },
+      '&.button-filtres': {
+         position: 'fixed',
+         bottom: 20,
+         left: 20,
+         zIndex: 6,
+         width: 'calc(50vw - 26px)',
+         display: 'block',
+         '@media screen and (min-width: 990px)': {
+            display: 'none'
+         }
+      },
       ...(props.primary ? buttonFormat('primary', theme) : {}),
       ...(props.secondary ? buttonFormat('secondary', theme) : {}),
       ...(props.third ? buttonFormat('third', theme) : {}),
       ...(props.fourth ? buttonFormat('fourth', theme) : {}),
-      ...(props.neuf ? buttonFormat('neuf', theme) : {}),
       ...(props.clear ? buttonFormat('clear', theme) : {}),
+      ...(props.breadcrumb ? buttonFormat('breadcrumb', theme) : {}),
       ...styles,
    }
 });
-
-const buttonFull = {
-   width: '100%'
-};
 
 const buttonFormat = (format, theme) => ({
    primary: {
@@ -122,5 +132,21 @@ const buttonFormat = (format, theme) => ({
       textAlign: 'left',
       display: 'inline',
       width: '100%',
+   },
+   breadcrumb: {
+      position: 'relative',
+      padding: 0,
+      margin: 0,
+      fontSize: 14,
+      fontWeight: 400,
+      lineHeight: 1.2,
+      height: 'auto',
+      background: 'white',
+      border: 0,
+      color: theme.black,
+      textAlign: 'left',
+      'a': {
+         color: theme.black
+      }
    }
 }[format]);
