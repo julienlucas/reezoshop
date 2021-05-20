@@ -10,8 +10,8 @@ import requireStatic from '../../utils/require-static';
 import { medias, theme } from '../../constants/theme';
 
 const Offers = ({ subHeadline }) => {
-  const [occasionPic, setOccasionPic] = useState('images/promo-occasion.png');
-  const [neufPic, setNeufPic] = useState('images/promo-neuf.png');
+  const [neufPic, setNeufPic] = useState('images/autopromo-desktop-neuf.jpg');
+  const [occasionPic, setOccasionPic] = useState('images/autopromo-desktop-occasion.jpg');
 
   const sliderSettings = {
     className: 'slider',
@@ -29,11 +29,11 @@ const Offers = ({ subHeadline }) => {
     function onResizeWidth(){
       const width = document.documentElement.clientWidth;
       if (width >= 768) {
-        setNeufPic('images/promo-neuf.png');
-        setOccasionPic('images/promo-occasion.png');
+        setNeufPic('images/autopromo-desktop-neuf.jpg');
+        setOccasionPic('images/autopromo-desktop-occasion.jpg');
       } else {
-        setNeufPic('images/promo-mobile.png');
-        setOccasionPic('images/promo-mobile.png');
+        setNeufPic('images/autopromo-mobile-neuf.jpg');
+        setOccasionPic('images/autopromo-mobile-occasion.jpg');
       }
     }
     window.addEventListener('resize', onResizeWidth);
