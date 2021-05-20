@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import ButtonHamb from '../ButtonHamb';
+import ButtonHamb from '../Buttons/ButtonHamb';
 
 import TelIcon from '../../svgs/tel.svg';
 import { medias, theme } from '../../constants/theme';
@@ -61,7 +61,8 @@ export const StyledMenu = styled.div`
       top: 20px;
       right: 15px;
       float: right;
-      width: 35px; height: 35px;
+      width: 35px;
+      height: 35px;
       display: block;
       cursor: pointer;
       z-index: 999;

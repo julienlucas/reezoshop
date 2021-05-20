@@ -2,8 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 
-import requireStatic from '../utils/require-static';
-
 const Button = ({ children, component = 'button', type = 'button', ...buttonProps }) => (
     <StyledButton as={component} type={type} {...buttonProps}>
        {children}
@@ -49,21 +47,12 @@ const StyledButton = styled.button(({ styles = {}, theme, ...props }) => {
          height: 35,
          lineHeight: '30px'
       },
-      '&.button-filtres-mobile': {
-         position: 'fixed',
-         bottom: 20,
-         left: 20,
-         zIndex: 6,
-         width: 'calc(50vw - 26px)',
-      },
-
       ...(props.full ? buttonFull : {}),
       ...(props.primary ? buttonFormat('primary', theme) : {}),
       ...(props.secondary ? buttonFormat('secondary', theme) : {}),
       ...(props.third ? buttonFormat('third', theme) : {}),
       ...(props.fourth ? buttonFormat('fourth', theme) : {}),
       ...(props.neuf ? buttonFormat('neuf', theme) : {}),
-      ...(props.phone ? buttonFormat('phone', theme) : {}),
       ...(props.clear ? buttonFormat('clear', theme) : {}),
       ...styles,
    }
@@ -118,31 +107,6 @@ const buttonFormat = (format, theme) => ({
          background: theme.black,
          color: 'white'
       }
-   },
-   phone: {
-      padding: '0 0 0 16px',
-      color: 'white',
-      backgroundColor: theme.orange100,
-      '&:hover': {
-         backgroundColor: theme.orange200
-      },
-      'span': {
-         padding: '0 20px 0 34px',
-         width: 'auto',
-         lineHeight: '47px',
-         background: `url(${requireStatic('icons/tel.svg')}) no-repeat`,
-         backgroundPosition: '3px 55%',
-         backgroundSize: '20px'
-      }
-   },
-   neuf: {
-      fontSize: 14,
-      height: 30,
-      lineHeight: '27px',
-      background: 'white',
-      border: `1px solid ${theme.blue100}`,
-      color: theme.blue100,
-      padding: '0 25px',
    },
    clear: {
       position: 'relative',

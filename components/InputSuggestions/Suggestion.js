@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 
-import Button from '../Button';
+import Button from '../Buttons/Button';
 
 const Suggestion = ({ className, index, onClick, suggestion }) => (
    <StyledSuggestion className={className ? 'active' : ''}>

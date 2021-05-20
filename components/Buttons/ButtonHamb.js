@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import Button from './Button';
 
-import { medias, theme } from '../constants/theme';
+import { medias, theme } from '../../constants/theme';
 
 const ButtonHamb = ({ className, onClick }) => (
    <StyledButtonHamb className={className ? 'open' : ''}>

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import React from 'react';
 import { useRouter } from 'next/router';
 
-import Button from '../Button';
+import Button from '../Buttons/Button';
 import InputSuggestions from '../InputSuggestions/InputSuggestions';
 
 import requireStatic from '../../utils/require-static';
@@ -17,12 +17,7 @@ const HeroSearch = ({ headline }) => {
    };
 
   return (
-    <StyledHero
-      style={{
-        background: `url(${requireStatic('images/header-home.png')})`,
-        backgroundSize: 'cover'
-      }}
-    >
+    <StyledHero background={`url(${requireStatic('images/header-home.png')})`}>
       <div className="container">
         <div>
           <h1>{headline}</h1>
@@ -62,6 +57,7 @@ export const StyledHero = styled.section`
   width: 100%;
   height: 630px;
   display: table;
+  background: ${props => props.background};
   background-position: 0% 0%;
   background-size: cover;
   z-index: 1;

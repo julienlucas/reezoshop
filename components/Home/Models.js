@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Tab, TabList, TabPanel } from 'react-tabs';
 import Slider from 'react-slick';
 
-import Button from '../Button';
+import Button from '../Buttons/Button';
 import CardCar from '../CardCar';
 import { ReactSlickStyles } from '../../constants/react-slick-styles';
 import { ReactTabsStyles } from '../../constants/react-tabs-styles';

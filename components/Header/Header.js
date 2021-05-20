@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
 
-import Button from '../Button';
+import ButtonPhone from '../Buttons/ButtonPhone';
 import Menu from './Menu';
 import Select from '../Select';
 
@@ -36,7 +36,7 @@ const Header = ({ path }) => {
 
   return (
     <StyledHeader>
-      <NavStyled
+      <StyledNav
         className={`${scroll ? 'scroll' : ''} ${
           path !== '/' ? 'bottomShadow' :
           menu ? 'menu-open' : ''
@@ -71,17 +71,17 @@ const Header = ({ path }) => {
             value: shopKey
           }))}
         />
-      </NavStyled>
+      </StyledNav>
 
       <Menu headline={shop?.headline} onIsVisible={onMenu} phone={shop?.phone} phoneFormated={shop?.phoneFormated} />
 
       {path === '/' && (
         <div className="bottom-buttons-nav">
-          <Button phone className="button-phone">
+          <ButtonPhone className="button-phone">
             <a href={`tel:${shop?.phone}`} rel="noopener noreferrer nofollow" target="_blank">
               <span>{shop?.phoneFormated}</span>
             </a>
-          </Button>
+          </ButtonPhone>
         {/* <Button secondary className="button-rdv">Prendre rendez-vous</Button> */}
       </div>)}
     </StyledHeader>
@@ -141,7 +141,7 @@ export const StyledHeader = styled.header`
   }
 `
 
-export const NavStyled = styled.nav`
+export const StyledNav = styled.nav`
   position: fixed;
   width: 100vw;
   height: 58px;

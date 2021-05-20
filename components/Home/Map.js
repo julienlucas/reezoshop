@@ -3,7 +3,7 @@ import GoogleMapReact from 'google-map-react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import Button from '../Button';
+import Button from '../Buttons/Button';
 import BoxGoogleRating from '../BoxGoogleRating';
 import MarkerIcon from '../../svgs/marker-b.svg';
 
@@ -71,11 +71,10 @@ Map.propTypes = {
 
 export default Map;
 
-const GoogleMap = ({ shop, onMapURL }) => {
-  const center = { lat: shop.geo.lat, lng: shop.geo.lng };
-  const zoom = 18;
+const Marker = () => <div><MarkerIcon /></div>;
 
-  const Marker = () => <div><MarkerIcon /></div>;
+const GoogleMap = ({ shop, onMapURL, zoom = 18 }) => {
+  const center = { lat: shop.geo.lat, lng: shop.geo.lng };
 
   useEffect(() => {
     onMapURL(`https://maps.google.com/maps?ll=${shop.geo.lat},${shop.geo.lng}&z=${zoom}`)
@@ -105,7 +104,8 @@ const GoogleMap = ({ shop, onMapURL }) => {
 
 GoogleMap.propTypes = {
   shop: PropTypes.object.isRequired,
-  onMapURL: PropTypes.func
+  onMapURL: PropTypes.func,
+  zoom: PropTypes.number
 };
 
 export const StyledMap = styled.section`

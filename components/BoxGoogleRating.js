@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 
+import StarsRating from './StarsRating';
+
 import MarkerIcon from '../svgs/marker.svg';
 import { medias, theme } from '../constants/theme';
 
@@ -13,15 +15,7 @@ const BoxGoogleRating = ({ className, address, headline, googleAvis, googleNote 
             <h3 className="big">{headline}</h3>
             <p>{address}</p>
 
-            <RatingStars>
-               <span>4,2</span>
-               <div className={googleNote > '1' ? 'active' : ''}>★</div>
-               <div className={googleNote > '2' ? 'active' : ''}>★</div>
-               <div className={googleNote > '3' ? 'active' : ''}>★</div>
-               <div className={googleNote > '4' ? 'active' : ''}>★</div>
-               <div className={googleNote > '5' ? 'active' : ''}>★</div>
-               <span>sur {googleAvis} avis Google</span>
-            </RatingStars>
+            <StarsRating nbrAvis={googleAvis} note={googleNote} />
          </div>
       </StyledBoxGoogle>
    );
@@ -75,21 +69,5 @@ export const StyledBoxGoogle = styled.div`
       margin-bottom: 7px;
       font-size: 16px;
       font-weight: 600;
-   }
-`
-
-export const RatingStars = styled.div`
-   color: ${theme.grey100};
-   font-size: 16px;
-   font-weight: 600;
-   * {
-      display: inline-block;
-   }
-   div {
-      top: 1px;
-      color: ${theme.grey400};
-      &.active {
-         color: orange;
-      }
    }
 `

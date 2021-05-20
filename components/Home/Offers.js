@@ -4,7 +4,7 @@ import Slider from 'react-slick';
 import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
 
-import Button from '../Button';
+import Button from '../Buttons/Button';
 import NextImageLazy from '../../utils/imgLazy';
 import requireStatic from '../../utils/require-static';
 import { medias, theme } from '../../constants/theme';
@@ -41,39 +41,39 @@ const Offers = ({ subHeadline }) => {
   }, []);
 
   return (
-    <StyledOffers>
+    <StyledOffers neufPic={neufPic} occassionPic={occasionPic}>
       <h2 className="text-center">En ce moment dans votre <span className="blue">{subHeadline}</span></h2>
 
       <div className="container">
         <Slider {...sliderSettings}>
-            <div className="card-promo">
-              <Link href="/">
-                <a>
-                  <Button primary className="small-height">Profitez-en !</Button>
-                  <NextImageLazy
-                    src={requireStatic(neufPic)}
-                    width={560}
-                    height={310}
-                    layout="responsive"
-                    alt=""
-                  />
-                </a>
-              </Link>
-            </div>
-            <div className="card-promo">
-              <Link href="/">
-                <a>
-                  <Button primary className="small-height">Profitez-en !</Button>
-                  <NextImageLazy
-                    src={requireStatic(occasionPic)}
-                    width={560}
-                    height={310}
-                    layout="responsive"
-                    alt=""
-                  />
-                </a>
-              </Link>
-            </div>
+          <div className="card-promo">
+            <Link href="/">
+              <a>
+                <Button primary className="small-height">Profitez-en !</Button>
+                <NextImageLazy
+                  src={requireStatic(neufPic)}
+                  width={560}
+                  height={310}
+                  layout="responsive"
+                  alt=""
+                />
+              </a>
+            </Link>
+          </div>
+          <div className="card-promo">
+            <Link href="/">
+              <a>
+                <Button primary className="small-height">Profitez-en !</Button>
+                <NextImageLazy
+                  src={requireStatic(occasionPic)}
+                  width={560}
+                  height={310}
+                  layout="responsive"
+                  alt=""
+                />
+              </a>
+            </Link>
+          </div>
         </Slider>
       </div>
     </StyledOffers>
