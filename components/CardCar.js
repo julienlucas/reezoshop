@@ -86,7 +86,7 @@ export const Card = styled.div`
       width: 100%;
       min-height: auto;
       .box-text {
-         height: 150px;
+         height: 205px;
       }
       .prix {
          text-align: right;
