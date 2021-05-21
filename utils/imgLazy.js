@@ -10,7 +10,7 @@ import React, { useRef, useEffect, useState } from 'react';
 //
 // Composant à recréer avec next/image lorsque le bug chez eux sera corrigé
 
-const NextImageLazy = ({ alt, src, srcSet }) => {
+const NextImageLazy = ({ alt, height, width, src, srcSet }) => {
    const domRef = useRef();
    const [smoothLoad, setSmoothLoad] = useState(false);
 
@@ -32,6 +32,8 @@ const NextImageLazy = ({ alt, src, srcSet }) => {
       <NextImage className={smoothLoad ? 'smooth-load' : ''} ref={domRef}>
          <img
             alt={alt}
+            width={width}
+            height={height}
             src={src}
             srcSet={srcSet}
          />
@@ -43,8 +45,16 @@ export default NextImageLazy;
 
 NextImageLazy.propTypes = {
    alt: PropTypes.string,
+   height: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+   ]),
+   width: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+   ]),
    src: PropTypes.string.isRequired,
-   srcSet: PropTypes.string.isRequired
+   srcSet: PropTypes.string
 };
 
 export const NextImage = styled.div`
@@ -52,8 +62,6 @@ export const NextImage = styled.div`
    visibility: hidden;
    transition: all .5s ease-in-out;
    img {
-      width: 100%;
-      height: 205px;
       display: none;
       object-fit: cover;
    }

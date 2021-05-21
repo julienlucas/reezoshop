@@ -55,7 +55,7 @@ const CardCar = ({
                   <NextImageLazy
                      src={thumbnail}
                      srcSet={srcSet}
-                     width={367}
+                     width="100%"
                      height={205}
                      layout="responsive"
                      alt=""
