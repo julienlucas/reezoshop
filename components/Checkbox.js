@@ -25,7 +25,7 @@ const Checkbox = ({ id, label, name, onChange, onReset }) => {
 
    return (
       <CustomCheckbox>
-         <input type="checkbox" className="checkbox" id={id} onClick={onClick} checked={value || false} readOnly />
+         <input type="checkbox" id={id} onClick={onClick} checked={value || false} readOnly />
          <label htmlFor={id}>{label}</label>
       </CustomCheckbox>
    );
@@ -42,7 +42,7 @@ Checkbox.propTypes = {
 export default Checkbox;
 
 export const CustomCheckbox = styled.div`
-   input.checkbox {
+   input {
       position: relative;
       opacity: 0;
       margin: 15px 0 30px 0;
@@ -66,18 +66,16 @@ export const CustomCheckbox = styled.div`
             border-radius: 3.24786px;
          }
       }
-      &:hover + label:before {
-         background: white;
-      }
-      &:focus + label:before {
-         box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
-      }
+      &:hover + label:before,
       &:checked + label:before {
          background: white;
       }
       &:disabled + label:before {
          box-shadow: none;
          background: #ddd;
+                  outline: 0;
+         user-select: none;
+         box-shadow: none;
       }
       &:checked + label:after {
          position: absolute;

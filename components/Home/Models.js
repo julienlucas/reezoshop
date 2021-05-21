@@ -48,6 +48,11 @@ const Models = ({ newCars, usedCars }) => {
                       title={car.title}
                       thumbnail={car.oneImage[0]}
                       year={car.year}
+                      pictures320={car.pictures320}
+                      pictures360={car.pictures360}
+                      pictures420={car.pictures420}
+                      pictures480={car.pictures480}
+                      pictures660={car.pictures480}
                     />
                   )}
                 </Slider>
@@ -73,6 +78,11 @@ const Models = ({ newCars, usedCars }) => {
                       title={car.title}
                       thumbnail={car.oneImage[0]}
                       year={car.year}
+                      pictures320={car.pictures320}
+                      pictures360={car.pictures360}
+                      pictures420={car.pictures420}
+                      pictures480={car.pictures480}
+                      pictures660={car.pictures480}
                     />
                   )}
                 </Slider>
@@ -114,7 +124,7 @@ const sliderSettings = {
 };
 
 export const StyledModels = styled.section`
-  padding: 85px 0 40px;
+  padding: 25px 0 40px;
   h2 {
     position: relative;
     margin: 0 auto 15px;
@@ -151,7 +161,6 @@ export const StyledModels = styled.section`
     }
   }
   ${medias.min768} {
-    padding: 125px 0 40px;
     h2 {
       margin: 0 -10px 25px 30px;
       max-width: 100%;

@@ -2,9 +2,6 @@ import { createGlobalStyle } from 'styled-components';
 import { medias, theme } from './theme';
 
 export const GlobalStyles = createGlobalStyle`
-  ::selection {
-    color: ${theme.black}
-  }
   html,
     body {
       scroll-behavior: smooth;

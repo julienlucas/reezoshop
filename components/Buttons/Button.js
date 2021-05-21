@@ -132,21 +132,8 @@ const buttonFormat = (format, theme) => ({
       textAlign: 'left',
       display: 'inline',
       width: '100%',
-   },
-   breadcrumb: {
-      position: 'relative',
-      padding: 0,
-      margin: 0,
-      fontSize: 14,
-      fontWeight: 400,
-      lineHeight: 1.2,
-      height: 'auto',
-      background: 'white',
-      border: 0,
-      color: theme.black,
-      textAlign: 'left',
       'a': {
          color: theme.black
       }
-   }
+   },
 }[format]);

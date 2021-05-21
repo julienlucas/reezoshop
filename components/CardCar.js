@@ -11,14 +11,36 @@ import { numberFormat } from '../utils/formaters';
 import { medias, theme } from '../constants/theme';
 import { energies, gearboxes } from '../constants/search';
 
-const CardCar = ({ _id, className, brand, energy, isNew, gearbox, model, mileage, price, prices, title, thumbnail, year }) => {
+const CardCar = ({
+      _id,
+      className,
+      brand,
+      energy,
+      isNew,
+      gearbox,
+      model,
+      mileage,
+      price,
+      prices,
+      title,
+      thumbnail,
+      year,
+      pictures320,
+      pictures360,
+      pictures420,
+      pictures480,
+      pictures660
+   }) => {
    const url = makeCarURL({ _id, brand, isNew, model, year });
    const priceDiscounted = prices?.percentage && (price - (price * `.${prices.percentage}`)).toFixed(0);
 
-   // Fake data, à remplacer lorsque que clé 'En Magasin' sera dans l'API
-   const isEnMagasin = true;
+   const isEnMagasin = true; // Fake data, à remplacer lorsque que cette clé sera gérée par l'API
 
-   thumbnail = "https://picsum.photos/480/270";
+   const srcSet = `${pictures320 && `${pictures320} 320w,`}
+   ${pictures360 && `${pictures360} 360w,`}
+   ${pictures420 && `${pictures420} 420w,`}
+   ${pictures480 && `${pictures480} 480w,`}
+   ${pictures660 && `${pictures660} 660w`}`
 
    return (
       <Card className={className}>
@@ -29,15 +51,20 @@ const CardCar = ({ _id, className, brand, energy, isNew, gearbox, model, mileage
             </>}
 
             <Link href={url}>
-               <a><NextImageLazy src={thumbnail} width={367} height={205} layout="responsive" alt=""/></a>
+               <a>
+                  <NextImageLazy
+                     src={thumbnail}
+                     srcSet={srcSet}
+                     width={367}
+                     height={205}
+                     layout="responsive"
+                     alt=""
+                  />
+               </a>
             </Link>
          </div>
          <div className="box-text">
-            <h3>
-               <Link href={url}>
-                  <a>{title && title}</a>
-               </Link>
-            </h3>
+            <h3><Link href={url}><a>{title && title}</a></Link></h3>
 
             <p className="description">{gearbox && `${(gearboxes[gearbox] || '')} ·`} {energy && `${energies[energy] || ''} ·`} {year && `${year} ·`} {mileage && `${numberFormat(mileage)} km`}</p>
             {(isNew && className === 'small-width') && <ButtonIsNew className="button-isnew">Neuf /0km</ButtonIsNew>}
@@ -64,7 +91,12 @@ CardCar.propTypes = {
    prices: PropTypes.object,
    title: PropTypes.string,
    thumbnail: PropTypes.string,
-   year: PropTypes.string
+   year: PropTypes.string,
+   pictures320: PropTypes.array,
+   pictures360: PropTypes.array,
+   pictures420: PropTypes.array,
+   pictures480: PropTypes.array,
+   pictures660: PropTypes.array,
 };
 
 export default CardCar;

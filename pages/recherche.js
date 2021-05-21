@@ -33,7 +33,7 @@ const Search = ({ search, query }) => {
   const onFilters = filters => setFilters(filters);
 
   useEffect(() => {
-    if (sortOrder || filters) fetchGraphQL(getAdsQuery, queryParams);
+    if (sortOrder || Object.keys(filters).length > 1) fetchGraphQL(getAdsQuery, queryParams);
   }, [sortOrder, filters])
 
   const onLoadMore = nbrCars => {
@@ -53,14 +53,14 @@ const Search = ({ search, query }) => {
     // Affiche les params URL en formatant les filters pour le query
     if (sortOrder || Object.keys(filters).length > 1) {
       delete filters.size;
-      const query = { ...filters }
+      query = { ...filters };
 
       Object.keys(query).map((item) => {
-        query[item] = query[item].toString().replace(/,/g, '-')
-        return null
+        query[item] = query[item].toString().replace(/,/g, '-');
+        return null;
       });
 
-      if (sortOrder) query.sort = sortOrder; // Ajoute dans le query le sort
+      if (sortOrder) query.sort = sortOrder; // Si en state, ajoute dans le sort dans le query
 
       router.push({ pathname: '/recherche', query }, undefined, { shallow: true });
     }
@@ -124,7 +124,8 @@ Search.getInitialProps = async ({ query }) => {
 };
 
 Search.propTypes = {
-   search: PropTypes.object.isRequired
+   search: PropTypes.object.isRequired,
+   query: PropTypes.object.isRequired
 };
 
 export default Search;
@@ -148,6 +149,11 @@ const getAdsQuery = `query getAds($queryParams: AdQueryParams!) {
          title
          thumbs:images(width: W320)
          year
+         pictures320: images(count: 1, width: W320)
+         pictures360: images(count: 1, width: W360)
+         pictures420: images(count: 1, width: W420)
+         pictures480: images(count: 1, width: W480)
+         pictures660: images(count: 1, width: W660)
       }
    }
 }`

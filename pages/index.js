@@ -82,6 +82,11 @@ const adsQuery = `query getAds($queryParamsNew: AdQueryParams!, $queryParamsUsed
          thumbs:images(width: W320)
          title
          year
+         pictures320: images(count: 1, width: W320)
+         pictures360: images(count: 1, width: W360)
+         pictures420: images(count: 1, width: W420)
+         pictures480: images(count: 1, width: W480)
+         pictures660: images(count: 1, width: W660)
       }
    }
    usedCars: ads(queryParams: $queryParamsUsed) {
@@ -101,6 +106,11 @@ const adsQuery = `query getAds($queryParamsNew: AdQueryParams!, $queryParamsUsed
          thumbs:images(width: W320)
          title
          year
+         pictures320: images(count: 1, width: W320)
+         pictures360: images(count: 1, width: W360)
+         pictures420: images(count: 1, width: W420)
+         pictures480: images(count: 1, width: W480)
+         pictures660: images(count: 1, width: W660)
       }
    }
 }`;

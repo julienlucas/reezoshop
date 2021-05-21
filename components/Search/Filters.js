@@ -16,7 +16,7 @@ const Filters = ({ onFilters, onResetFilters }) => {
    const [occasion, setOccasion] = useState(false);
    const [neuf, setNeuf] = useState(false);
    const [openFilters, setOpenFilters] = useState(false);
-   const [filters, setFilters] = useState({size: 12});
+   const [filters, setFilters] = useState({});
    const reset = filters === '' && true;
 
    const resetFilters = () => {

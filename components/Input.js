@@ -68,6 +68,7 @@ const InputStyled = styled.input(({ styles = {}, theme, ...props }) => {
       borderRadius: 3.24786,
       boxShadow: 'none',
       outline: 0,
+      userSelect: 'none',
       boxShadows: 'none',
       appearance: 'none',
       fontSize: 13,
@@ -84,7 +85,6 @@ const InputStyled = styled.input(({ styles = {}, theme, ...props }) => {
          '-webkit-appearance': 'none',
          margin: 0
       },
-
       ...(props.search ? inputFormat('search', theme) : {}),
       ...(props.multiSelect ? inputFormat('multiSelect', theme) : {}),
       ...styles,

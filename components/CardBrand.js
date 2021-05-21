@@ -62,13 +62,12 @@ export const StyledCardBrand= styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-      * {
-         position: absolute;
-         width: 100px;
-         height: 80px;
-         width: auto;
-         height: auto;
-         z-index: 2;
+      img {
+        max-width: 210px;
+        width: auto;
+        max-height: 80px;
+        height: 100%;
+        z-index: 2;
       }
    }
    ${medias.min768} {
