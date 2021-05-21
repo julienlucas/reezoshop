@@ -33,7 +33,7 @@ const Search = ({ search, query }) => {
   const onFilters = filters => setFilters(filters);
 
   useEffect(() => {
-    if (sortOrder) fetchGraphQL(getAdsQuery, queryParams);
+    if (sortOrder || filters) fetchGraphQL(getAdsQuery, queryParams);
   }, [sortOrder, filters])
 
   const onLoadMore = nbrCars => {

@@ -8,46 +8,29 @@ import requireStatic from '../utils/require-static';
 const Select = ({ children, className, defaultValue, name, onChange, onClick, onReset, options, placeholder, ...selectProps }) => {
    const node = useRef();
 
-   const [state, setState] = useState({
-      selected: null,
-      opened: false
-   });
+   const [value, setValue] = useState(null)
+   const [opened, setOpened] = useState(false);
 
    const onSelect = option => {
+      setValue(option.label)
       onChange(option.value, name);
-      setState({
-         selected: option,
-         opened: false
-      });
+      setOpened(false);
    };
 
    const onOpen = e => {
       // On inside click
       if (node.current.contains(e.target)) {
-         setState(prevState => {
-            return {
-            ...prevState,
-            opened: true
-            }
-         });
+         setOpened(true);
 
          if (selectProps.agencies) onClick()
          return;
       }
-
       // On outside click
-      setState(prevState => {
-         return {
-         ...prevState,
-         opened: false
-         }
-      });
+      setOpened(false);
    };
 
    useEffect(() => {
-      setState({
-         opened: false
-      });
+      setOpened(false);
    }, [onReset])
 
    useEffect(() => {
@@ -65,8 +48,8 @@ const Select = ({ children, className, defaultValue, name, onChange, onClick, on
 
    return (
       <SelectStyled className={className} ref={node} {...selectProps} onClick={e => onOpen(e)}>
-         <span>{state.selected ? state.selected.label : placeholder || defaultValue}</span>
-         <ul className={state.opened ? 'show': 'hide'}>{getOptions()}</ul>
+         <span>{value || placeholder || defaultValue}</span>
+         <ul className={opened ? 'show': 'hide'}>{getOptions()}</ul>
       </SelectStyled>
    );
 };

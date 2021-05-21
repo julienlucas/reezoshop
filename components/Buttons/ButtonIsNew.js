@@ -17,23 +17,24 @@ Button.propTypes = {
 export default Button;
 
 export const StyledButtonIsNew = styled.button`
-   position: relative;
+   position: absolute;
+   bottom: 20px;
    border: 1px solid ${theme.blue100};
-   borderRadius: 4;
+   border-radius: 4px;
    color: ${theme.blue100};
    cursor: pointer;
    display: table;
-   fontSize: 14px;
-   fontWeight: 600;
+   font-size: 14px;
+   font-weight: 600;
    height: 26px;
-   lineHeight: 26px;
+   line-height: 1;
    background: white;
    width: auto;
    padding: 0 5px;
    outline: 0;
-   userSelect: none;
+   user-select: none;
    margin: 0 auto;
-   textAlign: center;
+   text-align: center;
    ${medias.min(1100)} {
       padding: 0 20px;
    };
