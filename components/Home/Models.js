@@ -48,6 +48,11 @@ const Models = ({ newCars, usedCars }) => {
                       title={car.title}
                       thumbnail={car.oneImage[0]}
                       year={car.year}
+                      pictures320={car.pictures320}
+                      pictures360={car.pictures360}
+                      pictures420={car.pictures420}
+                      pictures480={car.pictures480}
+                      pictures660={car.pictures480}
                     />
                   )}
                 </Slider>
@@ -73,6 +78,11 @@ const Models = ({ newCars, usedCars }) => {
                       title={car.title}
                       thumbnail={car.oneImage[0]}
                       year={car.year}
+                      pictures320={car.pictures320}
+                      pictures360={car.pictures360}
+                      pictures420={car.pictures420}
+                      pictures480={car.pictures480}
+                      pictures660={car.pictures480}
                     />
                   )}
                 </Slider>

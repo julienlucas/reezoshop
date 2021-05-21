@@ -2,9 +2,6 @@ import { createGlobalStyle } from 'styled-components';
 import { medias, theme } from './theme';
 
 export const GlobalStyles = createGlobalStyle`
-  ::selection {
-    color: ${theme.black}
-  }
   html,
     body {
       scroll-behavior: smooth;
@@ -24,7 +21,6 @@ export const GlobalStyles = createGlobalStyle`
     a {
       text-decoration: none;
     }
-    ${''/* Container central & lists */}
     .container {
       position: relative;
       margin: 0 auto;
@@ -37,7 +33,6 @@ export const GlobalStyles = createGlobalStyle`
       padding: 0;
       margin: 0;
     }
-    ${''/* Typos */}
     .text-center {
       text-align: center;
     }
@@ -85,7 +80,6 @@ export const GlobalStyles = createGlobalStyle`
         color: ${theme.blue100}
       }
     }
-    ${''/* Media queries */}
     ${medias.min780} {
       .container {
         padding: 0 40px;
