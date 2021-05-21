@@ -18,11 +18,11 @@ nodeSelector:
 
 env:
   CONF_ENV: uat
-  CONF_API_BASE: https://reezoshop-gql-ci${DEV_ID}${RAND_VALUE}.front-uat.reezocar.com
+  CONF_API_BASE: https://gql-rc.front-uat.reezocar.com
 
 
 rzc-chart-reezogql:
-  enabled: true
+  enabled: false
   service:
     type: ClusterIP
   

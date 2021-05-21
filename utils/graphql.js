@@ -1,11 +1,10 @@
 import configs from '../configs';
 
 import { __TEST__ } from '../constants/env';
-
-const { graphqlEndpoint, graphqlStaticEndpoint } = configs;
+const { graphQLEndpoint } = configs;
 
 const graphQLQuery = (query, variables = {}, { headers: additionalHeaders, ...options } = {}) => {
-   const endpoint = staticEndpoint ? graphqlStaticEndpoint : graphqlEndpoint;
+   const endpoint = graphQLEndpoint;
    const body = JSON.stringify({ query, variables });
    const headers = {
       'Content-Type': 'application/json',

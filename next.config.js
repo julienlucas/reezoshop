@@ -6,6 +6,9 @@ module.exports = {
       N_ENV: process.env.NODE_ENV,
    },
    trailingSlash: true,
+   images: {
+      domains: ['pict1.reezocar.com', 'picsum.photos']
+   },
 
    webpack: (config) => {
       config.node = {
@@ -13,7 +16,7 @@ module.exports = {
       };
 
       config.module.rules.push({
-         test: /\.(css|gif|jpg|jpeg|png|svg)$/,
+         test: /\.(ico|css|gif|jpg|jpeg|png|svg|xml)$/,
          use: [
             {
                loader: 'file-loader',

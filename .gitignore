@@ -17,3 +17,10 @@
 .idea
 *-debug.log
 *-error.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+yarn.lock
