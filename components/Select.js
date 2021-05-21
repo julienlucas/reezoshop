@@ -12,7 +12,7 @@ const Select = ({ children, className, defaultValue, name, onChange, onClick, on
    const [opened, setOpened] = useState(false);
 
    const onSelect = option => {
-      setValue(option.label)
+      setValue(option.label);
       onChange(option.value, name);
       setOpened(false);
    };
@@ -30,7 +30,10 @@ const Select = ({ children, className, defaultValue, name, onChange, onClick, on
    };
 
    useEffect(() => {
-      setOpened(false);
+      if (onReset) {
+         setValue(null);
+         setOpened(false);
+      }
    }, [onReset])
 
    useEffect(() => {
