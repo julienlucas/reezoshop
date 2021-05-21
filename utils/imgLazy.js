@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import React, { useRef, useEffect, useState } from 'react';
 
 // important :
-// Next/image donne une erreur 400 avec les urls de l'API (type : https://pict1.reezocar.com/images/480/autosuche.de/RZCASCDEB9A1BBBF01A7/VOLKSWAGEN-UP!-00.jpg)
-// Le qui n'est pas le cas avec d'autres urls externes.
+// Next/image donne une erreur 400 avec les images urls de l'API (de ce type: https://pict1.reezocar.com/images/480/autosuche.de/RZCASCDEB9A1BBBF01A7/VOLKSWAGEN-UP!-00.jpg)
+// Ce qui n'est pas le cas avec d'autres urls externes.
 // Le 'autosuche.de' posant peut-être problème.
 //
-// Composant à recréer avec next/image lorsque le bug chez eux sera corrigé
+// Composant à recréer avec next/image lorsque le bug chez Next/Vercel sera corrigé
 
 const NextImageLazy = ({ alt, height, width, src, srcSet }) => {
    const domRef = useRef();
