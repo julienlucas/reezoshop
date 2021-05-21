@@ -141,7 +141,7 @@ export const StyledMap = styled.section`
   }
   .wrapper {
     position: absolute;
-    top: 315px;
+    top: 304px;
     height: 360px;
     width: 100vw;
     z-index: 1;

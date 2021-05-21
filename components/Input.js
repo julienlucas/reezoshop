@@ -3,45 +3,64 @@ import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
 
 import requireStatic from '../utils/require-static';
+import { theme } from '../constants/theme';
 
 const Input = ({ className, name, onChange, onReset, placeholder, type, ...inputProps }) => {
-   const [value, setValue] = useState('');
+   const [state, setState] = useState('')
 
-   const onChangeInput = e => {
-      const { value, name } = e.target;
-      setValue(value);
-      onChange(value, name);
+   const onChangeInput = (e) => {
+      if (!inputProps.multiSelect) {
+         const { value, name } = e.target
+         setState(value)
+         onChange(value, name)
+      }
    };
 
    useEffect(() => {
-      if (onReset) setValue('');
+      if (onReset) setState('')
    }, [onReset])
 
    return (
-      <StyledInput
-         className={className}
-         type={type}
-         name={name}
-         placeholder={placeholder}
-         value={!onReset && value}
-         onChange={e => onChangeInput(e)}
-         {...inputProps}
-      />
+      <BoxInput className={type}>
+         <InputStyled
+            className={className}
+            type={type}
+            name={name}
+            placeholder={placeholder}
+            value={!onReset && state}
+            onChange={e => onChangeInput(e)}
+            {...inputProps}
+         />
+      </BoxInput>
    );
 };
 
 Input.propTypes = {
    className: PropTypes.string,
    name: PropTypes.string,
-   onChange: PropTypes.func.isRequired,
+   onChange: PropTypes.func,
    onReset: PropTypes.bool,
-   placeholder: PropTypes.string.isRequired,
+   placeholder: PropTypes.string,
    type: PropTypes.string.isRequired
 };
 
 export default Input;
 
-const StyledInput = styled.input(({ styles = {}, theme, ...props }) => {
+const BoxInput = styled.div`
+   &.number {
+      position: relative;
+      &::before {
+         position: absolute;
+         margin: 7px 0 0 0;
+         right: 12px;
+         color: ${theme.black};
+         content: '€';
+         z-index: 1;
+      }
+   }
+`
+
+const InputStyled = styled.input(({ styles = {}, theme, ...props }) => {
    return {
       marginBottom: 16,
       color: theme.black,
@@ -61,13 +80,13 @@ const StyledInput = styled.input(({ styles = {}, theme, ...props }) => {
       '&::placeholder': {
          color: `${theme.black} !important`
       },
-      '&[type="text"]': {
-         '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
-            '-webkit-appearance': 'none',
-            margin: 0
-         }
+      '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
+         '-webkit-appearance': 'none',
+         margin: 0
       },
+
       ...(props.search ? inputFormat('search', theme) : {}),
+      ...(props.multiSelect ? inputFormat('multiSelect', theme) : {}),
       ...styles,
    }
 });
@@ -77,11 +96,10 @@ const inputFormat = (format, theme) => ({
       borderRadius: '4px',
       border: 0,
       height: '47px',
-      minWidth: '100%',
+      minWidth: '393px',
       fontSize: '16px',
-      background: `white url(${requireStatic('icons/search.svg')}) no-repeat`,
-      backgroundPosition: 'calc(100% - 20px) 50%',
-      backgroundSize: '18px',
+      background: `white url(${requireStatic('icons/search.svg')}) no-repeat calc(100% - 20px) 50%`,
+      backgroundSize: 18,
       boxSadow: '0 0 0 rgba(0, 0, 0, 0)',
       color: theme.grey100,
       '&::placeholder': {
@@ -93,13 +111,21 @@ const inputFormat = (format, theme) => ({
          '&::placeholder': {
             color: theme.black
          }
-      },
-      '@media(min-width: 450px)': {
-         minWidth: '393px'
       }
    },
-   'multi-select': {
-      background: `white url(${requireStatic('icons/arrow-bottom-light.svg')}') no-repeat calc(100% - 10px) 50%`,
-      backgroundSize: '13px'
-   },
+   multiSelect: {
+      color: 'transparent',
+      textShadow: `0 0 0 ${theme.black}`,
+      background: `white url(${requireStatic('icons/arrow-bottom-light.svg')}) no-repeat calc(100% - 10px) 50%`,
+      backgroundSize: 13,
+      cursor: 'pointer',
+      textTransform: 'capitalize',
+      '&::placeholder': {
+         textTransform: 'none',
+         color: `${theme.black} !important`
+      },
+      '&:focus, &:hover': {
+         cursor: 'pointer'
+      }
+   }
 }[format]);

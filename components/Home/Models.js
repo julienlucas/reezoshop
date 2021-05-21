@@ -114,7 +114,7 @@ const sliderSettings = {
 };
 
 export const StyledModels = styled.section`
-  padding: 85px 0 40px;
+  padding: 25px 0 40px;
   h2 {
     position: relative;
     margin: 0 auto 15px;
@@ -151,7 +151,6 @@ export const StyledModels = styled.section`
     }
   }
   ${medias.min768} {
-    padding: 125px 0 40px;
     h2 {
       margin: 0 -10px 25px 30px;
       max-width: 100%;

@@ -9,6 +9,7 @@ import { makeCarURL } from '../utils/url';
 import NextImageLazy from '../utils/imgLazy';
 import { numberFormat } from '../utils/formaters';
 import { medias, theme } from '../constants/theme';
+import { energies, gearboxes } from '../constants/search';
 
 const CardCar = ({ _id, className, brand, energy, isNew, gearbox, model, mileage, price, prices, title, thumbnail, year }) => {
    const url = makeCarURL({ _id, brand, isNew, model, year });
@@ -38,7 +39,7 @@ const CardCar = ({ _id, className, brand, energy, isNew, gearbox, model, mileage
                </Link>
             </h3>
 
-            <p className="description">{gearbox && `${gearbox} ·`} {energy && `${energy} ·`} {year && `${year} ·`} {mileage && `${numberFormat(mileage)} km`}</p>
+            <p className="description">{gearbox && `${(gearboxes[gearbox] || '')} ·`} {energy && `${energies[energy] || ''} ·`} {year && `${year} ·`} {mileage && `${numberFormat(mileage)} km`}</p>
             {(isNew && className === 'small-width') && <ButtonIsNew className="button-isnew">Neuf /0km</ButtonIsNew>}
 
             <div className="box-prix">
@@ -85,7 +86,7 @@ export const Card = styled.div`
       width: 100%;
       min-height: auto;
       .box-text {
-         height: 150px;
+         height: 205px;
       }
       .prix {
          text-align: right;
