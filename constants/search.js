@@ -28,7 +28,8 @@ export const energies = {
    diesel: 'Diesel',
    hybrid: 'Hybride',
    electric: 'Électrique',
-   lpg: 'GPL'
+   lpg: 'GPL',
+   other: 'Autre'
 };
 
 export const doors = [
