@@ -20,6 +20,10 @@ const Search = ({ search, query }) => {
 
   let queryParams = { queryParams: { ...filters, size: 12 } };
 
+  useEffect(() => {
+    setFilters(query)
+  },[query])
+
   const fetchGraphQL = async (getAdsQuery, queryParams) => {
     const newSearch = await graphQLQuery(getAdsQuery, queryParams);
     setCount(newSearch.ads.count);
@@ -30,7 +34,11 @@ const Search = ({ search, query }) => {
 
   const onSort = sorting => setSortOrder(sorting);
 
-  const onFilters = filters => setFilters(filters);
+  const onFilters = filters => {
+    setFilters(prevState => {
+      return { ...prevState, ...filters }
+    });
+  };
 
   useEffect(() => {
     if (sortOrder || Object.keys(filters).length > 1) fetchGraphQL(getAdsQuery, queryParams);
