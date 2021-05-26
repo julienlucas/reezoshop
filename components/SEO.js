@@ -10,9 +10,14 @@ const InjectSEO = ({ path, shop, shopKey }) => {
    let title;
    let description;
    if (path === '/') {
-      title = `${`Agence ` + shop.headline} vente de voitures neuves et d'occasion - ${shop.name} Métropole` //eslint-disable-line
+      title = `${`Agence ` + shop.headline} vente de voitures neuves et d'occasion - ${shop.region}` //eslint-disable-line
       description = `Trouvez et achetez votre voiture d’occasion à l’agence ${shop.headline} métropole. Rencontrez nos conseillers, choisissez votre nouveau véhicule en ligne, prenez rendez-vous et venez simplement découvrir les réductions sur les prix des modèles neufs et d’occasion`
-   }
+   };
+
+   if (path === '/recherche') {
+      title = `Annonces voitures neuves 0km et occasion près de ${shop.name} | Reezocar ${shop.locality}`
+      description = `Acheter une nouvelle voiture près de ${shop.name} grâce a ${shop.headline}. Découvrir les réductions allant jusqu’à -30% sur des voitures neuves 0km de 2021. Peugeot, Renault, Audi, Fiat et toutes les autres marques sont disponibles à la vente dans notre agence ${shop.agence} à ${shop.locality} - ${shop.region}`
+   };
 
    return (
       <>

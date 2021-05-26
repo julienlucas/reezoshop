@@ -45,7 +45,7 @@ function BreadCrumb({ params }) {
 
                return (
                <li key={crumb+i}>
-                  <Button breadcrumb className={disabled}>
+                  <Button clear className={disabled}>
                      <Link href={links[i]}>{crumb}</Link>
                   </Button>
                </li>

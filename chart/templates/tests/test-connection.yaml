@@ -31,4 +31,3 @@ spec:
     configMap:
       name: {{ include "rzc-chart-reezoshop.fullname" . }}-test
   restartPolicy: Never
-

@@ -14,7 +14,7 @@ export const bodies = {
    old: 'Ancienne',
    commercial: 'Utilitaire',
    kombi: 'Kombi',
-   limousine: 'Limousine',
+   limousine: 'Limousine',
    other: 'Autres'
 };
 
@@ -34,7 +34,7 @@ export const energies = {
 export const doors = [
    { value: ["2","3"], label: '2/3 portes' },
    { value: ["4","5"], label: '4/5 portes' },
-   { value: ["6","7","8"], label: '6 portes et +' }
+   { value: ["6"], label: '6 portes et +' }
 ];
 
 export const colorsExt = {

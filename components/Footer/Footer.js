@@ -1,13 +1,11 @@
 import Image from 'next/image';
 import React from 'react';
-import styled from 'styled-components';
-
-import { medias, theme } from '../../constants/theme';
-import requireStatic from '../../utils/require-static';
+import styled from 'styled-components'
+import { medias, theme } from '../../constants/theme'
 
 const Footer = () => {
   return (
-    <StyledFooter>
+    <FooterStyled>
       <div className="container">
         <div className="row">
           <div className="col col-1">
@@ -36,7 +34,7 @@ const Footer = () => {
 
         <div className="logo">
           <Image
-            src={requireStatic('images/logo-reezocar.svg')}
+            src="/images/logo-reezocar.svg"
             alt="reezocar"
             width={211}
             height={57}
@@ -46,13 +44,13 @@ const Footer = () => {
 
         <p className="copyright text-center">Reezocar {new Date().getFullYear()} - Tous droits réservés</p>
       </div>
-    </StyledFooter>
+    </FooterStyled>
   )
 }
 
 export default Footer;
 
-export const StyledFooter = styled.footer`
+export const FooterStyled = styled.footer`
   padding: 65px 20px 30px;
   background: ${theme.grey300};
   .row {
