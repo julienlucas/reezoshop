@@ -41,4 +41,3 @@ export const StyledButtonIsNew = styled.button`
    @media (max-width: 990px) {
       padding: 0 20px;
    };
-`

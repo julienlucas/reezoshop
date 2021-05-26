@@ -11,4 +11,3 @@ ENV NODE_ENV=production
 
 COPY . .
 CMD bash -c "yarn build && yarn dev"
-

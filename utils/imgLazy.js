@@ -41,8 +41,6 @@ const NextImageLazy = ({ alt, height, width, src, srcSet }) => {
    )
 };
 
-export default NextImageLazy;
-
 NextImageLazy.propTypes = {
    alt: PropTypes.string,
    height: PropTypes.oneOfType([
@@ -56,6 +54,8 @@ NextImageLazy.propTypes = {
    src: PropTypes.string.isRequired,
    srcSet: PropTypes.string
 };
+
+export default NextImageLazy;
 
 export const NextImage = styled.div`
    opacity: 0;

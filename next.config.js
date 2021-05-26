@@ -7,8 +7,9 @@ module.exports = {
    },
    trailingSlash: true,
    images: {
-      domains: ['pict1.reezocar.com']
+      domains: ['pict1.reezocar.com', 'picsum.photos']
    },
+
    webpack: (config) => {
       config.node = {
          fs: 'empty',
