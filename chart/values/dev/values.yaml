@@ -25,18 +25,18 @@ rzc-chart-reezogql:
   enabled: true
   service:
     type: ClusterIP
-  
+    
   ingress:
     enabled: true
     hosts:
     - host: "reezoshop-gql-dev${DEV_ID}.front-uat.reezocar.com"
       paths: ["/"]
-  
+      
   imagePullSecrets:
   - "acr-secret"
 
   nodeSelector:
     agentpool: dev
-  
+    
   env:
     NODE_ENV: uat

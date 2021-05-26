@@ -14,7 +14,6 @@ import React from 'react';
              });
 
           const initialProps = await Document.getInitialProps(ctx);
-
           return {
              ...initialProps,
              styles: (

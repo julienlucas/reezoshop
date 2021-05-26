@@ -15,7 +15,6 @@ spec:
       resources:
         limits:
           cpu: 100m
-          memory: 200Mi
           memory: 500Mi
       volumeMounts:
       - mountPath: /tests
@@ -32,4 +31,3 @@ spec:
     configMap:
       name: {{ include "rzc-chart-reezoshop.fullname" . }}-test
   restartPolicy: Never
-
