@@ -37,7 +37,7 @@ class RZSApp extends App {
                <Head />
 
                {path === '/_error' ? <Component hocProps={hocProps} {...pageProps} /> :
-                  <Layout cityShop={hocProps.shop.host} path={path}>
+                  <Layout cityShop={hocProps.shop.host} path={pageProps.path}>
                      <Component hocProps={hocProps} {...pageProps} />
                   </Layout>}
             </ThemeProvider>

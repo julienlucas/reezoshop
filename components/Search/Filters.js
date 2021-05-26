@@ -65,7 +65,7 @@ const Filters = ({ onFilters, onResetFilters }) => {
    }, [filters])
 
    return (
-      <>
+      <StyledWrapper>
          <ButtonClose className={openFilters ? 'open' : ''} onClick={() => setOpenFilters(false)}>
             <span/>
             <span/>
@@ -74,7 +74,7 @@ const Filters = ({ onFilters, onResetFilters }) => {
 
          <Button secondary className="button-filtres" onClick={() => setOpenFilters(!openFilters)}>Filtres</Button>
 
-         <FiltersComp className={openFilters ? 'open' : ''}>
+         <StyledFilters className={openFilters ? 'open' : ''}>
             <form>
                <div className="row">
                   <h3>Filtres</h3>
@@ -149,8 +149,8 @@ const Filters = ({ onFilters, onResetFilters }) => {
                   <Button third className="full-width" onClick={e => onFiltersSearch(e)}>Rechercher</Button>
                </div>
             </form>
-         </FiltersComp>
-      </>
+         </StyledFilters>
+      </StyledWrapper>
    )
 };
 
@@ -161,7 +161,21 @@ Filters.propTypes = {
 
 export default Filters;
 
-export const FiltersComp = styled.div`
+export const StyledWrapper = styled.div`
+   .button-filtres {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 6;
+      width: calc(50vw - 26px);
+      display: block;
+      ${medias.min990} {
+         display: none
+      }
+   }
+}`
+
+export const StyledFilters = styled.div`
    position: fixed;
    width: 100%;
    padding: 21px 16px 27px;

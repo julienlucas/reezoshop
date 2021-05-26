@@ -50,10 +50,6 @@ const StyledButtonPhone = styled.button(({ theme }) => {
          background: `url(${requireStatic('icons/tel.svg')}) no-repeat`,
          backgroundPosition: '3px 55%',
          backgroundSize: '20px'
-      },
-      '&.search-page': {
-         backgorund: 'red',
-         width: 'calc(50vw - 26px)'
       }
    }
 });

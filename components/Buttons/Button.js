@@ -51,17 +51,6 @@ const StyledButton = styled.button(({ styles = {}, theme, ...props }) => {
       '&.full-width': {
          width: '100%'
       },
-      '&.button-filtres': {
-         position: 'fixed',
-         bottom: 20,
-         left: 20,
-         zIndex: 6,
-         width: 'calc(50vw - 26px)',
-         display: 'block',
-         '@media screen and (min-width: 990px)': {
-            display: 'none'
-         }
-      },
       ...(props.primary ? buttonFormat('primary', theme) : {}),
       ...(props.secondary ? buttonFormat('secondary', theme) : {}),
       ...(props.third ? buttonFormat('third', theme) : {}),

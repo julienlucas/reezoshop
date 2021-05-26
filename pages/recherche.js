@@ -109,6 +109,7 @@ const Search = ({ search, query }) => {
 
 Search.getInitialProps = async ({ query }) => {
    const initialQueryParams = { queryParams: { size: 12 } };
+   const path = '/recherche';
 
    let search;
    try {
@@ -128,7 +129,7 @@ Search.getInitialProps = async ({ query }) => {
       search = {};
    }
 
-   return { search, query };
+   return { path, query, search };
 };
 
 Search.propTypes = {

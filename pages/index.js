@@ -34,6 +34,7 @@ const HomePage = ({ data, newCars, usedCars }) => {
 export async function getStaticProps() {
    const queryParamsUsed = { onlyNew: true, size: 3 };
    const queryParamsNew = { ...queryParamsUsed, onlyNew: true };
+   const path = '/';
 
    let homeDatas;
    try {
@@ -45,7 +46,8 @@ export async function getStaticProps() {
    return {
       props: {
          ...homeDatas,
-         data: mockData
+         data: mockData,
+         path
       }
    };
 };
