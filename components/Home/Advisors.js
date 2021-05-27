@@ -32,9 +32,6 @@ const CardAdvisor = ({ advisor }) => {
       <div className="picture">
         <NextImageLazy
           src={requireStatic(advisor.picture)}
-          width={185}
-          height={185}
-          layout="responsive"
           alt=""
         />
       </div>
@@ -59,6 +56,7 @@ export const StyledAdvisors = styled.section`
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 22px;
     .card-interlocuteur {
+      position: relative;
       padding: 25px 30px;
       box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.15);
       border-radius: 5.73741px;
@@ -67,11 +65,11 @@ export const StyledAdvisors = styled.section`
         position: relative;
         margin: 0 auto;
         display: table;
-        max-width: 185px;
-        max-height: 185px;
-        width: 100%;
-        height: 100%;
         * {
+          max-width: 185px;
+          width: 100%;
+          height: auto;
+          object-fit: scale-down;
           border-radius: 50%;
         }
       }
@@ -114,8 +112,9 @@ export const StyledAdvisors = styled.section`
   @media (max-width: 550px) {
     .row {
       .card-interlocuteur {
+        padding: 25px 15px;
         .box-text {
-          min-height: 150px;
+          min-height: 140px;
         }
       }
     }

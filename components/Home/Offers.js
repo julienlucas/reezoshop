@@ -52,9 +52,6 @@ const Offers = ({ subHeadline }) => {
                 <Button primary className="small-height">Profitez-en !</Button>
                 <NextImageLazy
                   src={requireStatic(neufPic)}
-                  width={560}
-                  height={310}
-                  layout="responsive"
                   alt=""
                 />
               </a>
@@ -66,9 +63,6 @@ const Offers = ({ subHeadline }) => {
                 <Button primary className="small-height">Profitez-en !</Button>
                 <NextImageLazy
                   src={requireStatic(occasionPic)}
-                  width={560}
-                  height={310}
-                  layout="responsive"
                   alt=""
                 />
               </a>
