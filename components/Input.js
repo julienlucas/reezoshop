@@ -22,7 +22,7 @@ const Input = ({ className, name, onChange, onReset, placeholder, type, ...input
 
    return (
       <BoxInput className={type}>
-         <InputStyled
+         <StyledInput
             className={className}
             type={type}
             name={name}
@@ -60,7 +60,7 @@ const BoxInput = styled.div`
    }
 `
 
-const InputStyled = styled.input(({ styles = {}, theme, ...props }) => {
+const StyledInput = styled.input(({ styles = {}, theme, ...props }) => {
    return {
       marginBottom: 16,
       color: theme.black,
@@ -110,6 +110,9 @@ const inputFormat = (format, theme) => ({
          '&::placeholder': {
             color: theme.black
          }
+      },
+      '@media screen and (max-width: 435px)': {
+         minWidth: '100%'
       }
    },
    multiSelect: {

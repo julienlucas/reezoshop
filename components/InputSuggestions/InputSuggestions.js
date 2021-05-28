@@ -137,7 +137,7 @@ const Autocomplete = ({ className }) => {
             <ul>
                {filteredSuggestions.map((suggestion, i) =>
                   <Suggestion
-                     className={i === active ? true : false}
+                     className={i === active}
                      index={i}
                      key={suggestion}
                      onClick={onClick}
@@ -170,13 +170,13 @@ const Autocomplete = ({ className }) => {
    return (
       <StyledSuggestions ref={node} className={`${className} ${!open ? 'hide-list' : ''}`} onClick={e => onClickComp(e)}>
          <Input
-         search
-         id="input-suggest"
-         type="text"
-         onKeyUp={onKeyUp}
-         onChange={onChange}
-         value={state.userInput}
-         placeholder="Marque, Modèle"
+            search
+            id="input-suggest"
+            type="text"
+            onKeyUp={onKeyUp}
+            onChange={onChange}
+            value={state.userInput}
+            placeholder="Marque, Modèle"
          />
          {suggestionsListComponent}
       </StyledSuggestions>
