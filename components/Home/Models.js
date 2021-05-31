@@ -142,7 +142,7 @@ export const StyledModels = styled.section`
   .slick-list {
     max-width: 1160px;
     width: 100%;
-    height: 360px !important;
+    height: 385px !important;
   }
   .container:first-child {
     padding-left: 0;
@@ -150,7 +150,7 @@ export const StyledModels = styled.section`
   .slider {
     margin-left: 20px;
     .slick-slide {
-      margin: 0 -50px 0px 70px;
+      margin: 5px -50px 0px 70px;
       * {
         outline: 0;
         user-select: none;

@@ -19,7 +19,8 @@ const MultiSelect = ({ className, name, onChange, onReset, options, placeholder 
          const newActives = optionsSelected.filter((item) => item !== value).map((item) => item)
          setOptionsSeleted([...newActives])
 
-         valuesInput.replace(label,'')
+         const newValuesInput = valuesInput.replaceAll(`${label},`,'')
+         setValuesInput(newValuesInput)
       } else {
          optionsSelected.push(value)
          setOptionsSeleted([...optionsSelected])

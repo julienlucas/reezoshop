@@ -103,7 +103,7 @@ export default CardCar;
 
 export const Card = styled.div`
    position: relative;
-   min-height: 336px;
+   min-height: 356px;
    width: 367px;
    user-select: none;
    outline: 0;
@@ -117,6 +117,11 @@ export const Card = styled.div`
    &.small-width {
       width: 100%;
       min-height: auto;
+      .box-prix {
+         left: auto;
+         right: 20px;
+         bottom: 15px;
+      }
       .box-text {
          height: 205px;
       }
@@ -162,8 +167,8 @@ export const Card = styled.div`
    }
    .box-prix {
       position: absolute;
-      right: 16px;
-      bottom: 20px;
+      left: 16px;
+      bottom: 5px;
    }
   .box-text {
       background: white;
@@ -206,12 +211,12 @@ export const Card = styled.div`
    }
    ${medias.min(1400)} {
       &.small-width {
-         min-height: 336px;
+         min-height: 366px;
          .box-text {
             height: auto;
          }
          .prix-barre {
-            padding: 10px 10px 0 0;
+            padding: 10px 10px 5px 0;
             float: right;
          }
          .prix {
