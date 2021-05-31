@@ -137,6 +137,7 @@ export const StyledOffers = styled.section`
         width: 560px;
         * {
           height: auto;
+          width: 560px;
         }
         button {
           left: auto;
