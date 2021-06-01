@@ -4,14 +4,14 @@ import React from 'react';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 
-const Layout = ({ children, path }) => {
+const Layout = ({ children, layoutProps, path }) => {
    const preventDragHandler = (e) => {
-      e.preventDefault();
+      e.preventDefault()
    };
 
    return (
       <div onDragStart={(e) => preventDragHandler(e)}>
-         <Header path={path} />
+         <Header path={path} headerProps={layoutProps?.headerProps} />
          <main>{children}</main>
          <Footer />
       </div>
@@ -20,6 +20,7 @@ const Layout = ({ children, path }) => {
 
 Layout.propTypes = {
   children: PropTypes.object.isRequired,
+  layoutProps: PropTypes.object,
   path: PropTypes.string
 };
 

@@ -1,19 +1,50 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
 import Ad from './Ad';
 import InputSuggestions from '../InputSuggestions/InputSuggestions';
 import Filters from './Filters';
 import SearchResults from './SearchResults';
 
+import graphQLQuery from '../../utils/graphql';
+import getSuggestions from '../InputSuggestions/getSuggestions.graphql';
 import { medias } from '../../constants/theme';
 
 function SearchWrapper({ cars, cityShop, count, filters, onFilters, onLoadMore, onSort, onResetFilters, onResetSorting }) {
+  const router = useRouter();
+  const [queryParams, setQueryParams] = useState({ "query": ""});
+  const [suggestions, setSuggestions] = useState([]);
+
+  const onChoice = innerText => router.push(`/recherche?match=${innerText}`);
+
+  const onSearch = inputSearch => setQueryParams({ "query": inputSearch });
+
+  const fetchGraphQL = async (query, queryParams) => {
+    const res = await graphQLQuery(query, queryParams)
+    return res
+  };
+
+  useEffect(() => {
+    const arrayFormated = [];
+
+    fetchGraphQL(getSuggestions.loc.source.body, queryParams)
+        .then(res => res.suggestions.suggestions.map(item => arrayFormated.push(item.query)))
+        .then(() => setSuggestions(arrayFormated))
+  }, [queryParams])
+
   return (
     <WrapperStyled>
       <div className="container">
-        <InputSuggestions className="search-page"/>
+        <InputSuggestions
+          className="in-header"
+          suggestionsData={suggestions}
+          onUserInput={(inputSearch) => setQueryParams({ "query": inputSearch })}
+          onChoice={onChoice}
+          onSearch={onSearch}
+          placeholder="Marque, Modèle"
+        />
 
         <AsideStyled>
           <Filters count={count} onFilters={filters => onFilters(filters)} onResetFilters={onResetFilters} />
@@ -52,16 +83,16 @@ SearchWrapper.propTypes = {
 export default SearchWrapper;
 
 export const WrapperStyled = styled.section`
-   margin: 80px 0;
+   padding: 80px 0;
    .container {
       padding: 0 25px;
       max-width: 1400px;
    }
    ${medias.min990} {
-      margin: 135px 0;
+      padding: 135px 0;
    }
    @media (max-width: 768px) {
-      margin: 40px 0 80px;
+      padding: 40px 0 80px;
    }
 `
 

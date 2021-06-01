@@ -36,6 +36,10 @@ const StyledButton = styled.button(({ styles = {}, theme, ...props }) => {
       userSelect: 'none',
       margin: '0 auto',
       textAlign: 'center',
+      backgroundColor: theme.orange100,
+      '&:hover': {
+         backgroundColor: theme.orange200
+      },
       'a': {
          color: 'white'
       },
@@ -50,6 +54,17 @@ const StyledButton = styled.button(({ styles = {}, theme, ...props }) => {
       },
       '&.full-width': {
          width: '100%'
+      },
+      '&.button-filtres': {
+         position: 'fixed',
+         bottom: 20,
+         left: 20,
+         zIndex: 6,
+         width: 'calc(50vw - 26px)',
+         display: 'block',
+         '@media screen and (min-width: 990px)': {
+            display: 'none'
+         }
       },
       ...(props.primary ? buttonFormat('primary', theme) : {}),
       ...(props.secondary ? buttonFormat('secondary', theme) : {}),
@@ -123,6 +138,9 @@ const buttonFormat = (format, theme) => ({
       width: '100%',
       'a': {
          color: theme.black
+      },
+      '&:hover, &:focus': {
+         background: 'transparent'
       }
    },
 }[format]);

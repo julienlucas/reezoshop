@@ -4,15 +4,14 @@ import styled from 'styled-components';
 
 import NextImageLazy from '../utils/imgLazy';
 import requireStatic from '../utils/require-static';
-import { medias, theme } from '../constants/theme';
 
-const CardBrand = ({ brand }) => {
+const CardBrand = ({ brand, ...cardProps }) => {
   return (
-    <StyledCardBrand>
+    <StyledCardBrand {...cardProps}>
       <div className="logo">
         <NextImageLazy
           src={requireStatic(brand.picture)}
-          alt="Picture of the author"
+          alt=""
           width={50}
           height={50}
           layout="fixed"
@@ -31,48 +30,100 @@ CardBrand.propTypes = {
 };
 export default CardBrand;
 
-export const StyledCardBrand= styled.div`
-   padding: 0;
-   height: 125px;
-   width: 130px;
-   user-select: none;
-   outline: 0;
-   cursor: pointer;
-   border: 0.867528px solid ${theme.grey200};
-   border-radius: 3.47011px;
-   p, strong {
-      position: relative;
-      margin: 0 auto;
-      display: table;
-      padding: 0;
-      text-align: center;
-      width: 100%;
-      font-size: 14px;
-      line-height: 1;
-      color: ${theme.black}
-   }
-   strong {
-      margin-bottom: 3px;
-      font-weight: 600;
-      font-size: 18px;
-   }
-   .logo {
-      height: 80px;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      img {
-        max-width: 210px;
-        width: auto;
-        max-height: 80px;
-        height: 100%;
-        z-index: 2;
+const StyledCardBrand = styled.div(({ styles = {}, theme, ...props }) => {
+  return {
+    padding: '13px 37px',
+    height: 154,
+    width: 'auto',
+    userSelect: 'none',
+    outline: 0,
+    cursor: 'pointer',
+    border: `0.867528px solid ${theme.grey200}`,
+    borderRadius: 3.47011,
+    'p, strong': {
+      position: 'relative',
+      margin: '0 auto',
+      display: 'table',
+      padding: 0,
+      textAlign: 'center',
+      width: '100%',
+      fontSize: 14,
+      lineHeight: 1,
+      color: theme.black
+    },
+    'strong': {
+      marginBottom: 3,
+      fontWeight: '600',
+      fontSize: 18
+    },
+    '.logo': {
+      height: 80,
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      'img': {
+        width: '100%',
+        maxHeight: 50,
+        maxWidth: 95,
+        objectFit: 'fill'
       }
+    },
+    ...(props.gridBigWidth ? cardFormat('gridBigWidth', theme) : {}),
+    ...styles,
    }
-   ${medias.min768} {
-      padding: 13px 0;
-      height: 154px;
-      width: 173px;
-   }
-`
+});
+
+const cardFormat = (format) => ({
+  gridBigWidth: {
+    position: 'relative',
+    padding: '15px 20px',
+    width: 'auto',
+    maxHeight: 215,
+    height: '100%',
+    '.prix': {
+      display: 'none'
+    },
+    '.logo': {
+      padding: '35px 0 45px',
+      div: {
+        width: '100%',
+        height: 80,
+        display: 'flex',
+        justifyContent: 'center'
+      },
+      img: {
+        width: '100%',
+        maxHeight: 50,
+        maxWidth: 95,
+        objectFit: 'fill'
+      }
+    },
+    '.logo, .box-text': {
+      position: 'relative',
+      left: 0,
+      right: 0,
+      margin: '0 auto'
+    },
+    '.box-text': {
+      position: 'absolute',
+      bottom: 30
+    },
+    '@media screen and (min-width: 768px)': {
+      padding: '13px 0',
+      width: 'auto',
+      maxHeight: 215,
+      height: '100%'
+    },
+    '@media screen and (min-width: 640px)': {
+      '.logo': {
+        padding: '40px 0 90px',
+        'img': {
+          height: '100%',
+          maxHeight: 80,
+          maxWidth: 140
+        }
+      }
+    }
+  }
+}[format])

@@ -12,7 +12,7 @@ import requireStatic from '../../utils/require-static';
 import useShop from '../../hooks/useShop';
 import { medias, theme } from '../../constants/theme';
 
-const Header = ({ path }) => {
+const Header = ({ headerProps }) => {
   const { onChangeShop, shops, shop, shopKey } = useShop();
   const [scroll, setScroll] = useState(null);
   const [overlay, setOverlay] = useState(false);
@@ -39,7 +39,7 @@ const Header = ({ path }) => {
       <StyledNav
         className={`
           ${scroll ? 'scroll' : ''}
-          ${path !== '/' ? 'bottomShadow' : ''}
+          ${headerProps.withHeaderShadow ? 'bottomShadow' : ''}
           ${menuIsVisible ? 'menu-open' : ''}
         `}
       >
@@ -76,8 +76,12 @@ const Header = ({ path }) => {
 
       <Menu headline={shop?.headline} onIsVisible={onMenu} phone={shop?.phone} phoneFormated={shop?.phoneFormated} />
 
-      <div className="bottom-buttons-nav">
-        <ButtonPhone className={`button-phone ${path === '/recherche' ? 'width-50p' : ''}`}>
+      <div className={`
+        bottom-buttons-nav
+        ${headerProps.withBottomMobileNav === false ? 'hide' : ''}
+        ${headerProps.singleBottomMobileNav ? 'single-button' : ''}
+      `}>
+        <ButtonPhone className="button-phone">
           <a href={`tel:${shop?.phone}`} rel="noopener noreferrer nofollow" target="_blank">
             <span>{shop?.phoneFormated}</span>
           </a>
@@ -89,7 +93,7 @@ const Header = ({ path }) => {
 };
 
 Header.propTypes = {
-  path: PropTypes.string,
+  headerProps: PropTypes.object
 };
 
 export default Header;
@@ -103,16 +107,21 @@ export const StyledHeader = styled.header`
     background: white;
     padding: 20px;
     box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
-    .button-phone {
-      float: none;
-      margin: auto;
-      width: 100%;
-      z-index: 8;
-      &.width-50p {
-        float: right;
-        width: calc(50vw - 26px);
-        display: block;
+    &.hide {
+      display: none;
+    }
+    &.single-button {
+      button {
+        float: none;
+        margin: auto;
+        width: 100%;
       }
+    }
+    .button-phone {
+      float: right;
+      width: calc(50vw - 26px);
+      display: block;
+      z-index: 8;
     }
     .button-rdv {
       position: absolute;
@@ -129,13 +138,20 @@ export const StyledHeader = styled.header`
       bottom: auto;
       background: transparent;
       box-shadow: 0px -4px 10px rgba(0, 0, 0, 0);
+      &.hide {
+        display: block;
+      }
+      &.single-button {
+        .button-phone {
+          float: right;
+          margin: 4px 75px 0 0;
+          width: auto;
+        }
+      }
       .button-phone {
         margin: 4px 75px 0 0;
         width: auto;
         float: right;
-        &.width-50p {
-          display: none;
-        }
       }
       .button-rdv {
         display: none;
@@ -179,6 +195,7 @@ export const StyledNav = styled.nav`
     box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.12);
   }
   &.bottomShadow {
+    background: white;
     border: 1px solid ${theme.grey700};
     box-shadow: 1px 2px 13px rgba(0, 0, 0, 0);
   }

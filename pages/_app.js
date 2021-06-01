@@ -33,11 +33,11 @@ class RZSApp extends App {
          <>
             <GlobalStyles />
             <ThemeProvider theme={theme}>
-               <SEO path={path} shop={shop} shopKey={shopKey} />
+               <SEO path={path} shop={shop} shopKey={shopKey} {...pageProps} />
                <Head />
 
                {path === '/_error' ? <Component hocProps={hocProps} {...pageProps} /> :
-                  <Layout cityShop={hocProps.shop.host} path={pageProps.path}>
+                  <Layout cityShop={hocProps.shop.host} layoutProps={Component?.layoutProps}>
                      <Component hocProps={hocProps} {...pageProps} />
                   </Layout>}
             </ThemeProvider>

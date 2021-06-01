@@ -23,10 +23,14 @@ export const StyledSuggestion = styled.li(({ theme }) => {
    return {
       listStyle: 'none',
       cursor: 'pointer',
-      padding: '5px 15px',
       margin: 0,
       display: 'block',
-      '&:hover, &:focus, &.active': {
+      width: '100%',
+      button: {
+         padding: '5px 15px',
+         borderRadius: 0
+      },
+      '&:hover button, &:focus button, &.active button': {
          background: theme.grey400
       }
    }

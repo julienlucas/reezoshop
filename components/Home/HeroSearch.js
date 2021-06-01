@@ -1,20 +1,43 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import Button from '../Buttons/Button';
 import InputSuggestions from '../InputSuggestions/InputSuggestions';
 
-import requireStatic from '../../utils/require-static';
+import graphQLQuery from '../../utils/graphql';
+import getSuggestions from '../InputSuggestions/getSuggestions.graphql';
 import { medias, theme } from '../../constants/theme';
+import requireStatic from '../../utils/require-static';
 
 const HeroSearch = ({ headline }) => {
-   const router = useRouter();
+  const router = useRouter();
+  const [suggestions, setSuggestions] = useState([]);
+  const [queryParams, setQueryParams] = useState({ "query": ""});
 
-   const seeAllCars = () => {
-      router.push(`/recherche`);
-   };
+  const seeAllCars = () => router.push(`/recherche`);
+
+  const onChoice = innerText => router.push(`/recherche?match=${innerText}`);
+
+  const onSearch = inputSearch => setQueryParams({ "query": inputSearch });
+
+  const fetchGraphQL = async (query, queryParams) => {
+    const res = await graphQLQuery(query, queryParams)
+    return res
+  };
+
+  useEffect(() => {
+    const arrayFormated = [];
+
+    fetchGraphQL(getSuggestions.loc.source.body, queryParams)
+        .then(res => res.suggestions.suggestions.map(item => arrayFormated.push(item.query)))
+        .then(() => setSuggestions(arrayFormated))
+  }, [queryParams])
+
+  useEffect(() => {
+    console.log(suggestions)
+  }, [suggestions])
 
   return (
     <StyledHero background={`url(${requireStatic('images/header-home.png')})`}>
@@ -25,10 +48,15 @@ const HeroSearch = ({ headline }) => {
             Voiture d'occasion et neuves à vendre dans notre agence
           </h2>
 
-
           <div className="row">
             <div className="col col-1">
-              <InputSuggestions />
+              <InputSuggestions
+                suggestionsData={suggestions}
+                onUserInput={(inputSearch) => setQueryParams({ "query": inputSearch })}
+                onChoice={onChoice}
+                onSearch={onSearch}
+                placeholder="Marque, Modèle"
+              />
             </div>
 
             <div className="col col-2">ou</div>
@@ -97,7 +125,7 @@ export const StyledHero = styled.section`
     align-items: center;
     justify-content: center;
   }
-  button {
+  .col-3 button {
     width: 100%;
     min-width: 100%;
   }
@@ -116,7 +144,7 @@ export const StyledHero = styled.section`
       margin-top: 3px;
       color: white;
     }
-    button {
+    .col-3 button {
       width: auto;
       min-width: 270px;
     }

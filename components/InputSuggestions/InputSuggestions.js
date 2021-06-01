@@ -1,19 +1,14 @@
 import PropTypes from 'prop-types';
 import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useRouter } from 'next/router';
 
 import Input from '../Input';
 import Suggestion from './Suggestion';
 
-import graphQLQuery from '../../utils/graphql';
-import getSuggestions from './getSuggestions.graphql';
 import { medias, theme } from '../../constants/theme';
 
-const Autocomplete = ({ className }) => {
+const Autocomplete = ({ className, suggestionsData, onChoice, onSearch, placeholder }) => {
    const node = useRef();
-   const router = useRouter();
-   const [queryParams, setQueryParams] = useState({ "query": ""});
    const [suggestions, setSuggestions] = useState([]);
    const [open, setOpen] = useState(null);
    const [state, setState] = useState({
@@ -23,6 +18,10 @@ const Autocomplete = ({ className }) => {
       userInput: ''
    });
    const { active, filteredSuggestions, showSuggestions , userInput } = state;
+
+   useEffect(() => {
+      setSuggestions(suggestionsData)
+   }, [suggestionsData])
 
    const onChange = (value) => {
       const filteredSuggestions = suggestions.filter(
@@ -38,15 +37,17 @@ const Autocomplete = ({ className }) => {
       });
    };
 
-   const onClick = innerText => {
-      setState({
-         active: 0,
-         filteredSuggestions: [],
-         showSuggestions: false,
-         userInput: innerText
+   const onClick = (index, innerText) => {
+      setState(prevState => {
+         return {
+            ...prevState,
+            active: index,
+            showSuggestions: false,
+            userInput: innerText
+         }
       });
 
-      router.push(`/recherche?match=${innerText}`);
+      onChoice(index);
    };
 
    const onKeyUp = e => {
@@ -55,8 +56,14 @@ const Autocomplete = ({ className }) => {
       if (e.keyCode === 13) {
          const index = active;
          const expression = filteredSuggestions[index];
-         setState({ userInput: expression });
-         router.push(`/recherche?match=${expression}`);
+         setState(prevState => {
+            return {
+               ...prevState,
+               userInput: expression
+            }
+         });
+
+         onChoice(index);
       }
 
       // Lorsque press up arrow
@@ -64,10 +71,10 @@ const Autocomplete = ({ className }) => {
          if (active === 0) return;
 
          setState(prevState => {
-         return {
-            ...prevState,
-            active: prevState.active - 1
-         }
+            return {
+               ...prevState,
+               active: prevState.active - 1
+            }
          })
       }
 
@@ -76,10 +83,10 @@ const Autocomplete = ({ className }) => {
          if (active - 1 === filteredSuggestions.length) return;
 
          setState(prevState => {
-         return {
-            ...prevState,
-            active: prevState .active + 1
-         }
+            return {
+               ...prevState,
+               active: prevState .active + 1
+            }
          })
       }
    };
@@ -96,26 +103,27 @@ const Autocomplete = ({ className }) => {
 
    useEffect(() => {
       if (userInput) {
-         onSearch(userInput)
+         onSearch(userInput);
 
          // Mets le text tapé en highlight dans la liste de suggestions
          const inputVal = document.getElementById('input-suggest').value;
          const startIndex = state.userInput.indexOf(inputVal);
+
          if (startIndex !== -1) {
 
-         const endingIndex = startIndex + inputVal.length;
+            const endingIndex = startIndex + inputVal.length;
 
-         let highlightedText;
-         suggestions.map((item, i) => {
-            highlightedText = suggestions[i].slice(0,startIndex)
-            highlightedText += '<span style=\'font-weight:400;\'>'
-            highlightedText += suggestions[i].slice(startIndex,endingIndex)
-            highlightedText += '</span>'
-            highlightedText += suggestions[i].slice(endingIndex)
-            if (document.getElementById(`suggestion-${i}`)) document.getElementById(`suggestion-${i}`).innerHTML = highlightedText
+            let highlightedText;
+            suggestions.map((item, i) => {
+               highlightedText = suggestions[i].slice(0,startIndex)
+               highlightedText += '<span style=\'font-weight:400;\'>'
+               highlightedText += suggestions[i].slice(startIndex,endingIndex)
+               highlightedText += '</span>'
+               highlightedText += suggestions[i].slice(endingIndex)
+               if (document.getElementById(`suggestion-${i}`)) document.getElementById(`suggestion-${i}`).innerHTML = highlightedText
 
-            return
-         })
+               return
+            })
          }
       }
    }, [userInput])
@@ -139,8 +147,8 @@ const Autocomplete = ({ className }) => {
                   <Suggestion
                      className={i === active}
                      index={i}
-                     key={suggestion}
-                     onClick={onClick}
+                     key={suggestion + i}
+                     onClick={(innerText) => onClick(i, innerText)}
                      suggestion={suggestion}
                   />
                )}
@@ -149,23 +157,6 @@ const Autocomplete = ({ className }) => {
          );
       }
    };
-
-   const onSearch = (inputSearch) => {
-      setQueryParams({ "query": inputSearch });
-   };
-
-   const fetchGraphQL = async (query, queryParams) => {
-      const res = await graphQLQuery(query, queryParams)
-      return res
-   };
-
-   useEffect(() => {
-      const arrayFormated = [];
-
-      fetchGraphQL(getSuggestions.loc.source.body, queryParams)
-         .then(res => res.suggestions.suggestions.map(item => arrayFormated.push(item.query)))
-         .then(() => setSuggestions(arrayFormated))
-   }, [queryParams])
 
    return (
       <StyledSuggestions ref={node} className={`${className} ${!open ? 'hide-list' : ''}`} onClick={e => onClickComp(e)}>
@@ -176,7 +167,7 @@ const Autocomplete = ({ className }) => {
             onKeyUp={onKeyUp}
             onChange={onChange}
             value={state.userInput}
-            placeholder="Marque, Modèle"
+            placeholder={placeholder}
          />
          {suggestionsListComponent}
       </StyledSuggestions>
@@ -184,15 +175,20 @@ const Autocomplete = ({ className }) => {
 };
 
 Autocomplete.propTypes = {
-   className: PropTypes.string
+   className: PropTypes.string,
+   suggestionsData: PropTypes.array.isRequired,
+   onChoice: PropTypes.func,
+   onSearch: PropTypes.func,
+   placeholder: PropTypes.string.isRequired
 };
 
 export default Autocomplete;
 
 export const StyledSuggestions = styled.div`
-   &.search-page {
+   position: relative;
+   &.in-header {
       position: fixed;
-      top: 23px;
+      top: 24px;
       right: 90px;
       z-index: 6;
       display: none;
@@ -200,7 +196,7 @@ export const StyledSuggestions = styled.div`
          border: 1px solid ${theme.grey200};
          box-shadow: none;
          &:hover, &:focus {
-         box-shadow: none;
+            box-shadow: none;
          }
       }
    }
@@ -210,6 +206,9 @@ export const StyledSuggestions = styled.div`
          opacity: 0;
          box-shadow: 0 0 0 rgba(0, 0, 0, 0);
       }
+   }
+   * {
+      user-select: auto;
    }
    .suggestions-list {
       position: absolute;
@@ -224,7 +223,7 @@ export const StyledSuggestions = styled.div`
       visibility: visible;
       opacity: 1;
       box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.12);
-      z-index: 3;
+      z-index: 99999;
       p {
          padding: 0 15px;
          text-transform: uppercase;
@@ -233,15 +232,13 @@ export const StyledSuggestions = styled.div`
          font-weight: 700;
          font-size: 12px;
       }
-   }
-   ${medias.min('820')} {
-      &.search-page {
-         display: block;
+      span {
+         display: inline;
       }
    }
-   ${medias.min800} {
-      .suggestions-list {
-         max-width: 395px;
+   ${medias.min(820)} {
+      &.in-header {
+         display: block;
       }
    }
 `;

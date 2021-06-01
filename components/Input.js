@@ -86,6 +86,7 @@ const StyledInput = styled.input(({ styles = {}, theme, ...props }) => {
       },
       ...(props.search ? inputFormat('search', theme) : {}),
       ...(props.multiSelect ? inputFormat('multiSelect', theme) : {}),
+      ...(props.borderBottom ? inputFormat('borderBottom', theme) : {}),
       ...styles,
    }
 });
@@ -128,6 +129,23 @@ const inputFormat = (format, theme) => ({
       },
       '&:focus, &:hover': {
          cursor: 'pointer'
+      }
+   },
+   borderBottom: {
+      marginBottom: 20,
+      border: 0,
+      fontSize: 16,
+      borderBottom: `1px solid ${theme.grey200}`,
+      color: `${theme.black} !important`,
+      padding: '15px 0',
+      borderRadius: 0,
+      minWidth: '100%',
+      '&::placeholder': {
+         textTransform: 'none',
+         color: `${theme.grey100} !important`
+      },
+      '&.error': {
+         borderColor: 'red'
       }
    }
 }[format]);

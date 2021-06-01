@@ -34,7 +34,6 @@ const HomePage = ({ data, newCars, usedCars }) => {
 export async function getStaticProps() {
    const queryParamsUsed = { onlyNew: true, size: 3 };
    const queryParamsNew = { ...queryParamsUsed, onlyNew: true };
-   const path = '/';
 
    let homeDatas;
    try {
@@ -46,8 +45,7 @@ export async function getStaticProps() {
    return {
       props: {
          ...homeDatas,
-         data: mockData,
-         path
+         data: mockData
       }
    };
 };
@@ -56,6 +54,14 @@ HomePage.propTypes = {
    data: PropTypes.object.isRequired,
    newCars: PropTypes.array.isRequired,
    usedCars: PropTypes.array.isRequired,
+};
+
+HomePage.layoutProps = {
+  headerProps: {
+    withHeaderShadow: false,
+    withBottomMobileNav: true,
+    singleBottomMobileNav: true
+  }
 };
 
 export default HomePage;
@@ -84,11 +90,6 @@ const adsQuery = `query getAds($queryParamsNew: AdQueryParams!, $queryParamsUsed
          thumbs:images(width: W320)
          title
          year
-         pictures320: images(count: 1, width: W320)
-         pictures360: images(count: 1, width: W360)
-         pictures420: images(count: 1, width: W420)
-         pictures480: images(count: 1, width: W480)
-         pictures660: images(count: 1, width: W660)
       }
    }
    usedCars: ads(queryParams: $queryParamsUsed) {
@@ -108,11 +109,6 @@ const adsQuery = `query getAds($queryParamsNew: AdQueryParams!, $queryParamsUsed
          thumbs:images(width: W320)
          title
          year
-         pictures320: images(count: 1, width: W320)
-         pictures360: images(count: 1, width: W360)
-         pictures420: images(count: 1, width: W420)
-         pictures480: images(count: 1, width: W480)
-         pictures660: images(count: 1, width: W660)
       }
    }
 }`;

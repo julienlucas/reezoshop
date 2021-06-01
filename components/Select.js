@@ -193,10 +193,7 @@ const selectFormat = (format, theme) => ({
          '&.menu-open': {
             filter: 'grayscale(1) brightness(600%)',
             ul: {
-               filter: 'brightness(100%)',
-               '*': {
-                  filter: 'brightness(0%)'
-               }
+               filter: 'brightness(18%)'
             }
          }
       },

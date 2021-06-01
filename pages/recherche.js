@@ -109,7 +109,6 @@ const Search = ({ search, query }) => {
 
 Search.getInitialProps = async ({ query }) => {
    const initialQueryParams = { queryParams: { size: 12 } };
-   const path = '/recherche';
 
    let search;
    try {
@@ -129,12 +128,20 @@ Search.getInitialProps = async ({ query }) => {
       search = {};
    }
 
-   return { path, query, search };
+   return { query, search };
 };
 
 Search.propTypes = {
    search: PropTypes.object.isRequired,
    query: PropTypes.object.isRequired
+};
+
+Search.layoutProps = {
+  headerProps: {
+    withHeaderShadow: true,
+    withBottomMobileNav: true,
+    singleBottomMobileNav: false
+  }
 };
 
 export default Search;
