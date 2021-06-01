@@ -8,7 +8,6 @@ import SEO from '../components/SEO';
 
 import hocs from '../hooks/hocs';
 import { GlobalStyles } from '../constants/global-styles';
-import { nav } from '../constants/nav';
 import { theme } from '../constants/theme';
 
 class RZSApp extends App {
@@ -38,7 +37,7 @@ class RZSApp extends App {
                <Head />
 
                {path === '/_error' ? <Component hocProps={hocProps} {...pageProps} /> :
-                  <Layout cityShop={hocProps.shop.host} nav={nav} path={path}>
+                  <Layout cityShop={hocProps.shop.host} path={path}>
                      <Component hocProps={hocProps} {...pageProps} />
                   </Layout>}
             </ThemeProvider>

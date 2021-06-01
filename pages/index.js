@@ -80,6 +80,7 @@ const adsQuery = `query getAds($queryParamsNew: AdQueryParams!, $queryParamsUsed
          price
          prices { originalPrice: originalCommercializationPrice, percentage }
          thumbs:images(width: W320)
+         title
          year
       }
    }
@@ -98,6 +99,7 @@ const adsQuery = `query getAds($queryParamsNew: AdQueryParams!, $queryParamsUsed
          price
          prices { originalPrice: originalCommercializationPrice, percentage }
          thumbs:images(width: W320)
+         title
          year
       }
    }

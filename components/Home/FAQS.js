@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import Button from '../Button';
+import Button from '../Buttons/Button';
 import BoxQuestion from '../BoxQuestion';
 
 import NextImageLazy from '../../utils/imgLazy';
@@ -29,7 +29,7 @@ const FAQS = ({ faqs }) => {
           </div>
         </div>
       </div>
-      <Button primary className="button">Accéder à la F.A.Q</Button>
+      <Button primary>Accéder à la F.A.Q</Button>
     </StyledFAQ>
   );
 };
@@ -58,7 +58,7 @@ export const StyledFAQ = styled.section`
     float: none;
     width: 100%;
   }
-  .button {
+  button {
     position: relative;
     margin: 50px auto 0;
     display: table;

@@ -2,15 +2,14 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 
-import requireStatic from '../utils/require-static';
-
-const Button = ({ children, component = 'button', type = 'button', ...buttonProps }) => (
-    <StyledButton as={component} type={type} {...buttonProps}>
+const Button = ({ className, children, component = 'button', type = 'button', ...buttonProps }) => (
+    <StyledButton className={className} as={component} type={type} {...buttonProps}>
        {children}
     </StyledButton>
  );
 
 Button.propTypes = {
+   className: PropTypes.string,
    children: PropTypes.node,
    component: PropTypes.string,
    type: PropTypes.string,
@@ -49,29 +48,29 @@ const StyledButton = styled.button(({ styles = {}, theme, ...props }) => {
          height: 35,
          lineHeight: '30px'
       },
-      '&.button-filtres-mobile': {
+      '&.full-width': {
+         width: '100%'
+      },
+      '&.button-filtres': {
          position: 'fixed',
          bottom: 20,
          left: 20,
          zIndex: 6,
          width: 'calc(50vw - 26px)',
+         display: 'block',
+         '@media screen and (min-width: 990px)': {
+            display: 'none'
+         }
       },
-
-      ...(props.full ? buttonFull : {}),
       ...(props.primary ? buttonFormat('primary', theme) : {}),
       ...(props.secondary ? buttonFormat('secondary', theme) : {}),
       ...(props.third ? buttonFormat('third', theme) : {}),
       ...(props.fourth ? buttonFormat('fourth', theme) : {}),
-      ...(props.neuf ? buttonFormat('neuf', theme) : {}),
-      ...(props.phone ? buttonFormat('phone', theme) : {}),
       ...(props.clear ? buttonFormat('clear', theme) : {}),
+      ...(props.breadcrumb ? buttonFormat('breadcrumb', theme) : {}),
       ...styles,
    }
 });
-
-const buttonFull = {
-   width: '100%'
-};
 
 const buttonFormat = (format, theme) => ({
    primary: {
@@ -97,8 +96,8 @@ const buttonFormat = (format, theme) => ({
       border: `1px solid ${theme.grey100}`,
       fontSize: 14,
       marginTop: 8,
-      paddingLeft: 110,
-      paddingRight: 110,
+      paddingLeft: 90,
+      paddingRight: 90,
       color: 'white',
       background: theme.blue100,
       '&:hover, &:focus': {
@@ -119,31 +118,6 @@ const buttonFormat = (format, theme) => ({
          color: 'white'
       }
    },
-   phone: {
-      padding: '0 0 0 16px',
-      color: 'white',
-      backgroundColor: theme.orange100,
-      '&:hover': {
-         backgroundColor: theme.orange200
-      },
-      'span': {
-         padding: '0 20px 0 34px',
-         width: 'auto',
-         lineHeight: '47px',
-         background: `url(${requireStatic('icons/tel.svg')}) no-repeat`,
-         backgroundPosition: '3px 55%',
-         backgroundSize: '20px'
-      }
-   },
-   neuf: {
-      fontSize: 14,
-      height: 30,
-      lineHeight: '27px',
-      background: 'white',
-      border: `1px solid ${theme.blue100}`,
-      color: theme.blue100,
-      padding: '0 25px',
-   },
    clear: {
       position: 'relative',
       padding: 0,
@@ -158,5 +132,8 @@ const buttonFormat = (format, theme) => ({
       textAlign: 'left',
       display: 'inline',
       width: '100%',
-   }
+      'a': {
+         color: theme.black
+      }
+   },
 }[format]);

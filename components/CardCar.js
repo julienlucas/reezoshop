@@ -3,28 +3,59 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 
-import NextImageLazy from '../utils/imgLazy';
-import { theme } from '../constants/theme';
+import ButtonIsNew from './Buttons/ButtonIsNew';
 
-const CardCar = ({ className, brand, energy, gearbox, model, mileage, price, year }) => {
-   // Ajout d'un espace tous les 3 chiffres
-   const numberFormat = num => {
-      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
-   };
+import { makeCarURL } from '../utils/url';
+import NextImageLazy from '../utils/imgLazy';
+import { numberFormat } from '../utils/formaters';
+import { medias, theme } from '../constants/theme';
+import { energies, gearboxes } from '../constants/search';
+
+const CardCar = ({
+      _id,
+      className,
+      brand,
+      energy,
+      isNew,
+      gearbox,
+      model,
+      mileage,
+      price,
+      prices,
+      title,
+      thumbnail,
+      year,
+      pictures320,
+      pictures360,
+      pictures420,
+      pictures480,
+      pictures660
+   }) => {
+   const url = makeCarURL({ _id, brand, isNew, model, year });
+   const priceDiscounted = prices?.percentage && (price - (price * `.${prices.percentage}`)).toFixed(0);
+
+   const isEnMagasin = true; // Fake data, à remplacer lorsque que cette clé sera gérée par l'API
+
+   const srcSet = `${pictures320 && `${pictures320} 320w,`}
+   ${pictures360 && `${pictures360} 360w,`}
+   ${pictures420 && `${pictures420} 420w,`}
+   ${pictures480 && `${pictures480} 480w,`}
+   ${pictures660 && `${pictures660} 660w`}`
 
    return (
-      <StyledCard className={`card-car ${className}`}>
+      <Card className={className}>
          <div className="thumbnail">
             {className === 'small-width' && <>
-               <div className="promo">-20%</div>
-               <div className="en-magasin">En magasin</div>
+               {prices?.percentage && <div className="promo">-{prices.percentage}%</div>}
+               {isEnMagasin && <div className="en-magasin">En magasin</div>}
             </>}
 
-            <Link href="/">
+            <Link href={url}>
                <a>
                   <NextImageLazy
-                     src="https://picsum.photos/480/270"
-                     width={367}
+                     src={thumbnail}
+                     srcSet={srcSet}
+                     width="100%"
                      height={205}
                      layout="responsive"
                      alt=""
@@ -33,37 +64,46 @@ const CardCar = ({ className, brand, energy, gearbox, model, mileage, price, yea
             </Link>
          </div>
          <div className="box-text">
-            <h3>
-               <Link href="/">
-                  <a>{brand && brand} {model && model}</a>
-               </Link>
-            </h3>
-            <p className="description">{gearbox && `${gearbox} ·`} {energy && `${energy} ·`} {year && `${year} ·`} {mileage && `${numberFormat(mileage)} km`}</p>
-            {className === 'small-width' && <button className="btn btn-neuf-occas" type="button">Neuf /0km</button>}
-            <p className="prix">{price && numberFormat(price)} €</p>
-            {className === 'small-width' && <p className="prix-barre">{price && numberFormat(price)} €</p>}
+            <h3><Link href={url}><a>{title && title}</a></Link></h3>
+
+            <p className="description">{gearbox && `${(gearboxes[gearbox] || '')} ·`} {energy && `${energies[energy] || ''} ·`} {year && `${year} ·`} {mileage && `${numberFormat(mileage)} km`}</p>
+            {(isNew && className === 'small-width') && <ButtonIsNew className="button-isnew">Neuf /0km</ButtonIsNew>}
+
+            <div className="box-prix">
+               <p className="prix">{price && numberFormat(price)} €</p>
+               {className === 'small-width' && priceDiscounted  && <p className="prix-barre">{priceDiscounted} €</p>}
+            </div>
          </div>
-      </StyledCard>
+      </Card>
    );
 };
 
 CardCar.propTypes = {
+   _id: PropTypes.string,
    className: PropTypes.string,
    brand: PropTypes.string,
    energy: PropTypes.string,
    gearbox: PropTypes.string,
+   isNew: PropTypes.bool,
    model: PropTypes.string,
    mileage: PropTypes.number,
    price: PropTypes.number,
-   // thumbnail: PropTypes.string,
-   year: PropTypes.string
+   prices: PropTypes.object,
+   title: PropTypes.string,
+   thumbnail: PropTypes.string,
+   year: PropTypes.string,
+   pictures320: PropTypes.array,
+   pictures360: PropTypes.array,
+   pictures420: PropTypes.array,
+   pictures480: PropTypes.array,
+   pictures660: PropTypes.array,
 };
 
 export default CardCar;
 
-export const StyledCard = styled.div`
+export const Card = styled.div`
    position: relative;
-   height: 336px;
+   min-height: 336px;
    width: 367px;
    user-select: none;
    outline: 0;
@@ -75,7 +115,11 @@ export const StyledCard = styled.div`
       box-shadow: 1px 2px 15px rgba(0, 0, 0, 0.2);
    }
    &.small-width {
-      width: 335px;
+      width: 100%;
+      min-height: auto;
+      .box-text {
+         height: 205px;
+      }
       .prix {
          text-align: right;
          float: right;
@@ -83,7 +127,7 @@ export const StyledCard = styled.div`
    }
    .promo {
       position: absolute;
-      padding-top: 3px;
+      padding: 3px 0 0 6px;
       display: flex;
       align-item: center;
       margin-top: 15px;
@@ -91,7 +135,7 @@ export const StyledCard = styled.div`
       font-weight: 700;
       border-top-right-radius: 4px;
       border-bottom-right-radius: 4px;
-      width: 45px;
+      width: 50px;
       height: 30px;
       color: white;
       text-align: center;
@@ -116,46 +160,82 @@ export const StyledCard = styled.div`
       transform: rotate(41.94deg);
       z-index: 2;
    }
+   .box-prix {
+      position: absolute;
+      right: 16px;
+      bottom: 20px;
+   }
   .box-text {
       background: white;
       border-bottom-left-radius: 4px;
       border-bottom-right-radius: 4px;
       padding: 12px 16px 23px;
-      a {
-         color: black;
-         text-decoration: none;
+   }
+   a {
+      color: black;
+      text-decoration: none;
+   }
+   h3, p {
+      margin: 0;
+      padding: 0;
+   }
+   .description {
+      padding: 5px 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: ${theme.grey100};
+      text-transform: capitalize;
+   }
+   .prix {
+      padding-bottom: 7px;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+   }
+   .prix-barre {
+      padding: 10px 0 0 0;
+      text-align: right;
+      float: none;
+      text-decoration: line-through;
+      font-size: 16px;
+   }
+   .button-isnew {
+      position: absolute;
+      bottom: 20px;
+      float: left;
+   }
+   ${medias.min(1400)} {
+      &.small-width {
+         min-height: 336px;
+         .box-text {
+            height: auto;
+         }
+         .prix-barre {
+            padding: 10px 10px 0 0;
+            float: right;
+         }
+         .prix {
+            padding-bottom: 0;
+         }
       }
-      h3, p {
-         margin: 0;
-         padding: 0;
+   }
+   ${medias.min(750)} {
+      &.small-width {
+         max-width: 335px;
       }
-      .description {
-         padding: 5px 0;
-         font-size: 14px;
-         font-weight: 600;
-         color: ${theme.grey100};
-         text-transform: capitalize;
-      }
-      .prix {
-         font-size: 26px;
-         font-weight: 700;
-         letter-spacing: -0.04em;
-      }
-      .prix-barre {
-         padding: 10px 10px 0 0;
-         text-align: right;
-         float: right;
-         text-decoration: line-through;
-         font-size: 16px;
-      }
-      .btn-neuf-occas {
-         float: left;
-         font-size: 14px;
-         height: 26px;
-         padding: 0 20px;
-         background: white;
-         border: 1px solid ${theme.blue100};
-         color: ${theme.blue100};
+   }
+   @media (max-width: 750px) {
+      &.small-width {
+         .box-text {
+            height: 150px;
+         }
+         .prix {
+            padding-bottom: 0;
+         }
+         .prix-barre {
+            padding: 10px 10px 0 0;
+            float: right;
+         }
       }
    }
 `

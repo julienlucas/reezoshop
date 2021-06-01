@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Tab, TabList, TabPanel } from 'react-tabs';
 import Slider from 'react-slick';
 
-import Button from '../Button';
+import Button from '../Buttons/Button';
 import CardCar from '../CardCar';
 import { ReactSlickStyles } from '../../constants/react-slick-styles';
 import { ReactTabsStyles } from '../../constants/react-tabs-styles';
@@ -34,15 +34,25 @@ const Models = ({ newCars, usedCars }) => {
                 <Slider {...sliderSettings}>
                   {usedCars?.map(car =>
                     <CardCar
+                      className="card-car"
+                      _id={car._id}
                       key={car._id}
-                      year={car.year}
+                      brand={car.brand}
                       gearbox={car.gearbox}
                       energy={car.energy}
+                      isNew={car.isNew}
                       mileage={car.mileage}
-                      brand={car.brand}
                       model={car.model}
-                      thumbnail={car.oneImage[0]}
                       price={car.price}
+                      prices={car.prices}
+                      title={car.title}
+                      thumbnail={car.oneImage[0]}
+                      year={car.year}
+                      pictures320={car.pictures320}
+                      pictures360={car.pictures360}
+                      pictures420={car.pictures420}
+                      pictures480={car.pictures480}
+                      pictures660={car.pictures480}
                     />
                   )}
                 </Slider>
@@ -54,15 +64,25 @@ const Models = ({ newCars, usedCars }) => {
                 <Slider {...sliderSettings}>
                   {newCars?.map(car =>
                     <CardCar
+                      className="card-car"
+                      _id={car._id}
                       key={car._id}
-                      year={car.year}
+                      brand={car.brand}
                       gearbox={car.gearbox}
                       energy={car.energy}
+                      isNew={car.isNew}
                       mileage={car.mileage}
-                      brand={car.brand}
-                      modele={car.model}
-                      thumbnail={car.oneImage[0]}
+                      model={car.model}
                       price={car.price}
+                      prices={car.prices}
+                      title={car.title}
+                      thumbnail={car.oneImage[0]}
+                      year={car.year}
+                      pictures320={car.pictures320}
+                      pictures360={car.pictures360}
+                      pictures420={car.pictures420}
+                      pictures480={car.pictures480}
+                      pictures660={car.pictures480}
                     />
                   )}
                 </Slider>
@@ -104,7 +124,7 @@ const sliderSettings = {
 };
 
 export const StyledModels = styled.section`
-  padding: 85px 0 40px;
+  padding: 25px 0 40px;
   h2 {
     position: relative;
     margin: 0 auto 15px;
@@ -141,7 +161,6 @@ export const StyledModels = styled.section`
     }
   }
   ${medias.min768} {
-    padding: 125px 0 40px;
     h2 {
       margin: 0 -10px 25px 30px;
       max-width: 100%;

@@ -4,14 +4,14 @@ import Slider from 'react-slick';
 import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
 
-import Button from '../Button';
+import Button from '../Buttons/Button';
 import NextImageLazy from '../../utils/imgLazy';
 import requireStatic from '../../utils/require-static';
 import { medias, theme } from '../../constants/theme';
 
 const Offers = ({ subHeadline }) => {
-  const [occasionPic, setOccasionPic] = useState('images/promo-occasion.png');
-  const [neufPic, setNeufPic] = useState('images/promo-neuf.png');
+  const [neufPic, setNeufPic] = useState('images/autopromo-desktop-neuf.jpg');
+  const [occasionPic, setOccasionPic] = useState('images/autopromo-desktop-occasion.jpg');
 
   const sliderSettings = {
     className: 'slider',
@@ -29,11 +29,11 @@ const Offers = ({ subHeadline }) => {
     function onResizeWidth(){
       const width = document.documentElement.clientWidth;
       if (width >= 768) {
-        setNeufPic('images/promo-neuf.png');
-        setOccasionPic('images/promo-occasion.png');
+        setNeufPic('images/autopromo-desktop-neuf.jpg');
+        setOccasionPic('images/autopromo-desktop-occasion.jpg');
       } else {
-        setNeufPic('images/promo-mobile.png');
-        setOccasionPic('images/promo-mobile.png');
+        setNeufPic('images/autopromo-mobile-neuf.jpg');
+        setOccasionPic('images/autopromo-mobile-occasion.jpg');
       }
     }
     window.addEventListener('resize', onResizeWidth);
@@ -41,39 +41,39 @@ const Offers = ({ subHeadline }) => {
   }, []);
 
   return (
-    <StyledOffers>
+    <StyledOffers neufPic={neufPic} occassionPic={occasionPic}>
       <h2 className="text-center">En ce moment dans votre <span className="blue">{subHeadline}</span></h2>
 
       <div className="container">
         <Slider {...sliderSettings}>
-            <div className="card-promo">
-              <Link href="/">
-                <a>
-                  <Button primary className="small-height">Profitez-en !</Button>
-                  <NextImageLazy
-                    src={requireStatic(neufPic)}
-                    width={560}
-                    height={310}
-                    layout="responsive"
-                    alt=""
-                  />
-                </a>
-              </Link>
-            </div>
-            <div className="card-promo">
-              <Link href="/">
-                <a>
-                  <Button primary className="small-height">Profitez-en !</Button>
-                  <NextImageLazy
-                    src={requireStatic(occasionPic)}
-                    width={560}
-                    height={310}
-                    layout="responsive"
-                    alt=""
-                  />
-                </a>
-              </Link>
-            </div>
+          <div className="card-promo">
+            <Link href="/">
+              <a>
+                <Button primary className="small-height">Profitez-en !</Button>
+                <NextImageLazy
+                  src={requireStatic(neufPic)}
+                  width={560}
+                  height={310}
+                  layout="responsive"
+                  alt=""
+                />
+              </a>
+            </Link>
+          </div>
+          <div className="card-promo">
+            <Link href="/">
+              <a>
+                <Button primary className="small-height">Profitez-en !</Button>
+                <NextImageLazy
+                  src={requireStatic(occasionPic)}
+                  width={560}
+                  height={310}
+                  layout="responsive"
+                  alt=""
+                />
+              </a>
+            </Link>
+          </div>
         </Slider>
       </div>
     </StyledOffers>
@@ -100,6 +100,7 @@ export const StyledOffers = styled.section`
     width: 100%;
   }
   .slider {
+    left: 10px;
     .slick-slide {
       position: relative;
       margin: 0 5px;
@@ -135,6 +136,7 @@ export const StyledOffers = styled.section`
       max-width: 100%;
     }
     .slider {
+      left: 0;
       .slick-slide {
         margin: 0 10px;
         height: 300px;
