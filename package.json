@@ -6,7 +6,6 @@
     "build": "next build",
     "lint": "eslint . --ext .js",
     "lint:fix": "eslint . --fix --ext .js",
-    "postbuild": "next-sitemap",
     "prettify": "node ./scripts/prettify"
   },
   "dependencies": {
