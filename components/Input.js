@@ -96,7 +96,7 @@ const inputFormat = (format, theme) => ({
       borderRadius: '4px',
       border: 0,
       height: '47px',
-      minWidth: '393px',
+      minWidth: '100%',
       fontSize: '16px',
       background: `white url(${requireStatic('icons/search.svg')}) no-repeat calc(100% - 20px) 50%`,
       backgroundSize: 18,
@@ -113,7 +113,7 @@ const inputFormat = (format, theme) => ({
          }
       },
       '@media screen and (max-width: 435px)': {
-         minWidth: '100%'
+         minWidth: '393px',
       }
    },
    multiSelect: {
