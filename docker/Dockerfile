@@ -10,5 +10,4 @@ RUN yarn install
 ENV NODE_ENV=production
 
 COPY . .
-CMD bash -c "yarn build && yarn start"
-
+CMD bash -c "yarn build && yarn production"
