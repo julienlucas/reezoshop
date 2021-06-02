@@ -23,10 +23,10 @@ const Menu = ({ headline, phone, phoneFormated, onIsVisible }) => {
             <div className="box-top">
                <ul>
                   <li><strong>Agence {headline}</strong></li>
-                  <li><Link href=""><a>Véhicules d'occasion</a></Link></li>
-                  <li><Link href=""><a>Véhicules neufs/0km</a></Link></li>
-                  <li><Link href=""><a>Comment venir ?</a></Link></li>
-                  <li><Link href=""><a>Foire Aux Questions</a></Link></li>
+                  <li><Link href="/plan-de-site/occasion"><a>Véhicules d'occasion</a></Link></li>
+                  <li><Link href="/plan-de-site/neuf"><a>Véhicules neufs/0km</a></Link></li>
+                  <li><Link href="/comment-venir"><a>Comment venir ?</a></Link></li>
+                  <li><Link href="/faq"><a>Foire Aux Questions</a></Link></li>
                </ul>
             </div>
             <div className="box-bottom">
