@@ -5,9 +5,7 @@ import styled from 'styled-components';
 import Input from '../Input';
 import Suggestion from './Suggestion';
 
-import { medias, theme } from '../../constants/theme';
-
-const Autocomplete = ({ className, suggestionsData, onChoice, onSearch, placeholder }) => {
+const Autocomplete = ({ suggestionsData, onChoice, onSearch, placeholder, ...inputSuggestionsProps }) => {
    const node = useRef();
    const [suggestions, setSuggestions] = useState([]);
    const [open, setOpen] = useState(null);
@@ -159,7 +157,7 @@ const Autocomplete = ({ className, suggestionsData, onChoice, onSearch, placehol
    };
 
    return (
-      <StyledSuggestions ref={node} className={`${className} ${!open ? 'hide-list' : ''}`} onClick={e => onClickComp(e)}>
+      <StyledSuggestions { ...inputSuggestionsProps } ref={node} className={!open ? 'hide-list' : ''} onClick={e => onClickComp(e)}>
          <Input
             search
             id="input-suggest"
@@ -175,7 +173,6 @@ const Autocomplete = ({ className, suggestionsData, onChoice, onSearch, placehol
 };
 
 Autocomplete.propTypes = {
-   className: PropTypes.string,
    suggestionsData: PropTypes.array.isRequired,
    onChoice: PropTypes.func,
    onSearch: PropTypes.func,
@@ -184,61 +181,66 @@ Autocomplete.propTypes = {
 
 export default Autocomplete;
 
-export const StyledSuggestions = styled.div`
-   position: relative;
-   &.in-header {
-      position: fixed;
-      top: 24px;
-      right: 90px;
-      z-index: 6;
-      display: none;
-      input {
-         border: 1px solid ${theme.grey200};
-         box-shadow: none;
-         &:hover, &:focus {
-            box-shadow: none;
+const StyledSuggestions = styled.div(({ styles = {}, theme, ...props }) => {
+   return {
+      position: 'relative',
+      '&.hide-list': {
+         '.suggestions-list': {
+            visibility: 'hidden',
+            opacity: '0',
+            boxShadow: '0 0 0 rgba(0, 0, 0, 0)',
          }
+      },
+      '*': {
+         userSelect: 'auto'
+      },
+      '.suggestions-list': {
+         position: 'absolute',
+         marginTop: -12,
+         border: `1px solid ${theme.grey200}`,
+         listStyle: 'none',
+         overflowY: 'auto',
+         maxWidth: '100%',
+         width: '100%',
+         borderRadius: 4,
+         background: 'white',
+         visibility: 'visible',
+         opacity: '1',
+         boxShadow: '1px 2px 13px rgba(0, 0, 0, 0.12)',
+         zIndex: 99999,
+         'p': {
+            padding: '0 15px',
+            textTransform: 'uppercase',
+            color: `${theme.grey100}`,
+            letterspacing: '.1em',
+            fontWeight: '700',
+            fontSize: 12,
+         },
+         'span' :{
+            display: 'inline'
+         }
+      },
+      ...(props.inNavBar ? inputSuggestionsFormat('inNavBar', theme) : {}),
+      ...styles,
+   }
+});
+
+const inputSuggestionsFormat = (format, theme) => ({
+   inNavBar: {
+      position: 'fixed',
+      top: 24,
+      right: 90,
+      zIndex: 6,
+      display: 'none',
+      'input': {
+         border: `1px solid ${theme.grey200}`,
+         boxShadow: 'none',
+         '&:hover, &:focus': {
+            boxShadow: 'none'
+         }
+      },
+      '@media screen and (min-width: 820px)': {
+         display: 'block'
       }
    }
-   &.hide-list {
-      .suggestions-list {
-         visibility: hidden;
-         opacity: 0;
-         box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-      }
-   }
-   * {
-      user-select: auto;
-   }
-   .suggestions-list {
-      position: absolute;
-      margin-top: -12px;
-      border: 1px solid ${theme.grey200}
-      list-style: none;
-      overflow-y: auto;
-      max-width: 100%;
-      width: 100%;
-      border-radius: 4px;
-      background: white;
-      visibility: visible;
-      opacity: 1;
-      box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.12);
-      z-index: 99999;
-      p {
-         padding: 0 15px;
-         text-transform: uppercase;
-         color: ${theme.grey100};
-         letter-spacing: .1em;
-         font-weight: 700;
-         font-size: 12px;
-      }
-      span {
-         display: inline;
-      }
-   }
-   ${medias.min(820)} {
-      &.in-header {
-         display: block;
-      }
-   }
-`;
+}[format])

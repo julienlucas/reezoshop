@@ -38,7 +38,7 @@ function SearchWrapper({ cars, cityShop, count, filters, onFilters, onLoadMore, 
     <WrapperStyled>
       <div className="container">
         <InputSuggestions
-          className="in-header"
+          inNavBar
           suggestionsData={suggestions}
           onUserInput={(inputSearch) => setQueryParams({ "query": inputSearch })}
           onChoice={onChoice}
