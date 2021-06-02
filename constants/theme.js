@@ -16,6 +16,12 @@ export const colors = {
    blue200: '#124b80',
 };
 
+export const fontWeights = {
+   normal: 400,
+   semiBold: 600,
+   bold: 700,
+};
+
 export const medias = {
    min1200: '@media (min-width: 1200px)',
    min990: '@media (min-width: 990px)',
@@ -33,8 +39,14 @@ export const medias = {
       }`,
 };
 
+export const radius = {
+   normal: 4,
+};
+
 export const theme = {
    ...colors,
    colors,
+   fontWeights,
    medias,
+   radius,
 };

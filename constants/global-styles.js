@@ -18,7 +18,12 @@ export const GlobalStyles = createGlobalStyle`
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
-    a {
+    a,
+    a:active,
+    a:focus,
+    a:hover {
+      color: inherit;
+      cursor: pointer;
       text-decoration: none;
     }
     .container {
@@ -99,4 +104,4 @@ export const GlobalStyles = createGlobalStyle`
       }
     }
   }
-`
+`;

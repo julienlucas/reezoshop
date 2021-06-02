@@ -10,7 +10,7 @@ metadata:
 spec:
   containers:
     - name: {{ include "rzc-chart-reezoshop.fullname" . }}-tst-cx
-      image: reezocar.azurecr.io/rzc-docker-chart-testing:latest
+      image: {{ .Values.testImage }}
       command: ["bats", "-t", "/tests/run.sh"]
       resources:
         limits:
