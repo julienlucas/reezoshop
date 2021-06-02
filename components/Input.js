@@ -112,7 +112,7 @@ const inputFormat = (format, theme) => ({
             color: theme.black
          }
       },
-      '@media screen and (max-width: 435px)': {
+      '@media screen and (min-width: 435px)': {
          minWidth: '393px',
       }
    },
