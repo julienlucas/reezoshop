@@ -69,7 +69,7 @@ const Search = ({ search, query }) => {
         return null;
       });
 
-      if (sortOrder) query.sort = sortOrder; // Si en state, ajoute dans le sort dans le query
+      if (sortOrder) query.sort = sortOrder; // Si sortOrder en state, ajoute le sort dans le query aussi
 
       router.push({ pathname: '/recherche', query }, undefined, { shallow: true });
     }
