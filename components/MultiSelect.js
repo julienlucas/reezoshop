@@ -20,12 +20,12 @@ const MultiSelect = ({ className, name, onChange, onReset, options, placeholder 
          setOptionsSeleted([...newActives])
 
          const newValuesInput = valuesInput.replaceAll(`${label},`,'')
-         setValuesInput(newValuesInput)
+         setValuesInput(newValuesInput.trim())
       } else {
          optionsSelected.push(value)
          setOptionsSeleted([...optionsSelected])
 
-         setValuesInput(`${valuesInput && valuesInput} ${label && `${label},`}`)
+         setValuesInput(`${valuesInput && valuesInput.trim()} ${label && `${label},`}`)
       };
    };
 
@@ -58,9 +58,13 @@ const MultiSelect = ({ className, name, onChange, onReset, options, placeholder 
       };
    }, []);
 
+   useEffect(() => {
+      console.log(valuesInput)
+   }, [valuesInput])
+
    return (
       <StyledMultiSelect className={className} ref={node}>
-         <Input multiSelect type="text" placeholder={placeholder} value={valuesInput} onClick={onClick} onChange={null} />
+         <Input multiSelect type="text" placeholder={placeholder} value={!valuesInput.trim() ? placeholder : valuesInput} onClick={onClick} onChange={null} />
 
          <div className={`multi-select-popup ${open ? 'show' : ''}`}>
             <p>{placeholder}</p>
