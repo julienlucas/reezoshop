@@ -21,6 +21,8 @@ const MultiSelect = ({ className, name, onChange, onReset, options, placeholder 
 
          const newValuesInput = valuesInput.replaceAll(`${label},`,'')
          setValuesInput(newValuesInput.trim())
+
+         if (!newValuesInput.trim()) onChange([], name)
       } else {
          optionsSelected.push(value)
          setOptionsSeleted([...optionsSelected])
@@ -41,7 +43,7 @@ const MultiSelect = ({ className, name, onChange, onReset, options, placeholder 
 
    useEffect(() => {
       const values = optionsSelected;
-      if (Object.keys(optionsSelected).length > 0) onChange(values, name)
+      if (optionsSelected.length > 0) onChange(values, name)
    }, [optionsSelected])
 
    useEffect(() => {
@@ -57,10 +59,6 @@ const MultiSelect = ({ className, name, onChange, onReset, options, placeholder 
          document.removeEventListener('mousedown', onClick);
       };
    }, []);
-
-   useEffect(() => {
-      console.log(valuesInput)
-   }, [valuesInput])
 
    return (
       <StyledMultiSelect className={className} ref={node}>

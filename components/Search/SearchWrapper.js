@@ -40,7 +40,6 @@ function SearchWrapper({ cars, cityShop, count, filters, onFilters, onLoadMore, 
         <InputSuggestions
           inNavBar
           suggestionsData={suggestions}
-          onUserInput={(inputSearch) => setQueryParams({ "query": inputSearch })}
           onChoice={onChoice}
           onSearch={onSearch}
           placeholder="Marque, Modèle"

@@ -27,10 +27,12 @@ const Filters = ({ onFilters, onResetFilters }) => {
    const onChange = (value, name, id) => {
       if (id === 'occasion') {
          setOccasion(!occasion)
-         value = !value;
+         value = !value
       };
 
-      if (id === 'neuf') setNeuf(!neuf);
+      if (id === 'neuf') {
+         setNeuf(!neuf)
+      };
 
       setFilters({
          ...filters,
@@ -43,12 +45,7 @@ const Filters = ({ onFilters, onResetFilters }) => {
       // Condition onResizeWidth uniquement pour la recherche mobile (width =< 990px)
       if (e) e.preventDefault()
 
-      if ((neuf && occasion) || (!neuf && !occasion)) {
-         delete filters.onlyNew
-         onFilters(filters)
-
-         return;
-      }
+      if ((neuf && occasion) || (!neuf && !occasion)) filters.onlyNew = ''
 
       onFilters(filters)
    };

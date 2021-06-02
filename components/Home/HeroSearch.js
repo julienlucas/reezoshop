@@ -35,10 +35,6 @@ const HeroSearch = ({ headline }) => {
         .then(() => setSuggestions(arrayFormated))
   }, [queryParams])
 
-  useEffect(() => {
-    console.log(suggestions)
-  }, [suggestions])
-
   return (
     <StyledHero background={`url(${requireStatic('images/header-home.png')})`}>
       <div className="container">

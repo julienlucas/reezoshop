@@ -63,8 +63,9 @@ const Search = ({ search, query }) => {
       delete filters.size;
       query = { ...filters };
 
-      Object.keys(query).map((item) => {
+      Object.keys(query).forEach((item) => {
         query[item] = query[item].toString().replace(/,/g, '-');
+        if (!query[item].trim()) delete query[item]
         return null;
       });
 
