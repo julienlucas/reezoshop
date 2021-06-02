@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import Button from '../Buttons/Button';
 import CardCar from '../CardCar';
-import Ad from './Ad';
+import Ad from '../Ad';
 import Select from '../Select';
 
 import { medias } from '../../constants/theme';

@@ -1,12 +1,11 @@
-import Image from 'next/image';
 import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 
-import Button from '../Buttons/Button';
+import Button from './Buttons/Button';
 
-import { medias } from '../../constants/theme';
-import requireStatic from '../../utils/require-static';
+import { medias } from '../constants/theme';
+import requireStatic from '../utils/require-static';
 
 const Ad = ({ className }) => {
    return (
@@ -15,18 +14,14 @@ const Ad = ({ className }) => {
             <div className="box-text">
                <div>
                <p>Trouvez plus d'annonces sur reezocar.com</p>
-               <Button secondary>
-                  <a href="https://reezocar.com/" target="_blank" rel="noopener noreferrer">
-                     Voir plus d'annonces
-                  </a>
-               </Button>
+               <Button secondary><a href="https://reezocar.com" target="_blank" rel="noopener noreferrer">Voir plus d'annonces</a></Button>
                </div>
             </div>
-            <Image
+            <img
                src={requireStatic('images/ad-voitures.png')}
-               width={300}
-               height={235}
+               width="100%"
                layout="responsive"
+               alt=""
             />
          </div>
       </AdStyled>
@@ -41,10 +36,19 @@ export default Ad;
 
 export const AdStyled = styled.div`
    margin-top: 25px;
-   border-radius: 4px;
-   overflow: hidden;
    max-height: 240px;
    display: none;
+   img {
+      max-height: 240px;
+      border-radius: 4px;
+      object-fit: cover;
+   }
+   &.ad-popup-mobile {
+      .box-text {
+         width: calc(100% - 30px);
+         justify-content: center;
+      }
+   }
    &.ad-mobile {
       display: block;
       margin-top: 64px;

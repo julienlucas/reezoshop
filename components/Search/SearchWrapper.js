@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
-import Ad from './Ad';
+import Ad from '../Ad';
 import InputSuggestions from '../InputSuggestions/InputSuggestions';
 import Filters from './Filters';
 import SearchResults from './SearchResults';
