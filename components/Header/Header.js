@@ -23,11 +23,11 @@ const Header = ({ headerProps }) => {
    };
 
    const onMenu = (boolean) => {
-      if (window.innerWidth <= 990) setMenuIsVisible(boolean);
+      if (window.innerWidth < 990) setMenuIsVisible(boolean);
    };
 
    const openOverlay = () => {
-     if (window.innerWidth <= 990) setOverlay(!overlay);
+     if (window.innerWidth < 990) setOverlay(!overlay);
    };
 
    useEffect(() => {
@@ -60,9 +60,9 @@ const Header = ({ headerProps }) => {
                   </a>
                </Link>
             </div>
-
-            <ShopSwitcher onOpen={openOverlay} menuIsVisible={menuIsVisible} />
          </StyledNav>
+
+         <ShopSwitcher onOpen={openOverlay} menuIsVisible={menuIsVisible} />
 
          <Menu
             headline={shop?.headline}
@@ -95,41 +95,39 @@ export default Header;
 
 export const StyledHeader = styled.header`
   .bottom-buttons-nav {
-    position: fixed;
-    bottom: 0;
-    z-index: 6;
-    height: 87px;
-    width: 100%;
-    background: white;
-    padding: 20px;
-    box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
-    &.hide {
+   position: fixed;
+   bottom: 0;
+   z-index: 6;
+   height: 87px;
+   width: 100%;
+   background: white;
+   padding: 20px;
+   box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
+   &.hide {
       display: none;
-    }
-    &.single-button {
+   }
+   &.single-button {
       button {
-        float: none;
-        margin: auto;
-        width: 100%;
+         float: none;
+         margin: auto;
+         width: 100%;
       }
-    }
-    .button-phone {
+   }
+   .button-phone {
       float: right;
       width: calc(50vw - 26px);
       display: block;
-      z-index: 8;
-    }
-    .button-rdv {
+      z-index: 10;
+   }
+   .button-rdv {
       position: absolute;
       display: block;
       bottom: 20px;
       left: 20px;
       width: calc(50vw - 26px);
       padding: 0;
-    }
-  }
-  ${medias.min990} {
-    .bottom-buttons-nav {
+   }
+   ${medias.min990} {
       right: 0;
       bottom: auto;
       background: transparent;
@@ -158,129 +156,94 @@ export const StyledHeader = styled.header`
          padding: 0;
       }
    }
-   ${medias.min990} {
-      .bottom-buttons-nav {
-         right: 0;
-         bottom: auto;
-         background: transparent;
-         box-shadow: 0px -4px 10px rgba(0, 0, 0, 0);
-         .button-phone {
-            margin: 4px 75px 0 0;
-            width: auto;
-            float: right;
-            &.search-page {
-               display: none;
-            }
-         }
-         .button-rdv {
-            display: none;
-         }
-      }
-   }
-   @media (max-width: 990px) {
-      .bottom-buttons-nav {
-         width: 100%;
-      }
-   }
 `;
 
 export const StyledNav = styled.nav`
-  position: fixed;
-  width: 100vw;
-  height: 58px;
-  top: 0;
-  z-index: 9;
-  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-  transition: all .3s ease-out;
-  .overlay-mobile {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    content: '';
-    z-index: 6;
-    &.show {
-      visibility: visible;
-      background: rgba(0, 0, 0, 0.3);
-    }
-    &.hide {
-      visibility: hidden;
-      background: rgba(0, 0, 0, 0);
-    }
-  }
-  &.scroll {
-    background: white;
-    box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.12);
-  }
-  &.bottomShadow {
-    background: white;
-    border: 1px solid ${theme.grey700};
-    box-shadow: 1px 2px 13px rgba(0, 0, 0, 0);
-  }
-  &.menu-open, &.menu-open.scroll, &.menu-open.bottomShadow {
-    border: 0;
-    box-shadow: none;
-    background: transparent;
-  }
-  .logo {
-    position: relative;
-    top: 8px;
-    float: left;
-    cursor: pointer;
-    * {
-      width: 163px;
-      height: 44px;
-    }
-  }
-   &.menu-open {
-      .logo {
-         filter: grayscale(1) brightness(600%);
+   position: fixed;
+   width: 100vw;
+   height: 58px;
+   top: 0;
+   z-index: 9;
+   box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+   transition: all .3s ease-out;
+   .overlay-mobile {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      content: '';
+      z-index: 6;
+      &.show {
+         visibility: visible;
+         background: rgba(0, 0, 0, 0.3);
+      }
+      &.hide {
+         visibility: hidden;
+         background: rgba(0, 0, 0, 0);
       }
    }
-  ${medias.min990} {
-    z-index: 6;
-    &.bottomShadow {
+   &.scroll {
+      background: white;
       box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.12);
    }
    &.bottomShadow {
+      background: white;
       border: 1px solid ${theme.grey700};
       box-shadow: 1px 2px 13px rgba(0, 0, 0, 0);
    }
-   &.menu-open,
-   &.menu-open.scroll,
-   &.menu-open.bottomShadow {
+   &.menu-open, &.menu-open.scroll, &.menu-open.bottomShadow {
       border: 0;
       box-shadow: none;
       background: transparent;
-   }
-   &.menu-open .logo {
-      filter: none;
    }
    .logo {
       position: relative;
       top: 8px;
       float: left;
       cursor: pointer;
+      &.menu-open {
+         filter: grayscale(1) brightness(600%)
+      }
       * {
          width: 163px;
          height: 44px;
       }
    }
    ${medias.min990} {
-      z-index: 6;
+     height: 92px;
+     z-index: 6;
       &.bottomShadow {
-         box-shadow: 1px 2px 13px rgba(0, 0, 0, 0.12);
+         border: 1px solid ${theme.grey700};
+         box-shadow: 1px 2px 13px rgba(0, 0, 0, 0);
       }
-   }
-   ${medias.min768} {
-      height: 92px;
+      &.menu-open,
+      &.menu-open.scroll,
+      &.menu-open.bottomShadow {
+         border: 0;
+         box-shadow: none;
+         background: transparent;
+      }
+      &.menu-open .logo {
+         filter: none;
+      }
       .logo {
-         top: 16px;
+         position: relative;
+         top: 13px;
+         float: left;
+         cursor: pointer;
+         &.menu-open {
+            filter: none;
+         }
          * {
             width: 244px;
             height: 66px;
          }
+      }
+   }
+   ${medias.min768} {
+      &.menu-open .logo {
+         filter: none;
       }
    }
 `;

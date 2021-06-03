@@ -65,7 +65,7 @@ export const StyledButtonHamb = styled.div`
       &:nth-child(2) {top: 8px}
       &:nth-child(3) {top: 16px}
    }
-   ${medias.min780} {
+   ${medias.min990} {
       top: 37px;
       right: 32px;
       .cross {

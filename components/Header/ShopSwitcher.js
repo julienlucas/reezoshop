@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 
@@ -12,7 +13,7 @@ import { shopToDomain } from '../../utils/url';
 
 import { theme, radius } from '../../constants/theme';
 
-const ShopSwitcher = () => {
+const ShopSwitcher = ({ onOpen, menuIsVisible }) => {
    const [opened, setOpened] = useState(false);
    const { host, shops, shopKey: currentShopKey } = useShop();
    const list = useRef();
@@ -29,10 +30,14 @@ const ShopSwitcher = () => {
       if (opened && list.current && !list.current.contains(e.target)) setOpened(false);
    };
 
+   useEffect(() => {
+      if (opened) onOpen()
+   }, [opened])
+
    return (
-      <StyledShopSwitcher>
-         <Button onClick={() => setOpened(true)} styles={buttonStyles}>
-            {shops[currentShopKey].name}
+      <StyledShopSwitcher className={menuIsVisible ? 'right-menu-open' : ''}>
+         <Button clear onClick={() => setOpened(true)} styles={buttonStyles}>
+            <span>{shops[currentShopKey].name}</span>
             <ArrowBottomIcon className="arrow-bottom-icon" />
          </Button>
          {opened ? (
@@ -57,15 +62,31 @@ const ShopSwitcher = () => {
    );
 };
 
+ShopSwitcher.propTypes = {
+  onOpen: PropTypes.func.isRequired,
+  menuIsVisible: PropTypes.bool
+};
+
 export default ShopSwitcher;
 
 export const StyledShopSwitcher = styled.div(({ theme }) => {
    return {
-      position: 'relative',
+      position: 'fixed',
+      top: -19,
+      left: -66,
+      zIndex: 999,
+      '&.right-menu-open': {
+         'span': {
+            color: 'white'
+         },
+         '.arrow-bottom-icon': {
+            filter: 'grayscale(1) brightness(600%)'
+         }
+      },
       '.arrow-bottom-icon': {
          height: 11,
          marginLeft: 7,
-         width: 19,
+         width: 22,
       },
       li: {
          borderTop: `1px solid ${theme.colors.grey200}`,
@@ -79,6 +100,28 @@ export const StyledShopSwitcher = styled.div(({ theme }) => {
          height: 48,
          paddingLeft: 20,
       },
+      '@media (min-width: 990px)': {
+         left: 'auto',
+         top: 'auto',
+         '&.right-menu-open': {
+            'span': {
+               color: theme.colors.black,
+            },
+            '.arrow-bottom-icon': {
+               filter: 'none'
+            }
+         }
+      },
+      '@media (min-width: 768px)': {
+         '&.right-menu-open': {
+            'span': {
+               color: theme.colors.black,
+            },
+            '.arrow-bottom-icon': {
+               filter: 'none'
+            }
+         }
+      }
    };
 });
 
@@ -90,6 +133,7 @@ const buttonStyles = {
    fontSize: 20,
    fontWeight: theme.fontWeights.semiBold,
    height: 36,
+   width: 'auto',
    left: 240,
    marginLeft: 0,
    marginRight: 0,
