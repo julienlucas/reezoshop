@@ -48,7 +48,6 @@ const HeroSearch = ({ headline }) => {
             <div className="col col-1">
               <InputSuggestions
                 suggestionsData={suggestions}
-                onUserInput={(inputSearch) => setQueryParams({ "query": inputSearch })}
                 onChoice={onChoice}
                 onSearch={onSearch}
                 placeholder="Marque, Modèle"
